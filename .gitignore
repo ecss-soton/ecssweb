@@ -2,7 +2,7 @@
 db.sqlite3
 
 # python virtual environment
-env/
+.env/
 
 # Django
 # https://github.com/django/django/blob/master/.gitignore
