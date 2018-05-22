@@ -1,0 +1,109 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'website/styles/base.css' %}">
+    <title>{% block title %}ECSS - University of Southampton Electronics and Computer Science Society{% endblock %}</title>
+  </head>
+  <body>
+    <header class="bg-black">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+          <a class="navbar-brand" href="{% url 'website:index' %}">
+            <img src="{% static 'website/images/ecssweb-logo.png' %}" width="30" height="30" alt="ECSS website navbar brand logo">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'website:index' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Committee</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Societies</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">Sponsors</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarEventsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Events
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarEventsDropdown">
+                  <a class="dropdown-item" href="#">Socials</a>
+                  <a class="dropdown-item" href="#">Game Socials</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'website:events_bbq' %}">BBQ</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Welfare</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarSportsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Sports
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarSportsDropdown">
+                  <a class="dropdown-item" href="#">Football</a>
+                  <a class="dropdown-item" href="#">Netball</a>
+                  <a class="dropdown-item" href="#">Basketball</a>
+                  <a class="dropdown-item" href="#">Parkrun</a>
+                  <a class="dropdown-item" href="#">Others</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarFilesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Files
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarFilesDropdown">
+                  <a class="dropdown-item" href="#">Meeting Minutes</a>
+                  <a class="dropdown-item" href="#">Committee Files</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarFeedbackDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Feedback
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarFeedbackDropdown">
+                  <a class="dropdown-item" href="#">Submit</a>
+                  <a class="dropdown-item" href="#">Responses</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarAboutDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  About
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarAboutDropdown">
+                  <a class="dropdown-item" href="#">About</a>
+                  <a class="dropdown-item" href="#">Constitution</a>
+                  <a class="dropdown-item" href="#">Voting Results</a>
+                  <a class="dropdown-item" href="#">Contact Us</a>
+                  <a class="dropdown-item" href="#">Credits</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <footer>
+
+    </footer>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+  </body>
+</html>
