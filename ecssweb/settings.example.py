@@ -118,3 +118,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Redirect this url to login
+LOGIN_URL = '/auth/saml/'
+
+# SAML config folder
+SAML_FOLDER = os.path.join(BASE_DIR, 'auth', 'saml-config')

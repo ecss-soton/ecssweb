@@ -1,6 +1,12 @@
 # database
 db.sqlite3
 
+# SAML config
+auth/saml-config/settings.json
+auth/saml-config/settings.uos.json
+auth/saml-config/certs/sp.crt
+auth/saml-config/certs/sp.key
+
 # python virtual environment
 .env/
 
