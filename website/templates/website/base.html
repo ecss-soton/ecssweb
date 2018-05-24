@@ -4,17 +4,22 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="icon" href="{% static 'website/images/favicon.ico' %}">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/brands.css" integrity="sha384-VGCZwiSnlHXYDojsRqeMn3IVvdzTx5JEuHgqZ3bYLCLUBV8rvihHApoA1Aso2TZA" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/fontawesome.css" integrity="sha384-GVa9GOgVQgOk+TNYXu7S/InPTfSDTtBalSgkgqQ7sCik56N9ztlkoTr2f/T44oKV" crossorigin="anonymous">
 
     <link rel="stylesheet" href="{% static 'website/styles/base.css' %}">
     <title>{% block title %}ECSS - University of Southampton Electronics and Computer Science Society{% endblock %}</title>
   </head>
   <body>
-    <header class="bg-black">
+    <header>
       <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-ecssweb">
           <a class="navbar-brand" href="{% url 'website:index' %}">
             <img src="{% static 'website/images/ecssweb-logo.png' %}" width="30" height="30" alt="ECSS website navbar brand logo">
           </a>
@@ -62,15 +67,6 @@
                 </div>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarFilesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Files
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarFilesDropdown">
-                  <a class="dropdown-item" href="#">Meeting Minutes</a>
-                  <a class="dropdown-item" href="#">Committee Files</a>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarFeedbackDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Feedback
                 </a>
@@ -96,8 +92,33 @@
         </nav>
       </div>
     </header>
-    <footer>
 
+    <div class="content container">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+    <footer>
+      <div class="container">
+        <dl class="footer-list">
+          <dt class="footer-title">Connect with us</dt>
+          <dd class="footer-item footer-item-icon"><a href="#" class="footer-link-icon" aria-label="ECSS Facebook page"><i class="fab fa-facebook" title="ECSS Facebook page" aria-hidden></i></a></dd>
+          <dd class="footer-item footer-item-icon"><a href="#" class="footer-link-icon" aria-label="ECSS Twitter"><i class="fab fa-twitter" title="ECSS Twitter" aria-hidden></i></a></dd>
+          <dd class="footer-item footer-item-icon"><a href="#" class="footer-link-icon" aria-label="ECSS Instagram"><i class="fab fa-instagram" title="ECSS Instagram" aria-hidden></i></a></dd>
+          <dd class="footer-item footer-item-icon"><a href="#" class="footer-link-icon" aria-label="ECSS GitHub"><i class="fab fa-github" title="ECSS GitHub" aria-hidden></i></a></dd>
+        </dl>
+        <dl class="footer-list">
+          <dd class="footer-item"><a href="#" class="footer-link">About</a></dd>
+          <dd class="footer-item"><a href="#" class="footer-link">Contact</a></dd>
+          <dd class="footer-item"><a href="#" class="footer-link">Meeting Minutes</a></dd>
+          <dd class="footer-item"><a href="#" class="footer-link">Societies in ECS</a></dd>
+          <dd class="footer-item"><a href="#" class="footer-link">ECS</a></dd>
+        </dl>
+        <dl class="footer-list">
+          <dd class="footer-item"><a href="#" class="footer-link">Site map</a></dd>
+          <dd class="footer-item"><a href="#" class="footer-link">Privacy &amp; Cookies</a></dd>
+        </dl>
+      </div>
     </footer>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

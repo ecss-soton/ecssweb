@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 def index(request):
-    return render(request, 'website/base.html')
+    return render(request, 'website/index.html')
 
 def events_bbq(request):
     return render(request, 'website/events/bbq.html')
