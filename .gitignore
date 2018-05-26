@@ -1,6 +1,9 @@
 # database
 db.sqlite3
 
+# website content
+website/static/website/content/
+
 # python virtual environment
 .env/
 
