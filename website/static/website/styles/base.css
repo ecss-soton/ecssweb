@@ -20,6 +20,10 @@ header {
   background-color: black;
 }
 
+section {
+  margin-bottom: 1rem;
+}
+
 footer {
   color: rgba(255,255,255,.75);
   background-color: black;
@@ -94,4 +98,16 @@ footer {
 .footer-link-icon:hover {
   color: white;
   text-decoration: none;
+}
+
+.btn-ecssweb {
+  color: white;
+  background-color: darkred;
+  border-color: darkred;
+}
+
+.btn-ecssweb:hover {
+  color: white;
+  background-color: #d82129;
+  border-color: #d82129;
 }

@@ -1,10 +1,40 @@
-.logo-homepage {
-  height: 12rem;
-  width: 12rem;
+.logo-home {
+  height: 10rem;
+  width: 10rem;
   display: block;
   margin: 0 auto;
 }
 
-.title-homepage {
-  text-align: center;
+.sponsors-logos-home {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.sponsor-link-logo-home {
+  width: 15rem;
+  height: 5rem;
+  margin: .75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 767.98px) {
+  .sponsor-link-logo-home {
+    width: 12rem;
+    height: 4rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .sponsor-link-logo-home {
+    width: 9rem;
+    height: 3rem;
+  }
+}
+
+.sponsor-logo-home {
+  max-width: 100%;
+  max-height: 100%;
 }

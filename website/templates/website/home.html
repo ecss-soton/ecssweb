@@ -8,14 +8,38 @@
 
 {% block content %}
 <section>
-  <img src="{% static 'website/images/ecss-logo-square.png' %}" alt="ECSS logo" class="logo-homepage">
-  <div class="title-homepage">
-    <h1>Welcome to ECSS!</h1>
-  </div>
+  <img src="{% static 'website/images/ecss-logo-square.png' %}" alt="ECSS logo" class="logo-home">
+  <h1 class="text-center">Welcome to ECSS!</h1>
   <p>Welcome to the University of Southampton Electronics and Computer Science (ECS) Society website.</p>
   <p>We are a student-run society for ECS at the University of Southampton.</p>
   <p>On this website you will find information about the society such as who we are, what we aim to do, as well as what events we are currently organising!</p>
   <p>Still reading? You can even find out more <a href="#">about us</a>.</p>
   <p>To keep up with the latest events, join the <a href="https://www.facebook.com/groups/ecss.soton/">ECSS Facebook group</a>, like <a href="https://www.facebook.com/ecss.soton/">our Facebook page</a> and follow us on Twitter, <a href="https://twitter.com/ecs_society">@ECS_Society</a>.</p>
+</section>
+<section>
+  <h2 class="text-center">Upcoming Events</h2>
+  <div class="card">
+    <div class="card-header">
+      Example event
+    </div>
+    <div class="card-body">
+      <p>Example event.</p>
+      <a href="#" class="btn btn-ecssweb" aria-label="Learn more about Example event">Learn more about this event</a>
+    </div>
+  </div>
+  <p>Find out more about our events on <a href="#">our events page</a>.</p>
+</section>
+<section>
+  <h2 class="text-center">Our Gold Sponsors</h2>
+  <hr>
+  <div class="sponsors-logos-home">
+    <a href="#" class="sponsor-link-logo-home" title="J.P. Morgan" aria-label="J.P. Morgan">
+      <img src="{% static 'website/content/sponsors-logos/jpmorgan.jpg' %}" alt="J.P. Morgan logo" class="sponsor-logo-home" aria-hidden="true">
+    </a>
+    <a href="#" class="sponsor-link-logo-home" title="talent.io" aria-label="talent.io">
+      <img src="{% static 'website/content/sponsors-logos/talentio.png' %}" alt="talent.io logo" class="sponsor-logo-home" aria-hidden="true">
+    </a>
+  </div>
+  <p>Find out more about our sponsors on <a href="#">our sponsors page</a>.</p>
 </section>
 {% endblock %}
