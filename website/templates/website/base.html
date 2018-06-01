@@ -4,28 +4,31 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="icon" href="{% static 'website/images/favicon.ico' %}">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/brands.css" integrity="sha384-VGCZwiSnlHXYDojsRqeMn3IVvdzTx5JEuHgqZ3bYLCLUBV8rvihHApoA1Aso2TZA" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/fontawesome.css" integrity="sha384-GVa9GOgVQgOk+TNYXu7S/InPTfSDTtBalSgkgqQ7sCik56N9ztlkoTr2f/T44oKV" crossorigin="anonymous">
+
     <link rel="stylesheet" href="{% static 'website/styles/base.css' %}">
+    {% block pagestyle %}{% endblock %}
     <title>{% block title %}ECSS - University of Southampton Electronics and Computer Science Society{% endblock %}</title>
   </head>
   <body>
-    <header class="bg-black">
+    <header>
       <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-black">
-          <a class="navbar-brand" href="{% url 'website:index' %}">
-            <img src="{% static 'website/images/ecssweb-logo.png' %}" width="30" height="30" alt="ECSS website navbar brand logo">
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-ecssweb">
+          <a class="navbar-brand" href="{% url 'website:home' %}" aria-label="Home">
+            <img src="{% static 'website/images/ecssweb-logo.png' %}" width="30" height="30" alt="ECSS website navbar brand logo" aria-hidden="true">
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'website:index' %}">Home</a>
-              </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Committee</a>
               </li>
@@ -62,15 +65,6 @@
                 </div>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarFilesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Files
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarFilesDropdown">
-                  <a class="dropdown-item" href="#">Meeting Minutes</a>
-                  <a class="dropdown-item" href="#">Committee Files</a>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarFeedbackDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Feedback
                 </a>
@@ -85,7 +79,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarAboutDropdown">
                   <a class="dropdown-item" href="#">About</a>
-                  <a class="dropdown-item" href="#">Constitution</a>
+                  <a class="dropdown-item" href="/filestore/index.php/s/idGPSGlxT15tbHi">Constitution</a>
                   <a class="dropdown-item" href="#">Voting Results</a>
                   <a class="dropdown-item" href="#">Contact Us</a>
                   <a class="dropdown-item" href="#">Credits</a>
@@ -96,8 +90,41 @@
         </nav>
       </div>
     </header>
-    <footer>
 
+    <div class="content container">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+    <footer>
+      <div class="container footer-container">
+        <div class="footer-social-medias">
+          <dl class="footer-list">
+            <dt class="footer-title">Connect with us</dt>
+            <dd class="footer-item footer-item-icon"><a href="https://www.facebook.com/ecss.soton/" class="footer-link-icon" aria-label="Facebook page"><i class="fab fa-facebook" title="ECSS Facebook page" aria-hidden="true"></i></a></dd>
+            <dd class="footer-item footer-item-icon"><a href="https://twitter.com/ecs_society" class="footer-link-icon" aria-label="Twitter"><i class="fab fa-twitter" title="ECSS Twitter" aria-hidden="true"></i></a></dd>
+            <dd class="footer-item footer-item-icon"><a href="https://www.instagram.com/ecss_soton/" class="footer-link-icon" aria-label="Instagram"><i class="fab fa-instagram" title="ECSS Instagram" aria-hidden="true"></i></a></dd>
+            <dd class="footer-item footer-item-icon"><a href="https://github.com/ecss-soton" class="footer-link-icon" aria-label="GitHub"><i class="fab fa-github" title="ECSS GitHub" aria-hidden="true"></i></a></dd>
+          </dl>
+        </div>
+        <div>
+          <dl class="footer-list">
+            <dt></dt>
+            <dd class="footer-item"><a href="#" class="footer-link">About</a></dd>
+            <dd class="footer-item"><a href="#" class="footer-link">Contact</a></dd>
+            <dd class="footer-item"><a href="/filestore/index.php/s/FGMWH0tjcjnHRpe" class="footer-link">Meeting Minutes</a></dd>
+            <dd class="footer-item"><a href="#" class="footer-link">Societies in ECS</a></dd>
+            <dd class="footer-item"><a href="https://www.ecs.soton.ac.uk" class="footer-link">ECS</a></dd>
+          </dl>
+          <dl class="footer-list">
+            <dt></dt>
+            <dd class="footer-item"><a href="#" class="footer-link">Sitemap</a></dd>
+            <dd class="footer-item"><a href="#" class="footer-link">Cookies</a></dd>
+            <dd class="footer-item"><a href="#" class="footer-link">Privacy Notice</a></dd>
+            <dd class="footer-item"><a href="#" class="footer-link">Copyright Notice</a></dd>
+          </dl>
+        </div>
+      </div>
     </footer>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

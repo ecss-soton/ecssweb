@@ -1,3 +1,113 @@
-.bg-black {
-    background-color: black;
+/* Global elements styles */
+a {
+  color: darkred;
+  text-decoration: none;
+}
+
+a:hover {
+  color: red;
+}
+
+/* Blocks styles */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  margin: 0 0 .75rem 0;
+  background-color: black;
+}
+
+section {
+  margin-bottom: 1rem;
+}
+
+footer {
+  color: rgba(255,255,255,.75);
+  background-color: black;
+  margin: .75rem 0 0 0;
+  padding: .75rem 0 0 0;
+}
+
+/* Themes */
+.navbar-ecssweb .navbar-nav .nav-link {
+  padding: .5rem .5rem;
+  color: white;
+}
+
+.navbar-ecssweb .navbar-nav .nav-link:hover {
+  color: white;
+}
+
+.navbar-ecssweb .navbar-nav .nav-link:focus {
+  color: white;
+}
+
+.nav-item:hover {
+  background-color: #d82129;
+  border-radius: .2rem
+}
+
+.content {
+  flex: 1;
+}
+
+@media (min-width: 992px) {
+  .footer-container {
+    display: flex;
+  }
+  
+  .footer-social-medias {
+    margin-left: auto;
+    order: 2;
+  }
+}
+
+.footer-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: .75rem;
+}
+
+.footer-title {
+  flex-basis: 100%;
+  width: 0;
+}
+
+.footer-item {
+  margin-right: 1rem;
+  margin-bottom: .25rem;
+}
+
+.footer-item-icon {
+  font-size: 2rem;
+  margin-right: 1.5rem;
+}
+
+.footer-link {
+  color: rgba(255,255,255,.75);
+}
+
+.footer-link-icon {
+  color: rgba(255,255,255,.75);
+}
+
+.footer-link-icon:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.btn-ecssweb {
+  color: white;
+  background-color: darkred;
+  border-color: darkred;
+}
+
+.btn-ecssweb:hover {
+  color: white;
+  background-color: #d82129;
+  border-color: #d82129;
 }

@@ -1,6 +1,9 @@
 # database
 db.sqlite3
 
+# website content
+website/static/website/content/
+
 # SAML config
 auth/saml-config/settings.json
 auth/saml-config/settings.uos.json
