@@ -20,12 +20,12 @@
     },
     "contactPerson": {
         "technical": {
-            "givenName": "technical_name",
-            "emailAddress": "technical@example.com"
+            "givenName": "ecssweb",
+            "emailAddress": "society@ecs.soton.ac.uk"
         },
         "support": {
-            "givenName": "support_name",
-            "emailAddress": "support@example.com"
+            "givenName": "ecssweb",
+            "emailAddress": "society@ecs.soton.ac.uk"
         }
     },
     "organization": {

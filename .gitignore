@@ -13,6 +13,9 @@ auth/saml-config/certs/sp.key
 # python virtual environment
 .env/
 
+# IDE files
+.vscode/
+
 # Django
 # https://github.com/django/django/blob/master/.gitignore
 *.egg-info

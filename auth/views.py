@@ -30,6 +30,13 @@ def auth_saml(request):
     auth = init_saml(request)
     return HttpResponseRedirect(auth.login())
 
+# sp metadata
+def saml_metadata(request):
+    auth = init_saml(request)
+    saml_settings = auth.get_settings()
+    metadata = saml_settings.get_sp_metadata()
+    return HttpResponse(metadata, content_type='application/samlmetadata+xml')
+
 # handle saml login response
 @csrf_exempt
 def saml_acs(request):
