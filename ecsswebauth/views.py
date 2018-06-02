@@ -42,7 +42,18 @@ def saml_metadata(request):
 def saml_acs(request):
     auth = init_saml(request)
     auth.process_response()
-    return HttpResponse(json.dumps(auth.get_attributes()))
+    errors = auth.get_errors()
+    if not errors:
+        if auth.is_authenticated():
+            request.session['samlUser'] = auth.get_attributes()
+            if 'RelayState' in request.POST:
+                return HttpResponseRedirect(request.POST['RelayState'])
+            else:
+                return HttpResponse('Logged in')
+        else:
+            return HttpResponse('Not authenticated')
+    else:
+        return HttpResponse('Error: {}'.format(join(', ', errors)))
 
 # initiate logout
 def saml_slo(request):

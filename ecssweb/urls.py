@@ -16,6 +16,6 @@ Including another URLconf
 from django.urls import include, path
 
 urlpatterns = [
-    path('auth/', include('auth.urls')),
+    path('auth/', include('ecsswebauth.urls')),
     path('', include('website.urls')),
 ]

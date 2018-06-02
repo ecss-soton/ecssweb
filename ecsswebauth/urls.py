@@ -2,7 +2,7 @@ from django.urls import path
 
 from . import views
 
-app_name='auth'
+app_name='ecsswebauth'
 urlpatterns = [
     path('saml/', views.auth_saml, name='auth_saml'),
     path('saml/metadata', views.saml_metadata, name='saml_metadata'),

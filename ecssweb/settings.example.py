@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website.apps.WebsiteConfig',
+    'ecsswebauth.apps.ecsswebauthConfig',
 ]
 
 MIDDLEWARE = [
@@ -123,4 +124,4 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/auth/saml/'
 
 # SAML config folder
-SAML_FOLDER = os.path.join(BASE_DIR, 'auth', 'saml-config')
+SAML_FOLDER = os.path.join(BASE_DIR, 'ecsswebauth', 'saml-config')
