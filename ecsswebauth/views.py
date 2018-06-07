@@ -64,9 +64,11 @@ def _get_user_info_from_attributes(attributes):
 # initiate saml login
 @csrf_exempt
 def saml_login(request):
+    if request.method == 'GET':
+        raise Http404
     auth = _init_saml(request)
     if 'next' in request.POST:
-        next_url = _clean_next_url(request.POST['next'])
+        next_url = _clean_next_url(_clean_next_url(request.POST['next']))
     else:
         next_url = settings.LOGIN_URL
     return HttpResponseRedirect(auth.login(next_url))
@@ -81,6 +83,8 @@ def saml_metadata(request):
 # handle saml login response
 @csrf_exempt
 def saml_acs(request):
+    if request.method == 'GET':
+        raise Http404
     auth = _init_saml(request)
     auth.process_response()
     errors = auth.get_errors()
@@ -92,18 +96,30 @@ def saml_acs(request):
             if 'RelayState' in request.POST:
                 return HttpResponseRedirect(request.POST['RelayState'])
             else:
-                return HttpResponse('Logged in')
+                return HttpResponseRedirect(settings.LOGIN_URL)
         else:
-            return HttpResponse('Not authenticated')
+            raise Exception('Not authenticated')
     else:
-        return HttpResponse('Error: {}'.format(join(', ', errors)))
+        raise Exception('Error: {}'.format(join(', ', errors)))
 
 # initiate logout
-@csrf_exempt
 def saml_logout(request):
     auth = _init_saml(request)
     logout(request)
     return HttpResponseRedirect(auth.logout())
+
+def saml_sls(request):
+    logout_user_callback = lambda: logout(request)
+    auth = _init_saml(request)
+    next_url = auth.process_slo(delete_session_cb=logout_user_callback)
+    errors = auth.get_errors()
+    if len(errors) == 0:
+        if next_url is not None:
+            return HttpResponseRedirect(_clean_next_url(next_url))
+        else:
+            return HttpResponseRedirect(settings.LOGIN_URL)
+    else:
+        raise Exception('Error when processing SLO: {}'.format((', '.join(errors))))
 
 @login_required
 def saml_test(request):

@@ -17,7 +17,7 @@
     window.location.replace("{{ next_url }}");
   </script>
   {% endif %}
-<form action="/auth/saml/logout/" method="POST">
+<form action="/auth/saml/logout/" method="GET">
   <input type="submit" value="Logout" class="btn btn-ecssweb">
 </form>
 {% endif %}
