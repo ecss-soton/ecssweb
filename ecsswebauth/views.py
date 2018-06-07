@@ -1,3 +1,4 @@
+from django.utils.http import is_safe_url
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -13,14 +14,24 @@ import json
 
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 
+def _clean_next_url(next_url):
+    if is_safe_url(next_url):
+        return next_url.strip()
+    else:
+        return settings.LOGIN_URL
+
 def auth(request):
     if 'next' in request.GET:
-        next_url = request.GET['next']
+        next_url = _clean_next_url(request.GET['next'])
     else:
         next_url = settings.LOGIN_URL
     saml_request_form = SamlRequestForm()
     saml_request_form.fields['next'].initial = next_url
-    context = {'saml_login_form': saml_request_form}
+    context = {
+        'next_url': next_url,
+        'auth_url': settings.LOGIN_URL,
+        'saml_request_form': saml_request_form,
+    }
     return render(request, 'ecsswebauth/auth.html', context)
 
 def _get_request_for_saml(request):
@@ -55,7 +66,7 @@ def _get_user_info_from_attributes(attributes):
 def saml_login(request):
     auth = _init_saml(request)
     if 'next' in request.POST:
-        next_url = request.POST['next']
+        next_url = _clean_next_url(request.POST['next'])
     else:
         next_url = settings.LOGIN_URL
     return HttpResponseRedirect(auth.login(next_url))

@@ -11,6 +11,12 @@
 </form>
 {% else %}
 <p class="alert alert-info">You are logged in as <strong>{{ user.username }}</strong>.</p>
+  {% if next_url != auth_url %}
+  <p><a href="{{ next_url }}">Go to {{ next_url }}</a></p>
+  <script>
+    window.location.replace("{{ next_url }}");
+  </script>
+  {% endif %}
 <form action="/auth/saml/logout/" method="POST">
   <input type="submit" value="Logout" class="btn btn-ecssweb">
 </form>
