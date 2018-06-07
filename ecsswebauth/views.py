@@ -7,10 +7,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
-from .models import SamlUser
+from .models import SamlUser, ConsumedAssertionRecord
 from .forms import SamlRequestForm
 
 import json
+import datetime
 
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 
@@ -87,6 +88,18 @@ def saml_acs(request):
         raise Http404
     auth = _init_saml(request)
     auth.process_response()
+
+    # limit the assertion to one time use only, protect from replay attack
+    assertion_id = auth.get_last_assertion_id()
+    try:
+        ConsumedAssertionRecord.objects.get(assertion_id=assertion_id)
+        raise Exception('Assertion has already been used')
+    except ConsumedAssertionRecord.DoesNotExist:
+        not_on_or_after = auth.get_last_assertion_not_on_or_after()
+        not_on_or_after = datetime.datetime.fromtimestamp(not_on_or_after)
+        consumed_assertion_record = ConsumedAssertionRecord(assertion_id=assertion_id, not_on_or_after=not_on_or_after)
+        consumed_assertion_record.save()
+
     errors = auth.get_errors()
     if not errors:
         if auth.is_authenticated():
