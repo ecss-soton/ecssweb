@@ -1,14 +1,29 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+
+from .models import SamlUser
+from .forms import SamlRequestForm
 
 import json
 
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 
-def get_request_for_saml(request):
+def auth(request):
+    if 'next' in request.GET:
+        next_url = request.GET['next']
+    else:
+        next_url = settings.LOGIN_URL
+    saml_request_form = SamlRequestForm()
+    saml_request_form.fields['next'].initial = next_url
+    context = {'saml_login_form': saml_request_form}
+    return render(request, 'ecsswebauth/auth.html', context)
+
+def _get_request_for_saml(request):
     result = {
         'https': 'on' if request.is_secure() else 'off',
         'http_host': request.META['HTTP_HOST'],
@@ -21,18 +36,33 @@ def get_request_for_saml(request):
     }
     return result
 
-def init_saml(request):
-    auth = OneLogin_Saml2_Auth(get_request_for_saml(request), custom_base_path=settings.SAML_FOLDER)
+def _init_saml(request):
+    auth = OneLogin_Saml2_Auth(_get_request_for_saml(request), custom_base_path=settings.SAML_FOLDER)
     return auth
 
+def _get_user_info_from_attributes(attributes):
+    userinfo = {
+        'username': attributes['http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsaccountname'][0],
+        #'groups': attributes['http://schemas.xmlsoap.org/claims/Group'],
+        'email': attributes['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'][0],
+        'givenname': attributes['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname'][0],
+        'surname': attributes['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname'][0],
+    }
+    return userinfo
+
 # initiate saml login
-def auth_saml(request):
-    auth = init_saml(request)
-    return HttpResponseRedirect(auth.login())
+@csrf_exempt
+def saml_login(request):
+    auth = _init_saml(request)
+    if 'next' in request.POST:
+        next_url = request.POST['next']
+    else:
+        next_url = settings.LOGIN_URL
+    return HttpResponseRedirect(auth.login(next_url))
 
 # sp metadata
 def saml_metadata(request):
-    auth = init_saml(request)
+    auth = _init_saml(request)
     saml_settings = auth.get_settings()
     metadata = saml_settings.get_sp_metadata()
     return HttpResponse(metadata, content_type='application/samlmetadata+xml')
@@ -40,12 +70,14 @@ def saml_metadata(request):
 # handle saml login response
 @csrf_exempt
 def saml_acs(request):
-    auth = init_saml(request)
+    auth = _init_saml(request)
     auth.process_response()
     errors = auth.get_errors()
     if not errors:
         if auth.is_authenticated():
-            request.session['samlUser'] = auth.get_attributes()
+            userinfo = _get_user_info_from_attributes(auth.get_attributes())
+            user = authenticate(username=userinfo['username'], email=userinfo['email'], givenname=userinfo['givenname'], surname=userinfo['surname'])
+            login(request, user)
             if 'RelayState' in request.POST:
                 return HttpResponseRedirect(request.POST['RelayState'])
             else:
@@ -56,10 +88,12 @@ def saml_acs(request):
         return HttpResponse('Error: {}'.format(join(', ', errors)))
 
 # initiate logout
-def saml_slo(request):
-    auth = init_saml(request)
+@csrf_exempt
+def saml_logout(request):
+    auth = _init_saml(request)
+    logout(request)
     return HttpResponseRedirect(auth.logout())
 
 @login_required
 def saml_test(request):
-    return HttpResponse('hello')
+    return HttpResponse((request.user.samluser.is_persistent))

@@ -1,0 +1,18 @@
+{% extends 'website/base.html' %}
+
+{% block title %}Login - ECSS{% endblock %}
+
+{% block content %}
+{% if not user.is_authenticated %}
+<p class="alert alert-info">You are not logged in.</p>
+<form action="/auth/saml/login/" method="POST">
+  {{ saml_request_form }}
+  <input type="submit" value="Login with university account" class="btn btn-ecssweb">
+</form>
+{% else %}
+<p class="alert alert-info">You are logged in as <strong>{{ user.username }}</strong>.</p>
+<form action="/auth/saml/logout/" method="POST">
+  <input type="submit" value="Logout" class="btn btn-ecssweb">
+</form>
+{% endif %}
+{% endblock %}
