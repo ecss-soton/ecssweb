@@ -5,10 +5,10 @@ db.sqlite3
 website/static/website/content/
 
 # SAML config
-auth/saml-config/settings.json
-auth/saml-config/settings.uos.json
-auth/saml-config/certs/sp.crt
-auth/saml-config/certs/sp.key
+auth/saml_config/settings.json
+auth/saml_config/settings.uos.json
+auth/saml_config/certs/sp.crt
+auth/saml_config/certs/sp.key
 
 # python virtual environment
 .env/

@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.conf import settings
 
 from .models import SamlUser, ConsumedAssertionRecord
@@ -135,5 +135,6 @@ def saml_sls(request):
         raise Exception('Error when processing SLO: {}'.format((', '.join(errors))))
 
 @login_required
+@permission_required('auth.add_permission', raise_exception=True)
 def saml_test(request):
     return HttpResponse((request.user.samluser.is_persistent))

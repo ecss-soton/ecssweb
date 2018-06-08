@@ -129,4 +129,4 @@ STATIC_ROOT = ''
 LOGIN_URL = '/auth/'
 
 # SAML config folder
-SAML_FOLDER = os.path.join(BASE_DIR, 'ecsswebauth', 'saml-config')
+SAML_FOLDER = os.path.join(BASE_DIR, 'ecsswebauth', 'saml_config')
