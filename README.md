@@ -22,9 +22,9 @@
 
 ### SAML
 
-- Rename `ecsswebauth/saml-config/settings.example.json` to `settings.json` and changes the settings in it
+- Rename `ecsswebauth/saml_config/settings.example.json` to `settings.json` and changes the settings in it
 
-- Put your X.509 certs in `ecsswebauth/saml-config/certs/` name them `sp.crt` and `sp.key`
+- Put your X.509 certs in `ecsswebauth/saml_config/certs/` name them `sp.crt` and `sp.key`
   
   You can run this to generate your certs:
 
