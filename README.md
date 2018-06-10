@@ -12,9 +12,23 @@
   brew install libxml2 libxmlsec1
   ```
 
+  On Linux (Debian):
+
+  ```
+  apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
+  wget http://xmlsoft.org/sources/libxml2-2.9.1.tar.gz
+  tar -xvf libxml2-2.9.1.tar.gz
+  cd libxml2-2.9.1
+  ./configure && make && make install
+  ```
+
   For other platforms see https://github.com/mehcode/python-xmlsec#pre-install
 
 - Install the packages in `requirements.txt`
+
+  ```
+  pip install -r requirements.txt
+  ```
 
 ## Configuration
 
