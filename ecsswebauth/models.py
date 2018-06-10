@@ -7,8 +7,8 @@ class SamlUser(models.Model):
     is_persistent = models.BooleanField(default=False)
 
 class EcsswebUserGroup(models.Model):
-    user = models.OneToOneField(Group, on_delete=models.CASCADE)
-    is_saml = models.BooleanField()
+    group = models.OneToOneField(Group, on_delete=models.CASCADE)
+    is_saml = models.BooleanField(default=False)
 
 class ConsumedAssertionRecord(models.Model):
     assertion_id = models.CharField(max_length=100, primary_key=True)

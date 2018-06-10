@@ -1,6 +1,6 @@
 from django.utils.http import is_safe_url
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render
+from django.shortcuts import render, resolve_url
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -15,22 +15,22 @@ import datetime
 
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 
-def _clean_next_url(next_url):
+def _clean_next_url(next_url, default_url=settings.LOGIN_REDIRECT_URL):
     if is_safe_url(next_url):
         return next_url.strip()
     else:
-        return settings.LOGIN_URL
+        return resolve_url(default_url)
 
 def auth(request):
     if 'next' in request.GET:
         next_url = _clean_next_url(request.GET['next'])
     else:
-        next_url = settings.LOGIN_URL
+        next_url = resolve_url(settings.LOGIN_REDIRECT_URL)
     saml_request_form = SamlRequestForm()
     saml_request_form.fields['next'].initial = next_url
     context = {
         'next_url': next_url,
-        'auth_url': settings.LOGIN_URL,
+        'auth_url': resolve_url(settings.LOGIN_URL),
         'saml_request_form': saml_request_form,
     }
     return render(request, 'ecsswebauth/auth.html', context)
@@ -55,7 +55,7 @@ def _init_saml(request):
 def _get_user_info_from_attributes(attributes):
     userinfo = {
         'username': attributes['http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsaccountname'][0],
-        #'groups': attributes['http://schemas.xmlsoap.org/claims/Group'],
+        'groups': attributes['http://schemas.xmlsoap.org/claims/Group'],
         'email': attributes['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'][0],
         'givenname': attributes['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname'][0],
         'surname': attributes['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname'][0],
@@ -71,7 +71,7 @@ def saml_login(request):
     if 'next' in request.POST:
         next_url = _clean_next_url(_clean_next_url(request.POST['next']))
     else:
-        next_url = settings.LOGIN_URL
+        next_url = resolve_url(settings.LOGIN_REDIRECT_URL)
     return HttpResponseRedirect(auth.login(next_url))
 
 # sp metadata
@@ -104,33 +104,43 @@ def saml_acs(request):
     if not errors:
         if auth.is_authenticated():
             userinfo = _get_user_info_from_attributes(auth.get_attributes())
-            user = authenticate(username=userinfo['username'], email=userinfo['email'], givenname=userinfo['givenname'], surname=userinfo['surname'])
+            user = authenticate(username=userinfo['username'], groups=userinfo['groups'], email=userinfo['email'], givenname=userinfo['givenname'], surname=userinfo['surname'])
             login(request, user)
             if 'RelayState' in request.POST:
-                return HttpResponseRedirect(request.POST['RelayState'])
+                return HttpResponseRedirect(_clean_next_url(request.POST['RelayState']))
             else:
-                return HttpResponseRedirect(settings.LOGIN_URL)
+                return HttpResponseRedirect(resolve_url(settings.LOGIN_REDIRECT_URL))
         else:
             raise Exception('Not authenticated')
     else:
         raise Exception('Error: {}'.format(join(', ', errors)))
 
+# Logout and remove the user if it is non-persistent
+def _logout(request):
+    user = request.user
+    logout(request)
+    try:
+        if not user.samluser.is_persistent:
+            user.delete()
+    except AttributeError:
+        pass
+
 # initiate logout
 def saml_logout(request):
     auth = _init_saml(request)
-    logout(request)
+    _logout(request)
     return HttpResponseRedirect(auth.logout())
 
 def saml_sls(request):
-    logout_user_callback = lambda: logout(request)
+    logout_user_callback = lambda: _logout(request)
     auth = _init_saml(request)
     next_url = auth.process_slo(delete_session_cb=logout_user_callback)
     errors = auth.get_errors()
     if len(errors) == 0:
         if next_url is not None:
-            return HttpResponseRedirect(_clean_next_url(next_url))
+            return HttpResponseRedirect(_clean_next_url(next_url, default_url=settings.LOGOUT_REDIRECT_URL))
         else:
-            return HttpResponseRedirect(settings.LOGIN_URL)
+            return HttpResponseRedirect(resolve_url(settings.LOGOUT_REDIRECT_URL))
     else:
         raise Exception('Error when processing SLO: {}'.format((', '.join(errors))))
 
