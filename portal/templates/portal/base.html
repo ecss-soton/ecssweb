@@ -1,0 +1,69 @@
+{% extends 'website/base.html' %}
+
+{% block title %}Portal - ECSS{% endblock %}
+
+{% block pagestyle %}
+
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-3">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <p>
+          Logged in as <strong>{{ user.username }}</strong>
+        </p>
+        <form action="{% url 'ecsswebauth:saml-logout' %}" method="GET">
+          <input type="submit" value="Logout" class="btn btn-ecssweb">
+        </form>
+      </li>
+      <li class="list-group-item">
+        <a href="{% url 'portal:overview' %}">
+          Overview
+        </a>
+      </li>
+      <li class="list-group-item">
+        <a href="#">Voting</a>
+      </li>
+      <li class="list-group-item">
+        <a href="#">Shop</a>
+      </li>
+      <li class="list-group-item">
+        <ul class="list-unstyled">
+          <li>
+            <a href="{% url 'portal:feedback-submit' %}">Submit Feedback</a>
+          </li>
+          <li>
+            <a href="{% url 'portal:feedback-view' %}">View Responses</a>
+          </li>
+          <li>
+            <a href="{% url 'portal:feedback-respond' %}">Submit Response</a>
+          </li>
+        </ul>
+      </li>
+      <li class="list-group-item">
+        <ul class="list-unstyled">
+          <li>
+            <a href="#">Jumpstart</a>
+          </li>
+        </ul>
+      </li>
+      <li class="list-group-item">
+        <ul class="list-unstyled">
+          <li>
+            <a href="#">Manage <em>next</em> URL</a>
+          </li>
+          <li>
+            <a href="#">Audit Log</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="col-lg-9">
+    {% block portalcontent %}
+    {% endblock %}
+  </div>
+</div>
+{% endblock %}

@@ -17,6 +17,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('auth/', include('ecsswebauth.urls')),
+    path('portal/', include('portal.urls')),
     path('', include('website.urls')),
 ]
 

@@ -1,0 +1,10 @@
+{% extends 'portal/base.html' %}
+
+{% block portalcontent %}
+<section>
+  <h1>Overview</h1>
+  <p>Welcome to ECSS web portal!</p>
+  <p>You can find current ECSS <a href="#">votings</a>, <a href="#">merchandise orders and events tickets bookings</a> in this web portal.</p>
+  <p>You are also welcomed to <a href="{% url 'portal:feedback-submit' %}">leave an anonymous feedback</a> about what we do well, and what we could do better on.</p>
+</section>
+{% endblock %}
