@@ -1,8 +1,20 @@
 # database
 db.sqlite3
 
+# website content
+website/static/website/content/
+
+# SAML config
+ecsswebauth/saml_config/settings.json
+ecsswebauth/saml_config/settings.uos.json
+ecsswebauth/saml_config/certs/sp.crt
+ecsswebauth/saml_config/certs/sp.key
+
 # python virtual environment
 .env/
+
+# IDE files
+.vscode/
 
 # Django
 # https://github.com/django/django/blob/master/.gitignore

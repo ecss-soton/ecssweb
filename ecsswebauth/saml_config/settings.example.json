@@ -1,0 +1,43 @@
+{
+    "strict": true,
+    "debug": true,
+    "sp": {
+        "entityId": "http://localhost:8000/auth/saml/metadata",
+        "assertionConsumerService": {
+            "url": "http://localhost:8000/auth/saml/acs",
+            "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+        },
+        "singleLogoutService": {
+            "url": "http://localhost:8000/saml/sls",
+            "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+        },
+        "attributeConsumingService": {
+                "serviceName": "ecssweb",
+                "serviceDescription": "ecssweb",
+                "requestedAttributes": [
+                    {
+                        "name": "ecssweb",
+                        "isRequired": false,
+                        "nameFormat": "",
+                        "friendlyName": "",
+                        "attributeValue": []
+                    }
+                ]
+        },
+        "NameIDFormat": "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"
+    },
+
+    "idp": {
+        "entityId": "idp-id",
+        "singleSignOnService": {
+            "url": "https://idp.example.com/logon/",
+            "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+        },
+        "singleLogoutService": {
+            "url": "https://idp.example.com/logout/",
+            "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+        },
+        "certFingerprint": "<change this>",
+        "certFingerprintAlgorithm": "sha1"
+    }
+}

@@ -28,6 +28,13 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# Set to None to use session-based CSRF cookies
+# https://docs.djangoproject.com/en/2.0/ref/settings/#csrf-cookie-age
+CSRF_COOKIE_AGE = None
+
+CSRF_COOKIE_SECURE = False
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website.apps.WebsiteConfig',
+    'ecsswebauth.apps.ecsswebauthConfig',
 ]
 
 MIDDLEWARE = [
@@ -114,7 +122,37 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Auth
+
+AUTHENTICATION_BACKENDS = [
+    'ecsswebauth.backends.SamlBackend',
+]
+
+LOGIN_REDIRECT_URL = 'ecsswebauth:auth'
+
+LOGIN_URL = 'ecsswebauth:auth'
+
+LOGOUT_REDIRECT_URL = 'ecsswebauth:auth'
+
+
+# Sessions
+
+SESSION_COOKIE_SECURE = False
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = ''
+
+
+# SAML
+
+# SAML config file folders
+SAML_FOLDER = os.path.join(BASE_DIR, 'ecsswebauth', 'saml_config')
+
+SAML_GROUP_PREFIX = 'saml_'

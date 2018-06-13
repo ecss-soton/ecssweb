@@ -16,5 +16,10 @@ Including another URLconf
 from django.urls import include, path
 
 urlpatterns = [
+    path('auth/', include('ecsswebauth.urls')),
     path('', include('website.urls')),
 ]
+
+handler404 = 'website.views.page_not_found'
+handler403 = 'website.views.permission_denied'
+handler500 = 'website.views.server_error'
