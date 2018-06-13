@@ -1,5 +1,13 @@
 # ecssweb
 
+Website for the University of Southampton Electronics and Computer Science Society
+
+https://society.ecs.soton.ac.uk
+
+## Documents
+
+To find out more about models of ecssweb, see the [wiki](https://github.com/ecss-soton/ecssweb/wiki)
+
 ## Requirements and Installation
 
 - Requires Python 3 to run the Django 2.0 project
@@ -8,19 +16,21 @@
 
   On Mac:
 
-  ```
-  brew install libxml2 libxmlsec1
-  ```
+    ```
+    brew install libxml2 libxmlsec1
+    ```
 
   On Linux (Debian):
 
-  ```
-  apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
-  wget http://xmlsoft.org/sources/libxml2-2.9.1.tar.gz
-  tar -xvf libxml2-2.9.1.tar.gz
-  cd libxml2-2.9.1
-  ./configure && make && make install
-  ```
+    ```
+    apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
+    wget http://xmlsoft.org/sources/libxml2-2.9.1.tar.gz
+    tar -xvf libxml2-2.9.1.tar.gz
+    cd libxml2-2.9.1
+    ./configure && make && make install
+    ```
+
+    If it fails you might need to run `apt-get install python3-dev` and then try again.
 
   For other platforms see https://github.com/mehcode/python-xmlsec#pre-install
 
@@ -65,3 +75,7 @@ To regularly clear the inactive sessions and non-persistent users from the datab
   ```
 
   This makes the maintance script runs every day at midnight
+
+## License
+
+Licensed under the [MIT license](LICENSE).
