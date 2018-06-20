@@ -137,6 +137,11 @@ LOGIN_URL = 'ecsswebauth:auth'
 LOGOUT_REDIRECT_URL = 'ecsswebauth:auth'
 
 
+# Messages
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+
 # Sessions
 
 SESSION_COOKIE_SECURE = False

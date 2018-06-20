@@ -24,6 +24,9 @@ Submit Feedback - ECSS
     {% for field in submit_form %}
     <div class="form-group">
       {{ field.label_tag }}{{ field }}
+      <small class="form-text text-danger">
+        {% for err in field.errors %}{{ err }}{% endfor %}
+      </small>
     </div>
     {% endfor %}
     <input type="Submit" class="btn btn-ecssweb">
