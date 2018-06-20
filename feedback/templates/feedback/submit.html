@@ -1,5 +1,32 @@
 {% extends 'portal/base.html' %}
 
-{% block portalcontent %}
+{% block title %}
+Submit Feedback - ECSS
+{% endblock %}
 
+{% block portalcontent %}
+<section>
+  <h1>Submit Feedback</h1>
+  <p>
+    ECSS wants to hear feedback from you guys on what we do well, and what we could do better on.
+  </p>
+  <p>
+    Any data you submit in this form is anonymous and cannot be traced back to you. <strong>This is assuming you don't name drop yourself, or give your identity away within it.</strong>
+  </p>
+  <p>
+    The committee will reply to submitted feedback, and both the feedback and response will be visible.
+  </p>
+  <p>
+    All source code is available on the <a href="https://github.com/ecss-soton/ecssweb">Github repository</a>. If you have any suggestions of how to improve this page or the site in general please submit them here as well!
+  </p>
+  <form method="POST">
+    {% csrf_token %}
+    {% for field in submit_form %}
+    <div class="form-group">
+      {{ field.label_tag }}{{ field }}
+    </div>
+    {% endfor %}
+    <input type="Submit" class="btn btn-ecssweb">
+  </form>
+</section>
 {% endblock %}

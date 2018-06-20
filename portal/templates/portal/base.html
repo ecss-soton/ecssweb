@@ -1,9 +1,11 @@
 {% extends 'website/base.html' %}
 
+{% load static %}
+
 {% block title %}Portal - ECSS{% endblock %}
 
 {% block pagestyle %}
-
+<link rel="stylesheet" href="{% static 'portal/styles/portal.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -12,7 +14,7 @@
     <ul class="list-group">
       <li class="list-group-item">
         <p>
-          Logged in as <strong>{{ user.username }}</strong>
+          Logged in as <strong class="username">{{ user.username }}</strong>
         </p>
         <form action="{% url 'ecsswebauth:saml-logout' %}" method="GET">
           <input type="submit" value="Logout" class="btn btn-ecssweb">
