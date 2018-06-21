@@ -2,8 +2,28 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+
+from .models import Feedback
 
 from .forms import SubmitForm
+
+def _get_page_range(page_num, num_pages, adjacents):
+    if adjacents * 2 + 1 >= num_pages:
+        # Enough space to show all pages
+        return range(1, num_pages + 1)
+
+    begin = page_num - adjacents
+    end = page_num + adjacents
+
+    if begin <= 0:
+        end -= (begin - 1)
+        begin = 1
+    elif end > num_pages:
+        begin -= end - num_pages
+        end = num_pages
+
+    return range(begin, end + 1)
 
 @login_required
 def submit(request):
@@ -31,3 +51,20 @@ def submit(request):
         'submit_form': submit_form,
     }
     return render(request, 'feedback/submit.html', context)
+
+@login_required
+def view(request):
+    feedbacks = Feedback.objects.all().order_by('-time', '-id')
+
+    # Show 10 feedback per page
+    paginator = Paginator(feedbacks, 10)
+    page_num = request.GET.get('page')
+    page = paginator.get_page(page_num)
+
+    page_range = _get_page_range(page.number, paginator.num_pages, 3)
+
+    context = {
+        'feedbacks': page,
+        'page_range': page_range
+    }
+    return render(request, 'feedback/view.html', context)

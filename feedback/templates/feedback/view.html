@@ -1,0 +1,66 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}
+View Feedback - ECSS
+{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>Feedback</h1>
+  {% if feedbacks %}
+  <div class="list-group mb-3">
+    {% for feedback in feedbacks %}
+    <div class="list-group-item">
+      <div class="card mb-3">
+        <div class="card-body">
+          <p>{{ feedback }}</p>
+          <div class="d-flex">
+            <div>
+              {% if feedback.category %}
+              <span class="badge badge-light">{{ feedback.category }}</span>
+              {% endif %}
+              {% if feedback.committee %}
+              <span class="badge badge-info">Submitted by {{ feedback.committee }}</span>
+              {% endif %}
+            </div>
+            <small class="text-muted ml-auto">Submitted on {{ feedback.time }}</small>
+          </div>
+        </div>
+      </div>
+      {% if feedback.response %}
+      <p>Response: {{ feedback.response }}</p>
+      <a href="#">Edit response</a>
+      {% else %}
+      <a href="#">Add a response</a>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% if page_range|length > 1 %}
+  <nav aria-label="Feedback pages">
+    <ul class="pagination justify-content-center">
+      <li class="page-item {% if not feedbacks.has_previous %}disabled{% endif %}">
+        <a href="{% if feedbacks.has_previous %}?page={{ feedbacks.previous_page_number }}{% else %}#{% endif %}" class="page-link" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      {% for page_number in page_range %}
+      <li class="page-item {% if page_number == feedbacks.number %}disabled{% endif %}">
+        <a href="?page={{ page_number }}" class="page-link">{{ page_number }}</a>
+      </li>
+      {% endfor %}
+      <li class="page-item {% if not feedbacks.has_next %}disabled{% endif %}">
+        <a href="{% if feedbacks.has_next %}?page={{ feedbacks.next_page_number }}{% else %}#{% endif %}" class="page-link" aria-label="Previous">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  {% endif %}
+  {% else %}
+  <p>No feedback yet.</p>
+  {% endif %}
+</section>
+{% endblock %}
