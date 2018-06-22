@@ -4,7 +4,7 @@ from django.contrib.messages import get_messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
-from .models import Feedback
+from .models import Feedback, Response
 
 from .forms import SubmitForm, RespondForm
 
@@ -71,13 +71,29 @@ def view(request):
 
 @login_required
 def respond(request, feedback_id):
+    feedback = get_object_or_404(Feedback, pk=feedback_id)
     if request.method == 'POST':
-        return render(request, 'feedback/respond.html', context)
+        # Build form
+        try:
+            respond_form = RespondForm(request.POST, instance=feedback.response)
+        except Response.DoesNotExist:
+            respond_form = RespondForm(request.POST)
+
+        if respond_form.is_valid():
+            # Submission is valid
+            response = respond_form.save(commit=False)
+            response.feedback = feedback
+            response.committee = request.user
+            response.save()
+            messages.success(request, 'Your response was saved successfully.')
+            return redirect('feedback:view')
     else:
-        feedback = get_object_or_404(Feedback, pk=feedback_id)
 
         # Build form
-        respond_form = RespondForm()
+        try:
+            respond_form = RespondForm(instance=feedback.response)
+        except Response.DoesNotExist:
+            respond_form = RespondForm()
         
     context = {
         'feedback': feedback,
