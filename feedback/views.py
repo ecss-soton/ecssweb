@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.contrib.auth.decorators import login_required
@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 
 from .models import Feedback
 
-from .forms import SubmitForm
+from .forms import SubmitForm, RespondForm
 
 def _get_page_range(page_num, num_pages, adjacents):
     if adjacents * 2 + 1 >= num_pages:
@@ -68,3 +68,19 @@ def view(request):
         'page_range': page_range
     }
     return render(request, 'feedback/view.html', context)
+
+@login_required
+def respond(request, feedback_id):
+    if request.method == 'POST':
+        return render(request, 'feedback/respond.html', context)
+    else:
+        feedback = get_object_or_404(Feedback, pk=feedback_id)
+
+        # Build form
+        respond_form = RespondForm()
+        
+    context = {
+        'feedback': feedback,
+        'respond_form': respond_form,
+    }
+    return render(request, 'feedback/respond.html', context)

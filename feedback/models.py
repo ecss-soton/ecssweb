@@ -9,7 +9,7 @@ class Category(models.Model):
         return self.name
 
 class Feedback(models.Model):
-    message = models.TextField()
+    message = models.TextField(verbose_name='Feedback')
     category = models.ForeignKey(Category, on_delete=models.SET('Others'), default=None)
     # Time when the feedback submitted
     time = models.DateField(auto_now_add=True)
@@ -21,7 +21,7 @@ class Feedback(models.Model):
 
 class Response(models.Model):
     feedback = models.OneToOneField(Feedback, on_delete=models.CASCADE)
-    message = models.TextField()
+    message = models.TextField(verbose_name='Response')
     committee = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     time = models.DateTimeField(auto_now=True)
 

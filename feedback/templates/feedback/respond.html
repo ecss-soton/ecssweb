@@ -1,0 +1,45 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}
+View Feedback - ECSS
+{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>Feedback Respond</h1>
+  <div class="list-group">
+    <div class="list-group-item">
+      <div class="card mb-3">
+        <div class="card-body">
+          <p>{{ feedback }}</p>
+          <div class="d-flex">
+            <div>
+              {% if feedback.category %}
+              <span class="badge badge-light">{{ feedback.category }}</span>
+              {% endif %}
+              {% if feedback.committee %}
+              <span class="badge badge-info">Submitted by {{ feedback.committee }}</span>
+              {% endif %}
+            </div>
+            <small class="text-muted ml-auto">Submitted on {{ feedback.time }}</small>
+          </div>
+        </div>
+      </div>
+      <form method="POST">
+        {% csrf_token %}
+        {% for field in respond_form %}
+        <div class="form-group">
+          {{ field.label_tag }}{{ field }}
+          {% if field.errors %}
+          <small class="form-text text-danger">
+            {% for err in field.errors %}{{ err }}{% endfor %}
+          </small>
+          {% endif %}
+        </div>
+        {% endfor %}
+        <input type="submit" value="Save" class="btn btn-ecssweb">
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

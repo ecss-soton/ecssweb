@@ -29,9 +29,9 @@ View Feedback - ECSS
       </div>
       {% if feedback.response %}
       <p>Response: {{ feedback.response }}</p>
-      <a href="#">Edit response</a>
+      <a href="{% url 'feedback:respond' feedback.pk %}">Edit response</a>
       {% else %}
-      <a href="#">Add a response</a>
+      <a href="{% url 'feedback:respond' feedback.pk %}">Add a response</a>
       {% endif %}
     </div>
     {% endfor %}
