@@ -33,8 +33,11 @@ View Feedback - ECSS
         </div>
       </div>
       {% if feedback.response %}
-      <p>Response: {{ feedback.response }}</p>
-      <a href="{% url 'feedback:respond' feedback.pk %}">Edit response</a>
+      <p>{{ feedback.response }}</p>
+      <div class="d-flex">
+        <a href="{% url 'feedback:respond' feedback.pk %}" class="mr-3 text-nowrap">Edit response</a>
+        <small class="text-muted ml-auto">Replyed by {{ feedback.response.committee.first_name }} on {{ feedback.response.time|date }} at {{ feedback.response.time|time:"H:i" }}</small>
+      </div>
       {% else %}
       <a href="{% url 'feedback:respond' feedback.pk %}">Add a response</a>
       {% endif %}
