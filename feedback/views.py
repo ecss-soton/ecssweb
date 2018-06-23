@@ -3,8 +3,12 @@ from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.utils import timezone
 
-from .models import Feedback, Response
+from datetime import timedelta
+import hashlib
+
+from .models import Feedback, Response, SubmittedIpRecord
 
 from .forms import SubmitForm, RespondForm
 
@@ -25,14 +29,38 @@ def _get_page_range(page_num, num_pages, adjacents):
 
     return range(begin, end + 1)
 
+def _get_ip_hash(request, times=100):
+    ip = request.META.get('REMOTE_ADDR') # Works only if not behind a reverse proxy
+    # Hash IP address 100 times
+    ip_hash = hashlib.sha512(ip.encode('utf-8')).hexdigest()
+    for i in range(0, times - 1):
+        ip_hash = hashlib.sha512(ip_hash.encode('utf-8')).hexdigest()
+    return ip_hash
+
+# Check if the IP address exceeds daily feedback submission limit
+def _is_not_exceed_submit_limit(ip_hash):
+    # Delete SubmittedIpRecords older than a day
+    SubmittedIpRecord.objects.filter(time__lt=timezone.now() - timedelta(hours=24)).delete()
+    # Check if the IP address has already submitted 5 feedback within 24 hours
+    return len(SubmittedIpRecord.objects.filter(ip_hash=ip_hash)) < 5
+
 @login_required
 def submit(request):
     if request.method == 'POST':
+        # Check if the IP address exceeds daily feedback submission limit
+        ip_hash = _get_ip_hash(request)
+        if not _is_not_exceed_submit_limit(ip_hash):
+            messages.error(request, 'Failed to submit feedback, one IP address can only submit 5 feedback within 24 hours. Please try again later.')
+            return redirect('feedback:submit')
+
+        # Build and check form
         submit_form = SubmitForm(request.POST)
 
         if submit_form.is_valid():
-            # If submission is valid
+            # Save feedback
             submit_form.save()
+            submitted_ip_record = SubmittedIpRecord(ip_hash=ip_hash)
+            submitted_ip_record.save()
             messages.success(request, 'Your feedback was submitted successfully.')
             return redirect('feedback:submit')
 
@@ -44,6 +72,13 @@ def submit(request):
             if msg.level == messages.SUCCESS and msg.message == 'Your feedback was submitted successfully.':
                 # If back from successful submission
                 return render(request, 'feedback/submit_completed.html')
+            if msg.level == messages.ERROR and msg.message == 'Failed to submit feedback, one IP address can only submit 5 feedback within 24 hours. Please try again later.':
+                # If back from failed submission
+                return render(request, 'feedback/submit_failed.html')
+
+        # Check if exceeded submission limit
+        if not _is_not_exceed_submit_limit(_get_ip_hash(request)):
+            return render(request, 'feedback/submit_limit_exceeded.html')
 
         submit_form = SubmitForm()
 
@@ -80,7 +115,7 @@ def respond(request, feedback_id):
             respond_form = RespondForm(request.POST)
 
         if respond_form.is_valid():
-            # Submission is valid
+            # Save response and update who submitted the response
             response = respond_form.save(commit=False)
             response.feedback = feedback
             response.committee = request.user

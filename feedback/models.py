@@ -27,3 +27,7 @@ class Response(models.Model):
 
     def __str__(self):
         return self.message
+
+class SubmittedIpRecord(models.Model):
+    ip_hash = models.CharField(max_length=128)
+    time = models.DateTimeField(auto_now_add=True)
