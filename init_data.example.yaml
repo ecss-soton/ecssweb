@@ -1,3 +1,14 @@
+# Add categories for feedback
+
 - model: feedback.category
   pk: Others
   fields: {}
+
+
+# Add groups
+
+- model: auth.group
+  fields:
+    name: committee
+    permissions:
+    - [add_response, feedback, response]

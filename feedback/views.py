@@ -57,10 +57,19 @@ def submit(request):
         submit_form = SubmitForm(request.POST)
 
         if submit_form.is_valid():
+
             # Save feedback
-            submit_form.save()
+            feedback = submit_form.save(commit=False)
+            # Record if a committee submission
+            if request.user.has_perm('feedback.add_response'):
+                feedback.committee = request.user
+                print('committee')
+            feedback.save()
+
+            # Record IP hash
             submitted_ip_record = SubmittedIpRecord(ip_hash=ip_hash)
             submitted_ip_record.save()
+
             messages.success(request, 'Your feedback was submitted successfully.')
             return redirect('feedback:submit')
 
