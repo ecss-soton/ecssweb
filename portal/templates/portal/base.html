@@ -34,13 +34,10 @@
       <li class="list-group-item">
         <ul class="list-unstyled">
           <li>
-            <a href="#">Submit Feedback</a>
+            <a href="{% url 'feedback:submit' %}">Submit Feedback</a>
           </li>
           <li>
-            <a href="#">View Responses</a>
-          </li>
-          <li>
-            <a href="#">Submit Response</a>
+            <a href="{% url 'feedback:view' %}">View Feedback</a>
           </li>
         </ul>
       </li>
