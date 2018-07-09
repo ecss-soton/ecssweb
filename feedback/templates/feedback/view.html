@@ -12,6 +12,9 @@ View Feedback - ECSS
     <div class="alert alert-success">{{ message }}</div>
     {% endif %}
   {% endfor %}
+  {% if not perms.feedback.add_response %}
+  <p>Only feedback replied by committee will be shown.</p>
+  {% endif %}
   {% if feedbacks %}
   <div class="list-group mb-3">
     {% for feedback in feedbacks %}
@@ -35,10 +38,12 @@ View Feedback - ECSS
       {% if feedback.response %}
       <p>{{ feedback.response }}</p>
       <div class="d-flex">
+        {% if perms.feedback.add_response %}
         <a href="{% url 'feedback:respond' feedback.pk %}" class="mr-3 text-nowrap">Edit response</a>
+        {% endif %}
         <small class="text-muted ml-auto">Replyed by {{ feedback.response.committee.first_name }} on {{ feedback.response.time|date }} at {{ feedback.response.time|time:"H:i" }}</small>
       </div>
-      {% else %}
+      {% elif perms.feedback.add_response %}
       <a href="{% url 'feedback:respond' feedback.pk %}">Add a response</a>
       {% endif %}
     </div>
@@ -67,7 +72,7 @@ View Feedback - ECSS
     </ul>
   </nav>
   {% endif %}
-  {% else %}
+  {% elif perms.feedback.add_response %}
   <p>No feedback yet.</p>
   {% endif %}
 </section>

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.messages import get_messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator
 from django.utils import timezone
 
@@ -98,7 +98,11 @@ def submit(request):
 
 @login_required
 def view(request):
-    feedbacks = Feedback.objects.all().order_by('-time', '-id')
+    # Show all feedback committee only, show feedback with response to everyone
+    if request.user.has_perm('feedback.add_response'):
+        feedbacks = Feedback.objects.all().order_by('-time', '-id')
+    else:
+        feedbacks = Feedback.objects.exclude(response__isnull=True).order_by('-time', '-id')
 
     # Show 10 feedback per page
     paginator = Paginator(feedbacks, 10)
@@ -114,6 +118,7 @@ def view(request):
     return render(request, 'feedback/view.html', context)
 
 @login_required
+@permission_required('feedback.add_response', raise_exception=True)
 def respond(request, feedback_id):
     feedback = get_object_or_404(Feedback, pk=feedback_id)
     if request.method == 'POST':
