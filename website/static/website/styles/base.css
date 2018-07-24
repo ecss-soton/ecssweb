@@ -58,6 +58,18 @@ section {
   border-color: #d82129;
 }
 
+.btn-ecssweb-light {
+  color: darkred;
+  background-color: white;
+  border-color: darkred;
+}
+
+.btn-ecssweb-light:hover {
+  color: #d82129;
+  background-color: white;
+  border-color: #d82129;
+}
+
 
 /* Header */
 

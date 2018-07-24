@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.contrib.auth.decorators import login_required, permission_required
@@ -117,14 +117,17 @@ def view(request):
     }
     return render(request, 'feedback/view.html', context)
 
+
 @login_required
 @permission_required('feedback.add_response', raise_exception=True)
 def respond(request, feedback_id):
     feedback = get_object_or_404(Feedback, pk=feedback_id)
-    if request.method == 'POST':
+    is_new = True
+    if request.method == 'POST' and request.POST['submit'] != 'Delete':
         # Build form
         try:
             respond_form = RespondForm(request.POST, instance=feedback.response)
+            is_new = False
         except Response.DoesNotExist:
             respond_form = RespondForm(request.POST)
 
@@ -136,16 +139,28 @@ def respond(request, feedback_id):
             response.save()
             messages.success(request, 'Your response was saved successfully.')
             return redirect('feedback:view')
+
+    elif request.method == 'POST' and request.POST['submit'] == 'Delete':
+        try:
+            response = feedback.response
+            response.delete()
+            messages.success(request, 'The response has been deleted successfully.')
+        except:
+            messages.warning(request, 'The response requested to be deleted does not exist, nothing has been changed.')
+        return redirect('feedback:view')
+
     else:
 
         # Build form
         try:
             respond_form = RespondForm(instance=feedback.response)
+            is_new = False
         except Response.DoesNotExist:
             respond_form = RespondForm()
-        
+    
     context = {
         'feedback': feedback,
         'respond_form': respond_form,
+        'is_new': is_new,
     }
     return render(request, 'feedback/respond.html', context)
