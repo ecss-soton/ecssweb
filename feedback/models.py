@@ -13,6 +13,8 @@ class Feedback(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET('Others'), default=None)
     # Time when the feedback submitted
     time = models.DateField(auto_now_add=True)
+    # Is the feedback submitted by people in ECS
+    from_ecs = models.BooleanField(default=False)
     # Record if a committee member submitted the feedback
     committee = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, default=None)
 

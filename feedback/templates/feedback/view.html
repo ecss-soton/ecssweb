@@ -28,7 +28,12 @@ View Feedback - ECSS
           <div class="d-flex">
             <div>
               {% if feedback.category %}
-              <span class="badge badge-light">{{ feedback.category }}</span>
+              <span class="badge badge-primary">{{ feedback.category }}</span>
+              {% endif %}
+              {% if feedback.from_ecs %}
+              <span class="badge badge-secondary">From ECS user</span>
+              {% else %}
+              <span class="badge badge-secondary">From non-ECS user</span>
               {% endif %}
               {% if feedback.committee %}
               <span class="badge badge-info">Submitted by {{ feedback.committee }}</span>

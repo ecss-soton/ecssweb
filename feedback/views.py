@@ -60,10 +60,14 @@ def submit(request):
 
             # Save feedback
             feedback = submit_form.save(commit=False)
+            # Record whether from a ECS user
+            if request.user.has_perm('ecsswebauth.is_ecs_user'):
+                feedback.from_ecs = True
+            else:
+                feedback.from_ecs = False
             # Record if a committee submission
             if request.user.has_perm('feedback.add_response'):
                 feedback.committee = request.user
-                print('committee')
             feedback.save()
 
             # Record IP hash
