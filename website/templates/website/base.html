@@ -32,38 +32,39 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link" href="#">Committee</a>
+                <a class="nav-link" href="https://society.ecs.soton.ac.uk/committee/">Committee</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Societies</a>
+                <a class="nav-link" href="https://society.ecs.soton.ac.uk/societies/">Societies</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="#">Sponsors</a>
+                  <a class="nav-link" href="https://society.ecs.soton.ac.uk/sponsors/">Sponsors</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarEventsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Events
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarEventsDropdown">
-                  <a class="dropdown-item" href="#">Socials</a>
-                  <a class="dropdown-item" href="#">Game Socials</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'website:events-bbq' %}">BBQ</a>
+                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Socials">Socials</a>
+                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Gaming%20Socials">Game Socials</a>
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Welfare</a>
+                <a class="nav-link" href="https://society.ecs.soton.ac.uk/leaflet/?section=Welfare">Welfare</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarSportsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Sports
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarSportsDropdown">
-                  <a class="dropdown-item" href="#">Football</a>
-                  <a class="dropdown-item" href="#">Netball</a>
-                  <a class="dropdown-item" href="#">Basketball</a>
-                  <a class="dropdown-item" href="#">Parkrun</a>
-                  <a class="dropdown-item" href="#">Others</a>
+                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Sports">Sports Overview</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Football">Football</a>
+                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Netball">Netball</a>
+                  <!--<a class="dropdown-item" href="#">Basketball</a>-->
+                  <!--<a class="dropdown-item" href="#">Parkrun</a>-->
+                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Running">Running</a>
+                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Others">Others</a>
                 </div>
               </li>
               <li class="nav-item dropdown">
@@ -71,8 +72,8 @@
                   Feedback
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarFeedbackDropdown">
-                  <a class="dropdown-item" href="#">Submit</a>
-                  <a class="dropdown-item" href="#">Responses</a>
+                  <a class="dropdown-item" href="{% url 'feedback:submit' %}">Submit</a>
+                  <a class="dropdown-item" href="{% url 'feedback:view' %}">View</a>
                 </div>
               </li>
               <li class="nav-item dropdown">
@@ -80,11 +81,11 @@
                   About
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarAboutDropdown">
-                  <a class="dropdown-item" href="#">About</a>
-                  <a class="dropdown-item" href="/filestore/index.php/s/idGPSGlxT15tbHi">Constitution</a>
-                  <a class="dropdown-item" href="#">Voting Results</a>
-                  <a class="dropdown-item" href="#">Contact Us</a>
-                  <a class="dropdown-item" href="#">Credits</a>
+                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/about/">About</a>
+                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/filestore/index.php/s/idGPSGlxT15tbHi">Constitution</a>
+                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/voteresult/">Voting Results</a>
+                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/about/contact.php">Contact Us</a>
+                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/about/credits.php">Credits</a>
                 </div>
               </li>
             </ul>
@@ -112,18 +113,19 @@
         <div>
           <dl class="footer-list">
             <dt></dt>
-            <dd class="footer-item"><a href="#" class="footer-link">About</a></dd>
-            <dd class="footer-item"><a href="#" class="footer-link">Contact</a></dd>
-            <dd class="footer-item"><a href="/filestore/index.php/s/FGMWH0tjcjnHRpe" class="footer-link">Meeting Minutes</a></dd>
-            <dd class="footer-item"><a href="#" class="footer-link">Societies in ECS</a></dd>
+            <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/about/" class="footer-link">About</a></dd>
+            <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/about/contact.php" class="footer-link">Contact</a></dd>
+            <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/filestore/index.php/s/FGMWH0tjcjnHRpe" class="footer-link">Meeting Minutes</a></dd>
+            <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/societies/" class="footer-link">Societies in ECS</a></dd>
             <dd class="footer-item"><a href="https://www.ecs.soton.ac.uk" class="footer-link">ECS</a></dd>
           </dl>
           <dl class="footer-list">
             <dt></dt>
-            <dd class="footer-item"><a href="#" class="footer-link">Sitemap</a></dd>
-            <dd class="footer-item"><a href="#" class="footer-link">Cookies</a></dd>
-            <dd class="footer-item"><a href="#" class="footer-link">Privacy Notice</a></dd>
-            <dd class="footer-item"><a href="#" class="footer-link">Copyright Notice</a></dd>
+            <!--<dd class="footer-item"><a href="#" class="footer-link">Sitemap</a></dd>-->
+            <dd class="footer-item"><a href="https://www.southampton.ac.uk/about/governance/policies/privacy-policy.page" class="footer-link">Privacy Notice</a></dd>
+            <dd class="footer-item"><a href="https://www.southampton.ac.uk/about/governance/policies/cookies.page" class="footer-link">Cookies</a></dd>
+            <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/media-notice/" class="footer-link">Media Notice</a></dd>
+            <!--<dd class="footer-item"><a href="#" class="footer-link">Copyright Notice</a></dd>-->
           </dl>
         </div>
       </div>

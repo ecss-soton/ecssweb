@@ -7,9 +7,6 @@ def home(request):
 def events(request):
     return render(request, 'website/events/events.html')
 
-def events_bbq(request):
-    return render(request, 'website/events/bbq.html')
-
 # 404
 def page_not_found(request, exception):
     return render(request, 'website/error_pages/404.html', status=404)
