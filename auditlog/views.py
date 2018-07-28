@@ -4,7 +4,7 @@ from .models import AuditLog
 
 
 def view(request):
-    auditlog = AuditLog.objects.all()
+    auditlog = AuditLog.objects.all().order_by('-time', '-id')
     context = {
         'auditlog': auditlog,
     }

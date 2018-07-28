@@ -20,7 +20,7 @@ urlpatterns = [
     path('auth/', include('ecsswebauth.urls')),
     path('portal/', include('portal.urls')),
     path('portal/feedback/', include('feedback.urls')),
-    path('admin/auditlog/', include('auditlog.urls')),
+    path('portal/auditlog/', include('auditlog.urls')),
 ]
 
 handler404 = 'website.views.page_not_found'
