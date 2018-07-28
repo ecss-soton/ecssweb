@@ -25,8 +25,8 @@ View Feedback - ECSS
       <div class="card mb-3">
         <div class="card-body">
           <p>{{ feedback }}</p>
-          <div class="d-flex">
-            <div>
+          <div class="row">
+            <div class="col-sm-8">
               {% if feedback.category %}
               <span class="badge badge-primary">{{ feedback.category }}</span>
               {% endif %}
@@ -36,10 +36,10 @@ View Feedback - ECSS
               <span class="badge badge-secondary">From non-ECS user</span>
               {% endif %}
               {% if feedback.committee %}
-              <span class="badge badge-info">Submitted by {{ feedback.committee }}</span>
+              <div class="badge badge-info badge-multline">Submitted by <strong class="username">{{ feedback.committee }}</strong></div>
               {% endif %}
             </div>
-            <small class="text-muted ml-auto">Submitted on {{ feedback.time }}</small>
+            <small class="text-muted ml-auto col-sm-4 text-right">Submitted on {{ feedback.time }}</small>
           </div>
         </div>
       </div>

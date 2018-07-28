@@ -26,6 +26,11 @@ section {
   flex: 1;
 }
 
+.badge-multline {
+  white-space: normal;
+  text-align: left;
+}
+
 
 /* Themes */
 .navbar-ecssweb .navbar-nav .nav-link {
