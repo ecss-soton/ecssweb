@@ -8,7 +8,8 @@ from django.utils import timezone
 from datetime import timedelta
 import hashlib
 
-from .models import Feedback, Response, SubmittedIpRecord
+from .models import Feedback, Response, SubmittedIpRecord, FeedbackAuditLog
+from auditlog.models import AuditLog
 
 from .forms import SubmitForm, RespondForm
 
@@ -144,6 +145,14 @@ def respond(request, feedback_id):
             response.feedback = feedback
             response.committee = request.user.username
             response.save()
+            if is_new:
+                action = 'create'
+            else:
+                action = 'edit'
+            feedback_auditlog = FeedbackAuditLog(action=action, user=request.user.username, feedback=feedback)
+            feedback_auditlog.save()
+            auditlog = AuditLog(content_object=feedback_auditlog)
+            auditlog.save()
             messages.success(request, 'Your response was saved successfully.')
             return redirect('feedback:view')
 
@@ -151,6 +160,10 @@ def respond(request, feedback_id):
         try:
             response = feedback.response
             response.delete()
+            feedback_auditlog = FeedbackAuditLog(action='delete', user=request.user.username, feedback=feedback)
+            feedback_auditlog.save()
+            auditlog = AuditLog(content_object=feedback_auditlog)
+            auditlog.save()
             messages.success(request, 'The response has been deleted successfully.')
         except:
             messages.warning(request, 'The response requested to be deleted does not exist, nothing has been changed.')

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'ecsswebauth.apps.EcsswebauthConfig',
     'portal.apps.PortalConfig',
     'feedback.apps.FeedbackConfig',
+    'auditlog.apps.AuditlogConfig',
 ]
 
 MIDDLEWARE = [
