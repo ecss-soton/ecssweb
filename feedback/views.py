@@ -67,14 +67,17 @@ def submit(request):
                 feedback.from_ecs = False
             # Record if a committee submission
             if request.user.has_perm('feedback.add_response'):
-                feedback.committee = request.user
+                feedback.committee = request.user.username
             feedback.save()
 
             # Record IP hash
             submitted_ip_record = SubmittedIpRecord(ip_hash=ip_hash)
             submitted_ip_record.save()
 
-            messages.success(request, 'Your feedback was submitted successfully.')
+            if request.user.has_perm('feedback.add_response'):
+                messages.success(request, 'Your feedback has been successfully submitted.')
+            else:
+                messages.success(request, 'Your feedback has been successfully submitted and saved anonymously.')
             return redirect('feedback:submit')
 
     else:
@@ -82,10 +85,10 @@ def submit(request):
         # Check if back from successful submission
         msgs = get_messages(request)
         for msg in msgs:
-            if msg.level == messages.SUCCESS and msg.message == 'Your feedback was submitted successfully.':
+            if msg.level == messages.SUCCESS:
                 # If back from successful submission
                 return render(request, 'feedback/submit_completed.html')
-            if msg.level == messages.ERROR and msg.message == 'Failed to submit feedback, one IP address can only submit 5 feedback within 24 hours. Please try again later.':
+            if msg.level == messages.ERROR:
                 # If back from failed submission
                 return render(request, 'feedback/submit_failed.html')
 
@@ -139,7 +142,7 @@ def respond(request, feedback_id):
             # Save response and update who submitted the response
             response = respond_form.save(commit=False)
             response.feedback = feedback
-            response.committee = request.user
+            response.committee = request.user.username
             response.save()
             messages.success(request, 'Your response was saved successfully.')
             return redirect('feedback:view')

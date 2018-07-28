@@ -16,7 +16,7 @@ class Feedback(models.Model):
     # Is the feedback submitted by people in ECS
     from_ecs = models.BooleanField(default=False)
     # Record if a committee member submitted the feedback
-    committee = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, default=None)
+    committee = models.CharField(max_length=150, null=True)
 
     def __str__(self):
         return self.message
@@ -24,7 +24,7 @@ class Feedback(models.Model):
 class Response(models.Model):
     feedback = models.OneToOneField(Feedback, on_delete=models.CASCADE)
     message = models.TextField(verbose_name='Response')
-    committee = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    committee = models.CharField(max_length=150, null=True)
     time = models.DateTimeField(auto_now=True)
 
     def __str__(self):
