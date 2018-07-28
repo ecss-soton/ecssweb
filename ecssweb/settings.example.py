@@ -44,7 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website.apps.WebsiteConfig',
-    'ecsswebauth.apps.ecsswebauthConfig',
+    'ecsswebauth.apps.EcsswebauthConfig',
+    'portal.apps.PortalConfig',
+    'feedback.apps.FeedbackConfig',
+    'auditlog.apps.AuditlogConfig',
 ]
 
 MIDDLEWARE = [
@@ -128,11 +131,16 @@ AUTHENTICATION_BACKENDS = [
     'ecsswebauth.backends.SamlBackend',
 ]
 
-LOGIN_REDIRECT_URL = 'ecsswebauth:auth'
+LOGIN_REDIRECT_URL = 'portal:overview'
 
 LOGIN_URL = 'ecsswebauth:auth'
 
 LOGOUT_REDIRECT_URL = 'ecsswebauth:auth'
+
+
+# Messages
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 
 # Sessions

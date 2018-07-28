@@ -1,0 +1,79 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Portal - ECSS{% endblock %}
+
+{% block pagestyle %}
+<link rel="stylesheet" href="{% static 'portal/styles/portal.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-3">
+    <ul class="list-group" id="portal-nav">
+      <li class="list-group-item">
+        <div class="row portal-nav-no-row">
+          <div class="col-9">
+            <p>
+              Logged in as <strong class="username">{{ user.username }}</strong>
+            </p>
+            <form action="{% url 'ecsswebauth:saml-logout' %}" method="GET">
+              <input type="submit" value="Logout" class="btn btn-ecssweb">
+            </form>
+          </div>
+          <div class="col-3 text-right">
+            <button class="navbar-toggler portal-nav-toggler" type="button" data-toggle="collapse" data-target=".portalNavContent" aria-controls="portalNavContent" aria-expanded="false" aria-label="Toggle portal navigation">
+              <span class="navbar-toggler-icon">
+                <i class="fas fa-bars"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <a href="{% url 'portal:overview' %}">
+          Overview
+        </a>
+      </li>
+      <li class="list-group-item">
+        <a href="#">Voting</a>
+      </li>
+      <li class="list-group-item">
+        <a href="#">Shop</a>
+      </li>
+      <li class="list-group-item">
+        <ul class="list-unstyled">
+          <li>
+            <a href="{% url 'feedback:submit' %}">Submit Feedback</a>
+          </li>
+          <li>
+            <a href="{% url 'feedback:view' %}">View Feedback</a>
+          </li>
+        </ul>
+      </li>
+      <li class="list-group-item">
+        <ul class="list-unstyled">
+          <li>
+            <a href="#">Jumpstart</a>
+          </li>
+        </ul>
+      </li>
+      <li class="list-group-item">
+        <a href="#">Admin</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-lg-9">
+    {% block portalcontent %}
+    {% endblock %}
+  </div>
+</div>
+{% endblock %}
+
+{% block pagescript %}
+{{ block.super }}
+<script>
+  $('#portal-nav>li:not(:first)').addClass('collapse portal-nav-collapse portalNavContent');
+</script>
+{% endblock %}

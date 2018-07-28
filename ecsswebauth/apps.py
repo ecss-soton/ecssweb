@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class ecsswebauthConfig(AppConfig):
+class EcsswebauthConfig(AppConfig):
     name = 'ecsswebauth'

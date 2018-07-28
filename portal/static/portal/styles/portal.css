@@ -1,0 +1,18 @@
+@media (min-width: 992px) {
+  .portal-nav-no-row>*{
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .portal-nav-collapse {
+    display: block!important;
+  }
+
+  .portal-nav-toggler {
+    display: none
+  }
+}
+
+.username {
+  word-break: break-all;
+}

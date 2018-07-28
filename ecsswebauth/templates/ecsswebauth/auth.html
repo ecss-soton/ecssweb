@@ -5,7 +5,7 @@
 {% block content %}
 {% if not user.is_authenticated %}
 <p class="alert alert-info">You are not logged in.</p>
-<form action="/auth/saml/login/" method="POST">
+<form action="{% url 'ecsswebauth:saml-login'%}" method="POST">
   {{ saml_request_form }}
   <input type="submit" value="Login with university account" class="btn btn-ecssweb">
 </form>
@@ -17,7 +17,7 @@
     window.location.replace("{{ next_url }}");
   </script>
   {% endif %}
-<form action="/auth/saml/logout/" method="GET">
+<form action="{% url 'ecsswebauth:saml-logout' %}" method="GET">
   <input type="submit" value="Logout" class="btn btn-ecssweb">
 </form>
 {% endif %}

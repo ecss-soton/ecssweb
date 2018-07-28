@@ -44,6 +44,8 @@ To find out more about models of ecssweb, see the [wiki](https://github.com/ecss
 
 - Rename `ecssweb/settings.example.py` to `settings.py` and changes the settings in it
 
+- After migrate database schema, load initial data using `python manage.py loaddata init_data.example.yaml`
+
 ### SAML
 
 - Rename `ecsswebauth/saml_config/settings.example.json` to `settings.json` and changes the settings in it

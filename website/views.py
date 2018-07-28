@@ -4,8 +4,8 @@ from django.shortcuts import render, render_to_response
 def home(request):
     return render(request, 'website/home.html')
 
-def events_bbq(request):
-    return render(request, 'website/events/bbq.html')
+def events(request):
+    return render(request, 'website/events/events.html')
 
 # 404
 def page_not_found(request, exception):

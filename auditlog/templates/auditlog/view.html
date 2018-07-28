@@ -1,0 +1,16 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}
+Auditlog - ECSS
+{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>Auditlog</h1>
+  <ul>
+    {% for auditlog_item in auditlog %}
+    <li>{{ auditlog_item }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

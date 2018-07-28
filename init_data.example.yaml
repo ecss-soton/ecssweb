@@ -1,0 +1,44 @@
+# Categories for feedback
+
+- model: feedback.category
+  pk: Others
+  fields: {}
+
+
+# Groups
+
+# Committee group
+- model: auth.group
+  fields:
+    name: committee
+    permissions:
+    - [add_response, feedback, response]
+    - [view_auditlog, auditlog, auditlog]
+
+# ECS user SAML groups
+# Add is_ecs_user permission to relevant saml groups
+- model: auth.group
+  fields:
+    name: saml_fpStudent
+    permissions:
+    - [is_ecs_user, ecsswebauth, samluser]
+
+
+# Users
+
+# Committee users
+- model: auth.user
+  fields:
+    password: ''
+    last_login: 2018-07-08 20:36:03.084028+00:00
+    is_superuser: false
+    username: example
+    first_name: example
+    last_name: example
+    email: example@example.com
+    is_staff: false
+    is_active: true
+    date_joined: 2018-07-08 20:36:03.071850+00:00
+    groups:
+    - [committee]
+    user_permissions: []

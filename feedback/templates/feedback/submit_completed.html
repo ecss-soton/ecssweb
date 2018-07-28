@@ -1,0 +1,17 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}
+Submit Feedback - ECSS
+{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>Submit Feedback</h1>
+  {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <p class="alert alert-success">{{ message }}</p>
+    {% endif %}
+  {% endfor %}
+  <p>Thanks for your feedback, and it will be looked at by our committee.</p>
+</section>
+{% endblock %}

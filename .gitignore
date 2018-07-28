@@ -1,6 +1,9 @@
 # database
 db.sqlite3
 
+# data
+init_data.yaml
+
 # website content
 website/static/website/content/
 

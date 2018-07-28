@@ -16,8 +16,11 @@ Including another URLconf
 from django.urls import include, path
 
 urlpatterns = [
-    path('auth/', include('ecsswebauth.urls')),
     path('', include('website.urls')),
+    path('auth/', include('ecsswebauth.urls')),
+    path('portal/', include('portal.urls')),
+    path('portal/feedback/', include('feedback.urls')),
+    path('portal/auditlog/', include('auditlog.urls')),
 ]
 
 handler404 = 'website.views.page_not_found'
