@@ -7,6 +7,9 @@ def home(request):
 def events(request):
     return render(request, 'website/events/events.html')
 
+def media_notice(request):
+    return render(request, 'website/media-notice.html')
+
 # 404
 def page_not_found(request, exception):
     return render(request, 'website/error_pages/404.html', status=404)
