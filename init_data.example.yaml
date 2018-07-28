@@ -13,6 +13,15 @@
     name: committee
     permissions:
     - [add_response, feedback, response]
+    - [view_auditlog, auditlog, auditlog]
+
+# ECS user SAML groups
+# Add is_ecs_user permission to relevant saml groups
+- model: auth.group
+  fields:
+    name: saml_fpStudent
+    permissions:
+    - [is_ecs_user, ecsswebauth, samluser]
 
 
 # Users
@@ -33,14 +42,3 @@
     groups:
     - [committee]
     user_permissions: []
-
-
-# Groups
-
-# ECS user SAML groups
-# Add is_ecs_user permission to relevant saml groups
-- model: auth.group
-  fields:
-    name: saml_fpStudent
-    permissions:
-    - [is_ecs_user, ecsswebauth, samluser]
