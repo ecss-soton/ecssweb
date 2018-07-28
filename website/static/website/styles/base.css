@@ -26,9 +26,16 @@ section {
   flex: 1;
 }
 
+
+/* Elements styles */
+
 .badge-multline {
   white-space: normal;
   text-align: left;
+}
+
+.navbar-toggler-icon>i {
+  font-size: 1.5em;
 }
 
 

@@ -54,6 +54,7 @@ Respond Feedback - ECSS
 {% endblock %}
 
 {% block pagescript %}
+{{ block.super }}
 <script>
   is_bind = false;
   $("#respond-form").change(function() {
