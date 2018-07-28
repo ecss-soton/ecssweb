@@ -24,7 +24,7 @@ urlpatterns = [
     path('portal/feedback/', include('feedback.urls')),
     path('portal/auditlog/', include('auditlog.urls')),
     # Temp for deployment
-    path('https://society.ecs.soton.ac.uk/simplesaml/module.php/saml/sp/saml2-acs.php/default-sp', saml_acs, name='saml-asc'),
+    path('simplesaml/module.php/saml/sp/saml2-acs.php/default-sp', saml_acs, name='saml-asc'),
     path('simplesaml/module.php/saml/sp/saml2-logout.php/default-sp', saml_sls, name='saml-sls'),
 ]
 
