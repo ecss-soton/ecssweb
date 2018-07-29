@@ -43,7 +43,7 @@ def _get_request_for_saml(request):
         'server_port': request.META['SERVER_PORT'],
         'get_data': request.GET.copy(),
         # Uncomment if using ADFS as IdP, https://github.com/onelogin/python-saml/pull/144
-        # 'lowercase_urlencoding': True,
+        'lowercase_urlencoding': True,
         'post_data': request.POST.copy()
     }
     return result
@@ -89,6 +89,9 @@ def saml_acs(request):
     auth = _init_saml(request)
     auth.process_response()
 
+    # store name_id in session
+    request.session['saml_name_id'] = auth.get_nameid()
+
     # limit the assertion to one time use only, protect from replay attack
     assertion_id = auth.get_last_assertion_id()
     try:
@@ -113,12 +116,17 @@ def saml_acs(request):
         else:
             raise Exception('Not authenticated')
     else:
-        raise Exception('Error: {}'.format(join(', ', errors)))
+        raise Exception('Error: {}'.format(', '.join(errors)))
 
 # Logout and remove the user if it is non-persistent
 def _logout(request):
     user = request.user
     logout(request)
+
+    # delete saml name_id in session
+    del request.session['saml_name_id']
+    request.session.modified = True
+
     try:
         if not user.samluser.is_persistent:
             user.delete()
@@ -128,8 +136,9 @@ def _logout(request):
 # initiate logout
 def saml_logout(request):
     auth = _init_saml(request)
+    saml_name_id = request.session['saml_name_id']
     _logout(request)
-    return HttpResponseRedirect(auth.logout())
+    return HttpResponseRedirect(auth.logout(name_id=saml_name_id))
 
 def saml_sls(request):
     logout_user_callback = lambda: _logout(request)
