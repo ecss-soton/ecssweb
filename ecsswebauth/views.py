@@ -122,11 +122,6 @@ def saml_acs(request):
 def _logout(request):
     user = request.user
     logout(request)
-
-    # delete saml name_id in session
-    del request.session['saml_name_id']
-    request.session.modified = True
-
     try:
         if not user.samluser.is_persistent:
             user.delete()
