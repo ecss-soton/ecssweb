@@ -94,7 +94,7 @@
       </div>
     </header>
 
-    <div class="content container">
+    <div class="content">
       {% block content %}
       {% endblock %}
     </div>
@@ -124,7 +124,7 @@
             <!--<dd class="footer-item"><a href="#" class="footer-link">Sitemap</a></dd>-->
             <dd class="footer-item"><a href="https://www.southampton.ac.uk/about/governance/policies/privacy-policy.page" class="footer-link">Privacy Notice</a></dd>
             <dd class="footer-item"><a href="https://www.southampton.ac.uk/about/governance/policies/cookies.page" class="footer-link">Cookies</a></dd>
-            <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/media-notice/" class="footer-link">Media Notice</a></dd>
+            <dd class="footer-item"><a href="{% url 'website:media-notice' %}" class="footer-link">Media Notice</a></dd>
             <!--<dd class="footer-item"><a href="#" class="footer-link">Copyright Notice</a></dd>-->
           </dl>
         </div>
