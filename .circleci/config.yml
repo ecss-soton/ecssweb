@@ -40,7 +40,7 @@ jobs:
             wget http://xmlsoft.org/sources/libxml2-2.9.1.tar.gz
             tar -xvf libxml2-2.9.1.tar.gz
             cd libxml2-2.9.1
-            ./configure && make && make install
+            sudo ./configure && make && make install
 
             python3 -m venv venv
             . venv/bin/activate
