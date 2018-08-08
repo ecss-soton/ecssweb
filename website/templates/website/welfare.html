@@ -1,0 +1,56 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Welfare - ECSS{% endblock title %}
+
+{% block content %}
+<div>
+  <section class="container">
+    <h1>Welfare</h1>
+    <p>
+      Any degree in the Electronic and Computer Science Society can be challenging. Work loads can be high and stress can be difficult manage. The job of the welfare sec is to lend guidance and support when things get tough. Whether it’s bad results, home-sickness or just needing a chat the welfare sec will be able to point you in the right direction. This year’s welfare officer is Alicja (Ala) Bochnacka, a second year electronics student.
+    </p>
+  </section>
+</div>
+<div class="container">
+  <section>
+    <h1>Events</h1>
+    <p>
+      Wellbeing events are held by the union, society and outside communities. We will hold a range of different events to help manage stress and take your mind of studies as well as teaming up and promoting outside groups. You can also find the welfare sec at most socials.
+    </p>
+    <img src="{% static 'website/content/welfare.jpg' %}" alt="Welfare event picture">
+  </section>
+  <section>
+    <h1>People to talk to</h1>
+    <ul>
+      <li>
+        Solent Mind—Support and advice for mental heath issues.<br>
+        +44(0)23 8202 7810
+      </li>
+      <li>
+        Samaritans—confidential, 24/7 and free call line that will listen to anything you want to say.<br>
+        116 123
+      </li>
+      <li>
+        First Support—a small team in student services who offer face-to-face appointments or calls for students dealing with crisis.<br>
+        +44(0)23 8059 7488 or firstsupport@soton.ac.uk
+      </li>
+      <li>
+        Tutors—The senior tutors are great for anything relating to the course and will help you sort out issues with your studies.<br>
+        Contact Jules Field
+      </li>
+      <li>
+        Student Services—for urgent issues the security team will respond out of hours.
+        +44(0)23 8059 2811
+      </li>
+      <li>
+        Enabling Sevices—Appointments can be booked for help with learning difficulties at the front desk.
+      </li>
+      <li>
+        Health Service—The university health services can provide appointments for health and mental issues.
+      </li>
+    </ul>
+  </section>
+</div>
+{% endblock %}
