@@ -48,9 +48,9 @@ jobs:
           key: v1-dependencies-{{ checksum "requirements.txt" }}
         
       - run:
-          name: rename config
+          name: config
           command:
-            mv ecssweb/config.example.py ecssweb/config.py
+            mv ecssweb/settings.example.py ecssweb/settings.py
 
       # run tests!
       # this example uses Django's built-in test-runner
