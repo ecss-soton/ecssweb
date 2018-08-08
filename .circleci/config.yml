@@ -37,10 +37,6 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
-            wget http://xmlsoft.org/sources/libxml2-2.9.1.tar.gz
-            tar -xvf libxml2-2.9.1.tar.gz
-            cd libxml2-2.9.1
-            sudo ./configure && make && make install
 
             python3 -m venv venv
             . venv/bin/activate
@@ -51,6 +47,11 @@ jobs:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
         
+      - run:
+          name: rename config
+          command:
+            mv ecssweb/config.example.py ecssweb/config.py
+
       # run tests!
       # this example uses Django's built-in test-runner
       # other common Python testing frameworks include pytest and nose
