@@ -10,6 +10,14 @@ def events(request):
     return render(request, 'website/events/events.html')
 
 
+def socials(request):
+    return render(request, 'website/events/socials.html')
+
+
+def gaming_socials(request):
+    return render(request, 'website/events/gaming-socials.html')
+
+
 def welfare(request):
     return render(request, 'website/welfare.html')
 
