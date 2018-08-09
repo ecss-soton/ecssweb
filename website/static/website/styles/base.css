@@ -86,7 +86,6 @@ section {
 /* Header */
 
 header {
-  margin: 0 0 .75rem 0;
   background-color: black;
 }
 
@@ -144,6 +143,13 @@ footer {
 .footer-link-icon:hover {
   color: white;
   text-decoration: none;
+}
+
+
+/* Page header */
+.page-header {
+  background-color: #e5e5e5;
+  padding: 10px 0;
 }
 
 
