@@ -45,12 +45,14 @@
                   Events
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarEventsDropdown">
+                  <a class="dropdown-item" href="{% url 'website:events' %}">Events Overview</a>
+                  <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Socials">Socials</a>
                   <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Gaming%20Socials">Game Socials</a>
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="https://society.ecs.soton.ac.uk/leaflet/?section=Welfare">Welfare</a>
+                <a class="nav-link" href="{% url 'website:welfare' %}">Welfare</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarSportsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
