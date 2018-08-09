@@ -1,5 +1,7 @@
 # ecssweb
 
+[![CircleCI](https://circleci.com/gh/ecss-soton/ecssweb.svg?style=shield)](https://circleci.com/gh/ecss-soton/ecssweb)
+
 Website for the University of Southampton Electronics and Computer Science Society
 
 https://society.ecs.soton.ac.uk
