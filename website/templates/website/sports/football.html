@@ -1,0 +1,66 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Football in ECSS{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+  <section class="container">
+    <h1>Football</h1>
+    <p>
+      ECSS FC (Est. 2007) is an intramural football team that plays in the weekend league. Last year the football team massively improved on the previous year placing mid table in the division, and also winning a plate for coming first in the bottom half of a weekend tournament. There are currently socials every couple weeks, where we go to whatever club the team are feeling on the day.
+    </p>
+    <p>
+      For more information about training, socials, and tour, join our <a href="https://www.facebook.com/groups/687261761358331/">Facebook group</a>.
+    </p>
+  </section>
+</div>
+<div class="container mt-3">
+  <section class="row">
+    <div class="col-md-7 order-md-1">
+      <h2>Performance</h2>
+      <p>
+        In the coming year, we aim of course to improve our league position, but also to enhance the social aspect via club society cards, fresher involvement and through shirt sponsors. We are planning to branch out to similar departments in other universities for friendlies and social events.
+      </p>
+    </div>
+    <div class="col-md-5 order-md-0 d-flex align-items-center">
+      <img class="img-fluid" src="{% static 'website/content/sports/squad.jpg' %}" alt="ECSS Football team">
+    </div>
+  </section>
+  <section  class="row">
+    <div class="col-md-7 order-md-1">
+      <h2>Tour</h2>
+      <p>
+        Every year we go on a football tour, which involves absolutely no football whatsoever. Last year we went to Budapest, had a great 4 days and 4 nights seeing the city, spa, and clubs.<br>
+        You don’t have to get very drunk to enjoy our tour, but it helps.
+      </p>
+    </div>
+    <div class="col-md-5 order-md-0 d-flex align-items-center">
+        <img class="img-fluid" src="{% static 'website/content/sports/football-tour.jpg' %}" alt="Football tour">
+      </div>
+  </section>
+  <section  class="row">
+    <div class="col-md-7 order-md-1">
+      <h2>Captain</h2>
+      <p>
+        <a href="https://www.facebook.com/brad.elvy.1">Brad Elvy</a>
+      </p>
+    </div>
+    <div class="col-md-5 order-md-0 d-flex align-items-center">
+        <img class="img-fluid" src="{% static 'website/content/sports/brad.jpg' %}" alt="Brad Elvy">
+      </div>
+  </section>
+  <section  class="row">
+    <div class="col-md-7 order-md-1">
+      <h2>Social and Tour Secretary</h2>
+      <p>
+        <a href="https://www.facebook.com/charlie.geen.7">Charlie Geen</a>
+      </p>
+    </div>
+    <div class="col-md-5 order-md-0 d-flex align-items-center">
+        <img class="img-fluid" src="{% static 'website/content/sports/geen.jpg' %}" alt="Charlie Geen">
+      </div>
+  </section>
+</div>
+{% endblock %}

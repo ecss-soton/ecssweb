@@ -1,0 +1,43 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Gaming Soicals in ECSS{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+  <section class="container">
+    <h1>Gaming Socials</h1>
+    <p>
+      At ECSS we run dedicated gaming socials every few weeks to help people from all years de-stress from the craziness of their degree, as well as to help them meet, make friends and play games with other students.
+    </p>
+    <p>
+      Make sure to follow the <a href="https://www.facebook.com/ecss.soton/">ECSS facebook</a> for news about events, including locations and times.
+    </p>
+  </section>
+</div>
+<div class="container mt-3">
+    <section class="row">
+      <div class="col-md-7 order-md-1">
+        <h2>Board Game Socials</h2>
+        <p>
+          We run regular board game nights throughout the year. Bring your own games or play some of ours with games ranging from classics like Catan, to card games like Magic, to quick games like Coup and Werewolf. We have them all so pop along and join in!
+        </p>
+      </div>
+      <div class="col-md-5 order-md-0 d-flex align-items-center">
+        <img class="img-fluid" src="{% static 'website/content/events/catan.jpg' %}" alt="Playing Catan">
+      </div>
+    </section>
+    <section  class="row">
+      <div class="col-md-7 order-md-1">
+        <h2>Video Game Socials</h2>
+        <p>
+            Once a semester we book the large computer labs in Zepler to play games on. With every computer running Steam and our own TF2 server it’s a great way to meet people at Uni interested in the same gamers as you. In addition to the computers we also hook up consoles to the large TV’s so you can look forward to playing classics like MarioKart and Halo as well.
+        </p>
+      </div>
+      <div class="col-md-5 order-md-0 d-flex align-items-center">
+          <img class="img-fluid" src="{% static 'website/content/events/mariokart.jpg' %}" alt="Playing Mariokart">
+        </div>
+    </section>
+  </div>
+{% endblock %}

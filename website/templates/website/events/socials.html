@@ -1,0 +1,43 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Socials in ECSS{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+  <section class="container">
+    <h1>Socials</h1>
+    <p>
+      At ECSS we run socials to help people de-stress from the madness that is an ECS degree but also to meet people in the department. If you need to procrastinate, make friends, or just chill and forget then this is for you.
+    </p>
+  </section>
+</div>
+<div class="container mt-3">
+  <section class="row">
+    <div class="col-md-7 order-md-1">
+      <h2>Alcoholic</h2>
+      <p>
+        As does every society at university, we also run alcoholic events. Two white t-shirt socials a year, the Halloween house crawl, and pub golf are just a few of the nights we have to offer.
+      </p>
+      <p>
+        In addition to this, every member of ECSS receives £1 entry to Oceana before midnight on any night except gala nights. Simply show them your student ID card and point out where it says "ECS" for the discount!
+      </p>
+    </div>
+    <div class="col-md-5 order-md-0 d-flex align-items-center">
+      <img class="img-fluid" src="{% static 'website/content/events/christmas-party.jpg' %}" alt="Christmas Party">
+    </div>
+  </section>
+  <section  class="row">
+    <div class="col-md-7 order-md-1">
+      <h2>Non-Alcoholic</h2>
+      <p>
+        Not all of university is getting so drunk you forget your own name, and to accommodate that we run many non-alcoholic and more relaxed events. We have bowling, trips to scoops and pub quizzes planned so keep an eye out for those.
+      </p>
+    </div>
+    <div class="col-md-5 order-md-0 d-flex align-items-center">
+        <img class="img-fluid" src="{% static 'website/content/events/sprinkles-social.jpg' %}" alt="Sprinkles social">
+      </div>
+  </section>
+</div>
+{% endblock %}
