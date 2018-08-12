@@ -59,14 +59,14 @@
                   Sports
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarSportsDropdown">
-                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Sports">Sports Overview</a>
+                  <a class="dropdown-item" href="{% url 'website:sports' %}">Sports Overview</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Football">Football</a>
-                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Netball">Netball</a>
+                  <a class="dropdown-item" href="{% url 'website:football' %}">Football</a>
+                  <a class="dropdown-item" href="{% url 'website:netball' %}">Netball</a>
                   <!--<a class="dropdown-item" href="#">Basketball</a>-->
                   <!--<a class="dropdown-item" href="#">Parkrun</a>-->
-                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Running">Running</a>
-                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/leaflet/?section=Others">Others</a>
+                  <a class="dropdown-item" href="{% url 'website:running' %}">Running</a>
+                  <a class="dropdown-item" href="{% url 'website:sports_others' %}">Others</a>
                 </div>
               </li>
               <li class="nav-item dropdown">
@@ -86,7 +86,7 @@
                   <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/about/">About</a>
                   <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/filestore/index.php/s/idGPSGlxT15tbHi">Constitution</a>
                   <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/voteresult/">Voting Results</a>
-                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/about/contact.php">Contact Us</a>
+                  <a class="dropdown-item" href="{% url 'website:contact' %}">Contact Us</a>
                   <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/about/credits.php">Credits</a>
                 </div>
               </li>
@@ -116,7 +116,7 @@
           <dl class="footer-list">
             <dt></dt>
             <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/about/" class="footer-link">About</a></dd>
-            <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/about/contact.php" class="footer-link">Contact</a></dd>
+            <dd class="footer-item"><a href="{% url 'website:contact' %}" class="footer-link">Contact</a></dd>
             <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/filestore/index.php/s/FGMWH0tjcjnHRpe" class="footer-link">Meeting Minutes</a></dd>
             <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/societies/" class="footer-link">Societies in ECS</a></dd>
             <dd class="footer-item"><a href="https://www.ecs.soton.ac.uk" class="footer-link">ECS</a></dd>

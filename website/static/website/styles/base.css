@@ -82,6 +82,27 @@ section {
   border-color: #d82129;
 }
 
+.icon-link {
+  color: darkred;
+  text-decoration: none;
+}
+
+.icon-link > i {
+  color: black;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.icon-link:hover {
+  color: red;
+  text-decoration: none;
+}
+
+.icon-link:hover > i {
+  color: gray;
+  text-decoration: none;
+}
+
 
 /* Header */
 

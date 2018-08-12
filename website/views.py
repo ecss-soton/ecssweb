@@ -6,6 +6,8 @@ def home(request):
     return render(request, 'website/home.html')
 
 
+# Events
+
 def events(request):
     return render(request, 'website/events/events.html')
 
@@ -18,13 +20,47 @@ def gaming_socials(request):
     return render(request, 'website/events/gaming-socials.html')
 
 
+# Welfare
+
 def welfare(request):
     return render(request, 'website/welfare.html')
 
 
+# Sports
+
+def sports(request):
+    return render(request, 'website/sports/sports.html')
+
+
+def football(request):
+    return render(request, 'website/sports/football.html')
+
+
+def netball(request):
+    return render(request, 'website/sports/netball.html')
+
+
+def running(request):
+    return render(request, 'website/sports/running.html')
+
+
+def sports_others(request):
+    return render(request, 'website/sports/others.html')
+
+
+# About
+
+def contact(request):
+    return render(request, 'website/contact.html')
+
+
+# Meta pages
+
 def media_notice(request):
     return render(request, 'website/media-notice.html')
 
+
+# Error pages
 
 # 404
 def page_not_found(request, exception):
