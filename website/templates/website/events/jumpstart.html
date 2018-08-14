@@ -1,0 +1,101 @@
+{% extends '../base.html' %}
+
+{% load static %}
+
+{% block title %}Jumpstart 2018 - ECSS{% endblock title %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'website/styles/events/jumpstart.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+  <section>
+    <div class="row">
+      <div class="col-sm-6">
+        <img class="img-fluid" src="{% static 'website/images/jumpstart-logo.png' %}" alt="Jumpstart">
+      </div>
+      <div class="col-sm-6">
+        <div class="text-center">Proud Sponsor</div>
+        <img class="img-fluid" src="{% static 'website/content/events/jumpstart/ibm-logo.jpg' %}" alt="IBM">
+      </div>
+    </div>
+    <h1>Jumpstart</h1>
+    <p>Jumpstart is an opportunity for freshers to meet other students in the faculty, take part in a range of activities, and settle into Southampton. It is the first event of the year organised by ECSS, and is sponsored by IBM. See below for the week’s timetable, and information on the City Challenge which is part of the UG timetable. If you have any questions feel free to <a href="{% url 'website:contact' %}">contact our committee</a>, and have fun!</p>
+  </section>
+  <section>
+    <h2>Timetable</h2>
+    <p><span class="text-muted">Timetable thing goes here</span></p>
+  </section>
+  <section>
+    <h2>City Challenge</h2>
+    <p>The Jumpstart City Challenge is our take on introducing you to Southampton. We’ll be splitting you into teams, assigning you a Jumpstart Helper (a current ECS student), and giving you the aim of getting as many points as possible.</p>
+    <p>Points can be achieved by exploring the main areas this side of the city; Highfield Campus, The Common, and Portswood; and completing various challenges outlined below. In doing so, you’ll be introduced to the members of the ECSS committee, find your bearings in Southampton, and make some new friends!</p>
+    <p>The winning team will be announced at the Jumpstart reception on Friday 29th September, with prizes from the faculty, ECSS, and IBM up for grabs. Some of the challenges are listed on the map below with red pins, and some you do whilst on your travels (make sure to remind your helpers). You can do as many or as few as you like, in any order. Good luck!</p>
+    <section>
+      <h3>City Challenge Groups</h3>
+      <p><span class="text-muted">Access to groups thing goes here</span></p>
+    </section>
+  </section>
+  <div id="map"></div>
+</div>
+{% endblock %}
+
+{% block pagescript %}
+{{ block.super }}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsi5_PVb95lyv6OTu6F3kpDiKZa_EgOnM"></script>
+<script>
+  var mapOptions = {
+    center: new google.maps.LatLng(50.9264099,-1.3953199),
+    zoom: 13,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+
+  var locations = [{"label":"Mountbatten","description":"This building houses our amazing external talks - make sure you don't miss out on great opportunities!","lat":50.937599,"lng":-1.398318,"cityChallenge":"true"},{"label":"Zepler","description":"As your new second home, Zepler is where you will find the majority of our high-tech computer labs - open until 11pm (you can even play games in here!!)","lat":50.937319,"lng":-1.397701,"cityChallenge":"true"},{"label":"Wild Lime","description":"A great student pub on Portswood High Street","lat":50.924746,"lng":-1.39362,"cityChallenge":null},{"label":"The Hobbit","description":"An even better student pub in Portswood - the name is no coincidence!","lat":50.918778,"lng":-1.395142,"cityChallenge":null},{"label":"Scoops","description":"Ice cream and other sinful pleasures","lat":50.926757,"lng":-1.391594,"cityChallenge":"true"},{"label":"The Common","description":"This is a big big park - the biggest in Southampton! (it's very big)","lat":50.931007,"lng":-1.408199,"cityChallenge":"true"},{"label":"Stags","description":"This is the only pub\/bar we have on Highfield campus - Karaoke Thursdays!","lat":50.934619,"lng":-1.397355,"cityChallenge":"true"},{"label":"Switch","description":"Night club right in the middle of the city centre!","lat":50.907285,"lng":-1.404765,"cityChallenge":null},{"label":"Student Union Building","description":"AKA SUSU Building - here you can find the Cinema, Piazza (food) and most of our societies!","lat":50.93435,"lng":-1.397234,"cityChallenge":null},{"label":"Jubilee Sports Hall","description":"Gym and other sports!","lat":50.933886,"lng":-1.396328,"cityChallenge":null},{"label":"Student Services","description":"This is where you go for important stuff & for help - acommodation, various documents, fees & funding and many more!","lat":50.934014,"lng":-1.395934,"cityChallenge":null},{"label":"Post Office","description":"This is the University post office - you can send mail out, buy stamps for your collection, and even collect mail!","lat":50.937749,"lng":-1.398195,"cityChallenge":null},{"label":"Barclays","description":"It's a bank!","lat":50.937721,"lng":-1.398131,"cityChallenge":null},{"label":"Santander","description":"It's a bank!","lat":50.937774,"lng":-1.398003,"cityChallenge":null},{"label":"Costa","description":"Coffee shop - for those long days in the Zepler computer labs!","lat":50.937796,"lng":-1.39746,"cityChallenge":null},{"label":"Pret a Manger","description":"Fancy coffee shop & food","lat":50.937765,"lng":-1.397729,"cityChallenge":null},{"label":"Hartley Library","description":"The university library - it's full of books (and PCs) - you can study there!","lat":50.934988,"lng":-1.395858,"cityChallenge":null},{"label":"Avenue Campus","description":"This is the second campus!","lat":50.928737,"lng":-1.402415,"cityChallenge":null},{"label":"Jesters Nightclub","description":"Affectionately known as the 'Palace of Dreams', Jesters is a student favourite on Portswood","lat":50.918297,"lng":-1.395309,"cityChallenge":null},{"label":"The Edge Nightclub","description":"As Southampton's best gay club you will probably end up spending a lot of time here, regardless of your sexual orientation","lat":50.910069,"lng":-1.399512,"cityChallenge":null},{"label":"The Mitre","description":"One of the best student pubs in Portswood","lat":50.926695,"lng":-1.390737,"cityChallenge":"true"}];
+
+  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+  var markers = [];
+
+  function makeNameTag(name, description){
+    return "<span><h3>" + name + "</h3><p>" + description + "</p></span>";
+  }
+
+
+  $(document).ready(function(){
+    google.maps.event.addDomListener(window, 'load');
+
+    $(locations).each(function(index, position){
+      var options = {
+        position: position,
+        map: map,
+        title: position.label,
+      };
+
+      if(position.cityChallenge){
+          options.icon = 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
+      } else {
+          options.icon = 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+      }
+          
+      var marker = new google.maps.Marker(options);
+
+      marker.infowindow = new google.maps.InfoWindow({
+          content: makeNameTag(position.label, position.description)
+      });
+
+
+      marker.addListener('click', function(){
+        $(markers).each(function(){
+            this.infowindow.close();
+        });
+
+        marker.infowindow.open(map, marker);
+      });
+
+      markers.push(marker);
+    });
+  });
+</script>
+{% endblock %}
