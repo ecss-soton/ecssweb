@@ -10,40 +10,69 @@
 {% endblock %}
 
 {% block content %}
-<main class="container mt-3">
-  <section>
-    <div class="logos-jumpstart2018">
-      <div class="logo-container-jumpstart2018">
-        <img class="img-fluid" src="{% static 'website/images/jumpstart-logo.png' %}" alt="Jumpstart">
-      </div>
-      <div class="sponsor-logo-text-container-jumpstart2018">
-        <div class="text-center">Proud Sponsor</div>
-        <div class="sponsor-logo-container-jumpstart2018">
-          <img class="img-fluid" src="{% static 'website/content/events/jumpstart-2018/ibm-logo.jpg' %}" alt="IBM">
+<div class="bg-dark navbar-jumpstart2018">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark container">
+    <a class="navbar-brand" href="#jumpstart-2018">
+      Jumpstart 2018
+    </a>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#timetable">Timetable</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#city-challenge">City Challenge</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#city-challenge-groups">Groups</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#maps">Maps</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<main class="content-jumpstart2018">
+  <section id="jumpstart-2018" class="py-4">
+    <div class="container">
+      <div class="logos-jumpstart2018">
+        <div class="logo-container-jumpstart2018">
+          <img class="img-fluid" src="{% static 'website/images/jumpstart-logo.png' %}" alt="Jumpstart">
+        </div>
+        <div class="sponsor-logo-text-container-jumpstart2018">
+          <div class="text-center">Proud Sponsor</div>
+          <div class="sponsor-logo-container-jumpstart2018">
+            <img class="img-fluid" src="{% static 'website/content/events/jumpstart-2018/ibm-logo.jpg' %}" alt="IBM">
+          </div>
         </div>
       </div>
+      <h1>Jumpstart</h1>
+      <p>Jumpstart is an opportunity for freshers to meet other students in the faculty, take part in a range of activities, and settle into Southampton. It is the first event of the year organised by ECSS, and is sponsored by IBM. See below for the week’s timetable, and information on the City Challenge which is part of the UG timetable. If you have any questions feel free to <a href="{% url 'website:contact' %}">contact our committee</a>, and have fun!</p>      
     </div>
-    <h1>Jumpstart</h1>
-    <p>Jumpstart is an opportunity for freshers to meet other students in the faculty, take part in a range of activities, and settle into Southampton. It is the first event of the year organised by ECSS, and is sponsored by IBM. See below for the week’s timetable, and information on the City Challenge which is part of the UG timetable. If you have any questions feel free to <a href="{% url 'website:contact' %}">contact our committee</a>, and have fun!</p>
-  </section>
-  <section>
-    <h2>Timetable</h2>
-    <p><span class="text-muted">Timetable thing goes here</span></p>
-    <p>UG Timetable</p>
-    <p>MSc Timetable</p>
-  </section>
-  <section>
-    <h2>City Challenge</h2>
-    <p>The Jumpstart City Challenge is our take on introducing you to Southampton. We’ll be splitting you into teams, assigning you a Jumpstart Helper (a current ECS student), and giving you the aim of getting as many points as possible.</p>
-    <p>Points can be achieved by exploring the main areas this side of the city; Highfield Campus, The Common, and Portswood; and completing various challenges outlined below. In doing so, you’ll be introduced to the members of the ECSS committee, find your bearings in Southampton, and make some new friends!</p>
-    <p>The winning team will be announced at the Jumpstart reception on Friday 29th September, with prizes from the faculty, ECSS, and IBM up for grabs. Some of the challenges are listed on the map below with red pins, and some you do whilst on your travels (make sure to remind your helpers). You can do as many or as few as you like, in any order. Good luck!</p>
-    <section>
-      <h3>City Challenge Groups</h3>
-      <p><span class="text-muted">Access to groups thing goes here</span></p>
     </section>
+  <section id="timetable" class="py-4 bg-light">
+    <div class="container">
+      <h2>Timetable</h2>
+      <p><span class="text-muted">Timetable thing goes here</span></p>
+      <p>UG Timetable</p>
+      <p>MSc Timetable</p>
+    </div>
   </section>
-  <section>
-    <h2>Maps</h2>
+  <section id="city-challenge" class="py-4">
+    <div class="container">
+      <h2>City Challenge</h2>
+      <p>The Jumpstart City Challenge is our take on introducing you to Southampton. We’ll be splitting you into teams, assigning you a Jumpstart Helper (a current ECS student), and giving you the aim of getting as many points as possible.</p>
+      <p>Points can be achieved by exploring the main areas this side of the city; Highfield Campus, The Common, and Portswood; and completing various challenges outlined below. In doing so, you’ll be introduced to the members of the ECSS committee, find your bearings in Southampton, and make some new friends!</p>
+      <p>The winning team will be announced at the Jumpstart reception on Friday 29th September, with prizes from the faculty, ECSS, and IBM up for grabs. Some of the challenges are listed on the map below with red pins, and some you do whilst on your travels (make sure to remind your helpers). You can do as many or as few as you like, in any order. Good luck!</p>
+      <section id="city-challenge-groups">
+        <h3>City Challenge Groups</h3>
+        <p><span class="text-muted">Access to groups thing goes here</span></p>
+      </section>
+    </div>
+  </section>
+  <section id="maps" class="pt-4 bg-light mb-0">
+    <div class="container">
+      <h2>Maps</h2>
+    </div>
     <div id="map"></div>
   </section>
 </main>
@@ -51,6 +80,19 @@
 
 {% block pagescript %}
 {{ block.super }}
+<!-- Make Jumpstart 2018 navbar stick on the top -->
+<script>
+var jumpstart2018NavbarOffsetTop = $('.navbar-jumpstart2018').offset().top;
+$(window).bind('scroll', function () {
+  if ($(window).scrollTop() > jumpstart2018NavbarOffsetTop) {
+      $('.navbar-jumpstart2018').addClass('fixed-top navbar-sticky-jumpstart2018');
+  } else {
+      $('.navbar-jumpstart2018').removeClass('fixed-top navbar-sticky-jumpstart2018');
+  }
+});
+</script>
+
+<!-- Google maps -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsi5_PVb95lyv6OTu6F3kpDiKZa_EgOnM"></script>
 <script>
   var mapOptions = {
