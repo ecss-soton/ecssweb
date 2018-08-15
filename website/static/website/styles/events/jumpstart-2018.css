@@ -54,17 +54,22 @@ Logos
 
 
 /*
+Pictures
+*/
+
+.pics-jumpstart2018 {
+  font-size: 0;
+}
+
+.pic-jumpstart2018 {
+  width: 33.33%;
+}
+
+
+/*
 Maps
 */
 
 #map {
   height: 30rem;
-}
-
-/*
-Override template
-*/
-
-footer {
-  margin: 0 !important;
 }
