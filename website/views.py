@@ -20,8 +20,8 @@ def gaming_socials(request):
     return render(request, 'website/events/gaming-socials.html')
 
 
-def jumpstart(request):
-    return render(request, 'website/events/jumpstart.html')
+def jumpstart_2018(request):
+    return render(request, 'website/events/jumpstart-2018.html')
 
 
 # Welfare
