@@ -10,15 +10,17 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mt-3">
+<main class="container mt-3">
   <section>
-    <div class="row">
-      <div class="col-sm-6">
+    <div class="logos-jumpstart2018">
+      <div class="logo-container-jumpstart2018">
         <img class="img-fluid" src="{% static 'website/images/jumpstart-logo.png' %}" alt="Jumpstart">
       </div>
-      <div class="col-sm-6">
+      <div class="sponsor-logo-text-container-jumpstart2018">
         <div class="text-center">Proud Sponsor</div>
-        <img class="img-fluid" src="{% static 'website/content/events/jumpstart-2018/ibm-logo.jpg' %}" alt="IBM">
+        <div class="sponsor-logo-container-jumpstart2018">
+          <img class="img-fluid" src="{% static 'website/content/events/jumpstart-2018/ibm-logo.jpg' %}" alt="IBM">
+        </div>
       </div>
     </div>
     <h1>Jumpstart</h1>
@@ -27,6 +29,8 @@
   <section>
     <h2>Timetable</h2>
     <p><span class="text-muted">Timetable thing goes here</span></p>
+    <p>UG Timetable</p>
+    <p>MSc Timetable</p>
   </section>
   <section>
     <h2>City Challenge</h2>
@@ -38,8 +42,11 @@
       <p><span class="text-muted">Access to groups thing goes here</span></p>
     </section>
   </section>
-  <div id="map"></div>
-</div>
+  <section>
+    <h2>Maps</h2>
+    <div id="map"></div>
+  </section>
+</main>
 {% endblock %}
 
 {% block pagescript %}

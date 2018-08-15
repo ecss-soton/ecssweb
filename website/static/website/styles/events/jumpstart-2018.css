@@ -1,3 +1,30 @@
+.logos-jumpstart2018 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.logo-container-jumpstart2018 {
+  width: 10rem;
+  height: 10rem;
+  margin: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.sponsor-logo-text-container-jumpstart2018 {
+  width: 10rem;
+  height: 10rem;
+  margin: 2rem;
+}
+
+.sponsor-logo-container-jumpstart2018 {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #map {
   height: 30rem;
 }
