@@ -25,9 +25,9 @@
       <li class="nav-item">
         <a class="nav-link" href="#city-challenge-groups">Groups</a>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="#maps">Maps</a>
-      </li>
+      </li> -->
     </ul>
   </nav>
 </div>
@@ -45,16 +45,14 @@
           </div>
         </div>
       </div>
-      <h1>Jumpstart</h1>
+      <h1>Jumpstart 2018</h1>
       <p>Jumpstart is an opportunity for freshers to meet other students in the faculty, take part in a range of activities, and settle into Southampton. It is the first event of the year organised by ECSS, and is sponsored by IBM. See below for the week’s timetable, and information on the City Challenge which is part of the UG timetable. If you have any questions feel free to <a href="{% url 'website:contact' %}">contact our committee</a>, and have fun!</p>      
     </div>
     </section>
   <section id="timetable" class="py-4 bg-light">
     <div class="container">
       <h2>Timetable</h2>
-      <p><span class="text-muted">Timetable thing goes here</span></p>
-      <p>UG Timetable</p>
-      <p>MSc Timetable</p>
+      <p class="text-muted">Timetable will appear here soon.</p>
     </div>
   </section>
   <section id="city-challenge" class="py-4">
@@ -65,16 +63,16 @@
       <p>The winning team will be announced at the Jumpstart reception on Friday 29th September, with prizes from the faculty, ECSS, and IBM up for grabs. Some of the challenges are listed on the map below with red pins, and some you do whilst on your travels (make sure to remind your helpers). You can do as many or as few as you like, in any order. Good luck!</p>
       <section id="city-challenge-groups">
         <h3>City Challenge Groups</h3>
-        <p><span class="text-muted">Access to groups thing goes here</span></p>
+        <p class="text-muted">Groups info will be released soon.</p>
       </section>
     </div>
   </section>
-  <section id="maps" class="pt-4 bg-light mb-0">
+  <!-- <section id="maps" class="pt-4 bg-light mb-0">
     <div class="container">
       <h2>Maps</h2>
     </div>
     <div id="map"></div>
-  </section>
+  </section> -->
 </main>
 {% endblock %}
 
@@ -93,7 +91,7 @@ $(window).bind('scroll', function () {
 </script>
 
 <!-- Google maps -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsi5_PVb95lyv6OTu6F3kpDiKZa_EgOnM"></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsi5_PVb95lyv6OTu6F3kpDiKZa_EgOnM"></script>
 <script>
   var mapOptions = {
     center: new google.maps.LatLng(50.9264099,-1.3953199),
@@ -146,5 +144,5 @@ $(window).bind('scroll', function () {
       markers.push(marker);
     });
   });
-</script>
+</script> -->
 {% endblock %}
