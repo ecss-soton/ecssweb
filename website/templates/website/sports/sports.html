@@ -1,0 +1,27 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Sports in ECSS{% endblock title %}
+
+{% block content %}
+<section class="container mt-3">
+  <h1>Sports</h1>
+  <p>
+    Sport is a large social aspect of ECSS. So much so that we have sub pages for:
+    <ul>
+      <li><a href="{% url 'website:football' %}">Football</a></li>
+      <li><a href="{% url 'website:netball' %}">Netball</a></li>
+      <li><a href="{% url 'website:running' %}">Running</a></li>
+      <li><a href="{% url 'website:sports_others' %}">Others</a></li>
+    </ul>
+  </p>
+  <p>
+    Whilst ECSS do not offer a wide range of sporting opportunities, the union does.<br>
+    Take as many opportunities to get involved, and try new things whilst at university.<br>
+    Make the most of your time here!
+  </p>
+  <p><a href="https://www.southampton.ac.uk/sportandwellbeing/">General Southampton sports facilities</a></p>
+  <p><a href="https://www.susu.org/opportunities/sports/">Sports Societies</a></p>
+</section>
+{% endblock %}

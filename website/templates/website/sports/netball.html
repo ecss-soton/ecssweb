@@ -1,0 +1,39 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Netball in ECSS{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+  <section class="container">
+    <h1>Netball</h1>
+    <p>
+      This year we are joining up with the Physoc and with the SUES (Southampton University Engineering Society) to create a women’s netball team. We welcome players of any ability.
+    </p>
+    <p>
+      The team will train and play weekly, and participate in tournaments throughout the year.
+    </p>
+    <p>
+      As the team is new for 2017/2018, the team, and sports reps from each society, will be looking for players to take up the roles of captain, vice captain and social sec.
+    </p>
+    <p>
+      Please join our <a href="https://www.facebook.com/groups/820484134777402/">Facebook group</a> to get involved!
+    </p>
+  </section>
+</div>
+<div class="container mt-3">
+  <section class="row">
+    <div class="col-md-7 order-md-1">
+      <h2>Contact us to help us get this going!</h2>
+      <ul>
+        <li><a href="">Brad Elvy</a></li>
+        <li><a href="https://www.facebook.com/nick.turner.9847">Nick Turner</a> (SUES sports rep)</li>
+        <li><a href="https://www.facebook.com/riapandit98">Ria Pandit</a> (PhySoc sports rep)</li>
+      </ul>
+    </div>
+    <div class="col-md-5 order-md-0 d-flex align-items-center">
+      <img class="img-fluid" src="{% static 'website/content/sports/netball-logo.jpg' %}" alt="Netball logo">
+    </div>
+</div>
+{% endblock %}

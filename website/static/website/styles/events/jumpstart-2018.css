@@ -1,0 +1,75 @@
+/*
+Jumpstart 2018 navbar
+*/
+
+.navbar-jumpstart2018 {
+  opacity: 0.9;
+}
+
+.navbar-sticky-jumpstart2018 + main {
+  padding-top: 56px;
+}
+
+@media (max-width: 575.98px) {
+  .navbar-jumpstart2018 {
+    display: none;
+  }
+
+  .navbar-jumpstart2018 + main {
+    padding-top: 0;
+  }
+}
+
+
+/*
+Logos
+*/
+
+.logos-jumpstart2018 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.logo-container-jumpstart2018 {
+  width: 10rem;
+  height: 10rem;
+  margin: 4rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.sponsor-logo-text-container-jumpstart2018 {
+  width: 10rem;
+  height: 10rem;
+  margin: 2rem;
+}
+
+.sponsor-logo-container-jumpstart2018 {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/*
+Pictures
+*/
+
+.pics-jumpstart2018 {
+  font-size: 0;
+}
+
+.pic-jumpstart2018 {
+  width: 33.33%;
+}
+
+
+/*
+Maps
+*/
+
+#map {
+  height: 30rem;
+}

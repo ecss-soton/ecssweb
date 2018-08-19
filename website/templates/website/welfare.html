@@ -2,10 +2,10 @@
 
 {% load static %}
 
-{% block title %}Welfare - ECSS{% endblock title %}
+{% block title %}Welfare in ECSS{% endblock title %}
 
 {% block content %}
-<div>
+<div class="page-header">
   <section class="container">
     <h1>Welfare</h1>
     <p>
@@ -13,16 +13,20 @@
     </p>
   </section>
 </div>
-<div class="container">
-  <section>
-    <h1>Events</h1>
-    <p>
-      Wellbeing events are held by the union, society and outside communities. We will hold a range of different events to help manage stress and take your mind of studies as well as teaming up and promoting outside groups. You can also find the welfare sec at most socials.
-    </p>
-    <img src="{% static 'website/content/welfare.jpg' %}" alt="Welfare event picture">
+<div class="container mt-3">
+  <section class="row">
+    <div class="col-md-7 order-md-1">
+      <h2>Events</h2>
+      <p>
+        Wellbeing events are held by the union, society and outside communities. We will hold a range of different events to help manage stress and take your mind of studies as well as teaming up and promoting outside groups. You can also find the welfare sec at most socials.
+      </p>
+    </div>
+    <div class="col-md-5 order-md-0 d-flex align-items-center">
+      <img class="img-fluid" src="{% static 'website/content/welfare.jpg' %}" alt="Welfare event picture">
+    </div>
   </section>
   <section>
-    <h1>People to talk to</h1>
+    <h2>People to talk to</h2>
     <ul>
       <li>
         Solent Mind—Support and advice for mental heath issues.<br>
@@ -41,7 +45,7 @@
         Contact Jules Field
       </li>
       <li>
-        Student Services—for urgent issues the security team will respond out of hours.
+        Student Services—for urgent issues the security team will respond out of hours.<br>
         +44(0)23 8059 2811
       </li>
       <li>

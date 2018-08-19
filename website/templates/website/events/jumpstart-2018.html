@@ -1,0 +1,156 @@
+{% extends '../base.html' %}
+
+{% load static %}
+
+{% block title %}Jumpstart 2018 - ECSS{% endblock title %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'website/styles/events/jumpstart-2018.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="bg-dark navbar-jumpstart2018">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark container">
+    <a class="navbar-brand" href="#jumpstart-2018">
+      Jumpstart 2018
+    </a>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#timetable">Timetable</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#city-challenge">City Challenge</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#city-challenge-groups">Groups</a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="#maps">Maps</a>
+      </li> -->
+    </ul>
+  </nav>
+</div>
+<main class="content-jumpstart2018">
+  <section id="jumpstart-2018" class="pt-4 mb-0">
+    <div class="container">
+      <div class="logos-jumpstart2018">
+        <div class="logo-container-jumpstart2018">
+          <img class="img-fluid" src="{% static 'website/images/jumpstart-logo.png' %}" alt="Jumpstart">
+        </div>
+        <div class="sponsor-logo-text-container-jumpstart2018">
+          <div class="text-center">Proud Sponsor</div>
+          <div class="sponsor-logo-container-jumpstart2018">
+            <img class="img-fluid" src="{% static 'website/content/events/jumpstart-2018/ibm-logo.jpg' %}" alt="IBM">
+          </div>
+        </div>
+      </div>
+      <h1>Jumpstart 2018</h1>
+      <p>Jumpstart is an opportunity for freshers to meet other students in the faculty, take part in a range of activities, and settle into Southampton. It is our first ECSS event of the year, and is sponsored by IBM. See below for the week’s timetable, and information on the City Challenge which is part of the UG timetable. If you have any questions feel free to <a href="{% url 'website:contact' %}">contact our committee</a>, and have fun!</p>      
+    </div>
+    <div class="pics-jumpstart2018 mt-4">
+      <img class="img-fluid pic-jumpstart2018" src="{% static 'website/content/events/jumpstart-2018/jumpstart-1.jpg' %}" alt="Jumpstart Q&A">
+      <img class="img-fluid pic-jumpstart2018" src="{% static 'website/content/events/jumpstart-2018/jumpstart-2.jpg' %}" alt="Jumpstart City Challenge">
+      <img class="img-fluid pic-jumpstart2018" src="{% static 'website/content/events/jumpstart-2018/jumpstart-3.jpg' %}" alt="Jumpstart City Challenge">
+    </div>
+  </section>
+  <section id="timetable" class="py-4 bg-light">
+    <div class="container">
+      <h2>Timetable</h2>
+      <p class="text-muted">Timetable will appear here soon.</p>
+    </div>
+  </section>
+  <section id="city-challenge" class="pt-4">
+    <div class="container">
+      <h2>City Challenge</h2>
+      <p>Get ready for The Jumpstart City Challenge 2019, Freshers! We'll be splitting you into teams and giving you the opportunity to compete in a series of group challenges and games, seeing some of our favourite things Southampton has to offer, alongside your assigned Jumpstart Group Leader (a current ECS student). This is the first of many chances you'll have to interact with the committee members, who will be glad to answer any of your questions and learn a bit more about us as a society.</p>
+      <p>Completion of any of our smorgasbord of activities with be worth some point value so be sure to bring your A-game!</p>
+      <p>Of course, it wouldn't be much of a challenge without prizes; be sure to attend the Jumpstart reception on Friday 28th September, where we'll have some goodies from ECSS and IBM up for grabs.</p>
+      <section id="city-challenge-groups">
+        <h3>City Challenge Groups</h3>
+        <p class="text-muted">Groups info will be released soon.</p>
+      </section>
+    </div>
+  </section>
+  <!-- <section id="maps" class="pt-4 bg-light">
+    <div class="container">
+      <h2>Maps</h2>
+    </div>
+    <div id="map"></div>
+  </section> -->
+  <div class="container">
+    <small class="text-muted">Pictures on this page are from Jumpstart 2017.</small>
+  </div>
+</main>
+{% endblock %}
+
+{% block pagescript %}
+{{ block.super }}
+<!-- Make Jumpstart 2018 navbar stick on the top -->
+<script>
+var jumpstart2018NavbarOffsetTop = $('.navbar-jumpstart2018').offset().top;
+$(window).bind('scroll', function () {
+  if ($(window).scrollTop() > jumpstart2018NavbarOffsetTop) {
+      $('.navbar-jumpstart2018').addClass('fixed-top navbar-sticky-jumpstart2018');
+  } else {
+      $('.navbar-jumpstart2018').removeClass('fixed-top navbar-sticky-jumpstart2018');
+  }
+});
+</script>
+
+<!-- Google maps -->
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsi5_PVb95lyv6OTu6F3kpDiKZa_EgOnM"></script>
+<script>
+  var mapOptions = {
+    center: new google.maps.LatLng(50.9264099,-1.3953199),
+    zoom: 13,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+
+  var locations = [{"label":"Mountbatten","description":"This building houses our amazing external talks - make sure you don't miss out on great opportunities!","lat":50.937599,"lng":-1.398318,"cityChallenge":"true"},{"label":"Zepler","description":"As your new second home, Zepler is where you will find the majority of our high-tech computer labs - open until 11pm (you can even play games in here!!)","lat":50.937319,"lng":-1.397701,"cityChallenge":"true"},{"label":"Wild Lime","description":"A great student pub on Portswood High Street","lat":50.924746,"lng":-1.39362,"cityChallenge":null},{"label":"The Hobbit","description":"An even better student pub in Portswood - the name is no coincidence!","lat":50.918778,"lng":-1.395142,"cityChallenge":null},{"label":"Scoops","description":"Ice cream and other sinful pleasures","lat":50.926757,"lng":-1.391594,"cityChallenge":"true"},{"label":"The Common","description":"This is a big big park - the biggest in Southampton! (it's very big)","lat":50.931007,"lng":-1.408199,"cityChallenge":"true"},{"label":"Stags","description":"This is the only pub\/bar we have on Highfield campus - Karaoke Thursdays!","lat":50.934619,"lng":-1.397355,"cityChallenge":"true"},{"label":"Switch","description":"Night club right in the middle of the city centre!","lat":50.907285,"lng":-1.404765,"cityChallenge":null},{"label":"Student Union Building","description":"AKA SUSU Building - here you can find the Cinema, Piazza (food) and most of our societies!","lat":50.93435,"lng":-1.397234,"cityChallenge":null},{"label":"Jubilee Sports Hall","description":"Gym and other sports!","lat":50.933886,"lng":-1.396328,"cityChallenge":null},{"label":"Student Services","description":"This is where you go for important stuff & for help - acommodation, various documents, fees & funding and many more!","lat":50.934014,"lng":-1.395934,"cityChallenge":null},{"label":"Post Office","description":"This is the University post office - you can send mail out, buy stamps for your collection, and even collect mail!","lat":50.937749,"lng":-1.398195,"cityChallenge":null},{"label":"Barclays","description":"It's a bank!","lat":50.937721,"lng":-1.398131,"cityChallenge":null},{"label":"Santander","description":"It's a bank!","lat":50.937774,"lng":-1.398003,"cityChallenge":null},{"label":"Costa","description":"Coffee shop - for those long days in the Zepler computer labs!","lat":50.937796,"lng":-1.39746,"cityChallenge":null},{"label":"Pret a Manger","description":"Fancy coffee shop & food","lat":50.937765,"lng":-1.397729,"cityChallenge":null},{"label":"Hartley Library","description":"The university library - it's full of books (and PCs) - you can study there!","lat":50.934988,"lng":-1.395858,"cityChallenge":null},{"label":"Avenue Campus","description":"This is the second campus!","lat":50.928737,"lng":-1.402415,"cityChallenge":null},{"label":"Jesters Nightclub","description":"Affectionately known as the 'Palace of Dreams', Jesters is a student favourite on Portswood","lat":50.918297,"lng":-1.395309,"cityChallenge":null},{"label":"The Edge Nightclub","description":"As Southampton's best gay club you will probably end up spending a lot of time here, regardless of your sexual orientation","lat":50.910069,"lng":-1.399512,"cityChallenge":null},{"label":"The Mitre","description":"One of the best student pubs in Portswood","lat":50.926695,"lng":-1.390737,"cityChallenge":"true"}];
+
+  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+  var markers = [];
+
+  function makeNameTag(name, description){
+    return "<span><h3>" + name + "</h3><p>" + description + "</p></span>";
+  }
+
+
+  $(document).ready(function(){
+    google.maps.event.addDomListener(window, 'load');
+
+    $(locations).each(function(index, position){
+      var options = {
+        position: position,
+        map: map,
+        title: position.label,
+      };
+
+      if(position.cityChallenge){
+          options.icon = 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
+      } else {
+          options.icon = 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+      }
+          
+      var marker = new google.maps.Marker(options);
+
+      marker.infowindow = new google.maps.InfoWindow({
+          content: makeNameTag(position.label, position.description)
+      });
+
+
+      marker.addListener('click', function(){
+        $(markers).each(function(){
+            this.infowindow.close();
+        });
+
+        marker.infowindow.open(map, marker);
+      });
+
+      markers.push(marker);
+    });
+  });
+</script> -->
+{% endblock %}
