@@ -1,5 +1,6 @@
 # ecssweb
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ad45603958ae42229db502b00a80ccdf)](https://app.codacy.com/app/allc/ecssweb?utm_source=github.com&utm_medium=referral&utm_content=ecss-soton/ecssweb&utm_campaign=badger)
 [![CircleCI](https://circleci.com/gh/ecss-soton/ecssweb.svg?style=shield)](https://circleci.com/gh/ecss-soton/ecssweb)
 
 Website for the University of Southampton Electronics and Computer Science Society
