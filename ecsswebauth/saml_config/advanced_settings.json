@@ -3,7 +3,7 @@
         "nameIdEncrypted": false,
         "authnRequestsSigned": false,
         "logoutRequestSigned": true,
-        "logoutResponseSigned": false,
+        "logoutResponseSigned": true,
         "signMetadata": false,
         "wantMessagesSigned": false,
         "wantAssertionsSigned": false,
