@@ -142,7 +142,7 @@ def saml_sls(request):
     errors = auth.get_errors()
     if len(errors) == 0:
         if next_url is not None:
-            return HttpResponseRedirect(_clean_next_url(next_url, default_url=settings.LOGOUT_REDIRECT_URL))
+            return HttpResponseRedirect(next_url)
         else:
             return HttpResponseRedirect(resolve_url(settings.LOGOUT_REDIRECT_URL))
     else:
