@@ -26,6 +26,7 @@ urlpatterns = [
     path('sports/others/', views.sports_others, name='sports_others'),
 
     # About
+    path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
 
     # Meta pages

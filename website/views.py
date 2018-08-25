@@ -54,6 +54,11 @@ def sports_others(request):
 
 # About
 
+
+def about(request):
+    return render(request, 'website/about.html')
+
+
 def contact(request):
     return render(request, 'website/contact.html')
 
