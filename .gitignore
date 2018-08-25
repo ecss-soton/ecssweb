@@ -2,7 +2,7 @@
 db.sqlite3
 
 # data
-init_data.yaml
+data.yaml
 
 # website content
 website/static/website/content/
