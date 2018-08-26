@@ -38,6 +38,10 @@ section {
   font-size: 1.5em;
 }
 
+.nav-tabs .nav-item {
+  white-space: nowrap;
+}
+
 
 /* Themes */
 .navbar-ecssweb .navbar-nav .nav-link {
