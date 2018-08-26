@@ -2,7 +2,8 @@
 db.sqlite3
 
 # data
-data.yaml
+fixture.yml
+societies.yml
 
 # website content
 website/static/website/content/

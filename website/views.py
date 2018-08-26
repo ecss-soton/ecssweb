@@ -1,9 +1,23 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, get_object_or_404
+
+from .models import Society
 
 
 def home(request):
     return render(request, 'website/home.html')
+
+
+# Societies
+
+def societies(request, society):
+    societies = Society.objects.all()
+    society_obj = get_object_or_404(Society, pk=society)
+    context = {
+        'society': society_obj,
+        'societies': societies,
+    }
+    return render(request, 'website/societies.html', context)
 
 
 # Events
@@ -53,7 +67,6 @@ def sports_others(request):
 
 
 # About
-
 
 def about(request):
     return render(request, 'website/about.html')

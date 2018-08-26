@@ -1,0 +1,16 @@
+- model: website.society
+  pk: ecss
+  fields: 
+    short_name: ECSS
+    name: Electronics and Computer Science Society
+    logo_file: website/images/ecss-logo-square.png
+    description: |
+      <p>Hey we're the society that made this!</p>
+      <p>See our events on our facebook page.</p>
+    time: ''
+    location: ''
+    email: society@ecs.soton.ac.uk
+    website: https://society.ecs.soton.ac.uk
+    fb_group: https://www.facebook.com/groups/ecss.soton
+    fb_page: https://www.facebook.com/ecss.soton
+    twitter: ecs_society

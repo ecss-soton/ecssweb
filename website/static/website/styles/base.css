@@ -53,7 +53,7 @@ section {
   color: white;
 }
 
-.nav-item:hover {
+.navbar-ecssweb .nav-item:hover {
   background-color: #d82129;
   border-radius: .2rem
 }
@@ -91,6 +91,8 @@ section {
   color: black;
   text-decoration: none;
   font-size: 1.5rem;
+  width: 1.5rem;
+  text-align: center;
 }
 
 .icon-link:hover {
