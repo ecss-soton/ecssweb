@@ -20,6 +20,6 @@ class Society(models.Model):
 
 
 class SocietyLinks(models.Model):
-    society = models.ForeignKey('Society', on_delete=models.CASCADE)
+    society = models.ForeignKey(Society, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     url = models.URLField()
