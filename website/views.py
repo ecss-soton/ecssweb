@@ -20,6 +20,15 @@ def societies(request, society):
     return render(request, 'website/societies.html', context)
 
 
+# Sponsors
+
+def sponsors(request):
+    if 'sponsor' not in request.GET:
+        return render(request, 'website/sponsors/sponsors.html')
+    
+    return render(request, 'website/sponsors/sponsor.html')
+
+
 # Events
 
 def events(request):
