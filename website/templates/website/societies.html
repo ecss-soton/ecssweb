@@ -11,7 +11,7 @@
 
 {% block content %}
 <div class="container mt-3">
-  <div class="nav nav-tabs">
+  <ul class="nav nav-tabs">
     {% for soc in societies %}
     <li class="nav-item">
       <a class="nav-link {% if soc.codename == society.codename %}active{% endif %}" href="{% url 'website:societies' soc.codename %}">
@@ -19,9 +19,9 @@
       </a>
     </li>
     {% endfor %}
-  </div>
+  </ul>
   <div class="row mt-2">
-    <div class="col-lg-3">
+    <div class="col-lg-3 my-2">
       <img class="img-fluid mx-auto d-block logo-societies" src="{% static society.logo_file %}" alt="{{ society.name }}">
     </div>
     <div class="col-lg-9">
@@ -29,6 +29,7 @@
       <div>
         {{ society.description | safe }}
       </div>
+      <hr>
       <ul class="list-unstyled">
         {% if society.time %}
         <li>Time: {{ society.time }}</li>

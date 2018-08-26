@@ -11,7 +11,7 @@ urlpatterns = [
 
     # Societies
     path('societies/', RedirectView.as_view(url=reverse_lazy('website:societies', kwargs={'society': 'ecss'})), name='societies-default'),
-    re_path(r'^societies/(?P<society>[a-z]+)/$', views.societies, name='societies'),
+    re_path(r'^societies/(?P<society>[\w-]+)/$', views.societies, name='societies'),
 
     # Events
     path('events/', views.events, name='events'),

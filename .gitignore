@@ -2,8 +2,8 @@
 db.sqlite3
 
 # data
-fixture.yml
-societies.yml
+fixture.yaml
+societies.yaml
 
 # website content
 website/static/website/content/
