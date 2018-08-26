@@ -1,0 +1,72 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Societies in ECS{% endblock title %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'website/styles/societies.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+  <ul class="nav nav-tabs">
+    {% for soc in societies %}
+    <li class="nav-item">
+      <a class="nav-link {% if soc.codename == society.codename %}active{% endif %}" href="{% url 'website:societies' soc.codename %}">
+        {{ soc.short_name }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="row mt-2">
+    <div class="col-lg-3 my-2">
+      <img class="img-fluid mx-auto d-block logo-societies" src="{% static society.logo_file %}" alt="{{ society.name }}">
+    </div>
+    <div class="col-lg-9">
+      <h2>{{ society.name }}</h2>
+      <div>
+        {{ society.description | safe }}
+      </div>
+      <hr>
+      <ul class="list-unstyled">
+        {% if society.time %}
+        <li>Time: {{ society.time }}</li>
+        {% endif %}
+        {% if society.location %}
+        <li>Location: {{ society.location }}</li>
+        {% endif %}
+        {% if society.email %}
+        <li class="my-1">
+          <a href="mailto:{{ society.email }}" class="icon-link" aria-label="Email"><i class="fas fa-envelope-square" title="Email" aria-hidden="true"></i> {{ society.email }}</a>
+        </li>
+        {% endif %}
+        {% if society.website %}
+        <li class="my-1">
+          <a href="{{ society.website }}" class="icon-link" aria-label="Website"><i class="fas fa-mouse-pointer" title="Website" aria-hidden="true"></i> {{ society.website }}</a>
+        </li>
+        {% endif %}
+        {% if society.fb_page %}
+        <li class="my-1">
+          <a href="{{ society.fb_page }}" class="icon-link" aria-label="Facebook Page"><i class="fab fa-facebook" title="Facebook Page" aria-hidden="true"></i> Facebook Page</a>
+        </li>
+        {% endif %}
+        {% if society.fb_group %}
+        <li class="my-1">
+          <a href="{{ society.fb_group }}" class="icon-link" aria-label="Facebook Group"><i class="fab fa-facebook" title="Facebook Group" aria-hidden="true"></i> Facebook Group</a>
+        </li>
+        {% endif %}
+        {% if society.twitter %}
+        <li class="my-1">
+          <a href="https://twitter.com/{{ society.twitter }}" class="icon-link" aria-label="Twitter"><i class="fab fa-twitter" title="Twitter" aria-hidden="true"></i> @{{ society.twitter }}</a>
+        </li>
+        {% endif %}
+        {% for link in society.societylinks_set.all %}
+        <li><a href="{{ link.url }}">{{ link.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path, reverse_lazy
 from django.views.generic.base import RedirectView
 
 from . import views
@@ -8,6 +8,10 @@ urlpatterns = [
     path('', views.home, name='home'),
 
     path('jumpstart/', RedirectView.as_view(pattern_name='website:jumpstart-2018'), name='jumpstart-redirect'),
+
+    # Societies
+    path('societies/', RedirectView.as_view(url=reverse_lazy('website:societies', kwargs={'society': 'ecss'})), name='societies-default'),
+    re_path(r'^societies/(?P<society>[\w-]+)/$', views.societies, name='societies'),
 
     # Events
     path('events/', views.events, name='events'),
