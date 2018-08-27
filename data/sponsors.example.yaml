@@ -1,0 +1,13 @@
+# Example Sponsor
+
+- model: website.sponsor
+  pk: example
+  fields:
+    name: Example
+    level: gold
+    logo_file: website/content/sponsors-logos/example.jpg
+    description: |
+      <p>
+        Example
+      </p>
+    website: https://example.com/
