@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-from .models import Society
+from .models import Society, Sponsor
 
 
 def home(request):
@@ -24,7 +24,16 @@ def societies(request, society):
 
 def sponsors(request):
     if 'sponsor' not in request.GET:
-        return render(request, 'website/sponsors/sponsors.html')
+        gold_sponsors = Sponsor.objects.filter(level='gold')
+        silver_sponsors = Sponsor.objects.filter(level='silver')
+        bronze_sponsors = Sponsor.objects.filter(level='bronze')
+        print(gold_sponsors)
+        context = {
+            'gold_sponsors': gold_sponsors,
+            'silver_sponsors': silver_sponsors,
+            'bronze_sponsors': bronze_sponsors,
+        }
+        return render(request, 'website/sponsors/sponsors.html', context)
     
     return render(request, 'website/sponsors/sponsor.html')
 
