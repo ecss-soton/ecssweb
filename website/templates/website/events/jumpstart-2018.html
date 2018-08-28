@@ -149,10 +149,14 @@ if (window.location.hash) {
 }
 // change url when click on buttons
 $("#ugScheduleButton").click(function() {
-  window.location.hash = "ugSchedule";
+  if (!$("#ugSchedule").hasClass("show")) {
+    window.location.hash = "ugSchedule";
+  }
 });
 $("#pgScheduleButton").click(function() {
-  window.location.hash = "pgSchedule";
+  if (!$("#pgSchedule").hasClass("show")) {
+    window.location.hash = "pgSchedule";
+  }
 });
 </script>
 
