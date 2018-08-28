@@ -67,6 +67,19 @@ Pictures
 
 
 /*
+Timetable
+*/
+.calendar-container {
+  overflow-x: scroll;
+}
+
+.calendar {
+  border: 0;
+  min-width: 40rem;
+}
+
+
+/*
 Maps
 */
 
