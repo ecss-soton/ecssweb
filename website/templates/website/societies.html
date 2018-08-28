@@ -62,7 +62,7 @@
           <a href="https://twitter.com/{{ society.twitter }}" class="icon-link" aria-label="Twitter"><i class="fab fa-twitter" title="Twitter" aria-hidden="true"></i> @{{ society.twitter }}</a>
         </li>
         {% endif %}
-        {% for link in society.societylinks_set.all %}
+        {% for link in society.societylink_set.all %}
         <li><a href="{{ link.url }}">{{ link.name }}</a></li>
         {% endfor %}
       </ul>
