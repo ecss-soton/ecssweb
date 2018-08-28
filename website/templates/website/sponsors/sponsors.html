@@ -1,0 +1,75 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Sponsors - ECSS{% endblock title %}
+
+{% block content %}
+<section class="container mt-3">
+  <section>
+    <h3>Gold Sponsors</h3>
+    <hr>
+    <ul class="list-unstyled d-flex justify-content-around flex-wrap">
+      {% for sponsor in gold_sponsors %}
+      <li>
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+          <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
+        </a>
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+          <div>{{ sponsor.name }}</div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  <section>
+    <h3>Silver Sponsors</h3>
+    <hr>
+    <div>
+      {% for sponsor in silver_sponsors %}
+      <div>
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+          <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
+        </a>
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+          <div>{{ sponsor.name }}</div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  <section>
+    <h3>Bronze Sponsors</h3>
+    <hr>
+    <div>
+      {% for sponsor in bronze_sponsors %}
+      <div>
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+          <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
+        </a>
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+          <div>{{ sponsor.name }}</div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  <div>
+    <p>
+      Our sponsors are vital part of ECSS. Their funding makes all our events possible. Additionally, we work with them to host a variety of academic events throughout the year; everything from talks about their tech to interview days and hackathons.
+    </p>
+    <p>
+      You can learn more about our sponsors on this website. Keep an eye on our <a href="https://www.facebook.com/ecss.soton/">Facebook page</a> for the latest academic events.
+    </p>
+    <p>
+      During term time, we invite our sponsors to hold talks on campus exclusively for members of ECSS. This is a great opportunity for you to keep up to speed with the latest innovations, network with leading companies, and even secure your graduate job! Our sponsors also regularly bring in pieces of kit for live hardware demonstrations, such as Leonardo with their military grade thermal imaging camera.
+    </p>
+    <p>
+      Besides talks, we host hackathons and interview days. Hackathons are valuable events where teams of engineers collaborate on hardware/software projects, with the common purpose of completing an assigned challenge. They are great opportunities to use new kit, enhance your skills, and make new friends. The interview days are great opportunities to meet with companies, gain experience with interviews, and of course land a job/internship! ECS graduates are highly sought after.
+    </p>
+    <p>
+      If you are a company interested in sponsoring ECSS, please contact us via our <a href="mailto:society@ecs.soton.ac.uk">email</a>, or our <a href="https://www.facebook.com/ecss.soton/">Facebook page</a>.
+    </p>
+  </div>
+</section>
+{% endblock %}

@@ -12,7 +12,7 @@
 {% block content %}
 <div class="bg-dark navbar-jumpstart2018">
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark container">
-    <a class="navbar-brand" href="#jumpstart-2018">
+    <a class="navbar-brand" href="#jumpstart2018">
       Jumpstart 2018
     </a>
     <ul class="navbar-nav">
@@ -20,10 +20,10 @@
         <a class="nav-link" href="#timetable">Timetable</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#city-challenge">City Challenge</a>
+        <a class="nav-link" href="#cityChallenge">City Challenge</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#city-challenge-groups">Groups</a>
+        <a class="nav-link" href="#cityChallengeGroups">Groups</a>
       </li>
       <!-- <li class="nav-item">
         <a class="nav-link" href="#maps">Maps</a>
@@ -32,7 +32,7 @@
   </nav>
 </div>
 <main class="content-jumpstart2018">
-  <section id="jumpstart-2018" class="pt-4 mb-0">
+  <section id="jumpstart2018" class="pt-4 mb-0">
     <div class="container">
       <div class="logos-jumpstart2018">
         <div class="logo-container-jumpstart2018">
@@ -41,7 +41,9 @@
         <div class="sponsor-logo-text-container-jumpstart2018">
           <div class="text-center">Proud Sponsor</div>
           <div class="sponsor-logo-container-jumpstart2018">
-            <img class="img-fluid" src="{% static 'website/content/events/jumpstart-2018/ibm-logo.jpg' %}" alt="IBM">
+            <a href="https://www.ibm.com/">
+              <img class="img-fluid" src="{% static 'website/content/events/jumpstart-2018/ibm-logo.jpg' %}" alt="IBM">
+            </a>
           </div>
         </div>
       </div>
@@ -57,16 +59,45 @@
   <section id="timetable" class="py-4 bg-light">
     <div class="container">
       <h2>Timetable</h2>
-      <p class="text-muted">Timetable will appear here soon.</p>
+      <div class="accordion mt-3" id="timetableAccordion">
+        <div class="card">
+          <div class="card-header" id="ugScheduleHeading">
+            <h5 class="mb-0">
+              <button class="btn btn-link btn-link-ecssweb accordion-button" type="button" data-toggle="collapse" data-target="#ugSchedule" aria-expanded="true" aria-controls="Jumpstart Undergraduate Schedule" id="ugScheduleButton">
+                Jumpstart Undergraduate Schedule
+              </button>
+            </h5>
+          </div>
+          <div id="ugSchedule" class="collapse show" aria-labelledby="ugScheduleHeading">
+            <div class="card-body calendar-container">
+              <iframe src="https://calendar.google.com/calendar/embed?showNav=0&amp;showTabs=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=500&amp;wkst=1&amp;bgcolor=%23f2a8a6&amp;src=fsntjlpn55svbf7u4rphn354bc%40group.calendar.google.com&amp;dates=20180923%2F20180929&amp;color=%23A32929&amp;ctz=Europe%2FLondon" height="500" class="calendar w-100"></iframe>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header calendar-container" id="pgScheduleHeading">
+            <h5 class="mb-0">
+              <button class="btn btn-link btn-link-ecssweb accordion-button" type="button" data-toggle="collapse" data-target="#pgSchedule" aria-expanded="true" aria-controls="Jumpstart Postgraduate Schedule" id="pgScheduleButton">
+                Jumpstart Postgraduate Schedule
+              </button>
+            </h5>
+          </div>
+          <div id="pgSchedule" class="collapse show" aria-labelledby="pgScheduleHeading">
+            <div class="card-body calendar-container">
+              <iframe src="https://calendar.google.com/calendar/embed?showNav=0&amp;showTabs=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=500&amp;wkst=1&amp;bgcolor=%23f2a77b&amp;src=tdibdfq86v9p2vfedjj7r7fqq0%40group.calendar.google.com&amp;dates=20180923%2F20180929&amp;color=%23BE6D00&amp;ctz=Europe%2FLondon" height="500" class="calendar w-100"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
-  <section id="city-challenge" class="pt-4">
+  <section id="cityChallenge" class="pt-4">
     <div class="container">
       <h2>City Challenge</h2>
       <p>Get ready for The Jumpstart City Challenge 2019, Freshers! We'll be splitting you into teams and giving you the opportunity to compete in a series of group challenges and games, seeing some of our favourite things Southampton has to offer, alongside your assigned Jumpstart Group Leader (a current ECS student). This is the first of many chances you'll have to interact with the committee members, who will be glad to answer any of your questions and learn a bit more about us as a society.</p>
       <p>Completion of any of our smorgasbord of activities with be worth some point value so be sure to bring your A-game!</p>
       <p>Of course, it wouldn't be much of a challenge without prizes; be sure to attend the Jumpstart reception on Friday 28th September, where we'll have some goodies from ECSS and IBM up for grabs.</p>
-      <section id="city-challenge-groups">
+      <section id="cityChallengeGroups">
         <h3>City Challenge Groups</h3>
         <p class="text-muted">Groups info will be released soon.</p>
       </section>
@@ -90,13 +121,38 @@
 {{ block.super }}
 <!-- Make Jumpstart 2018 navbar stick on the top -->
 <script>
-var jumpstart2018NavbarOffsetTop = $('.navbar-jumpstart2018').offset().top;
-$(window).bind('scroll', function () {
+var jumpstart2018NavbarOffsetTop = $(".navbar-jumpstart2018").offset().top;
+$(window).bind("scroll", function () {
   if ($(window).scrollTop() > jumpstart2018NavbarOffsetTop) {
-      $('.navbar-jumpstart2018').addClass('fixed-top navbar-sticky-jumpstart2018');
+      $(".navbar-jumpstart2018").addClass("fixed-top navbar-sticky-jumpstart2018");
   } else {
-      $('.navbar-jumpstart2018').removeClass('fixed-top navbar-sticky-jumpstart2018');
+      $(".navbar-jumpstart2018").removeClass("fixed-top navbar-sticky-jumpstart2018");
   }
+});
+</script>
+
+<!-- Timetable -->
+<script>
+// cloapse timetable when page loads
+$("#timetableAccordion .collapse").removeClass("show");
+$("#timetableAccordion .accordion-button").attr("aria-expanded", false);
+// show timetable if hash URL to the timetable
+if (window.location.hash) {
+  if (window.location.hash === "#ugSchedule") {
+    $("#ugSchedule").addClass("show");
+    $("#ugScheduleButton").attr("aria-expanded", true);
+  }
+  else if (window.location.hash === "#pgSchedule") {
+    $("#pgSchedule").addClass("show");
+    $("#pgScheduleButton").attr("aria-expanded", true);
+  }
+}
+// change url when click on buttons
+$("#ugScheduleButton").click(function() {
+  window.location.hash = "ugSchedule";
+});
+$("#pgScheduleButton").click(function() {
+  window.location.hash = "pgSchedule";
 });
 </script>
 

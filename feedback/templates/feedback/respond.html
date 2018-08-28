@@ -30,7 +30,7 @@ Respond Feedback - ECSS
           </div>
         </div>
       </div>
-      <form id="respond-form" method="POST">
+      <form id="respondForm" method="post">
         {% csrf_token %}
         {% for field in respond_form %}
         <div class="form-group">
@@ -42,9 +42,9 @@ Respond Feedback - ECSS
           {% endif %}
         </div>
         {% endfor %}
-        <input id="save-button" name="submit" type="submit" value="Save" class="btn btn-ecssweb">
+        <input id="saveButton" name="submit" type="submit" value="Save" class="btn btn-ecssweb">
         {% if not is_new %}
-        <input id="delete-button" name="submit" type="submit" value="Delete" class="btn btn-ecssweb-light">
+        <input id="deleteButton" name="submit" type="submit" value="Delete" class="btn btn-ecssweb-light">
         {% endif %}
         <a href="{% url 'feedback:view' %}" class="btn">Cancel</a>
       </form>
@@ -57,23 +57,23 @@ Respond Feedback - ECSS
 {{ block.super }}
 <script>
   is_bind = false;
-  $("#respond-form").change(function() {
+  $("#respondForm").change(function() {
     if (!is_bind) {
-      $(window).bind('beforeunload', function(){
+      $(window).bind("beforeunload", function(){
         return "Are you sure you want to leave this page, changes you made may not be saved?";
       });
     }
   });
-  $('#save-button').click(function() {
-    $(window).unbind('beforeunload');
-    $("#respond-form").removeAttr('novalidate');
-    $("#respond-form").unbind('submit');
+  $("#saveButton").click(function() {
+    $(window).unbind("beforeunload");
+    $("#respondForm").removeAttr("novalidate");
+    $("#respondForm").unbind("submit");
   });
-  $('#delete-button').click(function() {
-    $(window).unbind('beforeunload');
-    $("#respond-form").unbind('submit');
-    $("#respond-form").attr('novalidate', 'novalidate');
-    $("#respond-form").submit(function() {
+  $("#deleteButton").click(function() {
+    $(window).unbind("beforeunload");
+    $("#respondForm").unbind("submit");
+    $("#respondForm").attr("novalidate", "novalidate");
+    $("#respondForm").submit(function() {
       return confirm("Are you sure you want to delete this response?");
     });
   });

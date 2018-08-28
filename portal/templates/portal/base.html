@@ -12,14 +12,14 @@
 <div class="container mt-3">
   <div class="row">
     <div class="col-lg-3">
-      <ul class="list-group" id="portal-nav">
+      <ul class="list-group" id="portalNav">
         <li class="list-group-item">
           <div class="row portal-nav-no-row">
             <div class="col-9">
               <p>
                 Logged in as <strong class="username">{{ user.username }}</strong>
               </p>
-              <form action="{% url 'ecsswebauth:saml-logout' %}" method="GET">
+              <form action="{% url 'ecsswebauth:saml-logout' %}" method="get">
                 <input type="submit" value="Logout" class="btn btn-ecssweb">
               </form>
             </div>
@@ -80,6 +80,6 @@
 {% block pagescript %}
 {{ block.super }}
 <script>
-  $('#portal-nav>li:not(:first)').addClass('collapse portal-nav-collapse portalNavContent');
+  $("#portalNav>li:not(:first)").addClass("collapse portal-nav-collapse portalNavContent");
 </script>
 {% endblock %}

@@ -86,6 +86,14 @@ section {
   border-color: #d82129;
 }
 
+.btn-link-ecssweb {
+  color: darkred;
+}
+
+.btn-link-ecssweb:hover {
+  color: #d82129;
+}
+
 .icon-link {
   color: darkred;
   text-decoration: none;
