@@ -4,15 +4,20 @@
 
 {% block title %}Sponsors - ECSS{% endblock title %}
 
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'website/styles/sponsors/sponsors.css' %}">
+{% endblock %}
+
 {% block content %}
 <section class="container mt-3">
   <section>
-    <h3>Gold Sponsors</h3>
+    <h3><i class="medal medal-gold"></i> Gold Sponsors</h3>
     <hr>
     <ul class="list-unstyled d-flex justify-content-around flex-wrap">
       {% for sponsor in gold_sponsors %}
-      <li>
-        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+      <li class="sponsor-item">
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link">
           <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
         </a>
         <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
@@ -23,37 +28,38 @@
     </ul>
   </section>
   <section>
-    <h3>Silver Sponsors</h3>
+    <h3><i class="medal medal-silver"></i> Silver Sponsors</h3>
     <hr>
-    <div>
+    <ul class="list-unstyled d-flex justify-content-around flex-wrap">
       {% for sponsor in silver_sponsors %}
-      <div>
-        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+      <li class="sponsor-item">
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link">
           <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
         </a>
         <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
           <div>{{ sponsor.name }}</div>
         </a>
-      </div>
+      </li>
       {% endfor %}
-    </div>
+    </ul>
   </section>
   <section>
-    <h3>Bronze Sponsors</h3>
+    <h3><i class="medal medal-bronze"></i> Bronze Sponsors</h3>
     <hr>
-    <div>
+    <ul class="list-unstyled d-flex justify-content-around flex-wrap">
       {% for sponsor in bronze_sponsors %}
-      <div>
-        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+      <li class="sponsor-item">
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link">
           <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
         </a>
         <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
           <div>{{ sponsor.name }}</div>
         </a>
-      </div>
+      </li>
       {% endfor %}
-    </div>
+    </ul>
   </section>
+  <hr>
   <div>
     <p>
       Our sponsors are vital part of ECSS. Their funding makes all our events possible. Additionally, we work with them to host a variety of academic events throughout the year; everything from talks about their tech to interview days and hackathons.
