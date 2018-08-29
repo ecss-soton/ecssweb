@@ -1,0 +1,59 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Sponsors - ECS{% endblock title %}
+
+{% block pagestyle %}
+{{ block.super }}
+<!-- <link rel="stylesheet" href="{% static 'website/styles/sponsors.css' %}"> -->
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+  <ul class="nav nav-tabs">
+    {% for sponsor in gold_sponsors %}
+    <li class="nav-item">
+      <a class="nav-link {% if sponsor.codename == current_sponsor.codename %}active{% endif %}" href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+        {{ sponsor.name }}
+      </a>
+    </li>
+    {% endfor %}
+    {% for sponsor in silver_sponsors %}
+    <li class="nav-item">
+      <a class="nav-link {% if sponsor.codename == current_sponsor.codename %}active{% endif %}" href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+        {{ sponsor.name }}
+      </a>
+    </li>
+    {% endfor %}
+    {% for sponsor in bronze_sponsors %}
+    <li class="nav-item">
+      <a class="nav-link {% if sponsor.codename == current_sponsor.codename %}active{% endif %}" href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+        {{ sponsor.name }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="row mt-2">
+    <div class="col-lg-3 my-2">
+      <img class="img-fluid mx-auto d-block logo-sponsors" src="{% static current_sponsor.logo_file %}" alt="{{ current_sponsor.name }}">
+    </div>
+    <div class="col-lg-9">
+      <h2>{{ current_sponsor.name }}</h2>
+      <div>
+        {{ current_sponsor.description | safe }}
+      </div>
+      <ul class="list-unstyled">
+        {% if current_sponsor.website %}
+        <li class="my-1">
+          <a href="{{ current_sponsor.website }}" class="icon-link" aria-label="Website"><i class="fas fa-mouse-pointer" title="Website" aria-hidden="true"></i> {{ current_sponsor.website }}</a>
+        </li>
+        {% endif %}
+        {% for link in current_sponsor.sponsorlink_set.all %}
+        <li><a href="{{ link.url }}">{{ link.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
