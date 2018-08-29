@@ -6,7 +6,7 @@
 
 {% block pagestyle %}
 {{ block.super }}
-<link rel="stylesheet" href="{% static 'website/styles/sponsors/sponsors.css' %}">
+<link rel="stylesheet" href="{% static 'website/styles/sponsors.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -17,11 +17,8 @@
     <ul class="list-unstyled d-flex justify-content-around flex-wrap">
       {% for sponsor in gold_sponsors %}
       <li class="sponsor-item">
-        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link">
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link" title="{{ sponsor.name }}">
           <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
-        </a>
-        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
-          <div>{{ sponsor.name }}</div>
         </a>
       </li>
       {% endfor %}
@@ -33,11 +30,8 @@
     <ul class="list-unstyled d-flex justify-content-around flex-wrap">
       {% for sponsor in silver_sponsors %}
       <li class="sponsor-item">
-        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link">
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link" title="{{ sponsor.name }}">
           <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
-        </a>
-        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
-          <div>{{ sponsor.name }}</div>
         </a>
       </li>
       {% endfor %}
@@ -49,11 +43,8 @@
     <ul class="list-unstyled d-flex justify-content-around flex-wrap">
       {% for sponsor in bronze_sponsors %}
       <li class="sponsor-item">
-        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link">
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link" title="{{ sponsor.name }}">
           <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
-        </a>
-        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
-          <div>{{ sponsor.name }}</div>
         </a>
       </li>
       {% endfor %}
