@@ -67,14 +67,13 @@ jobs:
       - run:
           name: coverag
           command: |
-          . venv/bin/activate
-          pip install coverage
-          pip install codacy-coverage
-          coverage xml
-          export CODACY_PROJECT_TOKEN=$COVERAGE_TOKEN
-          python-codacy-coverage -r coverage.xml
+            . venv/bin/activate
+            pip install coverage
+            pip install codacy-coverage
+            coverage xml
+            export CODACY_PROJECT_TOKEN=$COVERAGE_TOKEN
+            python-codacy-coverage -r coverage.xml
 
       - store_artifacts:
           path: test-reports
           destination: test-reports
-          
