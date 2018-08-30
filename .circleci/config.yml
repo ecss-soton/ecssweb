@@ -70,7 +70,8 @@ jobs:
             . venv/bin/activate
             pip install coverage
             pip install codacy-coverage
-            coverage run --source='.' manage.py test myapp
+            coverage run --source='.' manage.py test
+            coverage report
             coverage xml
             export CODACY_PROJECT_TOKEN=$COVERAGE_TOKEN
             python-codacy-coverage -r coverage.xml
