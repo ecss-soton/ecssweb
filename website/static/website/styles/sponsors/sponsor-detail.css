@@ -42,12 +42,12 @@
 }
 
 
-.sponsor-logo {
+.ecssweb-sponsor-logo {
   padding: 1rem;
 }
 
 @media (max-width: 991.98px) {
-  .sponsor-logo {
+  .ecssweb-sponsor-logo {
     max-width: 15rem;
   }
 }
