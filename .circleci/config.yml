@@ -40,6 +40,7 @@ jobs:
 
             python3 -m venv venv
             . venv/bin/activate
+            pip install --upgrade pip
             pip install -r requirements.txt
 
       - save_cache:
@@ -62,6 +63,16 @@ jobs:
           command: |
             . venv/bin/activate
             python manage.py test
+
+      - run:
+          name: coverag
+          command: |
+          . venv/bin/activate
+          pip install coverage
+          pip install codacy-coverage
+          coverage xml
+          export CODACY_PROJECT_TOKEN=$COVERAGE_TOKEN
+          python-codacy-coverage -r coverage.xml
 
       - store_artifacts:
           path: test-reports
