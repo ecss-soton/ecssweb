@@ -6,29 +6,29 @@
 
 {% block pagestyle %}
 {{ block.super }}
-<!-- <link rel="stylesheet" href="{% static 'website/styles/sponsors.css' %}"> -->
+<link rel="stylesheet" href="{% static 'website/styles/sponsors/sponsor-detail.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="container mt-3">
-  <ul class="nav nav-tabs">
+  <ul class="nav nav-pills ecssweb-nav-sponsor">
     {% for sponsor in gold_sponsors %}
     <li class="nav-item">
-      <a class="nav-link {% if sponsor.codename == current_sponsor.codename %}active{% endif %}" href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+      <a class="nav-link ecssweb-nav-sponsor-link-gold {% if sponsor.codename == current_sponsor.codename %}active{% endif %}" href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
         {{ sponsor.name }}
       </a>
     </li>
     {% endfor %}
     {% for sponsor in silver_sponsors %}
     <li class="nav-item">
-      <a class="nav-link {% if sponsor.codename == current_sponsor.codename %}active{% endif %}" href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+      <a class="nav-link ecssweb-nav-sponsor-link-silver {% if sponsor.codename == current_sponsor.codename %}active{% endif %}" href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
         {{ sponsor.name }}
       </a>
     </li>
     {% endfor %}
     {% for sponsor in bronze_sponsors %}
     <li class="nav-item">
-      <a class="nav-link {% if sponsor.codename == current_sponsor.codename %}active{% endif %}" href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
+      <a class="nav-link ecssweb-nav-sponsor-link-bronze {% if sponsor.codename == current_sponsor.codename %}active{% endif %}" href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}">
         {{ sponsor.name }}
       </a>
     </li>
@@ -36,10 +36,23 @@
   </ul>
   <div class="row mt-2">
     <div class="col-lg-3 my-2">
-      <img class="img-fluid mx-auto d-block logo-sponsors" src="{% static current_sponsor.logo_file %}" alt="{{ current_sponsor.name }}">
+      <img class="img-fluid mx-auto d-block sponsor-logo" src="{% static current_sponsor.logo_file %}" alt="{{ current_sponsor.name }}">
     </div>
     <div class="col-lg-9">
       <h2>{{ current_sponsor.name }}</h2>
+      <div>
+        <p>
+          {% if current_sponsor.level == 'gold' %}
+          <small class="text-muted"><i class="medal medal-gold"></i> Gold Sponsor</small>
+          {% endif %}
+          {% if current_sponsor.level == 'silver' %}
+          <small class="text-muted"><i class="medal medal-silver"></i> Silver Sponsor</small>
+          {% endif %}
+          {% if current_sponsor.level == 'bronze' %}
+          <small class="text-muted"><i class="medal medal-silver"></i> Bronze Sponsor</small>
+          {% endif %}
+        </p>
+      </div>
       <div>
         {{ current_sponsor.description | safe }}
       </div>
