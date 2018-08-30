@@ -10,7 +10,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mt-3">
+<div class="container mt-2">
+  <div class="mb-2"><a href="{% url 'website:sponsors' %}"><i class="fas fa-arrow-circle-left"></i> sponsors overview</a></div>
   <ul class="nav nav-pills ecssweb-nav-sponsor">
     {% for sponsor in gold_sponsors %}
     <li class="nav-item">
