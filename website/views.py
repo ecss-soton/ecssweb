@@ -22,21 +22,33 @@ def societies(request, society):
 
 # Sponsors
 
+def _get_sponsors():
+    gold_sponsors = Sponsor.objects.filter(level='gold')
+    silver_sponsors = Sponsor.objects.filter(level='silver')
+    bronze_sponsors = Sponsor.objects.filter(level='bronze')
+
+    return gold_sponsors, silver_sponsors, bronze_sponsors
+
 def sponsors(request):
-    if 'sponsor' not in request.GET:
-        gold_sponsors = Sponsor.objects.filter(level='gold')
-        silver_sponsors = Sponsor.objects.filter(level='silver')
-        bronze_sponsors = Sponsor.objects.filter(level='bronze')
-        print(gold_sponsors)
+    if 'sponsor' in request.GET:
+        sponsor = get_object_or_404(Sponsor, pk=request.GET['sponsor'])
+        gold_sponsors, silver_sponsors, bronze_sponsors = _get_sponsors()
+        context = {
+            'gold_sponsors': gold_sponsors,
+            'silver_sponsors': silver_sponsors,
+            'bronze_sponsors': bronze_sponsors,
+            'current_sponsor': sponsor,
+        }
+        return render(request, 'website/sponsors/sponsor.html', context)
+
+    else:
+        gold_sponsors, silver_sponsors, bronze_sponsors = _get_sponsors()
         context = {
             'gold_sponsors': gold_sponsors,
             'silver_sponsors': silver_sponsors,
             'bronze_sponsors': bronze_sponsors,
         }
         return render(request, 'website/sponsors/sponsors.html', context)
-    
-    return render(request, 'website/sponsors/sponsor.html')
-
 
 # Events
 

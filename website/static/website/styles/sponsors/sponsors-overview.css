@@ -1,0 +1,61 @@
+.sponsor-item {
+  margin: 1rem;
+  width: 12rem;
+  text-align: center;
+}
+
+.sponsor-img-link {
+  margin: .5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sponsor-item img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+@media (max-width: 575.98px) {
+
+  .sponsor-item {
+    margin: 1rem;
+    width: 8.1rem;
+    text-align: center;
+  }
+
+  .sponsor-img-link {
+    margin: .5rem;
+    height: 4rem;
+  }
+
+}
+
+
+/* Medals */
+
+.medal {
+  background-image: url(/static/website/images/sponsors-medals.png);
+  background-repeat: no-repeat;
+  background-size: 4rem 4rem;
+  display: inline-block;
+}
+
+.medal-gold {
+  width: 2rem;
+  height: 2rem;
+  background-position: -2rem 0;
+}
+
+.medal-silver {
+  width: 2rem;
+  height: 2rem;
+  background-position: 0 -2rem;
+}
+
+.medal-bronze {
+  width: 2rem;
+  height: 2rem;
+  background-position: 0 0;
+}

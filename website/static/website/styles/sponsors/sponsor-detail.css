@@ -1,0 +1,81 @@
+/* Sponsor nav */
+.ecssweb-nav-sponsor .nav-item {
+  margin: 0 .4rem .4rem 0;
+}
+
+.ecssweb-nav-sponsor .nav-link {
+  padding: .3rem .5rem;
+}
+
+.ecssweb-nav-sponsor .nav-link.active {
+  background-color: darkred;
+}
+
+.ecssweb-nav-sponsor-link-gold {
+  color: white;
+  background-color: #f9c700;
+}
+
+.ecssweb-nav-sponsor-link-silver {
+  color: white;
+  background-color: silver;
+}
+
+.ecssweb-nav-sponsor-link-bronze {
+  color: white;
+  background-color: #cd7f32;
+}
+
+.ecssweb-nav-sponsor-link-gold:hover {
+  color: white;
+  background-color: #cca300;
+}
+
+.ecssweb-nav-sponsor-link-silver:hover {
+  color: white;
+  background-color: #999999;
+}
+
+.ecssweb-nav-sponsor-link-bronze:hover {
+  color: white;
+  background-color: #905923;
+}
+
+
+.ecssweb-sponsor-logo {
+  padding: 1rem;
+}
+
+@media (max-width: 991.98px) {
+  .ecssweb-sponsor-logo {
+    max-width: 15rem;
+  }
+}
+
+
+/* Medals */
+
+.medal {
+  background-image: url(/static/website/images/sponsors-medals.png);
+  background-repeat: no-repeat;
+  background-size: 3rem 3rem;
+  display: inline-block;
+}
+
+.medal-gold {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-position: -1.5rem 0;
+}
+
+.medal-silver {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-position: 0 -1.5rem;
+}
+
+.medal-bronze {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-position: 0 0;
+}
