@@ -38,7 +38,7 @@ section {
   font-size: 1.5em;
 }
 
-.nav-tabs .nav-item {
+.nav-tabs .nav-item, .nav-pills .nav-item {
   white-space: nowrap;
 }
 
