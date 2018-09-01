@@ -3,9 +3,19 @@ from django.shortcuts import render, get_object_or_404
 
 from .models import Society, Sponsor
 
+# Homepage
 
 def home(request):
     return render(request, 'website/home.html')
+
+
+# Committee
+
+def committee_overview(request):
+    return render(request, 'website/committee/committee-overview.html')
+
+def committee_member(request, role):
+    pass
 
 
 # Societies
