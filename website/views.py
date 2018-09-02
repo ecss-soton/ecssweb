@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-from .models import Society, Sponsor
+from .models import Society, Sponsor, CommitteeRoleMember
 
 # Homepage
 
@@ -12,7 +12,11 @@ def home(request):
 # Committee
 
 def committee_overview(request):
-    return render(request, 'website/committee/committee-overview.html')
+    committee = CommitteeRoleMember.objects.all()
+    context = {
+        'committee': committee,
+    }
+    return render(request, 'website/committee/committee-overview.html', context)
 
 def committee_member(request, role):
     pass
