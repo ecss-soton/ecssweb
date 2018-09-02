@@ -8,6 +8,11 @@ urlpatterns = [
     path('', views.home, name='home'),
 
     path('jumpstart/', RedirectView.as_view(pattern_name='website:jumpstart-2018'), name='jumpstart-redirect'),
+    path('feedback/', RedirectView.as_view(pattern_name='feedback:submit'), name='feedback-redirect'),
+
+    # Committee
+    path('committee/', views.committee_overview, name='committee-overview'),
+    re_path(r'^committee/(?P<role>[\w-]+)/$', views.committee_member, name='committee-member'),
 
     # Societies
     path('societies/', RedirectView.as_view(url=reverse_lazy('website:societies', kwargs={'society': 'ecss'})), name='societies-default'),

@@ -1,0 +1,87 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Committee - ECS{% endblock title %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'website/styles/committee/committee-member.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+  <ul class="nav nav-tabs">
+    {% for committee_member in committee %}
+    <li class="nav-item">
+      <a class="nav-link {% if committee_member.role_codename == current_committee_member.role_codename %}active{% endif %}" href="{% url 'website:committee-member' committee_member.role_codename %}">
+        {{ committee_member.role_short_name }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="row mt-2">
+    <div class="col-lg-3 my-2">
+      <img class="img-fluid mx-auto d-block committee-member-img" src="{% static current_committee_member.member_pic_file %}" alt="{{ current_committee_member.member_name }}">
+    </div>
+    <div class="col-lg-9">
+      <div>
+        <h2 class="d-inline-block mr-3">{{ current_committee_member.member_name }}</h2>
+        <div class="d-inline-block">
+          {% if current_committee_member.member_email %}
+          <a href="mailto:{{ current_committee_member.member_email }}" class="mr-2 committee-member-contact-icon" aria-label="Email"><i class="fas fa-envelope-square" title="Email" aria-hidden="true"></i></a>
+          {% endif %}
+          {% if current_committee_member.member_facebook %}
+          <a href="{{ current_committee_member.member_facebook }}" class="committee-member-contact-icon" aria-label="Facebook"><i class="fab fa-facebook" title="Facebook" aria-hidden="true"></i></a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="text-muted">{{ current_committee_member.role_name }}</div>
+      <div class="mt-3 font-italic">
+        {{ current_committee_member.role_description | safe }}
+      </div>
+      <hr>
+      <div>
+        {{ current_committee_member.member_manifesto | safe }}
+      </div>
+
+      <ul class="list-unstyled">
+        {% if society.time %}
+        <li>Time: {{ society.time }}</li>
+        {% endif %}
+        {% if society.location %}
+        <li>Location: {{ society.location }}</li>
+        {% endif %}
+        {% if society.email %}
+        <li class="my-1">
+          <a href="mailto:{{ society.email }}" class="icon-link" aria-label="Email"><i class="fas fa-envelope-square" title="Email" aria-hidden="true"></i> {{ society.email }}</a>
+        </li>
+        {% endif %}
+        {% if society.website %}
+        <li class="my-1">
+          <a href="{{ society.website }}" class="icon-link" aria-label="Website"><i class="fas fa-mouse-pointer" title="Website" aria-hidden="true"></i> {{ society.website }}</a>
+        </li>
+        {% endif %}
+        {% if society.fb_page %}
+        <li class="my-1">
+          <a href="{{ society.fb_page }}" class="icon-link" aria-label="Facebook Page"><i class="fab fa-facebook" title="Facebook Page" aria-hidden="true"></i> Facebook Page</a>
+        </li>
+        {% endif %}
+        {% if society.fb_group %}
+        <li class="my-1">
+          <a href="{{ society.fb_group }}" class="icon-link" aria-label="Facebook Group"><i class="fab fa-facebook" title="Facebook Group" aria-hidden="true"></i> Facebook Group</a>
+        </li>
+        {% endif %}
+        {% if society.twitter %}
+        <li class="my-1">
+          <a href="https://twitter.com/{{ society.twitter }}" class="icon-link" aria-label="Twitter"><i class="fab fa-twitter" title="Twitter" aria-hidden="true"></i> @{{ society.twitter }}</a>
+        </li>
+        {% endif %}
+        {% for link in society.societylink_set.all %}
+        <li><a href="{{ link.url }}">{{ link.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

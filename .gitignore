@@ -5,6 +5,7 @@ db.sqlite3
 fixture.yaml
 societies.yaml
 sponsors.yaml
+committee.yaml
 
 # website content
 website/static/website/content/

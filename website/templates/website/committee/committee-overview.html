@@ -1,0 +1,50 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Committee - ECSS{% endblock title %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'website/styles/committee/committee-overview.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="container mt-3">
+  <h1>ECSS Committee</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <p>
+        The ECSS Committee work tirelessly on your behalf to ensure access to the best social events and sponsored activities.
+      </p>
+      <ul class="list-unstyled">
+        <li class="my-1"><a href="https://www.facebook.com/ecss.soton/" class="icon-link"><i class="fab fa-facebook" title="ECSS Facebook page" aria-hidden="true"></i> ECSS Facebook Page</a></li>
+        <li class="my-1"><a href="mailto:society@ecs.soton.ac.uk" class="icon-link"><i class="fas fa-envelope-square" title="Email" aria-hidden="true"></i> society@ecs.soton.ac.uk</a></li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <img class="img-fluid" src="{% static 'website/content/committee/committee-group.jpg' %}" alt="2018-2019 ECSS committee group at Hobbit BBQ social">
+    </div>
+  </div>
+  <section class="mt-3">
+    <h2>2018-2019 Committee</h2>
+    <hr>
+    Click any of the roles below to see who currently holds the role, and their pledges.
+    <ul class="list-unstyled d-flex justify-content-around flex-wrap">
+      {% for committee_role_member in committee %}
+      <li class="text-center committee-item">
+        <a href="{% url 'website:committee-member' committee_role_member.role_codename %}" class="committee-img-link">
+          <img class="img-fluid" src="{% static committee_role_member.member_pic_file %}" alt="{{ committee_role_member.member_name }}">
+        </a>
+        <a href="{% url 'website:committee-member' committee_role_member.role_codename %}" class="committee-member-name-link">
+          <div>{{ committee_role_member.member_name }}</div>
+        </a>
+        <a href="{% url 'website:committee-member' committee_role_member.role_codename %}" class="committee-role-name-link">
+          <div class="text-muted">{{ committee_role_member.role_name }}</div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+</section>
+{% endblock %}
