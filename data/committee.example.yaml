@@ -1,0 +1,16 @@
+- model: website.committeerolemember
+  pk: president
+  fields:
+    role_short_name: President
+    role_name: President
+    role_description: |
+      <p>
+      </p>
+    member_name: Example
+    member_nickname: ''
+    member_pic_file:  website/content/committee/example.jpg
+    member_manifesto: |
+      <p>
+      </p>
+    member_email: president@example.com
+    member_facebook: ''

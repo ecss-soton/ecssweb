@@ -32,7 +32,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link" href="https://society.ecs.soton.ac.uk/committee/">Committee</a>
+                <a class="nav-link" href="{% url 'website:committee-overview' %}">Committee</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'website:societies-default' %}">Societies</a>
@@ -41,7 +41,7 @@
                   <a class="nav-link" href="{% url 'website:sponsors' %}">Sponsors</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarEventsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="{% url 'website:events' %}" id="navbarEventsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Events
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarEventsDropdown">
@@ -57,7 +57,7 @@
                 <a class="nav-link" href="{% url 'website:welfare' %}">Welfare</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarSportsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="{% url 'website:sports' %}" id="navbarSportsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Sports
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarSportsDropdown">
@@ -72,7 +72,7 @@
                 </div>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarFeedbackDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="{% url 'feedback:submit' %}" id="navbarFeedbackDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Feedback
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarFeedbackDropdown">

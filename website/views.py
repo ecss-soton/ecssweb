@@ -1,11 +1,31 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-from .models import Society, Sponsor
+from .models import Society, Sponsor, CommitteeRoleMember
 
+# Homepage
 
 def home(request):
     return render(request, 'website/home.html')
+
+
+# Committee
+
+def committee_overview(request):
+    committee = CommitteeRoleMember.objects.all()
+    context = {
+        'committee': committee,
+    }
+    return render(request, 'website/committee/committee-overview.html', context)
+
+def committee_member(request, role):
+    committee = CommitteeRoleMember.objects.all()
+    committee_role_member = get_object_or_404(CommitteeRoleMember, pk=role)
+    context = {
+        'committee': committee,
+        'current_committee_member': committee_role_member,
+    }
+    return render(request, 'website/committee/committee-member.html', context)
 
 
 # Societies
