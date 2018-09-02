@@ -19,7 +19,13 @@ def committee_overview(request):
     return render(request, 'website/committee/committee-overview.html', context)
 
 def committee_member(request, role):
-    pass
+    committee = CommitteeRoleMember.objects.all()
+    committee_role_member = get_object_or_404(CommitteeRoleMember, pk=role)
+    context = {
+        'committee': committee,
+        'current_committee_member': committee_role_member,
+    }
+    return render(request, 'website/committee/committee-member.html', context)
 
 
 # Societies

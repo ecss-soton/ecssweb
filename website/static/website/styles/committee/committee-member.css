@@ -1,0 +1,10 @@
+.committee-member-contact-icon {
+  color: black;
+  font-size: 1.6rem;
+}
+
+@media (max-width: 991.98px) {
+  .committee-member-img {
+    max-width: 15rem;
+  }
+}

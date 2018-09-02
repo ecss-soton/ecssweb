@@ -1,6 +1,7 @@
 - model: website.committeerolemember
   pk: president
   fields:
+    role_short_name: President
     role_name: President
     role_description: |
       <p>
