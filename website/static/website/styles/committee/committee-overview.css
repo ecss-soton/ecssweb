@@ -26,4 +26,6 @@
 
 .committee-role-name-link:hover {
   text-decoration-color: #6c757d;
+  -webkit-text-decoration-color: #6c757d;
+  -moz-text-decoration-color: #6c757d;
 }
