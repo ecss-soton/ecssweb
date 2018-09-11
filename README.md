@@ -66,7 +66,7 @@ To find out more about models of ecssweb, see the [wiki](https://github.com/ecss
 
 To regularly clear the inactive sessions and non-persistent users from the database, you can setup the cron job to it
 
-- Give the `maintance.sh` script execute permission
+- Give the `maintenance.sh` script execute permission
 
   ```
   chmod u+x maintance.sh
@@ -75,7 +75,7 @@ To regularly clear the inactive sessions and non-persistent users from the datab
 - Run `crontab -e` to open the text editor and add the following line:
 
   ```
-  0 0 * * * /path/to/project/maintance.sh /path/to/python/env/ /path/to/project/
+  0 0 * * * /path/to/project/maintenance.sh /path/to/python/env/ /path/to/project/
   ```
 
   This makes the maintance script runs every day at midnight
