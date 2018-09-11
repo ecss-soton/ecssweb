@@ -6,7 +6,11 @@ from .models import Society, Sponsor, CommitteeRoleMember
 # Homepage
 
 def home(request):
-    return render(request, 'website/home.html')
+    gold_sponsors = Sponsor.objects.filter(level='gold')
+    context = {
+        'gold_sponsors': gold_sponsors,
+    }
+    return render(request, 'website/home.html', context)
 
 
 # Committee

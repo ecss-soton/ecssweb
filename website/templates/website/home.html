@@ -42,14 +42,15 @@
   <section>
     <h2 class="text-center">Our Gold Sponsors</h2>
     <hr>
-    <div class="sponsors-logos-home">
-      <a href="https://www.jpmorgan.com/" class="sponsor-link-logo-home" title="J.P. Morgan" aria-label="J.P. Morgan">
-        <img src="{% static 'website/content/sponsors-logos/jpmorgan.jpg' %}" alt="J.P. Morgan logo" class="sponsor-logo-home" aria-hidden="true">
-      </a>
-      <a href="https://www.talent.io/" class="sponsor-link-logo-home" title="talent.io" aria-label="talent.io">
-        <img src="{% static 'website/content/sponsors-logos/talentio.png' %}" alt="talent.io logo" class="sponsor-logo-home" aria-hidden="true">
-      </a>
-    </div>
+    <ul class="d-flex justify-content-around list-unstyled">
+      {% for gold_sponsor in gold_sponsors %}
+      <li class="sponsor-list-logo-home">
+        <a href="{% url 'website:sponsors' %}?sponsor={{ gold_sponsor.codename }}" title="{{ gold_sponsor.name }}" aria-label="{{ gold_sponsor.name }}">
+          <img src="{% static gold_sponsor.logo_file %}" alt="{{ gold_sponsor.name }}" class="sponsor-logo-home" aria-hidden="true">
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
     <p>Find out more about our sponsors on <a href="https://society.ecs.soton.ac.uk/sponsors/">our sponsors page</a>.</p>
   </section>
 </div>
