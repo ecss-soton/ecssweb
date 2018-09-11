@@ -6,5 +6,5 @@ app_name='feedback'
 urlpatterns = [
     path('', views.submit, name='submit'),
     path('view/', views.view, name='view'),
-    path('<int:feedback_id>/respond/', views.respond, name='respond'),
+    path('<uuid:feedback_uuid>/respond/', views.respond, name='respond'),
 ]
