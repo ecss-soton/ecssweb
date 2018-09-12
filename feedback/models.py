@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericRelation
 from auditlog.models import AuditLog
 
+import uuid
 
 class Category(models.Model):
     name = models.CharField(max_length=20, primary_key=True)
@@ -13,6 +14,7 @@ class Category(models.Model):
         return self.name
 
 class Feedback(models.Model):
+    uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
     message = models.TextField(verbose_name='Feedback')
     category = models.ForeignKey(Category, on_delete=models.SET('Others'), default=None)
     # Time when the feedback submitted

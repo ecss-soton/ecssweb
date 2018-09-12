@@ -47,12 +47,12 @@ View Feedback - ECSS
       <p>{{ feedback.response }}</p>
       <div class="d-flex">
         {% if perms.feedback.add_response %}
-        <a href="{% url 'feedback:respond' feedback.pk %}" class="mr-3 text-nowrap">Edit response</a>
+        <a href="{% url 'feedback:respond' feedback.uuid %}" class="mr-3 text-nowrap">Edit response</a>
         {% endif %}
         <small class="text-muted ml-auto">Replyed by {{ feedback.response.committee }} on {{ feedback.response.time|date }} at {{ feedback.response.time|time:"H:i" }}</small>
       </div>
       {% elif perms.feedback.add_response %}
-      <a href="{% url 'feedback:respond' feedback.pk %}">Add a response</a>
+      <a href="{% url 'feedback:respond' feedback.uuid %}">Add a response</a>
       {% endif %}
     </div>
     {% endfor %}
