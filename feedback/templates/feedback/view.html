@@ -16,9 +16,13 @@ View Feedback - ECSS
     {% endif %}
   {% endfor %}
   {% if not perms.feedback.add_response %}
-  <p>Only feedback replied by committee will be shown.</p>
+  <p>Only feedback replied by the committee will be shown.</p>
   {% endif %}
   {% if feedbacks %}
+  <p class="text-muted">
+    <small>
+      Some feedback and responses migrated from the old database with no recorded submission time or whether submitted by an ECS or non-ECS member are all showing submitted on 1 Jan 2018 and submitted by non-ECS member.
+    </small>
   <div class="list-group mb-3">
     {% for feedback in feedbacks %}
     <div class="list-group-item">
