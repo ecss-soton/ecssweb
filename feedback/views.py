@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, resolve_url
+from django.shortcuts import render, redirect, resolve_url, get_object_or_404
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.contrib.auth.decorators import login_required, permission_required
@@ -128,8 +128,8 @@ def view(request):
 
 @login_required
 @permission_required('feedback.add_response', raise_exception=True)
-def respond(request, feedback_id):
-    feedback = get_object_or_404(Feedback, pk=feedback_id)
+def respond(request, feedback_uuid):
+    feedback = get_object_or_404(Feedback, uuid=feedback_uuid)
     is_new = True
     if request.method == 'POST' and request.POST['submit'] != 'Delete':
         # Build form

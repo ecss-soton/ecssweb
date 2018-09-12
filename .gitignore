@@ -3,6 +3,7 @@ db.sqlite3
 
 # data
 fixture.yaml
+fixture.local.yaml
 societies.yaml
 sponsors.yaml
 committee.yaml
