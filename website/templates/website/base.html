@@ -72,15 +72,6 @@
                 </div>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'feedback:submit' %}" id="navbarFeedbackDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Feedback
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarFeedbackDropdown">
-                  <a class="dropdown-item" href="{% url 'feedback:submit' %}">Submit</a>
-                  <a class="dropdown-item" href="{% url 'feedback:view' %}">View</a>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="{% url 'website:about' %}" id="navbarAboutDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   About
                 </a>
@@ -93,6 +84,9 @@
                 </div>
               </li>
             </ul>
+            <span class="nav-item">
+              <a class="nav-link" href="{% url 'portal:overview' %}">Portal</a>
+            </span>
           </div>
         </nav>
       </div>
