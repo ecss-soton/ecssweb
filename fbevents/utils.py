@@ -10,8 +10,7 @@ from fbevents.models import Event
 # Assume all the upcoming events are in the first page, paging is ignored
 def sync_upcoming_events_with_fb():
     fb_events_api = 'https://graph.facebook.com/{}/events?access_token={}&fields=name,id,place,cover,start_time,end_time'.format(settings.FB_PAGE_ID, settings.FB_ACCESS_TOKEN)
-    req = urllib.request.Request(fb_events_api)
-    with urllib.request.urlopen(req) as url:
+    with urllib.request.urlopen(fb_events_api) as url:
         events = json.loads(url.read().decode())
         for event in events['data']:
             end_time = datetime.strptime(event['end_time'], '%Y-%m-%dT%H:%M:%S%z')
