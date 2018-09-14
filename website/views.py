@@ -3,12 +3,15 @@ from django.shortcuts import render, get_object_or_404
 
 from .models import Society, Sponsor, CommitteeRoleMember
 
+from fbevents.utils import get_upcoming_events
+
 # Homepage
 
 def home(request):
     gold_sponsors = Sponsor.objects.filter(level='gold')
     context = {
         'gold_sponsors': gold_sponsors,
+        'events': get_upcoming_events(),
     }
     return render(request, 'website/home.html', context)
 
