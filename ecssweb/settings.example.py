@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'portal.apps.PortalConfig',
     'feedback.apps.FeedbackConfig',
     'auditlog.apps.AuditlogConfig',
+    'fbevents.apps.FbeventsConfig',
 ]
 
 MIDDLEWARE = [
@@ -164,3 +165,10 @@ STATIC_ROOT = ''
 SAML_FOLDER = os.path.join(BASE_DIR, 'ecsswebauth', 'saml_config')
 
 SAML_GROUP_PREFIX = 'saml_'
+
+
+# FB
+
+FB_PAGE_ID = ''
+
+FB_ACCESS_TOKEN = ''
