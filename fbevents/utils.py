@@ -18,9 +18,12 @@ def sync_upcoming_events_with_fb():
             if now < end_time:
                 defaults = {
                     'name': event['name'],
-                    'location': event['place'],
-                    'cover': event['cover'],
+                    'location': event['place']['name'],
+                    'cover': event['cover']['source'],
                     'start_time': event['start_time'],
                     'end_time': event['end_time'],
                 }
                 Event.objects.update_or_create(fb_id=event['id'], defaults=defaults)
+
+def get_upcoming_events():
+    return Event.objects.filter(end_time__gt=timezone.now())

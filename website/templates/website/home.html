@@ -21,22 +21,25 @@
     <h2 class="text-center">Upcoming Events</h2>
     <hr>
     <p class="alert alert-info">If you're looking for our big freshers welcome event, check out <a href="{% url 'website:jumpstart-2018' %}">Jumpstart 2018</a>.</p>
-    <!--
+    {% if not events %}
+    <p>Currently no upcoming events published, stay tuned.</p>
+    {% endif %}
+    {% for event in events %}
     <div class="events-cards-home">
       <div class="card event-card-home">
-        <img class="card-img-top" src="#" alt="Example event">
-        <a href="#">
+        <img class="card-img-top" src="{{ event.cover }}" alt="{{ event.name }}">
+        <a href="https://www.facebook.com/events/{{ event.fb_id }}/">
           <h5 class="card-header">
-              Example event
+            {{ event.name }}
           </h5>
         </a>
         <div class="card-body">
-          time<br>
-          location
+          {{ event.start_time|date }} at {{ event.start_time|time:"H:i" }} - {{ event.end_time|date }} at {{ event.end_time|time:"H:i" }}<br>
+          {{ event.location }}
         </div>
       </div>
     </div>
-    -->
+    {% endfor %}
     <p>Find out more about our events on <a href="{% url 'website:events' %}">our events page</a>.</p>
   </section>
   <section>
