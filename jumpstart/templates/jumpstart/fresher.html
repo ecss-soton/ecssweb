@@ -1,3 +1,31 @@
-{% extends 'jumpstart/base.html' %}
+{% extends 'jumpstart/home-base.html' %}
 
-
+{% block jumpstartcontent %}
+<p class="card-text">Hi {{ fresher.name }}, welcome to Jumpstart!</p>
+<div class="card">
+    <div class="card-header">
+      Your Group
+    </div>
+    <div class="card-body">
+      <p class="card-text">
+        You are in <b>Group {{ fresher.group.id }}</b> with:
+        <ul>
+          {% for group_fresher in fresher.group.fresher_set.all %}
+          {% if group_fresher != fresher %}
+          <li>{{ group_fresher.name }}</li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </p>
+    </div>
+  </div>
+<div class="card mt-3">
+  <div class="card-header">
+    Your Group Helper
+  </div>
+  <div class="card-body">
+    <p class="card-text">Your group helper is {{ fresher.group.helper.name }}{% if fresher.group.helper.nickname %} ({{ fresher.group.helper.nickname }}){% endif %}.</p>
+    <img src="{{ fresher.group.helper.photo }}" alt="{{ fresher.group.helper.name }}">
+  </div>
+</div>
+{% endblock %}

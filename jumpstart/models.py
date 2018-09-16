@@ -12,3 +12,10 @@ class Fresher(models.Model):
     username = models.CharField(max_length=20, primary_key=True)
     name = models.CharField(max_length=50)
     group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True)
+
+class Helper(models.Model):
+    username = models.CharField(max_length=20, primary_key=True)
+    name = models.CharField(max_length=50)
+    nickname = models.CharField(max_length=50)
+    photo = models.ImageField(upload_to='jumpstart2018/helpers/')
+    group = models.OneToOneField(Group, on_delete=models.SET_NULL, null=True)

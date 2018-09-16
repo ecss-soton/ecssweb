@@ -20,8 +20,9 @@ class HomeView(UserPassesTestMixin, View):
 
     def get(self, request):
         if Fresher.objects.filter(pk=request.user.username).exists():
+            fresher = Fresher.objects.get(pk=request.user.username)
             context = {
-
+                'fresher': fresher,
             }
             return render(request, 'jumpstart/fresher.html', context)
         elif request.user.groups.filter(name='committee').exists():
