@@ -23,6 +23,7 @@ urlpatterns = [
     path('portal/', include('portal.urls')),
     path('portal/feedback/', include('feedback.urls')),
     path('portal/auditlog/', include('auditlog.urls')),
+    path('portal/jumpstart/', include('jumpstart.urls')),
     # Temp for deployment
     path('simplesaml/module.php/saml/sp/saml2-acs.php/default-sp', saml_acs, name='saml-asc'),
     path('simplesaml/module.php/saml/sp/saml2-logout.php/default-sp', saml_sls, name='saml-sls'),
