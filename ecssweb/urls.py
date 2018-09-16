@@ -14,6 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import include, path
+from django.conf.urls.static import static
+
+from django.conf import settings
 
 from ecsswebauth.views import saml_acs, saml_sls
 
@@ -27,7 +30,7 @@ urlpatterns = [
     # Temp for deployment
     path('simplesaml/module.php/saml/sp/saml2-acs.php/default-sp', saml_acs, name='saml-asc'),
     path('simplesaml/module.php/saml/sp/saml2-logout.php/default-sp', saml_sls, name='saml-sls'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = 'website.views.page_not_found'
 handler403 = 'website.views.permission_denied'

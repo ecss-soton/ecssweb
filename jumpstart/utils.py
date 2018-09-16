@@ -1,7 +1,13 @@
+from website.utils import is_committee
+
 from .models import Fresher, Helper
 
 
+def is_fresher(user):
+    return Fresher.objects.filter(pk=user.username).exists()
+
+def is_helper(user):
+    return Helper.objects.filter(pk=user.username).exists()
+
 def jumpstart_check(user):
-    return user.groups.filter(name='committee').exists() \
-        or Fresher.objects.filter(pk=user.username).exists() \
-        or Helper.objects.filter(pk=user.username).exists()
+    return is_committee or is_fresher or is_helper

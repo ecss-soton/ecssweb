@@ -1,6 +1,11 @@
 {% extends 'jumpstart/home-base.html' %}
 
 {% block jumpstartcontent %}
+{% for message in messages %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+<div class="alert alert-success">{{ message }}</div>
+{% endif %}
+{% endfor %}
 <p class="card-text">Hi {% if helper.nickname %}{{ helper.nickname }}{% else %}{{ helper.name }}{% endif %}, welcome to Jumpstart!</p>
 <div class="card">
     <div class="card-header">
@@ -28,14 +33,14 @@
   </div>
   <div class="card-body">
     <p class="card-text">
-      <img src="{{ helper.photo }}" alt="{{ helper.name }}">
+      <img class="img-fluid" src="{{ helper.photo.url }}" alt="{{ helper.name }}">
       <ul>
         <li>Name: {{ helper.name }}</li>
         <li>Nickname: {% if helper.nickname %}{{ helper.nickname }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
       </ul>
     </p>
     <p class="card-text">
-      <a href="#">Edit</a>
+      <a href="{% url 'jumpstart:profile-edit' %}">Edit</a>
     </p>
     <p class="card-text">
       <small class="text-muted">Your profile is visible to ECSS committee and your group members.</small>

@@ -11,6 +11,7 @@ jumpstart.yaml
 
 # website content
 website/static/website/content/
+media/
 
 # SAML config
 ecsswebauth/saml_config/settings.json
