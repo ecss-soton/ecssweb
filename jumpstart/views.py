@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.core.exceptions import PermissionDenied
 
-from .models import Fresher
+from .models import Fresher, Helper
 
 from .utils import jumpstart_check
 
@@ -25,8 +25,12 @@ class HomeView(UserPassesTestMixin, View):
                 'fresher': fresher,
             }
             return render(request, 'jumpstart/fresher.html', context)
-        elif request.user.groups.filter(name='committee').exists():
-            pass
+        elif Helper.objects.filter(pk=request.user.username).exists():
+            helper = Helper.objects.get(pk=request.user.username)
+            context = {
+                'helper': helper,
+            }
+            return render(request, 'jumpstart/helper.html', context)
         elif request.user.groups.filter(name='committee').exists():
             pass
         else:

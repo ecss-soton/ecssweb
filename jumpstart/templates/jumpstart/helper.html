@@ -1,0 +1,54 @@
+{% extends 'jumpstart/home-base.html' %}
+
+{% block jumpstartcontent %}
+<p class="card-text">Hi {% if helper.nickname %}{{ helper.nickname }}{% else %}{{ helper.name }}{% endif %}, welcome to Jumpstart!</p>
+<div class="card">
+    <div class="card-header">
+      Your Group
+    </div>
+    <div class="card-body">
+      <p class="card-text">
+        You are helper of <b>Group {{ helper.group.id }}</b>.
+      </p>
+      <p class="card-text">
+        Members in Group {{ helper.group.id }}:
+        <ul>
+          {% for group_fresher in helper.group.fresher_set.all %}
+          {% if group_fresher != fresher %}
+          <li>{{ group_fresher.name }}</li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </p>
+    </div>
+  </div>
+<div class="card mt-3">
+  <div class="card-header">
+    Your Profile
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      <img src="{{ helper.photo }}" alt="{{ helper.name }}">
+      <ul>
+        <li>Name: {{ helper.name }}</li>
+        <li>Nickname: {% if helper.nickname %}{{ helper.nickname }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
+      </ul>
+    </p>
+    <p class="card-text">
+      <a href="#">Edit</a>
+    </p>
+    <p class="card-text">
+      <small class="text-muted">Your profile is visible to ECSS committee and your group members.</small>
+    </p>
+  </div>
+</div>
+<div class="card mt-3">
+  <div class="card-header">
+      City Challenge
+    </div>
+    <div class="card-body">
+      
+    </div>
+  </div>
+</div>
+{% endblock %}
