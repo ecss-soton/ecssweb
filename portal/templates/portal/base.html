@@ -2,6 +2,9 @@
 
 {% load static %}
 
+{% load website_extra %}
+{% load jumpstart_extra %}
+
 {% block title %}Portal - ECSS{% endblock %}
 
 {% block pagestyle %}
@@ -55,14 +58,21 @@
             </li>
           </ul>
         </li>
-        <!--
+        {% if user|has_group:"committee" or user|is_fresher or user|is_helper %}
         <li class="list-group-item">
           <ul class="list-unstyled">
             <li>
-              <a href="#">Jumpstart</a>
+              <a href="{% url 'jumpstart:home' %}">Jumpstart</a>
             </li>
+            {% if user|is_helper %}
+            <li>
+              <a href="{% url 'jumpstart:profile-edit' %}">Edit Profile</a>
+            </li>
+            {% endif %}
           </ul>
         </li>
+        {% endif %}
+        <!--
         <li class="list-group-item">
           <a href="#">Admin</a>
         </li>
