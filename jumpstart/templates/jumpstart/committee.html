@@ -1,0 +1,24 @@
+{% extends 'jumpstart/home-base.html' %}
+
+{% block jumpstartcontent %}
+{% for group in groups %}
+<div class="card mt-3">
+  <div class="card-header">
+      Group {{ group.id }}
+    </div>
+    <div class="card-body">
+      <img class="img-fluid helper-photo" src="{{ group.helper.photo.url }}" alt="{{ group.helper.name }}">
+      <p class="card-text mt-2">Group helper: {{ group.helper.name }}{% if group.helper.nickname %} ({{ group.helper.nickname }}){% endif %} <small class="text-muted ml-3">{{ group.helper.username }}</small></p>
+      <p class="card-text">
+        Group members:
+        <ul>
+          {% for fresher in group.fresher_set.all %}
+          <li>{{ fresher.name }} <small class="text-muted ml-2">{{ fresher.username }}</small></li>
+          {% endfor %}
+        </ul>
+      </p>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

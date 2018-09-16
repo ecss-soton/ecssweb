@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
 
-from .models import Fresher, Helper
+from .models import Fresher, Helper, Group
 
 from .forms import HelperEditProfileForm
 
@@ -38,7 +38,11 @@ class HomeView(UserPassesTestMixin, View):
             }
             return render(request, 'jumpstart/helper.html', context)
         elif is_committee(request.user):
-            pass
+            groups = Group.objects.all().order_by('id')
+            context = {
+                'groups': groups,
+            }
+            return render(request, 'jumpstart/committee.html', context)
         else:
             raise PermissionDenied()
 
@@ -53,7 +57,7 @@ class ProfileEditView(UserPassesTestMixin, View):
 
     def get(self, request):
         if is_fresher(request.user):
-            pass
+            raise Http404()
         elif is_helper(request.user):
             helper = Helper.objects.get(pk=request.user.username)
             profile_edit_form = HelperEditProfileForm(instance=helper)
@@ -66,7 +70,7 @@ class ProfileEditView(UserPassesTestMixin, View):
 
     def post(self, request):
         if is_fresher(request.user):
-            pass
+            raise Http404()
         elif is_helper(request.user):
             helper = Helper.objects.get(pk=request.user.username)
 

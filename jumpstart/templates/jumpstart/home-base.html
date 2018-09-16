@@ -1,5 +1,12 @@
 {% extends 'portal/base.html' %}
 
+{% load static %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'jumpstart/jumpstart.css' %}">
+{% endblock %}
+
 {% block title %}
 Jumpstart - ECSS
 {% endblock %}
