@@ -1,37 +1,17 @@
-# Python CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-python/ for more details
-#
 version: 2
+
 jobs:
   build:
-    branches:
-      only:
-        - master
-        - develop
-
     docker:
-      # specify the version you desire here
-      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:3.6.1
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
+      - image: circleci/python:3.6.6-browsers
     working_directory: ~/repo
-
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-{{ checksum "requirements.txt" }}
           # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
+            - v1-dependencies-
       - run:
           name: install dependencies
           command: |
@@ -42,30 +22,40 @@ jobs:
             . venv/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
-
       - save_cache:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-        
+      - persist_to_workspace:
+          root: ~/
+          paths: 
+            - repo
       - run:
           name: config
           command:
             mv ecssweb/settings.example.py ecssweb/settings.py
 
-      # run tests!
-      # this example uses Django's built-in test-runner
-      # other common Python testing frameworks include pytest and nose
-      # https://pytest.org
-      # https://nose.readthedocs.io
+  unit_test:
+    docker:
+        - image: circleci/python:3.6.1-browsers
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/
       - run:
           name: run tests
           command: |
             . venv/bin/activate
             python manage.py test
-
+  coverage:
+    docker:
+        - image: circleci/python:3.6.1-browsers
+    working_directory: ~/
+    steps:
+      - attach_workspace:
+          at: ~/repo
       - run:
-          name: coverag
+          name: coverage
           command: |
             . venv/bin/activate
             pip install coverage
@@ -79,3 +69,33 @@ jobs:
       - store_artifacts:
           path: test-reports
           destination: test-reports
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+                - seleniumSetup
+      - unit_test:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+                - seleniumSetup
+      - coverage:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+                - seleniumSetup
