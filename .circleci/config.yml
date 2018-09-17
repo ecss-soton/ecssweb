@@ -46,7 +46,6 @@ jobs:
           name: run tests
           command: |
             source venv/bin/activate
-            pip install --upgrade pip
             python manage.py test
   coverage:
     docker:
@@ -59,7 +58,6 @@ jobs:
           name: coverage
           command: |
             source venv/bin/activate
-            pip install --upgrade pip
             pip install coverage
             pip install codacy-coverage
             coverage run --source='.' manage.py test
