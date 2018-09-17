@@ -5,7 +5,7 @@ from .validators import validate_photo_file_extension
 
 
 def photo_file_name(instance, filename):
-    return ('jumpstart2018/helpers/{}-{}{}'.format(instance.username, uuid.uuid4(), os.path.splitext(filename)[1]))
+    return ('jumpstart2018/helpers/{}-{}{}'.format(instance.username, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
 
 class Group(models.Model):
     name = models.CharField(max_length=20)
