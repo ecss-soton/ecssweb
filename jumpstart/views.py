@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
+from django.conf import settings
+from django.forms.models import model_to_dict
 
 from .models import Fresher, Helper, Group
 
@@ -14,6 +16,9 @@ from .forms import HelperEditProfileForm
 from .utils import jumpstart_check, is_fresher, is_helper
 
 from website.utils import is_committee
+
+import requests
+import json
 
 
 @method_decorator(login_required, name='dispatch')
@@ -78,7 +83,23 @@ class ProfileEditView(UserPassesTestMixin, View):
 
             if profile_edit_form.is_valid():
                 profile_edit_form.save()
-                messages.success(request, 'Your profile has been updated successfully.')
+                message = 'Your profile has been updated successfully.'
+
+                if 'photo' in profile_edit_form.changed_data and settings.FACE_DETECT_ENABLED:
+                    files = {
+                        'image': helper.photo.file,
+                    }
+                    response = requests.post(settings.FACE_DETECT_API, files=files)
+                    if response.status_code == 200:
+                        response = json.loads(response.text)
+                        if response['num_faces'] == 1:
+                            message += ' Nice photo!'
+                        elif response['num_faces'] > 1:
+                            messages.warning(request, 'How many people are there in the photo? (Face detection is an experimental feature)')
+                        else:
+                            messages.warning(request, 'Are you in the picture? (Face detection is an experimental feature)')
+
+                messages.success(request, message)
                 return redirect('jumpstart:home')
 
             context = {

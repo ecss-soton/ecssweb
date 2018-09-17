@@ -172,3 +172,10 @@ SAML_GROUP_PREFIX = 'saml_'
 FB_PAGE_ID = ''
 
 FB_ACCESS_TOKEN = ''
+
+
+# Face Detection
+
+FACE_DETECT_ENABLED = True
+
+FACE_DETECT_API = 'http://face-detection.ecss.cjxol.com/'

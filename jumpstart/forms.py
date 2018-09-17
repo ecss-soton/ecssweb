@@ -20,7 +20,7 @@ class HelperEditProfileForm(ModelForm):
     def clean_photo(self):
         photo = self.cleaned_data.get('photo', False)
         if photo:
-            if photo._size > 4*1024*1024:
+            if photo.size > 4*1024*1024:
                 raise ValidationError("Photo file size too large. Supports file up to 4MB.")
             return photo
         else:
