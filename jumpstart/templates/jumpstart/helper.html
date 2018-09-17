@@ -36,7 +36,7 @@
   </div>
   <div class="card-body">
     <p class="card-text">
-      <img class="img-fluid helper-photo" src="{{ helper.photo.url }}" alt="{{ helper.name }}">
+      <img class="img-fluid helper-photo" src="{% if helper.photo %}{{ helper.photo.url }}{% endif %}" alt="{{ helper.name }}">
       <ul>
         <li>Name: {{ helper.name }}</li>
         <li>Nickname: {% if helper.nickname %}{{ helper.nickname }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
