@@ -19,7 +19,7 @@ To find out more about models of ecssweb, see the [wiki](https://github.com/ecss
   On Mac:
 
     ```
-    brew install libxml2 libxmlsec1
+    brew install libxml2 libxmlsec1 pkg-config
     ```
 
   On Linux (Debian):
