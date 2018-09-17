@@ -26,14 +26,14 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-      - persist_to_workspace:
-          root: ~/repo
-          paths: 
-            - '*'
       - run:
           name: config
           command:
             mv ecssweb/settings.example.py ecssweb/settings.py
+      - persist_to_workspace:
+          root: ~/repo
+          paths: 
+            - '*'
 
   unit_test:
     docker:
@@ -68,8 +68,8 @@ jobs:
           name: coverage
           command: |
             . venv/bin/activate
-            pip install --user coverage
-            pip install --user codacy-coverage
+            pip install coverage
+            pip install codacy-coverage
             coverage run --source='.' manage.py test
             coverage report
             coverage xml
