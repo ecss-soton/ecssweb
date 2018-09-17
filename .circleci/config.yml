@@ -27,9 +27,9 @@ jobs:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
       - persist_to_workspace:
-          root: ~/
+          root: ~/repo
           paths: 
-            - repo
+            - '*'
       - run:
           name: config
           command:
@@ -41,7 +41,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - attach_workspace:
-          at: ~/
+          at: ./
       - run:
           name: run tests
           command: |
@@ -53,7 +53,7 @@ jobs:
     working_directory: ~/
     steps:
       - attach_workspace:
-          at: ~/repo
+          at: ./
       - run:
           name: coverage
           command: |
