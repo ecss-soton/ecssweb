@@ -37,7 +37,7 @@ jobs:
 
   unit_test:
     docker:
-        - image: circleci/python:3.6.1-browsers
+        - image: circleci/python:3.6.6-browsers
     working_directory: ~/repo
     steps:
       - attach_workspace:
@@ -50,7 +50,7 @@ jobs:
             python manage.py test
   coverage:
     docker:
-        - image: circleci/python:3.6.1-browsers
+        - image: circleci/python:3.6.6-browsers
     working_directory: ~/
     steps:
       - attach_workspace:
