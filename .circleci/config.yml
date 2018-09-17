@@ -19,7 +19,7 @@ jobs:
             sudo apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
 
             python3 -m venv venv
-            . venv/bin/activate
+            source venv/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
       - save_cache:
@@ -45,7 +45,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            . venv/bin/activate
+            source venv/bin/activate
             pip install --upgrade pip
             python manage.py test
   coverage:
@@ -58,7 +58,7 @@ jobs:
       - run:
           name: coverage
           command: |
-            . venv/bin/activate
+            source venv/bin/activate
             pip install --upgrade pip
             pip install coverage
             pip install codacy-coverage
