@@ -1,0 +1,76 @@
+{% extends 'jumpstart/base.html' %}
+
+{% block jumpstartcontent %}
+{% for message in messages %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+<div class="alert alert-success">{{ message }}</div>
+{% endif %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+<div class="alert alert-warning">{{ message }}</div>
+{% endif %}
+{% endfor %}
+<p>Hi {% if helper.nickname %}{{ helper.nickname }}{% else %}{{ helper.name }}{% endif %}, welcome to <a href="{% url 'website:jumpstart-redirect' %}">Jumpstart</a>!</p>
+<div class="card">
+  <div class="card-header">
+    Your Group
+  </div>
+  <div class="card-body">
+    {% if helper.group.name %}
+    <h5>{{ helper.group.name }}</h5>
+    <small class="text-muted">Group {{ helper.group.id }}</small>
+    {% else %}
+    <h5>Group {{ helper.group.id }}</h5>
+    {% endif %}
+    <p class="card-text">
+      You are the helper of <b>{% if helper.group.name %}{{ helper.group.name }}{% else %}Group {{ helper.group.id }}{% endif %}</b>.
+    </p>
+    <div class="card-text">
+      Member{{ helper.group.fresher_set.all|length|pluralize }} in {% if helper.group.name %}{{ helper.group.name }}{% else %}Group {{ helper.group.id }}{% endif %}:
+      <ul>
+        {% for group_fresher in helper.group.fresher_set.all %}
+        {% if group_fresher != fresher %}
+        <li>{{ group_fresher.name }}</li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="card mt-3">
+  <div class="card-header">
+    Your Profile
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      <img class="img-fluid helper-photo" src="{% if helper.photo %}{{ helper.photo.url }}{% endif %}" alt="{{ helper.name }}">
+      <ul>
+        <li>Name: {{ helper.name }}</li>
+        <li>Nickname: {% if helper.nickname %}{{ helper.nickname }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
+      </ul>
+    </div>
+    <p class="card-text">
+      <a href="{% url 'jumpstart:profile-edit' %}">Edit</a>
+    </p>
+    <p class="card-text">
+      <small class="text-muted">Your profile is visible to ECSS committee and your group members.</small>
+    </p>
+  </div>
+</div>
+<div class="card mt-3">
+  <div class="card-header">
+    City Challenge
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      Please help fill in this section with the group during the event.
+      <ul>
+        <li>
+          Group name: {% if fresher.group.name %}{{ fresher.group.name }}{% else %}<span class="text-muted">Not set</span>{% endif %}
+        </li>
+      </ul>
+      <a href="#">Edit</a>
+    </div>
+  </div>
+</div>
+{% include 'jumpstart/groups-list.html' %}
+{% endblock %}

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'feedback.apps.FeedbackConfig',
     'auditlog.apps.AuditlogConfig',
     'fbevents.apps.FbeventsConfig',
+    'jumpstart.apps.JumpstartConfig',
 ]
 
 MIDDLEWARE = [
@@ -158,6 +159,10 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = ''
 
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # SAML
 
@@ -172,3 +177,10 @@ SAML_GROUP_PREFIX = 'saml_'
 FB_PAGE_ID = ''
 
 FB_ACCESS_TOKEN = ''
+
+
+# Face Detection
+
+FACE_DETECT_ENABLED = False
+
+FACE_DETECT_API = ''

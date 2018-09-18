@@ -7,9 +7,11 @@ fixture.local.yaml
 societies.yaml
 sponsors.yaml
 committee.yaml
+data/jumpstart/
 
 # website content
 website/static/website/content/
+media/
 
 # SAML config
 ecsswebauth/saml_config/settings.json
