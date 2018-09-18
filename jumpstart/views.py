@@ -1,5 +1,5 @@
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -7,7 +7,6 @@ from django.utils.decorators import method_decorator
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
-from django.forms.models import model_to_dict
 
 from .models import Fresher, Helper, Group
 

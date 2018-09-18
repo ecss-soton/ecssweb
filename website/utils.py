@@ -1,11 +1,9 @@
-from PIL import Image, ExifTags
-
-
 def is_committee(user):
     return user.groups.filter(name='committee').exists()
 
 
 def rotate_image(image):
+    """ Rotate an image according to it's exif info. """
     try:
         orientation_tag = 274 # 0x0112
         exif=dict(image._getexif().items())
