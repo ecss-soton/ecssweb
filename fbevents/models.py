@@ -7,7 +7,7 @@ class Event(models.Model):
     location = models.CharField(max_length=100)
     cover = models.URLField()
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    end_time = models.DateTimeField(null=True)
 
     def __str__(self):
         return 'name: {},fb_id: {}'.format(self.name, self.fb_id)
