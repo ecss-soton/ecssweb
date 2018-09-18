@@ -7,7 +7,7 @@
       Group {{ group.id }}
     </div>
     <div class="card-body">
-      <img class="img-fluid helper-photo" src="{{ group.helper.photo.url }}" alt="{{ group.helper.name }}">
+      <img class="img-fluid helper-photo" src="{% if helper.photo %}{{ helper.photo.url }}{% endif %}" alt="{{ group.helper.name }}">
       <p class="card-text mt-2">Group helper: {{ group.helper.name }}{% if group.helper.nickname %} ({{ group.helper.nickname }}){% endif %} <small class="text-muted ml-3">{{ group.helper.username }}</small></p>
       <p class="card-text">
         Group members:

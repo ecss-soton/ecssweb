@@ -1,14 +1,20 @@
 {% extends 'jumpstart/base.html' %}
 
 {% block jumpstartcontent %}
-<p class="card-text">Hi {{ fresher.name }}, welcome to Jumpstart!</p>
+<p class="card-text">Hi {{ fresher.name }}, welcome to <a href="{% url 'website:jumpstart-redirect' %}">Jumpstart</a>!</p>
 <div class="card">
     <div class="card-header">
       Your Group
     </div>
     <div class="card-body">
+      {% if fresher.group.name %}
+      <h5>{{ fresher.group.name }}</h5>
+      <small class="text-muted">Group {{ fresher.group.id }}</small>
+      {% else %}
+      <h5>Group {{ fresher.group.id }}</h5>
+      {% endif %}
       <p class="card-text">
-        You are in <b>Group {{ fresher.group.id }}</b> with:
+        You are in <b>{% if fresher.group.name %}{{ fresher.group.name }}{% else %}Group {{ fresher.group.id }}{% endif %}</b> with:
         <ul>
           {% for group_fresher in fresher.group.fresher_set.all %}
           {% if group_fresher != fresher %}
@@ -25,7 +31,7 @@
   </div>
   <div class="card-body">
     <p class="card-text">Your group helper is {{ fresher.group.helper.name }}{% if fresher.group.helper.nickname %} ({{ fresher.group.helper.nickname }}){% endif %}.</p>
-    <img class="img-fluid helper-photo" src="{{ fresher.group.helper.photo.url }}" alt="{{ fresher.group.helper.name }}">
+    <img class="img-fluid helper-photo" src="{% if helper.photo %}{{ helper.photo.url }}{% endif %}" alt="{{ fresher.group.helper.name }}">
   </div>
 </div>
 <div class="card mt-3">
@@ -33,8 +39,16 @@
       City Challenge
     </div>
     <div class="card-body">
-      
+      <p class="card-text">
+        This section is to complete by your group during the event.
+        <ul>
+          <li>
+            Group name: {% if fresher.group.name %}{{ fresher.group.name }}{% else %}<span class="text-muted">Not set</span>{% endif %}
+          </li>
+        </ul>
+      </p>
     </div>
   </div>
 </div>
+{% include 'jumpstart/groups-list.html' %}
 {% endblock %}

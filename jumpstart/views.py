@@ -32,14 +32,18 @@ class HomeView(UserPassesTestMixin, View):
     def get(self, request):
         if is_fresher(request.user):
             fresher = Fresher.objects.get(pk=request.user.username)
+            groups = Group.objects.all().order_by('id')
             context = {
                 'fresher': fresher,
+                'groups': groups,
             }
             return render(request, 'jumpstart/fresher.html', context)
         elif is_helper(request.user):
             helper = Helper.objects.get(pk=request.user.username)
+            groups = Group.objects.all().order_by('id')
             context = {
                 'helper': helper,
+                'groups': groups,
             }
             return render(request, 'jumpstart/helper.html', context)
         elif is_committee(request.user):
