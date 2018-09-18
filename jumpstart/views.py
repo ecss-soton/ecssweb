@@ -2,7 +2,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
@@ -112,3 +112,9 @@ class ProfileEditView(UserPassesTestMixin, View):
             return render(request, 'jumpstart/helper-profile-edit.html', context)
         else:
             raise Http404()
+
+
+@login_required
+@user_passes_test(is_committee)
+def city_challenge_view(request, group_id):
+    pass

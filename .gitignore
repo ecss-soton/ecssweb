@@ -7,7 +7,7 @@ fixture.local.yaml
 societies.yaml
 sponsors.yaml
 committee.yaml
-jumpstart.yaml
+data/jumpstart/
 
 # website content
 website/static/website/content/

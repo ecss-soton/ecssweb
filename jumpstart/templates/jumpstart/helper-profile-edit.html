@@ -3,30 +3,29 @@
 {% block jumpstartcontent %}
 <div class="card mt-3">
   <div class="card-header">
-      Edit Profile
-    </div>
-    <div class="card-body">
-      <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% for field in profile_edit_form %}
-        <div class="form-group">
-          {{ field.label_tag }}{{ field }}
-          {% if field.errors %}
-          <small class="form-text text-danger">
-            {% for err in field.errors %}{{ err }}{% endfor %}
-          </small>
-          {% endif %}
-        </div>
-        {% endfor %}
-        <input type="Submit" class="btn btn-ecssweb" value="Update">
-        <p>
-          <small class="text-muted">When updating your photo, the old file will not be immediately removed from the server. It need to be removed manually by us.</small>
-        </p>
-        <p>
-          <small class="text-muted">Your profile is visible to ECSS committee and your group members.</small>
-        </p>
-      </form>
-    </div>
+    Edit Profile
+  </div>
+  <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for field in profile_edit_form %}
+      <div class="form-group">
+        {{ field.label_tag }}{{ field }}
+        {% if field.errors %}
+        <small class="form-text text-danger">
+          {% for err in field.errors %}{{ err }}{% endfor %}
+        </small>
+        {% endif %}
+      </div>
+      {% endfor %}
+      <input type="Submit" class="btn btn-ecssweb" value="Update">
+      <p>
+        <small class="text-muted">When updating your photo, the old file will not be immediately removed from the server. It need to be removed manually by us.</small>
+      </p>
+      <p>
+        <small class="text-muted">Your profile is visible to ECSS committee, City Challenge helpers and your group members.</small>
+      </p>
+    </form>
   </div>
 </div>
 {% endblock %}

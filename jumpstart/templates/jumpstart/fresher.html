@@ -1,7 +1,7 @@
 {% extends 'jumpstart/base.html' %}
 
 {% block jumpstartcontent %}
-<p class="card-text">Hi {{ fresher.name }}, welcome to <a href="{% url 'website:jumpstart-redirect' %}">Jumpstart</a>!</p>
+<p>Hi {{ fresher.name }}, welcome to <a href="{% url 'website:jumpstart-redirect' %}">Jumpstart</a>!</p>
 <div class="card">
     <div class="card-header">
       Your Group
@@ -13,7 +13,7 @@
       {% else %}
       <h5>Group {{ fresher.group.id }}</h5>
       {% endif %}
-      <p class="card-text">
+      <div class="card-text">
         You are in <b>{% if fresher.group.name %}{{ fresher.group.name }}{% else %}Group {{ fresher.group.id }}{% endif %}</b> with:
         <ul>
           {% for group_fresher in fresher.group.fresher_set.all %}
@@ -22,7 +22,7 @@
           {% endif %}
           {% endfor %}
         </ul>
-      </p>
+      </div>
     </div>
   </div>
 <div class="card mt-3">
@@ -38,17 +38,16 @@
 </div>
 <div class="card mt-3">
   <div class="card-header">
-      City Challenge
-    </div>
-    <div class="card-body">
-      <p class="card-text">
-        This section is to complete by your group during the event.
-        <ul>
-          <li>
-            Group name: {% if fresher.group.name %}{{ fresher.group.name }}{% else %}<span class="text-muted">Not set</span>{% endif %}
-          </li>
-        </ul>
-      </p>
+    City Challenge
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      This section is to complete by your group during the event.
+      <ul>
+        <li>
+          Group name: {% if fresher.group.name %}{{ fresher.group.name }}{% else %}<span class="text-muted">Not set</span>{% endif %}
+        </li>
+      </ul>
     </div>
   </div>
 </div>
