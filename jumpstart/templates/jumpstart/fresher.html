@@ -30,8 +30,10 @@
     Your Group Helper
   </div>
   <div class="card-body">
-    <p class="card-text">Your group helper is {{ fresher.group.helper.name }}{% if fresher.group.helper.nickname %} ({{ fresher.group.helper.nickname }}){% endif %}.</p>
-    <img class="img-fluid helper-photo" src="{% if helper.photo %}{{ helper.photo.url }}{% endif %}" alt="{{ fresher.group.helper.name }}">
+    <p class="card-text">
+      Your group helper is {{ fresher.group.helper.name }}{% if fresher.group.helper.nickname %} ({{ fresher.group.helper.nickname }}){% endif %}.
+      <img class="img-fluid helper-photo d-block" src="{% if helper.photo %}{{ helper.photo.url }}{% endif %}" alt="{{ fresher.group.helper.name }}">
+    </p>
   </div>
 </div>
 <div class="card mt-3">
