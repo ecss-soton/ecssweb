@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.utils import timezone
 from django.conf import settings
+from django.db.models import Q
 
 from fbevents.models import Event
 
@@ -13,17 +14,21 @@ def sync_upcoming_events_with_fb():
     with urllib.request.urlopen(fb_events_api) as url:
         events = json.loads(url.read().decode())
         for event in events['data']:
-            end_time = datetime.strptime(event['end_time'], '%Y-%m-%dT%H:%M:%S%z')
+            end_time = event.get('end_time', None)
+            if end_time:
+                end_time = datetime.strptime(end_time, '%Y-%m-%dT%H:%M:%S%z')
+            else:
+                start_time = datetime.strptime(event['start_time'], '%Y-%m-%dT%H:%M:%S%z')
             now = timezone.now()
-            if now < end_time:
+            if (end_time and now < end_time) or now < start_time:
                 defaults = {
                     'name': event['name'],
                     'location': event['place']['name'],
                     'cover': event['cover']['source'],
                     'start_time': event['start_time'],
-                    'end_time': event['end_time'],
+                    'end_time': end_time,
                 }
                 Event.objects.update_or_create(fb_id=event['id'], defaults=defaults)
 
 def get_upcoming_events():
-    return Event.objects.filter(end_time__gt=timezone.now())
+    return Event.objects.filter(Q(end_time__gt=timezone.now()) | Q(start_time__gt=timezone.now())).order_by('start_time')

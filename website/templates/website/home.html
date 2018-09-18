@@ -24,6 +24,7 @@
     {% if not events %}
     <p>Currently no upcoming events published, stay tuned.</p>
     {% endif %}
+    <div class="d-flex justify-content-center flex-wrap">
     {% for event in events %}
     <div class="events-cards-home">
       <div class="card event-card-home">
@@ -34,12 +35,13 @@
           </h5>
         </a>
         <div class="card-body">
-          {{ event.start_time|date }} at {{ event.start_time|time:"H:i" }} - {{ event.end_time|date }} at {{ event.end_time|time:"H:i" }}<br>
+          {{ event.start_time|date }} at {{ event.start_time|time:"H:i" }}{% if event.end_time %}- {{ event.end_time|date }} at {{ event.end_time|time:"H:i" }}{% endif %}<br>
           {{ event.location }}
         </div>
       </div>
     </div>
     {% endfor %}
+    </div>
     <p>Find out more about our events on <a href="{% url 'website:events' %}">our events page</a>.</p>
   </section>
   <section>
