@@ -17,8 +17,7 @@ def sync_upcoming_events_with_fb():
             end_time = event.get('end_time', None)
             if end_time:
                 end_time = datetime.strptime(end_time, '%Y-%m-%dT%H:%M:%S%z')
-            else:
-                start_time = datetime.strptime(event['start_time'], '%Y-%m-%dT%H:%M:%S%z')
+            start_time = datetime.strptime(event['start_time'], '%Y-%m-%dT%H:%M:%S%z')
             now = timezone.now()
             if (end_time and now < end_time) or now < start_time:
                 defaults = {
