@@ -154,3 +154,30 @@ class CityChallengeEditView(UserPassesTestMixin, View):
             return render(request, 'jumpstart/city-challenge-edit.html', context)
         else:
             raise Http404()
+
+
+@method_decorator(login_required, name='dispatch')
+class GroupsView(UserPassesTestMixin, View):
+
+    raise_exception = True
+
+    def test_func(self):
+        return jumpstart_check(self.request.user)
+
+    def get(self, request):
+        if is_fresher(request.user):
+            fresher = Fresher.objects.get(pk=request.user.username)
+            groups = Group.objects.all().order_by('id')
+            context = {
+                'groups': groups,
+            }
+            return render(request, 'jumpstart/groups.html', context)
+        elif is_helper(request.user):
+            helper = Helper.objects.get(pk=request.user.username)
+            groups = Group.objects.all().order_by('id')
+            context = {
+                'groups': groups,
+            }
+            return render(request, 'jumpstart/groups.html', context)
+        else:
+            raise Http404()

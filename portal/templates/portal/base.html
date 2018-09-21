@@ -68,6 +68,14 @@
             <li>
               <a href="{% url 'jumpstart:profile-edit' %}">Edit Profile</a>
             </li>
+            <li>
+              <a href="{% url 'jumpstart:city-challenge-edit' %}">Submit City Challenge</a>
+            </li>
+            {% endif %}
+            {% if user|is_helper or user|is_fresher %}
+            <li>
+              <a href="{% url 'jumpstart:groups' %}">Groups</a>
+            </li>
             {% endif %}
           </ul>
         </li>

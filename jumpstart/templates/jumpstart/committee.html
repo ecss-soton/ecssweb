@@ -14,7 +14,7 @@
     <h5>Group {{ group.id }}</h5>
     {% endif %}
     <div class="card-text mb-3">
-      <img class="img-fluid helper-photo d-block" src="{% if helper.photo %}{{ helper.photo.url }}{% endif %}" alt="{{ group.helper.name }}">
+      <img class="img-fluid helper-photo d-block" src="{% if group.helper.photo %}{{ group.helper.photo.url }}{% endif %}" alt="{{ group.helper.name }}">
       Group helper: {{ group.helper.name }}{% if group.helper.nickname %} ({{ group.helper.nickname }}){% endif %} <small class="text-muted ml-2">{{ group.helper.username }}</small>
     </div>
     <div class="card-text">
