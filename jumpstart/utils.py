@@ -10,4 +10,4 @@ def is_helper(user):
     return Helper.objects.filter(pk=user.username).exists()
 
 def jumpstart_check(user):
-    return is_committee or is_fresher or is_helper
+    return is_committee(user) or is_fresher(user) or is_helper(user)
