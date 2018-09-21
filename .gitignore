@@ -44,3 +44,5 @@ tests/report/
 
 # Django settings
 settings.py
+
+venv

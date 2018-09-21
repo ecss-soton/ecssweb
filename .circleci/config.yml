@@ -126,7 +126,7 @@ jobs:
           name: start server
           command: |
             . venv/bin/activate
-            python selenium.py
+            python browser_test.py
       - store_artifacts:
           path: test-reports
           destination: test-reports
