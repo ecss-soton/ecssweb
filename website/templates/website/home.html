@@ -35,7 +35,7 @@
           </h5>
         </a>
         <div class="card-body">
-          {{ event.start_time|date }} at {{ event.start_time|time:"H:i" }}{% if event.end_time %}- {{ event.end_time|date }} at {{ event.end_time|time:"H:i" }}{% endif %}<br>
+          {{ event.start_time|date }} at {{ event.start_time|time:"H:i" }}{% if event.end_time %} - {{ event.end_time|date }} at {{ event.end_time|time:"H:i" }}{% endif %}<br>
           {{ event.location }}
         </div>
       </div>
