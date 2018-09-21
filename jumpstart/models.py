@@ -11,7 +11,7 @@ class Group(models.Model):
     name = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.name
+        return self.name if self.name != '' and self.name != None else 'Group {}'.format(self.id)
 
 
 class Fresher(models.Model):

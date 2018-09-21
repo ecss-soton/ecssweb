@@ -1,0 +1,29 @@
+{% extends 'jumpstart/base.html' %}
+
+{% block jumpstartcontent %}
+<div class="card mt-3">
+  <div class="card-header">
+    Edit City Challenge
+  </div>
+  <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="id_id">Group:</label>
+        <input value="Group {{ group.id }}" class="form-control" disabled id="id_id">
+      </div>
+      {% for field in city_challenge_edit_form %}
+      <div class="form-group">
+        {{ field.label_tag }}{{ field }}
+        {% if field.errors %}
+        <small class="form-text text-danger">
+          {% for err in field.errors %}{{ err }}{% endfor %}
+        </small>
+        {% endif %}
+      </div>
+      {% endfor %}
+      <input type="Submit" class="btn btn-ecssweb" value="Update">
+    </form>
+  </div>
+</div>
+{% endblock %}

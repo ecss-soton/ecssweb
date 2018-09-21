@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
-from .models import Helper
+from .models import Helper, Group
 
 from website.utils import rotate_image
 
@@ -40,3 +40,16 @@ class HelperEditProfileForm(ModelForm):
             return photo
         else:
             raise ValidationError("Couldn't read uploaded image.")
+
+
+class EditCityChallengeForm(ModelForm):
+    class Meta:
+        model = Group
+        fields = ['name']
+
+    def __init__(self, *args, **kwargs):
+        super(EditCityChallengeForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+            })

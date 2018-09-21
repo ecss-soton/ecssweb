@@ -65,10 +65,10 @@
       Please help fill in this section with the group during the event.
       <ul>
         <li>
-          Group name: {% if fresher.group.name %}{{ fresher.group.name }}{% else %}<span class="text-muted">Not set</span>{% endif %}
+          Group name: {% if helper.group.name %}{{ helper.group.name }}{% else %}<span class="text-muted">Not set</span>{% endif %}
         </li>
       </ul>
-      <a href="#">Edit</a>
+      <a href="{% url 'jumpstart:city-challenge-edit' %}">Edit</a>
     </div>
   </div>
 </div>
