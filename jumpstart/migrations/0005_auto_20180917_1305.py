@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='helper',
             name='photo',
-            field=models.ImageField(upload_to=jumpstart.models.photo_file_name, validators=[jumpstart.validators.validate_photo_file_extension]),
+            field=models.ImageField(upload_to=jumpstart.models.helper_photo_file_name, validators=[jumpstart.validators.validate_photo_file_extension]),
         ),
     ]

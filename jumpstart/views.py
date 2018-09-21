@@ -181,3 +181,19 @@ class GroupsView(UserPassesTestMixin, View):
             return render(request, 'jumpstart/groups.html', context)
         else:
             raise Http404()
+
+
+@method_decorator(login_required, name='dispatch')
+class CityChallengeView(UserPassesTestMixin, View):
+
+    raise_exception = True
+
+    def test_func(self):
+        return is_committee(self.request.user)
+
+    def get(self, request, group_id):
+        group = Group.objects.get(pk=group_id)
+        context = {
+            'group': group,
+        }
+        return render(request, 'jumpstart/city-challenge.html', context)
