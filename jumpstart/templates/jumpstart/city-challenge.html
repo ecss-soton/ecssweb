@@ -1,0 +1,17 @@
+{% extends 'jumpstart/base.html' %}
+
+{% block jumpstartcontent %}
+<div class="card mt-3">
+  <div class="card-header">
+    City Challenge
+  </div>
+  <div class="card-body">
+    <h5>Group {{ group.id }}</h5>
+    <ul>
+      <li>
+        Group name: {% if group.name %}{{ group.name }}{% else %}<span class="text-muted">Not set</span>{% endif %}
+      </li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

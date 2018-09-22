@@ -13,11 +13,11 @@
     {% else %}
     <h5>Group {{ group.id }}</h5>
     {% endif %}
-    <div class="card-text mb-3">
-      <img class="img-fluid helper-photo d-block" src="{% if helper.photo %}{{ helper.photo.url }}{% endif %}" alt="{{ group.helper.name }}">
+    <div class="card-text my-3">
+      <img class="img-fluid helper-photo d-block" src="{% if group.helper.photo %}{{ group.helper.photo.url }}{% endif %}" alt="{{ group.helper.name }}">
       Group helper: {{ group.helper.name }}{% if group.helper.nickname %} ({{ group.helper.nickname }}){% endif %} <small class="text-muted ml-2">{{ group.helper.username }}</small>
     </div>
-    <div class="card-text">
+    <div class="card-text my-3">
       Group members:
       <ul>
         {% for fresher in group.fresher_set.all %}
@@ -25,9 +25,9 @@
         {% endfor %}
       </ul>
     </div>
-    <p class="card-text">
-      <a href="#">City Challenge</a>
-    </p>
+    <div class="card-text mt-3">
+      <a href="{% url 'jumpstart:city-challenge' group.id %}">City Challenge</a>
+    </div>
   </div>
 </div>
 {% endfor %}

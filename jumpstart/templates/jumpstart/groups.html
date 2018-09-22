@@ -1,3 +1,8 @@
+{% extends 'jumpstart/base.html' %}
+
+{% load jumpstart_extra %}
+
+{% block jumpstartcontent %}
 <div class="card mt-3">
   <div class="card-header">
     Jumpstart Groups
@@ -11,8 +16,15 @@
       {% else %}
       <h5>Group {{ group.id }}</h5>
       {% endif %}
+      {% if user|is_helper %}
+      <p>
+        <img class="img-fluid helper-photo d-block" src="{% if group.helper.photo %}{{ group.helper.photo.url }}{% endif %}" alt="{{ group.helper.name }}">
+        Group helper: {{ group.helper.name }}{% if group.helper.nickname %} ({{ group.helper.nickname }}){% endif %}
+      </p>
+      {% endif %}
       <p>{{ group.fresher_set.all|length }} member{{ group.fresher_set.all|length|pluralize }}.</p>
     </li>
     {% endfor %}
   </ul>
 </div>
+{% endblock %}

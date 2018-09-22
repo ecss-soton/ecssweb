@@ -10,7 +10,7 @@ from django.conf import settings
 
 from .models import Fresher, Helper, Group
 
-from .forms import HelperEditProfileForm
+from .forms import HelperEditProfileForm, EditCityChallengeForm
 
 from .utils import jumpstart_check, is_fresher, is_helper
 
@@ -112,8 +112,88 @@ class ProfileEditView(UserPassesTestMixin, View):
         else:
             raise Http404()
 
+@method_decorator(login_required, name='dispatch')
+class CityChallengeEditView(UserPassesTestMixin, View):
+    
+    raise_exception = True
 
-@login_required
-@user_passes_test(is_committee)
-def city_challenge_view(request, group_id):
-    pass
+    def test_func(self):
+        return jumpstart_check(self.request.user)
+
+    def get(self, request):
+        if is_committee(request.user):
+            raise Http404()
+        elif is_helper(request.user):
+            group = Group.objects.get(helper=request.user.username)
+            city_challenge_edit_form = EditCityChallengeForm(instance=group)
+            context = {
+                'group': group,
+                'city_challenge_edit_form': city_challenge_edit_form,
+            }
+            return render(request, 'jumpstart/city-challenge-edit.html', context)
+        else:
+            raise Http404()
+
+    def post(self, request):
+        if is_committee(request.user):
+            raise Http404()
+        elif is_helper(request.user):
+            group = Group.objects.get(helper=request.user.username)
+
+            city_challenge_edit_form = EditCityChallengeForm(request.POST, instance=group)
+
+            if city_challenge_edit_form.is_valid():
+                city_challenge_edit_form.save()
+                messages.success(request, 'Your group\'s city challenge has been updated successfully.')
+                return redirect('jumpstart:home')
+
+            context = {
+                'group': group,
+                'city_challenge_edit_form': city_challenge_edit_form,
+            }
+            return render(request, 'jumpstart/city-challenge-edit.html', context)
+        else:
+            raise Http404()
+
+
+@method_decorator(login_required, name='dispatch')
+class GroupsView(UserPassesTestMixin, View):
+
+    raise_exception = True
+
+    def test_func(self):
+        return jumpstart_check(self.request.user)
+
+    def get(self, request):
+        if is_fresher(request.user):
+            fresher = Fresher.objects.get(pk=request.user.username)
+            groups = Group.objects.all().order_by('id')
+            context = {
+                'groups': groups,
+            }
+            return render(request, 'jumpstart/groups.html', context)
+        elif is_helper(request.user):
+            helper = Helper.objects.get(pk=request.user.username)
+            groups = Group.objects.all().order_by('id')
+            context = {
+                'groups': groups,
+            }
+            return render(request, 'jumpstart/groups.html', context)
+        else:
+            raise Http404()
+
+
+@method_decorator(login_required, name='dispatch')
+class CityChallengeView(UserPassesTestMixin, View):
+
+    raise_exception = True
+
+    def test_func(self):
+        return is_committee(self.request.user)
+
+    def get(self, request, group_id):
+        group = Group.objects.get(pk=group_id)
+        context = {
+            'group': group,
+        }
+        return render(request, 'jumpstart/city-challenge.html', context)
