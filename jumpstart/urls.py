@@ -9,5 +9,4 @@ urlpatterns = [
     path('profile/edit/', views.ProfileEditView.as_view(), name='profile-edit'),
     path('city-challenge/edit/', views.CityChallengeEditView.as_view(), name='city-challenge-edit'),
     path('group-<int:group_id>/city-challenge/', views.CityChallengeView.as_view(), name='city-challenge'),
-    path('group-<int:group_id>/city-challenge/score/', views.CityChallengeScoreView.as_view(), name='city-challenge-score'),
 ]

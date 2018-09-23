@@ -1,6 +1,11 @@
 {% extends 'jumpstart/base.html' %}
 
 {% block jumpstartcontent %}
+{% for message in messages %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+<div class="alert alert-success">{{ message }}</div>
+{% endif %}
+{% endfor %}
 <div class="card mt-3">
   <div class="card-header">
     City Challenge
@@ -20,7 +25,7 @@
         {% endif %}
       </li>
       <li>
-        <form class="form-inline my-2" method="post" action="{% url 'jumpstart:city-challenge-score' group.id %}?challenge=mitre">
+        <form class="form-inline my-2" method="post" action="{% url 'jumpstart:city-challenge' group.id %}?challenge=mitre">
           {% csrf_token %}
           {% for field in score_mitre_challenge_form %}
           <div class="form-group">
@@ -36,7 +41,7 @@
         </form>
       </li>
       <li>
-        <form class="form-inline my-2" method="post" action="{% url 'jumpstart:city-challenge-score' group.id %}?challenge=coding">
+        <form class="form-inline my-2" method="post" action="{% url 'jumpstart:city-challenge' group.id %}?challenge=coding">
           {% csrf_token %}
           {% for field in score_coding_challenge_form %}
           <div class="form-group">
@@ -52,10 +57,10 @@
         </form>
       </li>
       <li>
-        <form class="form-inline my-2" method="post" action="{% url 'jumpstart:city-challenge-score' group.id %}?challenge=stags">
+        <form class="form-inline my-2" method="post" action="{% url 'jumpstart:city-challenge' group.id %}?challenge=stags">
           {% csrf_token %}
           {% for field in stags_quiz_score_form %}
-          <div class="form-group">
+          <div class="form-group fl">
             {{ field.label_tag }}{{ field }}
             {% if field.errors %}
             <small class="form-text text-danger">
