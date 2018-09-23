@@ -21,9 +21,9 @@
     {% else %}
     <h5>Group {{ helper.group.id }}</h5>
     {% endif %}
-    <p class="card-text">
+    <div class="card-text my-3">
       You are the helper of <b>{% if helper.group.name %}{{ helper.group.name }}{% else %}Group {{ helper.group.id }}{% endif %}</b>.
-    </p>
+    </div>
     <div class="card-text">
       Member{{ helper.group.fresher_set.all|length|pluralize }} in {% if helper.group.name %}{{ helper.group.name }}{% else %}Group {{ helper.group.id }}{% endif %}:
       <ul>
@@ -41,19 +41,19 @@
     Your Profile
   </div>
   <div class="card-body">
-    <div class="card-text">
+    <div class="card-text mb-3">
       <img class="img-fluid helper-photo" src="{% if helper.photo %}{{ helper.photo.url }}{% endif %}" alt="{{ helper.name }}">
       <ul>
         <li>Name: {{ helper.name }}</li>
         <li>Nickname: {% if helper.nickname %}{{ helper.nickname }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
       </ul>
     </div>
-    <p class="card-text">
+    <div class="card-text my-3">
       <a href="{% url 'jumpstart:profile-edit' %}">Edit</a>
-    </p>
-    <p class="card-text">
+    </div>
+    <div class="card-text mt-3">
       <small class="text-muted">Your profile is visible to ECSS committee and your group members.</small>
-    </p>
+    </div>
   </div>
 </div>
 <div class="card mt-3">
@@ -66,6 +66,14 @@
       <ul>
         <li>
           Group name: {% if helper.group.name %}{{ helper.group.name }}{% else %}<span class="text-muted">Not set</span>{% endif %}
+        </li>
+        <li>
+          Charity Shop Challenge photo:
+          {% if helper.group.charity_shop_challenge_photo %}
+          <img class="img-fluid d-block city-challenge-photo" src="{{ helper.group.charity_shop_challenge_photo.url }}" alt="Charity Shop Challenge">
+          {% else %}
+          <span class="text-muted">Not submitted</span>
+          {% endif %}
         </li>
       </ul>
       <a href="{% url 'jumpstart:city-challenge-edit' %}">Edit</a>

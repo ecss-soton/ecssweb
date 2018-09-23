@@ -9,12 +9,12 @@ def helper_photo_file_name(instance, filename):
 
 
 def charity_shop_challenge_photo_file_name(instance, filename):
-    return ('jumpstart2018/city-challenge/charity-shop-challenge-{}-{}{}'.format(instance.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
+    return ('jumpstart2018/city-challenge/charity-shop-challenge-group{}-{}{}'.format(instance.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
 
 
 class Group(models.Model):
     name = models.CharField(max_length=50, null=True, blank=True)
-    charity_shop_challenge_photo = models.ImageField(upload_to=charity_shop_challenge_photo_file_name, validators=[validate_photo_file_extension], null=True)
+    charity_shop_challenge_photo = models.ImageField(upload_to=charity_shop_challenge_photo_file_name, validators=[validate_photo_file_extension], null=True, blank=True, verbose_name='Charity Shop Challenge photo')
 
     def __str__(self):
         return self.name if self.name != '' and self.name != None else 'Group {}'.format(self.id)

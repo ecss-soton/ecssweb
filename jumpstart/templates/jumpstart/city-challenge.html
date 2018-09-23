@@ -11,6 +11,14 @@
       <li>
         Group name: {% if group.name %}{{ group.name }}{% else %}<span class="text-muted">Not set</span>{% endif %}
       </li>
+      <li>
+        Charity Shop Challenge photo:
+        {% if group.charity_shop_challenge_photo %}
+        <img class="img-fluid d-block city-challenge-photo" src="{{ group.charity_shop_challenge_photo.url }}" alt="Charity Shop Challenge">
+        {% else %}
+        <span class="text-muted">Not submitted</span>
+        {% endif %}
+      </li>
     </ul>
   </div>
 </div>

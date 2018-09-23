@@ -140,7 +140,7 @@ class CityChallengeEditView(UserPassesTestMixin, View):
         elif is_helper(request.user):
             group = Group.objects.get(helper=request.user.username)
 
-            city_challenge_edit_form = EditCityChallengeForm(request.POST, instance=group)
+            city_challenge_edit_form = EditCityChallengeForm(request.POST, request.FILES, instance=group)
 
             if city_challenge_edit_form.is_valid():
                 city_challenge_edit_form.save()
