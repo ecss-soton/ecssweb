@@ -21,9 +21,8 @@ class Group(models.Model):
     mitre_challenge_score = models.IntegerField(null=True, blank=True)
     coding_challenge_score = models.IntegerField(null=True, blank=True)
     stags_quiz_score = models.IntegerField(null=True, blank=True)
-
-    def __str__(self):
-        return self.name if self.name != '' and self.name != None else 'Group {}'.format(self.id)
+    games_challenge_score = models.IntegerField(null=True, blank=True)
+    sports_challenge_score = models.IntegerField(null=True, blank=True)
 
 
 class Fresher(models.Model):

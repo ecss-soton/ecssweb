@@ -24,10 +24,11 @@
         <span class="text-muted">Not submitted</span>
         {% endif %}
       </li>
+      {% for form, challenge in forms %}
       <li>
-        <form class="form-inline my-2" method="post" action="{% url 'jumpstart:city-challenge' group.id %}?challenge=mitre">
+        <form class="form-inline my-2" method="post" action="{% url 'jumpstart:city-challenge' group.id %}?challenge={{ challenge }}">
           {% csrf_token %}
-          {% for field in score_mitre_challenge_form %}
+          {% for field in form %}
           <div class="form-group">
             {{ field.label_tag }}{{ field }}
             {% if field.errors %}
@@ -40,38 +41,7 @@
           <input type="submit" class="btn btn-ecssweb" value="Update">
         </form>
       </li>
-      <li>
-        <form class="form-inline my-2" method="post" action="{% url 'jumpstart:city-challenge' group.id %}?challenge=coding">
-          {% csrf_token %}
-          {% for field in score_coding_challenge_form %}
-          <div class="form-group">
-            {{ field.label_tag }}{{ field }}
-            {% if field.errors %}
-            <small class="form-text text-danger">
-              {% for err in field.errors %}{{ err }}{% endfor %}
-            </small>
-            {% endif %}
-          </div>
-          {% endfor %}
-          <input type="submit" class="btn btn-ecssweb" value="Update">
-        </form>
-      </li>
-      <li>
-        <form class="form-inline my-2" method="post" action="{% url 'jumpstart:city-challenge' group.id %}?challenge=stags">
-          {% csrf_token %}
-          {% for field in stags_quiz_score_form %}
-          <div class="form-group">
-            {{ field.label_tag }}{{ field }}
-            {% if field.errors %}
-            <small class="form-text text-danger">
-              {% for err in field.errors %}{{ err }}{% endfor %}
-            </small>
-            {% endif %}
-          </div>
-          {% endfor %}
-          <input type="submit" class="btn btn-ecssweb" value="Update">
-        </form>
-      </li>
+      {% endfor %}
     </ul>
   </div>
 </div>

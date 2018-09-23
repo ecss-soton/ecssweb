@@ -11,7 +11,7 @@ from django.conf import settings
 
 from .models import Fresher, Helper, Group, CityChallengeScoreAuditlog
 
-from .forms import HelperEditProfileForm, EditCityChallengeForm, ScoreMitreChallengeForm, ScoreCodingChallengeForm, ScoreStagsQuizForm
+from .forms import HelperEditProfileForm, EditCityChallengeForm, ScoreMitreChallengeForm, ScoreCodingChallengeForm, ScoreStagsQuizForm, ScoreGamesChallengeForm, ScoreSportsChallengeForm
 
 from .utils import jumpstart_check, is_fresher, is_helper
 
@@ -199,10 +199,16 @@ class CityChallengeView(UserPassesTestMixin, View):
         score_mitre_challenge_form = ScoreMitreChallengeForm(instance=group)
         score_coding_challenge_form = ScoreCodingChallengeForm(instance=group)
         stags_quiz_score_form = ScoreStagsQuizForm(instance=group)
+        games_challenge_score_form = ScoreGamesChallengeForm(instance=group)
+        sports_challenge_score_form = ScoreSportsChallengeForm(instance=group)
         context = {
-            'score_mitre_challenge_form': score_mitre_challenge_form,
-            'score_coding_challenge_form': score_coding_challenge_form,
-            'stags_quiz_score_form': stags_quiz_score_form,
+            'forms': [
+                    (score_mitre_challenge_form, 'mitre'),
+                    (score_coding_challenge_form, 'coding'),
+                    (stags_quiz_score_form, 'stags'),
+                    (games_challenge_score_form, 'games'),
+                    (sports_challenge_score_form, 'sports'),
+                ],
             'group': group,
         }
         return render(request, 'jumpstart/city-challenge.html', context)
@@ -219,6 +225,10 @@ class CityChallengeView(UserPassesTestMixin, View):
             form = ScoreCodingChallengeForm(request.POST, instance=group)
         elif request.GET.get('challenge') == 'stags':
             form = ScoreStagsQuizForm(request.POST, instance=group)
+        elif request.GET.get('challenge') == 'games':
+            form = ScoreGamesChallengeForm(request.POST, instance=group)
+        elif request.GET.get('challenge') == 'sports':
+            form = ScoreSportsChallengeForm(request.POST, instance=group)
         else:
             raise Http404()
         
@@ -228,6 +238,8 @@ class CityChallengeView(UserPassesTestMixin, View):
                 'mitre': 'Mitre Challenge',
                 'coding': 'Coding Challenge',
                 'stags': 'Stags Quiz',
+                'games': 'Games Challenge',
+                'sports': 'Sports Challenge',
             }
 
             if request.GET.get('challenge') == 'mitre':
@@ -236,6 +248,10 @@ class CityChallengeView(UserPassesTestMixin, View):
                 score = group.coding_challenge_score
             elif request.GET.get('challenge') == 'stags':
                 score = group.stags_quiz_score
+            elif request.GET.get('challenge') == 'games':
+                score = group.games_challenge_score
+            elif request.GET.get('challenge') == 'sports':
+                score = group.sports_challenge_score
 
             city_challenge_score_auditlog = CityChallengeScoreAuditlog.objects.create(user=request.user.username, group=group, challenge=challenges[request.GET.get('challenge')], score=score)
             AuditLog.objects.create(content_object=city_challenge_score_auditlog)
@@ -246,6 +262,8 @@ class CityChallengeView(UserPassesTestMixin, View):
             score_mitre_challenge_form = ScoreMitreChallengeForm(instance=group)
             score_coding_challenge_form = ScoreCodingChallengeForm(instance=group)
             stags_quiz_score_form = ScoreStagsQuizForm(instance=group)
+            games_challenge_score_form = ScoreGamesChallengeForm(instance=group)
+            sports_challenge_score_form = ScoreSportsChallengeForm(instance=group)
 
             if request.GET.get('challenge') == 'mitre':
                 score_mitre_challenge_form = form
@@ -253,11 +271,19 @@ class CityChallengeView(UserPassesTestMixin, View):
                 score_coding_challenge_form = form
             elif request.GET.get('challenge') == 'stags':
                 stags_quiz_score_form = form
+            elif request.GET.get('challenge') == 'games':
+                games_challenge_score_form = form
+            elif request.GET.get('challenge') == 'sports':
+                sports_challenge_score_form = form
 
             context = {
-                'score_mitre_challenge_form': score_mitre_challenge_form,
-                'score_coding_challenge_form': score_coding_challenge_form,
-                'stags_quiz_score_form': stags_quiz_score_form,
+                'forms': [
+                    (score_mitre_challenge_form, 'mitre'),
+                    (score_coding_challenge_form, 'coding'),
+                    (stags_quiz_score_form, 'stags'),
+                    (games_challenge_score_form, 'games'),
+                    (sports_challenge_score_form, 'sports'),
+                ],
                 'group': group,
             }
         return render(request, 'jumpstart/city-challenge.html', context)

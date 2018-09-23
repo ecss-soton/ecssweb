@@ -103,3 +103,29 @@ class ScoreStagsQuizForm(ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control mx-3',
             })
+
+
+class ScoreGamesChallengeForm(ModelForm):
+    class Meta:
+        model = Group
+        fields = ['games_challenge_score']
+
+    def __init__(self, *args, **kwargs):
+        super(ScoreGamesChallengeForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control mx-3',
+            })
+
+
+class ScoreSportsChallengeForm(ModelForm):
+    class Meta:
+        model = Group
+        fields = ['sports_challenge_score']
+
+    def __init__(self, *args, **kwargs):
+        super(ScoreSportsChallengeForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control mx-3',
+            })
