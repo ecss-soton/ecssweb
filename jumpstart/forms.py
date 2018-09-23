@@ -64,3 +64,42 @@ class EditCityChallengeForm(ModelForm):
     def clean_charity_shop_challenge_photo(self):
         photo = self.cleaned_data.get('charity_shop_challenge_photo', False)
         return _clean_photo(photo)
+
+
+class ScoreMitreChallengeForm(ModelForm):
+    class Meta:
+        model = Group
+        fields = ['mitre_challenge_score']
+
+    def __init__(self, *args, **kwargs):
+        super(ScoreMitreChallengeForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control mx-3',
+            })
+
+
+class ScoreCodingChallengeForm(ModelForm):
+    class Meta:
+        model = Group
+        fields = ['coding_challenge_score']
+
+    def __init__(self, *args, **kwargs):
+        super(ScoreCodingChallengeForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control mx-3',
+            })
+
+
+class ScoreStagsQuizForm(ModelForm):
+    class Meta:
+        model = Group
+        fields = ['stags_quiz_score']
+
+    def __init__(self, *args, **kwargs):
+        super(ScoreStagsQuizForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control mx-3',
+            })

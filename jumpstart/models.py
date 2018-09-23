@@ -15,6 +15,9 @@ def charity_shop_challenge_photo_file_name(instance, filename):
 class Group(models.Model):
     name = models.CharField(max_length=50, null=True, blank=True)
     charity_shop_challenge_photo = models.ImageField(upload_to=charity_shop_challenge_photo_file_name, validators=[validate_photo_file_extension], null=True, blank=True, verbose_name='Charity Shop Challenge photo')
+    mitre_challenge_score = models.IntegerField(null=True, blank=True)
+    coding_challenge_score = models.IntegerField(null=True, blank=True)
+    stags_quiz_score = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.name if self.name != '' and self.name != None else 'Group {}'.format(self.id)

@@ -1,6 +1,6 @@
 from django.views import View
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
@@ -10,7 +10,7 @@ from django.conf import settings
 
 from .models import Fresher, Helper, Group
 
-from .forms import HelperEditProfileForm, EditCityChallengeForm
+from .forms import HelperEditProfileForm, EditCityChallengeForm, ScoreMitreChallengeForm, ScoreCodingChallengeForm, ScoreStagsQuizForm
 
 from .utils import jumpstart_check, is_fresher, is_helper
 
@@ -192,8 +192,26 @@ class CityChallengeView(UserPassesTestMixin, View):
         return is_committee(self.request.user)
 
     def get(self, request, group_id):
-        group = Group.objects.get(pk=group_id)
+        group = get_object_or_404(Group, pk=group_id)
+        score_mitre_challenge_form = ScoreMitreChallengeForm(instance=group)
+        score_coding_challenge_form = ScoreCodingChallengeForm(instance=group)
+        stags_quiz_score_form = ScoreStagsQuizForm(instance=group)
         context = {
+            'score_mitre_challenge_form': score_mitre_challenge_form,
+            'score_coding_challenge_form': score_coding_challenge_form,
+            'stags_quiz_score_form': stags_quiz_score_form,
             'group': group,
         }
         return render(request, 'jumpstart/city-challenge.html', context)
+
+
+@method_decorator(login_required, name='dispatch')
+class CityChallengeScoreView(UserPassesTestMixin, View):
+
+    raise_exception = True
+
+    def test_func(self):
+        return is_committee(self.request.user)
+
+    def post(self, request, group_id):
+        pass
