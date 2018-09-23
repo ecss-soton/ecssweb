@@ -1,7 +1,10 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericRelation
 import os
 import uuid
 from .validators import validate_photo_file_extension
+
+from auditlog.models import AuditLog
 
 
 def helper_photo_file_name(instance, filename):
@@ -28,9 +31,22 @@ class Fresher(models.Model):
     name = models.CharField(max_length=50)
     group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True)
 
+
 class Helper(models.Model):
     username = models.CharField(max_length=20, primary_key=True)
     name = models.CharField(max_length=50)
     nickname = models.CharField(max_length=50, null=True, blank=True)
     photo = models.ImageField(upload_to=helper_photo_file_name, validators=[validate_photo_file_extension])
     group = models.OneToOneField(Group, on_delete=models.SET_NULL, null=True)
+
+
+class CityChallengeScoreAuditlog(models.Model):
+    user = models.CharField(max_length=150)
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True)
+    challenge = models.CharField(max_length=150)
+    score = models.IntegerField()
+
+    auditlog = GenericRelation(AuditLog)
+
+    def __str__(self):
+        return '{} updated score of for {} for Group {} to {} at {}'.format(self.user, self.challenge, self.group.id, self.score, self.auditlog.get().time)

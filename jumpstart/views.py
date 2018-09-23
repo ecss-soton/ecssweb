@@ -9,13 +9,15 @@ from django.http import Http404
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
 
-from .models import Fresher, Helper, Group
+from .models import Fresher, Helper, Group, CityChallengeScoreAuditlog
 
 from .forms import HelperEditProfileForm, EditCityChallengeForm, ScoreMitreChallengeForm, ScoreCodingChallengeForm, ScoreStagsQuizForm
 
 from .utils import jumpstart_check, is_fresher, is_helper
 
 from website.utils import is_committee
+
+from auditlog.models import AuditLog
 
 import requests
 import json
@@ -227,6 +229,17 @@ class CityChallengeView(UserPassesTestMixin, View):
                 'coding': 'Coding Challenge',
                 'stags': 'Stags Quiz',
             }
+
+            if request.GET.get('challenge') == 'mitre':
+                score = group.mitre_challenge_score
+            elif request.GET.get('challenge') == 'coding':
+                score = group.coding_challenge_score
+            elif request.GET.get('challenge') == 'stags':
+                score = group.stags_quiz_score
+
+            city_challenge_score_auditlog = CityChallengeScoreAuditlog.objects.create(user=request.user.username, group=group, challenge=challenges[request.GET.get('challenge')], score=score)
+            AuditLog.objects.create(content_object=city_challenge_score_auditlog)
+
             messages.success(request, 'You have updated score of {} for Group {}'.format(challenges[request.GET.get('challenge')], group.id))
             return redirect(reverse_lazy('jumpstart:city-challenge', kwargs={'group_id': group.id}))
         else:

@@ -60,7 +60,7 @@
         <form class="form-inline my-2" method="post" action="{% url 'jumpstart:city-challenge' group.id %}?challenge=stags">
           {% csrf_token %}
           {% for field in stags_quiz_score_form %}
-          <div class="form-group fl">
+          <div class="form-group">
             {{ field.label_tag }}{{ field }}
             {% if field.errors %}
             <small class="form-text text-danger">
