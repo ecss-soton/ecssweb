@@ -19,9 +19,7 @@ def _clean_photo(photo):
         image_io = io.BytesIO()
         image.save(image_io, image_format)
         photo.file = image_io
-        return photo
-    else:
-        raise ValidationError("Couldn't read uploaded image.")
+    return photo
 
 
 class HelperEditProfileForm(ModelForm):
