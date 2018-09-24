@@ -11,7 +11,7 @@ from django.conf import settings
 
 from .models import Fresher, Helper, Group, CityChallengeScoreAuditlog
 
-from .forms import HelperEditProfileForm, EditCityChallengeForm, ScoreMitreChallengeForm, ScoreCodingChallengeForm, ScoreStagsQuizForm, ScoreGamesChallengeForm, ScoreSportsChallengeForm
+from .forms import HelperEditProfileForm, EditCityChallengeForm, EditScavengerHuntForm, ScoreMitreChallengeForm, ScoreCodingChallengeForm, ScoreStagsQuizForm, ScoreGamesChallengeForm, ScoreSportsChallengeForm
 
 from .utils import jumpstart_check, is_fresher, is_helper
 
@@ -147,7 +147,7 @@ class CityChallengeEditView(UserPassesTestMixin, View):
 
             if city_challenge_edit_form.is_valid():
                 city_challenge_edit_form.save()
-                messages.success(request, 'Your group\'s city challenge has been updated successfully.')
+                messages.success(request, 'Your group\'s City Challenge has been updated successfully.')
                 return redirect('jumpstart:home')
 
             context = {
@@ -155,6 +155,53 @@ class CityChallengeEditView(UserPassesTestMixin, View):
                 'city_challenge_edit_form': city_challenge_edit_form,
             }
             return render(request, 'jumpstart/city-challenge-edit.html', context)
+        else:
+            raise Http404()
+
+
+
+@method_decorator(login_required, name='dispatch')
+class ScavengerHuntEditView(UserPassesTestMixin, View):
+
+    raise_exception = True
+
+    def test_func(self):
+        return jumpstart_check(self.request.user)
+
+    def get(self, request):
+        if is_fresher(request.user):
+            raise PermissionDenied()
+        elif is_helper(request.user):
+            group = Group.objects.get(helper=request.user.username)
+            scavenger_hunt_edit_form = EditScavengerHuntForm()
+            context = {
+                'group': group,
+                'scavenger_hunt_edit_form': scavenger_hunt_edit_form,
+            }
+            return render(request, 'jumpstart/scavenger-hunt-edit.html', context)
+        else:
+            raise Http404()
+
+    def post(self, request):
+        if is_fresher(request.user):
+            raise PermissionDenied()
+        elif is_helper(request.user):
+            group = Group.objects.get(helper=request.user.username)
+
+            scavenger_hunt_edit_form = EditScavengerHuntForm(request.POST, request.FILES)
+
+            if scavenger_hunt_edit_form.is_valid():
+                scavenger_hunt = scavenger_hunt_edit_form.save(commit=False)
+                scavenger_hunt.group = Group.objects.get(helper=request.user.username)
+                scavenger_hunt.save()
+                messages.success(request, '1 image has been uploaded for Scavenger Hunt successfully.')
+                return redirect('jumpstart:scavenger-hunt-edit')
+
+            context = {
+                'group': group,
+                'scavenger_hunt_edit_form': scavenger_hunt_edit_form,
+            }
+            return render(request, 'jumpstart/scavenger-hunt-edit.html', context)
         else:
             raise Http404()
 
@@ -169,14 +216,12 @@ class GroupsView(UserPassesTestMixin, View):
 
     def get(self, request):
         if is_fresher(request.user):
-            fresher = Fresher.objects.get(pk=request.user.username)
             groups = Group.objects.all().order_by('id')
             context = {
                 'groups': groups,
             }
             return render(request, 'jumpstart/groups.html', context)
         elif is_helper(request.user):
-            helper = Helper.objects.get(pk=request.user.username)
             groups = Group.objects.all().order_by('id')
             context = {
                 'groups': groups,

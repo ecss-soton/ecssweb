@@ -1,3 +1,7 @@
+from PIL import Image
+import io
+
+
 def is_committee(user):
     return user.groups.filter(name='committee').exists()
 
@@ -18,3 +22,16 @@ def rotate_image(image):
         pass
 
     return image
+
+
+def clean_image(image_file):
+    if image_file:
+        if image_file.size > 8*1024*1024:
+            raise ValidationError("Photo file size too large. Supports file up to 8MB.")
+        image = Image.open(image_file.file)
+        image_format = image.format
+        image = rotate_image(image)
+        image_io = io.BytesIO()
+        image.save(image_io, image_format)
+        image_file.file = image_io
+    return image_file

@@ -1,25 +1,9 @@
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
-from .models import Helper, Group
+from .models import Helper, Group, ScavengerHunt
 
-from website.utils import rotate_image
-
-from PIL import Image
-import io
-
-
-def _clean_photo(photo):
-    if photo:
-        if photo.size > 8*1024*1024:
-            raise ValidationError("Photo file size too large. Supports file up to 8MB.")
-        image = Image.open(photo.file)
-        image_format = image.format
-        image = rotate_image(image)
-        image_io = io.BytesIO()
-        image.save(image_io, image_format)
-        photo.file = image_io
-    return photo
+from website.utils import rotate_image, clean_image
 
 
 class HelperEditProfileForm(ModelForm):
@@ -40,7 +24,7 @@ class HelperEditProfileForm(ModelForm):
 
     def clean_photo(self):
         photo = self.cleaned_data.get('photo', False)
-        return _clean_photo(photo)
+        return clean_image(photo)
         
 
 
@@ -52,7 +36,7 @@ class EditCityChallengeForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(EditCityChallengeForm, self).__init__(*args, **kwargs)
         self.fields['charity_shop_challenge_photo'].widget.attrs.update({
-            'accept': 'image/jpeg, image/png'
+            'accept': 'image/jpeg, image/png',
         })
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
@@ -61,7 +45,28 @@ class EditCityChallengeForm(ModelForm):
 
     def clean_charity_shop_challenge_photo(self):
         photo = self.cleaned_data.get('charity_shop_challenge_photo', False)
-        return _clean_photo(photo)
+        return clean_image(photo)
+
+
+class EditScavengerHuntForm(ModelForm):
+    class Meta:
+        model = ScavengerHunt
+        fields = ['photo']
+
+    def __init__(self, *args, **kwargs):
+        super(EditScavengerHuntForm, self).__init__(*args, **kwargs)
+        self.fields['photo'].widget.attrs.update({
+            'accept': 'image/jpeg, image/png',
+        })
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                #'multiple': 'true',
+            })
+
+    def clean_photo(self):
+        photo = self.cleaned_data.get('photo', False)
+        return clean_image(photo)
 
 
 class ScoreMitreChallengeForm(ModelForm):

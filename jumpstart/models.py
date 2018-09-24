@@ -14,6 +14,9 @@ def helper_photo_file_name(instance, filename):
 def charity_shop_challenge_photo_file_name(instance, filename):
     return ('jumpstart2018/city-challenge/charity-shop-challenge-group{}-{}{}'.format(instance.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
 
+def scavenger_hunt_photo_file_name(instance, filename):
+    return ('jumpstart2018/city-challenge/scavenger-hunt-group{}-{}{}'.format(instance.group.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
+
 
 class Group(models.Model):
     name = models.CharField(max_length=50, null=True, blank=True)
@@ -37,6 +40,11 @@ class Helper(models.Model):
     nickname = models.CharField(max_length=50, null=True, blank=True)
     photo = models.ImageField(upload_to=helper_photo_file_name, validators=[validate_photo_file_extension])
     group = models.OneToOneField(Group, on_delete=models.SET_NULL, null=True)
+
+
+class ScavengerHunt(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True)
+    photo = models.ImageField(upload_to=scavenger_hunt_photo_file_name, validators=[validate_photo_file_extension])
 
 
 class CityChallengeScoreAuditlog(models.Model):

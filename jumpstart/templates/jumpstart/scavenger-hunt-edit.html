@@ -1,0 +1,37 @@
+{% extends 'jumpstart/base.html' %}
+
+{% block jumpstartcontent %}
+{% for message in messages %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+<div class="alert alert-success">{{ message }}</div>
+{% endif %}
+{% endfor %}
+<div class="card mt-3">
+  <div class="card-header">
+    Submit Scavenger Hunt
+  </div>
+  <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="id_id">Group:</label>
+        <input value="Group {{ group.id }}" class="form-control" disabled id="id_id">
+      </div>
+      {% for field in scavenger_hunt_edit_form %}
+      <div class="form-group">
+        {{ field.label_tag }}{{ field }}
+        {% if field.errors %}
+        <small class="form-text text-danger">
+          {% for err in field.errors %}{{ err }}{% endfor %}
+        </small>
+        {% endif %}
+      </div>
+      {% endfor %}
+      <input type="Submit" class="btn btn-ecssweb" value="Update">
+      <div class="mt-2">
+        <small class="text-muted">Your submission of Scavenger Hunt will be visible for ECSS committee and your group.</small>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
