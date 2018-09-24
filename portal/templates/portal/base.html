@@ -76,9 +76,9 @@
             </li>
             {% endif %}
             {% if user|is_helper or user|is_fresher %}
-            <!-- <li>
-              <a href="">View Scavenger Hunt</a>
-            </li> -->
+            <li>
+              <a href="{% url 'jumpstart:scavenger-hunt' %}">View Scavenger Hunt</a>
+            </li>
             <li>
               <a href="{% url 'jumpstart:groups' %}">Jumpstart Groups</a>
             </li>

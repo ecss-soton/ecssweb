@@ -1,4 +1,7 @@
-.helper-photo, .city-challenge-photo {
+.helper-photo, .city-challenge-photo, .scavenger-hunt-photo {
   width: 15rem;
 }
 
+.scavenger-hunt-photo {
+  height: 15rem;
+}

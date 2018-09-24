@@ -159,6 +159,27 @@ class CityChallengeEditView(UserPassesTestMixin, View):
             raise Http404()
 
 
+@method_decorator(login_required, name='dispatch')
+class ScavengerHuntView(UserPassesTestMixin, View):
+
+    raise_exception = True
+
+    def test_func(self):
+        return jumpstart_check(self.request.user)
+
+    def get(self, request):
+        if is_fresher(request.user):
+            group = Fresher.objects.get(pk=request.user.username).group
+        elif is_helper(request.user):
+            group = Group.objects.get(helper=request.user.username)
+        else:
+            raise Http404()
+
+        context = {
+            'group': group,
+        }
+        return render(request, 'jumpstart/scavenger-hunt.html', context)
+
 
 @method_decorator(login_required, name='dispatch')
 class ScavengerHuntEditView(UserPassesTestMixin, View):

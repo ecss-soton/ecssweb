@@ -14,6 +14,7 @@ def helper_photo_file_name(instance, filename):
 def charity_shop_challenge_photo_file_name(instance, filename):
     return ('jumpstart2018/city-challenge/charity-shop-challenge-group{}-{}{}'.format(instance.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
 
+
 def scavenger_hunt_photo_file_name(instance, filename):
     return ('jumpstart2018/city-challenge/scavenger-hunt-group{}-{}{}'.format(instance.group.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
 
