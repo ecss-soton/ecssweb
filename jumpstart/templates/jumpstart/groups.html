@@ -16,12 +16,10 @@
       {% else %}
       <h5>Group {{ group.id }}</h5>
       {% endif %}
-      {% if user|is_helper %}
       <div class="my-3">
         <img class="img-fluid helper-photo d-block" src="{% if group.helper.photo %}{{ group.helper.photo.url }}{% endif %}" alt="{{ group.helper.name }}">
         Group helper: {{ group.helper.name }}{% if group.helper.nickname %} ({{ group.helper.nickname }}){% endif %}
       </div>
-      {% endif %}
       <div class="mt-3">{{ group.fresher_set.all|length }} member{{ group.fresher_set.all|length|pluralize }}.</div>
     </li>
     {% endfor %}
