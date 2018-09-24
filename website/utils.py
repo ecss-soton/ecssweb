@@ -26,14 +26,9 @@ def rotate_image(image):
 
 def clean_image(image_file):
     if image_file:
-        print(image_file)
         if image_file.size > 8*1024*1024:
             raise ValidationError("Photo file size too large. Supports file up to 8MB.")
-        try:
-            image = Image.open(image_file.file)
-        except(AttributeError):
-            image_file.file.name = ''
-            image = Image.open(image_file.file)
+        image = Image.open(image_file)
         image_format = image.format
         image = rotate_image(image)
         image_io = io.BytesIO()
