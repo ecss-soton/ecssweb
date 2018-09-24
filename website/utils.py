@@ -1,5 +1,6 @@
 from PIL import Image
 import io
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 def is_committee(user):
@@ -33,5 +34,6 @@ def clean_image(image_file):
         image = rotate_image(image)
         image_io = io.BytesIO()
         image.save(image_io, image_format)
-        image_file.file = image_io
+        image_file = InMemoryUploadedFile(image_io, None, image_file.name, image_format, None, None, None)
+
     return image_file
