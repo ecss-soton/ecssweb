@@ -20,7 +20,7 @@ def scavenger_hunt_photo_file_name(instance, filename):
 
 
 class Group(models.Model):
-    name = models.CharField(max_length=50, null=True, blank=True)
+    name = models.CharField(max_length=50, null=True, blank=True, verbose_name='Group Name')
     charity_shop_challenge_photo = models.ImageField(upload_to=charity_shop_challenge_photo_file_name, validators=[validate_photo_file_extension], null=True, blank=True, verbose_name='Charity Shop Challenge photo')
     mitre_challenge_score = models.IntegerField(null=True, blank=True)
     coding_challenge_score = models.IntegerField(null=True, blank=True)

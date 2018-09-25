@@ -60,4 +60,17 @@
     </div>
   </div>
 </div>
+<div class="card">
+  <div class="card-header">
+    Scavenger Hunt
+  </div>
+  <div class="card-body">
+    <div class="mb-3">
+      Submitted {{ group.scavengerhunt_set.all|length }} photo{{ group.scavengerhunt_set.all|length|pluralize }}.
+    </div>
+    <div class="mt-3">
+        <a href="{% url 'jumpstart:scavenger-hunt' %}">View Scavenger Hunt</a>
+    </div>
+  </div>
+</div>
 {% endblock %}
