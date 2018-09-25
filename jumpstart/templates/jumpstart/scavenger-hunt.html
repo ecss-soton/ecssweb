@@ -10,6 +10,9 @@
     <h5>{{ group.name }}</h5>
     <small class="text-muted">Group {{ group.id }}</small>
     {% else %}
+    <h5>
+      Group {{ group.id }}
+    </h5>
     {% endif %}
     {% if not group.scavengerhunt_set.all %}
     <div class="mt-3">

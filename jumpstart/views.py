@@ -172,8 +172,14 @@ class ScavengerHuntView(UserPassesTestMixin, View):
             group = Fresher.objects.get(pk=request.user.username).group
         elif is_helper(request.user):
             group = Group.objects.get(helper=request.user.username)
+        elif is_committee(request.user):
+            groups = Group.objects.all().order_by('id')
+            context = {
+                'groups': groups,
+            }
+            return render(request, 'jumpstart/scavenger-hunt-all.html', context)
         else:
-            raise Http404()
+            raise PermissionDenied()
 
         context = {
             'group': group,
