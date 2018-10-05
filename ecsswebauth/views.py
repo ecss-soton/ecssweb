@@ -16,7 +16,7 @@ import datetime
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 
 def _clean_next_url(next_url, default_url=settings.LOGIN_REDIRECT_URL):
-    if is_safe_url(next_url):
+    if is_safe_url(next_url, settings.ALLOWED_HOSTS):
         return next_url.strip()
     else:
         return resolve_url(default_url)
