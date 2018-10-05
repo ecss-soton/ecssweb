@@ -64,7 +64,13 @@ To find out more about models of ecssweb, see the [wiki](https://github.com/ecss
 
 ## Maintenance
 
-To regularly clear the inactive sessions and non-persistent users from the database, you can setup the cron job to it
+You can setup cron job to perform regular maintenance tasks:
+
+- Clear the inactive sessions and non-persistent users from the database
+
+- Sync upcoming events with Facebook
+
+### Setup
 
 - Give the `maintenance.sh` script execute permission
 
