@@ -19,10 +19,15 @@ def sync_upcoming_events_with_fb():
                 end_time = datetime.strptime(end_time, '%Y-%m-%dT%H:%M:%S%z')
             start_time = datetime.strptime(event['start_time'], '%Y-%m-%dT%H:%M:%S%z')
             now = timezone.now()
+
+            location = ''
+            if 'place' in event and 'name' in event['place']:
+                location = event['place']['name']
+
             if (end_time and now < end_time) or now < start_time:
                 defaults = {
                     'name': event['name'],
-                    'location': event['place']['name'],
+                    'location': location,
                     'cover': event['cover']['source'],
                     'start_time': event['start_time'],
                     'end_time': end_time,
