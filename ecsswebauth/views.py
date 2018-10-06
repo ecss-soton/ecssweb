@@ -130,6 +130,8 @@ def _logout(request):
 
 # initiate logout
 def saml_logout(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(resolve_url(settings.LOGIN_URL))
     auth = _init_saml(request)
     saml_name_id = request.session['saml_name_id']
     _logout(request)
