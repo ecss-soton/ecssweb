@@ -26,6 +26,7 @@ from ecsswebauth.views import saml_acs, saml_sls
 urlpatterns = [
     path('', include('website.urls')),
     path('auth/', include('ecsswebauth.urls')),
+    # Portal
     path('portal/', include('portal.urls')),
     path('portal/feedback/', include('feedback.urls')),
     path('portal/auditlog/', include('auditlog.urls')),

@@ -1,19 +1,53 @@
-# Categories for feedback
+# Add categories for feedback
+
+- model: feedback.category
+  pk: Events/Socials
+  fields: {}
+
+- model: feedback.category
+  pk: Social media
+  fields: {}
+
+- model: feedback.category
+  pk: Website
+  fields: {}
 
 - model: feedback.category
   pk: Others
   fields: {}
 
 
-# Groups
+# Add groups
 
-# Committee group
+# Add committee group
 - model: auth.group
   fields:
     name: committee
     permissions:
+    # Responses
     - [add_response, feedback, response]
+    - [change_response, feedback, response]
+    - [delete_response, feedback, response]
+    - [view_response, feedback, response]
+    # Auditlog
     - [view_auditlog, auditlog, auditlog]
+    # Committee roles members
+    - [view_committeerolemember, website, committeerolemember]
+    - [change_committeerolemember, website, committeerolemember]
+    # Societies
+    - [view_society, website, society]
+    - [change_society, website, society]
+    - [add_societylink, website, societylink]
+    - [change_societylink, website, societylink]
+    - [delete_societylink, website, societylink]
+    - [view_societylink, website, societylink]
+    # Sponsors
+    - [view_sponsor, website, sponsor]
+    - [change_sponsor, website, sponsor]
+    - [add_sponsorlink, website, sponsorlink]
+    - [change_sponsorlink, website, sponsorlink]
+    - [delete_sponsorlink, website, sponsorlink]
+    - [view_sponsorlink, website, sponsorlink]
 
 # ECS user SAML groups
 # Add is_ecs_user permission to relevant saml groups
