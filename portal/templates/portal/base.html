@@ -86,11 +86,11 @@
           </ul>
         </li>
         {% endif %}
-        <!--
+        {% if user.is_staff %}
         <li class="list-group-item">
-          <a href="#">Admin</a>
+          <a href="/admin/">Django admin</a>
         </li>
-        -->
+        {% endif %}
       </ul>
     </div>
     <div class="col-lg-9">

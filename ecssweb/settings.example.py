@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'auditlog.apps.AuditlogConfig',
     'fbevents.apps.FbeventsConfig',
     'jumpstart.apps.JumpstartConfig',
+    'shop.apps.ShopConfig',
 ]
 
 MIDDLEWARE = [
