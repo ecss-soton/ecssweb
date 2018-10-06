@@ -17,6 +17,12 @@ class CommitteeRoleMember(models.Model):
     member_email = models.EmailField(max_length=100)
     member_facebook = models.URLField()
 
+    class Meta:
+        verbose_name_plural = 'committee roles members'
+
+    def __str__(self):
+        return '{} ({})'.format(self.role_name, self.member_name)
+
 
 # Societies
 
@@ -37,11 +43,23 @@ class Society(models.Model):
     fb_group = models.URLField()
     twitter = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = 'societies'
+
+    def __str__(self):
+        return self.name
+
 
 class SocietyLink(models.Model):
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     url = models.URLField()
+
+    class Meta:
+        verbose_name_plural = 'societies links'
+
+    def __str__(self):
+        return '{} - {}'.format(self.society, self.name)
 
 
 # Sponsors
@@ -55,7 +73,17 @@ class Sponsor(models.Model):
     description = models.TextField()
     website = models.URLField()
 
+    def __str__(self):
+        return self.name
+
+
 class SponsorLink(models.Model):
     sponsor = models.ForeignKey(Sponsor, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     url = models.URLField()
+
+    class Meta:
+        verbose_name_plural = 'sponsors links'
+
+    def __str__(self):
+        return '{} - {}'.format(self.sponsor, self.name)
