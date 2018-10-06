@@ -32,16 +32,16 @@ class Society(models.Model):
     name = models.CharField(max_length=100)
     logo_file = models.CharField(max_length=100)
 
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
-    time = models.CharField(max_length=100)
-    location = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100)
-    website = models.URLField()
+    time = models.CharField(max_length=100, blank=True)
+    location = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(max_length=100, blank=True)
+    website = models.URLField(blank=True)
 
-    fb_page = models.URLField()
-    fb_group = models.URLField()
-    twitter = models.CharField(max_length=100)
+    fb_page = models.URLField(blank=True)
+    fb_group = models.URLField(blank=True)
+    twitter = models.CharField(max_length=100, blank=True)
 
     class Meta:
         verbose_name_plural = 'societies'
