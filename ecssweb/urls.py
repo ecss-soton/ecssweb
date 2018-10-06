@@ -16,9 +16,12 @@ Including another URLconf
 from django.urls import include, path
 from django.conf.urls.static import static
 
+from django.contrib import admin
+
 from django.conf import settings
 
 from ecsswebauth.views import saml_acs, saml_sls
+
 
 urlpatterns = [
     path('', include('website.urls')),
@@ -27,10 +30,14 @@ urlpatterns = [
     path('portal/feedback/', include('feedback.urls')),
     path('portal/auditlog/', include('auditlog.urls')),
     path('portal/jumpstart/', include('jumpstart.urls')),
+    # Admin
+    path('admin/', include('ecsswebadmin.urls')),
+    path('admin/', admin.site.urls),
     # Temp for deployment
     path('simplesaml/module.php/saml/sp/saml2-acs.php/default-sp', saml_acs, name='saml-asc'),
     path('simplesaml/module.php/saml/sp/saml2-logout.php/default-sp', saml_sls, name='saml-sls'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 handler404 = 'website.views.page_not_found'
 handler403 = 'website.views.permission_denied'

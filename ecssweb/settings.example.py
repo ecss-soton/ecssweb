@@ -38,6 +38,7 @@ CSRF_COOKIE_SECURE = False
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website.apps.WebsiteConfig',
     'ecsswebauth.apps.EcsswebauthConfig',
+    'ecsswebadmin.apps.EcsswebadminConfig',
     'portal.apps.PortalConfig',
     'feedback.apps.FeedbackConfig',
     'auditlog.apps.AuditlogConfig',
