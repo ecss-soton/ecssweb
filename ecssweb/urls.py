@@ -28,6 +28,7 @@ urlpatterns = [
     path('auth/', include('ecsswebauth.urls')),
     # Portal
     path('portal/', include('portal.urls')),
+    path('portal/shop/', include('shop.urls')),
     path('portal/feedback/', include('feedback.urls')),
     path('portal/auditlog/', include('auditlog.urls')),
     path('portal/jumpstart/', include('jumpstart.urls')),
