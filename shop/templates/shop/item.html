@@ -1,0 +1,59 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+
+{% block title %}Shop - ECSS{% endblock %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'shop/styles/shop.css' %}">
+{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>Shop</h1>
+  <div class="card">
+    <h5 class="card-header">
+      {{ item.name }}
+    </h5>
+    <div class="card-body row">
+      <div class="col-md-5">
+        <img class="img-fluid" src="{% if item.image %}{{ item.image.url }}{% endif %}" alt="{{ item.name }}">
+      </div>
+      <div class="col-md-7">
+        <h5>
+          {{ item.name }}
+        </h5>
+        <p>{{ item.description }}</p>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">        
+          <input type="hidden" name="cmd" value="_s-xclick">
+          <input type="hidden" name="hosted_button_id" value="{{ item.paypal_button_id }}">
+
+          <input type="hidden" name="item_name" value="{{ item.name }}">
+          <input type="hidden" name="amount" value="1">
+
+          {% for item_option in item.itemoption_set.all %}
+          <div class="form-group">
+            <label for="input{{ item_option.paypal_option_number }}">{{ item_option.name }}</label>
+            <input type="hidden" name="on{{ item_option.paypal_option_number }}" value="{{ item_option.paypal_option_name }}">
+            {% if item_option.auto_value == 'username' %}
+            <input class="form-control" name="os{{ item_option.paypal_option_number }}" value="{{ user.username }}" id="input{{ item_option.paypal_option_number }}" readonly>
+            {% else %}
+            <select class="form-control" name="os{{ item_option.paypal_option_number }}" id="input{{ item_option.paypal_option_number }}" required>
+              <option value="" selected disabled>Select {{ item_option.name }}</option>
+              {% for option_choice in item_option.optionchoice_set.all %}
+              <option value="{{ option_choice.value }}">{{ option_choice.name }}</option>
+              {% endfor %}
+            </select>
+          {% endif %}
+          </div>
+          {% endfor %}
+
+          <div>£{{ item.price }}</div>
+          <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="Buy Now">
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

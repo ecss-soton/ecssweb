@@ -33,31 +33,37 @@ class Item(models.Model):
 
 
 class ItemOption(models.Model):
+
+    AUTO_CHOICES = [
+        ('username', 'Username'),
+    ]
+
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    paypal_on_number = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(7)])
-    paypal_on_name = models.CharField(max_length=20)
-    option_name = models.CharField(max_length=20)
+    paypal_option_number = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(7)], verbose_name='PayPal option number')
+    paypal_option_name = models.CharField(max_length=20, verbose_name='PayPal option name')
+    name = models.CharField(max_length=20)
+    auto_value = models.CharField(max_length=20, null=True, blank=True, choices=AUTO_CHOICES)
 
     def __str__(self):
-        return self.option_name
+        return self.name
 
     class meta:
-        unique_together = ('item, paypal_on_number')
+        unique_together = ('item, paypal_option_number')
 
 
 class OptionChoice(models.Model):
     item_option = models.ForeignKey(ItemOption, on_delete=models.CASCADE)
     sort_order = models.IntegerField(null=True, blank=True)
-    choice_name = models.CharField(max_length=20)
-    choice_value = models.CharField(max_length=20)
+    name = models.CharField(max_length=20)
+    value = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.choice_name
+        return self.name
 
 
 class ItemPermission(models.Model):
-    item = models.ForeignKey(Sale, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
     permission = models.ForeignKey(Permission, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.permission
+        return str(self.permission)
