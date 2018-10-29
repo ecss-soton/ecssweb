@@ -19,6 +19,11 @@
       {{ sale.name }}
     </h5>
     <div class="card-body">
+      {% if sale.is_future %}
+      <div class="alert alert-warning">
+        This sale is not yet open.
+      </div>
+      {% endif %}
       {% if sale.item_set.all %}
       <div class="d-inline-flex flex-wrap">
         {% for item in sale.item_set.all %}

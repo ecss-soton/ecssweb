@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, Http404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.db.models import Q
@@ -21,6 +21,10 @@ def shop(request):
 @login_required
 def item(request, sale, item):
     sale = get_object_or_404(Sale, codename=sale)
+    if sale.end < timezone.now():
+        raise Http404()
+    if sale.start > timezone.now() and not request.user.groups.filter(name='committee').exists():
+        raise Http404()
     item = get_object_or_404(Item, codename=item, sale=sale)
     context = {
         'item': item,

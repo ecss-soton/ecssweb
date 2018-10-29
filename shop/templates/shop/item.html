@@ -21,6 +21,14 @@
         <img class="img-fluid" src="{% if item.image %}{{ item.image.url }}{% endif %}" alt="{{ item.name }}">
       </div>
       <div class="col-md-7">
+        {% if item.sale.is_future %}
+        <div class="alert alert-warning">
+          Sale for this item is not yet open.
+        </div>
+        {% endif %}
+        <div class="alert alert-danger" id="jsWarning">
+          <b>Error</b>: JavaScript is not enabled. JavaScript is required to send the correct order information.
+        </div>
         <h5>
           {{ item.name }}
         </h5>
@@ -55,7 +63,6 @@
           <div class="mb-3">£{{ item.price }}</div>
 
           <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="Buy Now" id="paypalButton" hidden>
-          <div class="alert alert-danger" id="jsWarning"><b>Error</b>: JavaScript is not enabled. JavaScript is required to send the correct order information.</div>
 
           <div class="text-muted">
             <small>

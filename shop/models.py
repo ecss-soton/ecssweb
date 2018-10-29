@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 import os
 
@@ -15,6 +17,27 @@ class Sale(models.Model):
     name = models.CharField(max_length=50)
     start = models.DateTimeField()
     end = models.DateTimeField()
+
+
+    @property
+    def is_future(self):
+        return self.start > timezone.now()
+
+
+    @property
+    def is_past(self):
+        return self.end < timezone.now()
+
+
+    @property
+    def is_current(self):
+        return not (self.is_future() or self.is_past())
+
+    
+    def clean(self):
+        if self.start >= self.end:
+            raise ValidationError('End time should not be the same or earlier than start time.')
+
 
     def __str__(self):
         return self.name
@@ -60,7 +83,7 @@ class ItemOption(models.Model):
 class OptionChoice(models.Model):
     item_option = models.ForeignKey(ItemOption, on_delete=models.CASCADE)
     sort_order = models.IntegerField(null=True, blank=True)
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=150)
     value = models.CharField(max_length=20)
 
     def __str__(self):
