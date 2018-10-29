@@ -1,6 +1,7 @@
 {% extends 'portal/base.html' %}
 
 {% load static %}
+{% load website_extra %}
 
 {% block title %}Shop - ECSS{% endblock %}
 
@@ -26,9 +27,15 @@
       {% endif %}
       {% if sale.item_set.all %}
       <div class="d-inline-flex flex-wrap">
-        {% for item in sale.item_set.all %}
+        {% for item in sale.item_set.all|msort:"sort_order" %}
         <div class="card shop-item-card">
-          <img class="card-img-top" src="{% if item.image %}{{ item.image.url }}{% endif %}" alt="{{ item.name }}">
+          {% if item.itemimage_set.all %}
+          {% with default_itemimage=item.itemimage_set.all|msort:"sort_order"|first %}
+          <img class="card-img-top" src="{{ default_itemimage.image.url }}" alt="{{ item.name }}">
+          {% endwith %}
+          {% else %}
+          <img class="card-img-top" src="" alt="{{ item.name }}">
+          {% endif %}
           <a href="{% url 'shop:item' sale=sale.codename item=item.codename %}">
             <h5 class="card-header">
               {{ item.name }}

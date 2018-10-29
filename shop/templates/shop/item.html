@@ -1,6 +1,7 @@
 {% extends 'portal/base.html' %}
 
 {% load static %}
+{% load website_extra %}
 
 {% block title %}Shop - ECSS{% endblock %}
 
@@ -17,7 +18,7 @@
       {{ item.name }}
     </h5>
     <div class="card-body row">
-      <div class="col-md-5">
+      <div class="col-md-5 mb-3">
         <img class="img-fluid" src="{% if item.image %}{{ item.image.url }}{% endif %}" alt="{{ item.name }}">
       </div>
       <div class="col-md-7">
@@ -43,7 +44,7 @@
           <input type="hidden" name="on0" value="options">
           <input type="hidden" name="os0" value="">
 
-          {% for item_option in item.itemoption_set.all %}
+          {% for item_option in item.itemoption_set.all|dictsort:"paypal_option_number" %}
           <div class="form-group">
             <label for="input{{ item_option.paypal_option_number }}">{{ item_option.name }}</label>
             <input type="hidden" name="on{{ item_option.paypal_option_number }}" value="{{ item_option.paypal_option_name }}">
@@ -52,7 +53,7 @@
             {% else %}
             <select class="form-control" name="os{{ item_option.paypal_option_number }}" id="input{{ item_option.paypal_option_number }}" required>
               <option value="" selected disabled>Select {{ item_option.name }}</option>
-              {% for option_choice in item_option.optionchoice_set.all %}
+              {% for option_choice in item_option.optionchoice_set.all|msort:"sort_order" %}
               <option value="{{ option_choice.value }}">{{ option_choice.name }}</option>
               {% endfor %}
             </select>

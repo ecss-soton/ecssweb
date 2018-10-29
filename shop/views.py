@@ -9,9 +9,9 @@ from .models import Sale, Item
 @login_required
 def shop(request):
     if request.user.groups.filter(name='committee').exists():
-        sales = Sale.objects.filter(end__gte=timezone.now())
+        sales = Sale.objects.filter(end__gte=timezone.now()).order_by('start')
     else:
-        sales = Sale.objects.filter(Q(start__lte=timezone.now()) & Q(end__gte=timezone.now()))
+        sales = Sale.objects.filter(Q(start__lte=timezone.now()) & Q(end__gte=timezone.now())).order_by('start')
     context = {
         'sales': sales,
     }
