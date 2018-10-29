@@ -1,12 +1,17 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+from django.db.models import Q
 
 from .models import Sale, Item
 
 
 @login_required
 def shop(request):
-    sales = Sale.objects.all()
+    if request.user.groups.filter(name='committee').exists():
+        sales = Sale.objects.filter(end__gte=timezone.now())
+    else:
+        sales = Sale.objects.filter(Q(start__lte=timezone.now()) & Q(end__gte=timezone.now()))
     context = {
         'sales': sales,
     }
