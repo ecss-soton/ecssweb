@@ -25,12 +25,15 @@
           {{ item.name }}
         </h5>
         <p>{{ item.description }}</p>
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">        
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" id="orderForm">        
           <input type="hidden" name="cmd" value="_s-xclick">
           <input type="hidden" name="hosted_button_id" value="{{ item.paypal_button_id }}">
 
           <input type="hidden" name="item_name" value="{{ item.name }}">
           <input type="hidden" name="amount" value="1">
+
+          <input type="hidden" name="on0" value="options">
+          <input type="hidden" name="os0" value="">
 
           {% for item_option in item.itemoption_set.all %}
           <div class="form-group">
@@ -49,11 +52,40 @@
           </div>
           {% endfor %}
 
-          <div>£{{ item.price }}</div>
-          <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="Buy Now">
+          <div class="mb-3">£{{ item.price }}</div>
+
+          <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="Buy Now" id="paypalButton" hidden>
+          <div class="alert alert-danger" id="jsWarning"><b>Error</b>: JavaScript is not enabled. JavaScript is required to send the correct order information.</div>
+
+          <div class="text-muted">
+            <small>
+              The order and payment is handled by PayPal. By clicking the "Buy Now" button, you order information will be sent to PayPal (this may also include your university username), and we may contact you regarding your order.
+            </small>
+          </div>
         </form>
       </div>
     </div>
   </div>
 </section>
+{% endblock %}
+
+{% block pagescript %}
+{{ block.super }}
+<script>
+// show "Buy Now" button and hide js warning
+$('#paypalButton').removeAttr('hidden');
+$('#jsWarning').prop('hidden', true);
+
+var optionsFields = new Array();
+{% for item_option in item.itemoption_set.all %}
+optionsFields.push('on{{ item_option.paypal_option_number }}');
+optionsFields.push('os{{ item_option.paypal_option_number }}');
+{% endfor %}
+
+$('#paypalButton').click(function() {
+  $("#orderForm>input[name='os0']").val($("#orderForm :input").filter(function() {
+    return optionsFields.includes(this.name);
+  }).serialize());
+});
+</script>
 {% endblock %}
