@@ -19,7 +19,7 @@
     </h5>
     <div class="card-body row">
       <div class="col-md-5 mb-3">
-        {% if item.itemimage_set.all|length == 1 %}
+        {% if item.itemimage_set.all|length <= 1 %}
         {% with first_itemimage=item.itemimage_set.all|first %}
         <img class="img-fluid" src="{{ first_itemimage.image.url }}" alt="{{ item.name }}">
         {% endwith %}
@@ -45,6 +45,13 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
           </a>
+        </div>
+        <div class="flex-row item-thumbnails d-none d-md-flex">
+          {% for itemimage in item.itemimage_set.all %}
+          <div class="d-flex item-thumbnail img-thumbnail" data-target="#itemCarousel" data-slide-to="{{ forloop.counter0 }}">
+            <img class="d-block img-fluid mx-auto" src="{{ itemimage.image.url }}" alt="{{ item.name }}">
+          </div>
+          {% endfor %}
         </div>
         {% endif %}
       </div>

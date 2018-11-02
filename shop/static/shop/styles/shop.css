@@ -37,3 +37,20 @@
 #itemCarousel .carousel-control-prev-icon, #itemCarousel .carousel-control-prev-icon {
   background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='darkred' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E")
 }
+
+.item-thumbnails {
+  overflow-x: scroll;
+}
+
+.item-thumbnail {
+  margin: .2rem;
+  width: 5rem;
+  height: 5rem;
+  min-width: 5rem;
+  align-items: center;
+  cursor: pointer;
+}
+
+.item-thumbnail > img {
+  height: auto;
+}
