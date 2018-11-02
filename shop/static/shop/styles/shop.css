@@ -3,3 +3,37 @@
   width: 14rem;
   height: auto;
 }
+
+.shop-carousel-item {
+  height: 18rem;
+}
+
+.shop-carousel-item.active {
+  display: flex;
+}
+
+.shop-carousel-item.carousel-item-next,
+.shop-carousel-item.carousel-item-left,
+.shop-carousel-item.carousel-item-right {
+  display: flex;
+}
+
+.shop-carousel-item > img {
+  max-height: 100%;
+}
+
+#itemCarousel .carousel-indicators li {
+  background-color: darkred;
+}
+
+#itemCarousel .carousel-indicators .active {
+  background-color: #d82129;
+}
+
+#itemCarousel .carousel-control-next-icon, #itemCarousel .carousel-control-next-icon {
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='darkred' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+#itemCarousel .carousel-control-prev-icon, #itemCarousel .carousel-control-prev-icon {
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='darkred' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E")
+}

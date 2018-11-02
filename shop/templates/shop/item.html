@@ -19,7 +19,34 @@
     </h5>
     <div class="card-body row">
       <div class="col-md-5 mb-3">
-        <img class="img-fluid" src="{% if item.image %}{{ item.image.url }}{% endif %}" alt="{{ item.name }}">
+        {% if item.itemimage_set.all|length == 1 %}
+        {% with first_itemimage=item.itemimage_set.all|first %}
+        <img class="img-fluid" src="{{ first_itemimage.image.url }}" alt="{{ item.name }}">
+        {% endwith %}
+        {% else %}
+        <div id="itemCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+          <ol class="carousel-indicators">
+            {% for itemimage in item.itemimage_set.all %}
+            <li data-target="#itemCarousel" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter == 1 %}active{% endif %}"></li>
+            {% endfor %}
+          </ol>
+          <div class="carousel-inner">
+            {% for itemimage in item.itemimage_set.all %}
+            <div class="carousel-item shop-carousel-item {% if forloop.counter == 1 %}active{% endif %}">
+              <img class="d-block img-fluid mx-auto" src="{{ itemimage.image.url }}" alt="{{ item.name }}">
+            </div>
+            {% endfor %}
+          </div>
+          <a class="carousel-control-prev" href="#itemCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#itemCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+        {% endif %}
       </div>
       <div class="col-md-7">
         {% if item.sale.is_future %}

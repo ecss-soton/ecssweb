@@ -34,6 +34,7 @@
           <img class="card-img-top" src="{{ default_itemimage.image.url }}" alt="{{ item.name }}">
           {% endwith %}
           {% else %}
+          <!-- src leave black if no image -->
           <img class="card-img-top" src="" alt="{{ item.name }}">
           {% endif %}
           <a href="{% url 'shop:item' sale=sale.codename item=item.codename %}">
