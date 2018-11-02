@@ -32,9 +32,9 @@ class Sale(models.Model):
 
     @property
     def is_current(self):
-        return not (self.is_future() or self.is_past())
+        return not (self.is_future or self.is_past)
 
-    
+
     def clean(self):
         if self.start >= self.end:
             raise ValidationError('End time should not be the same or earlier than start time.')
