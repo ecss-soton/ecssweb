@@ -1,0 +1,133 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+{% load website_extra %}
+
+{% block title %}Shop - ECSS{% endblock %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'shop/styles/shop.css' %}">
+{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>Shop</h1>
+  <div class="card">
+    <h5 class="card-header">
+      {{ item.name }}
+    </h5>
+    <div class="card-body row">
+      <div class="col-md-5 mb-3">
+        {% if item.itemimage_set.all|length <= 1 %}
+        {% with first_itemimage=item.itemimage_set.all|first %}
+        <img class="img-fluid" src="{{ first_itemimage.image.url }}" alt="{{ item.name }}">
+        {% endwith %}
+        {% else %}
+        <div id="itemCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+          <ol class="carousel-indicators">
+            {% for itemimage in item.itemimage_set.all %}
+            <li data-target="#itemCarousel" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter == 1 %}active{% endif %}"></li>
+            {% endfor %}
+          </ol>
+          <div class="carousel-inner">
+            {% for itemimage in item.itemimage_set.all %}
+            <div class="carousel-item shop-carousel-item {% if forloop.counter == 1 %}active{% endif %}">
+              <img class="d-block img-fluid mx-auto" src="{{ itemimage.image.url }}" alt="{{ item.name }}">
+            </div>
+            {% endfor %}
+          </div>
+          <a class="carousel-control-prev" href="#itemCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#itemCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+        <div class="flex-row item-thumbnails d-none d-md-flex">
+          {% for itemimage in item.itemimage_set.all %}
+          <div class="d-flex item-thumbnail img-thumbnail" data-target="#itemCarousel" data-slide-to="{{ forloop.counter0 }}">
+            <img class="d-block img-fluid mx-auto" src="{{ itemimage.image.url }}" alt="{{ item.name }}">
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      <div class="col-md-7">
+        {% if item.sale.is_future %}
+        <div class="alert alert-warning">
+          Sale for this item is not yet open.
+        </div>
+        {% endif %}
+        <div class="alert alert-danger" id="jsWarning">
+          <b>Error</b>: JavaScript is not enabled. JavaScript is required to send the correct order information.
+        </div>
+        <h5>
+          {{ item.name }}
+        </h5>
+        <p>{{ item.description }}</p>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" id="orderForm">        
+          <input type="hidden" name="cmd" value="_s-xclick">
+          <input type="hidden" name="hosted_button_id" value="{{ item.paypal_button_id }}">
+
+          <input type="hidden" name="item_name" value="{{ item.name }}">
+          <input type="hidden" name="amount" value="1">
+
+          <input type="hidden" name="on0" value="options">
+          <input type="hidden" name="os0" value="">
+
+          {% for item_option in item.itemoption_set.all|dictsort:"paypal_option_number" %}
+          <div class="form-group">
+            <label for="input{{ item_option.paypal_option_number }}">{{ item_option.name }}</label>
+            <input type="hidden" name="on{{ item_option.paypal_option_number }}" value="{{ item_option.paypal_option_name }}">
+            {% if item_option.auto_value == 'username' %}
+            <input class="form-control" name="os{{ item_option.paypal_option_number }}" value="{{ user.username }}" id="input{{ item_option.paypal_option_number }}" readonly>
+            {% else %}
+            <select class="form-control" name="os{{ item_option.paypal_option_number }}" id="input{{ item_option.paypal_option_number }}" required>
+              <option value="" selected disabled>Select {{ item_option.name }}</option>
+              {% for option_choice in item_option.optionchoice_set.all|msort:"sort_order" %}
+              <option value="{{ option_choice.value }}">{{ option_choice.name }}</option>
+              {% endfor %}
+            </select>
+          {% endif %}
+          </div>
+          {% endfor %}
+
+          <div class="mb-3">£{{ item.price }}</div>
+
+          <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="Buy Now" id="paypalButton" hidden>
+
+          <div class="text-muted">
+            <small>
+              The order and payment is handled by PayPal. By clicking the "Buy Now" button, you order information will be sent to PayPal (this may also include your university username), and we may contact you regarding your order.
+            </small>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block pagescript %}
+{{ block.super }}
+<script>
+// show "Buy Now" button and hide js warning
+$('#paypalButton').removeAttr('hidden');
+$('#jsWarning').prop('hidden', true);
+
+var optionsFields = new Array();
+{% for item_option in item.itemoption_set.all %}
+optionsFields.push('on{{ item_option.paypal_option_number }}');
+optionsFields.push('os{{ item_option.paypal_option_number }}');
+{% endfor %}
+
+$('#paypalButton').click(function() {
+  $("#orderForm>input[name='os0']").val($("#orderForm :input").filter(function() {
+    return optionsFields.includes(this.name);
+  }).serialize());
+});
+</script>
+{% endblock %}

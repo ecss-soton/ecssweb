@@ -8,7 +8,8 @@ urlpatterns = [
     path('', views.home, name='home'),
 
     path('jumpstart/', RedirectView.as_view(pattern_name='website:jumpstart-2018'), name='jumpstart-redirect'),
-    path('feedback/', RedirectView.as_view(pattern_name='feedback:submit'), name='feedback-redirect'),
+    path('feedback/', RedirectView.as_view(pattern_name='feedback:submit', permanent=True), name='feedback-redirect'),
+    path('shop/', RedirectView.as_view(pattern_name='shop:shop', permanent=True), name='shop-redirect'),
 
     # Committee
     path('committee/', views.committee_overview, name='committee-overview'),

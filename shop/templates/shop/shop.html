@@ -1,0 +1,64 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+{% load website_extra %}
+
+{% block title %}Shop - ECSS{% endblock %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'shop/styles/shop.css' %}">
+{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>Shop</h1>
+  {% if sales %}
+  {% for sale in sales %}
+  <div class="card">
+    <h5 class="card-header">
+      {{ sale.name }}
+    </h5>
+    <div class="card-body">
+      {% if sale.is_future %}
+      <div class="alert alert-warning">
+        This sale is not yet open.
+      </div>
+      {% endif %}
+      {% if sale.item_set.all %}
+      <div class="d-inline-flex flex-wrap">
+        {% for item in sale.item_set.all|msort:"sort_order" %}
+        <div class="card shop-item-card">
+          {% if item.itemimage_set.all %}
+          {% with default_itemimage=item.itemimage_set.all|msort:"sort_order"|first %}
+          <img class="card-img-top" src="{{ default_itemimage.image.url }}" alt="{{ item.name }}">
+          {% endwith %}
+          {% else %}
+          <!-- src leave black if no image -->
+          <img class="card-img-top" src="" alt="{{ item.name }}">
+          {% endif %}
+          <a href="{% url 'shop:item' sale=sale.codename item=item.codename %}">
+            <h5 class="card-header">
+              {{ item.name }}
+            </h5>
+          </a>
+          <div class="card-body">
+            <div>
+              {{ item.description }}
+            </div>
+            <div>£{{ item.price }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="card-text">Nothing is on sale in this sale.</p>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <p>Nothing is currently on sale here.</p>
+  {% endif %}
+</section>
+{% endblock %}

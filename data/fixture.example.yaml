@@ -48,6 +48,27 @@
     - [change_sponsorlink, website, sponsorlink]
     - [delete_sponsorlink, website, sponsorlink]
     - [view_sponsorlink, website, sponsorlink]
+    # Shop
+    # - [add_sale, shop, sale]
+    # - [change_sale, shop, sale]
+    # - [delete_sale, shop, sale]
+    # - [view_sale, shop, sale]
+    # - [add_item, shop, item]
+    # - [change_item, shop, item]
+    # - [delete_item, shop, item]
+    # - [view_item, shop, item]
+    # - [add_itemoption, shop, itemoption]
+    # - [change_itemoption, shop, itemoption]
+    # - [delete_itemoption, shop, itemoption]
+    # - [view_itemoption, shop, itemoption]
+    # - [add_optionchoice, shop, optionchoice]
+    # - [change_optionchoice, shop, optionchoice]
+    # - [delete_optionchoice, shop, optionchoice]
+    # - [view_optionchoice, shop, optionchoice]
+    # - [add_itempermission, shop, itempermission]
+    # - [change_itempermission, shop, itempermission]
+    # - [delete_itempermission, shop, itempermission]
+    # - [view_itempermission, shop, itempermission]
 
 # ECS user SAML groups
 # Add is_ecs_user permission to relevant saml groups
