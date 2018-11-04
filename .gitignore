@@ -13,6 +13,7 @@ data/jumpstart/
 # website content
 website/static/website/content/
 media/
+shop/static/shop/content/
 
 # SAML config
 ecsswebauth/saml_config/settings.json

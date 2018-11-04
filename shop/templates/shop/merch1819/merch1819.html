@@ -1,0 +1,91 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+
+{% block title %}ECSS Merch 2018-19{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>ECSS Merch 2018-19</h1>
+  <hr>
+  {% if not sale.is_current %}
+  <div class="alert alert-warning">
+    This sale is not currently open. This sale opens between {{ sale.start|date }} {{ sale.start|time:"H:i" }} and {{ sale.end|date }} {{ sale.end|time:"H:i" }}.
+  </div>
+  {% endif %}
+  <section class="container">
+    <h2 class="text-center">Browse Categories</h2>
+    <div class="row">
+      <a class="col border border-ecssweb m-1" href="#">
+        <img class="img-fluid" src="{% static 'shop/content/tshirts.png' %}" alt="t-shirts">
+        <div class="text-center">T-shirts</div>
+      </a>
+      <a class="col border border-ecssweb m-1" href="#">
+        <img class="img-fluid" src="{% static 'shop/content/hoodie.png' %}" alt="hoodies">
+        <div class="text-center">Hoodies</div>
+      </a>
+      <a class="col border border-ecssweb m-1" href="#">
+        <img class="img-fluid" src="{% static 'shop/content/sweatshirts.png' %}">
+        <div class="text-center">Sweatshirts</div>
+      </a>
+    </div>
+  </section>
+  <div class="my-3">
+    This sale ends on {{ sale.end|date }} at {{ sale.end|time:"H:i" }}.
+  </div>
+  <div class="my-3 text-danger">
+    Sale introduction goes here, talks about changes to merch plans this year and how slogan etc. works. We have t-shirts, hoodies, sweatshirts in both classic designs and new designs from this year. We have sports t-shirts as well.
+  </div>
+  <section>
+    <h2>Size Guide</h2>
+    <hr>
+    <div class="text-danger">
+      Size guide goes here.
+    </div>
+  </section>
+  <section>
+    <h2>Slogans</h2>
+    <hr>
+    <div>
+      We love slogans, and you can have optional slogans on the back of some items. Here is a list of slogans available this year picked by the committee:
+      <ul>
+        <li>
+          Have you tried turning it off and on again?
+        </li>
+        <li>
+          No, I will not fix your computer.
+        </li>
+        <li>
+          ["hip", "hip"]
+        </li>
+        <li>
+          There is no place like 127.0.0.1
+        </li>
+        <li>
+          #titanic: { float:none; }
+        </li>
+        <li>
+          Byte me
+        </li>
+        <li>
+          Switches be trippin'
+        </li>
+        <li>
+          Keep out of direct sunlight
+        </li>
+      </ul>
+      Don't fancy having slogans? Leave it blank is an option, or you can have "Electronics and Computer Science" saying there.
+    </div>
+  </section>
+  <div>
+    <small class="text-muted">
+      If having difficulities purchasing on the website, please contact the committee.
+    </small>
+  </div>
+  <div>
+    <small class="text-muted">
+      To get refund or amend your order, please contact the committee. Please note the refund or changes after the sale ends might not be possible.
+    </small>
+  </div>
+</section>
+{% endblock %}

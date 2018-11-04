@@ -30,3 +30,16 @@ def item(request, sale, item):
         'item': item,
     }
     return render(request, 'shop/item.html', context)
+
+
+@login_required
+def merch1819(request):
+    sale = get_object_or_404(Sale, codename='ecss-merch-2018-19')
+    if sale.end < timezone.now():
+        raise Http404()
+    if sale.start > timezone.now() and not request.user.groups.filter(name='committee').exists():
+        raise Http404()
+    context = {
+        'sale': sale,
+    }
+    return render(request, 'shop/merch1819/merch1819.html', context)
