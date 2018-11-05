@@ -3,7 +3,7 @@
 {% load static %}
 {% load website_extra %}
 
-{% block title %}Shop - ECSS{% endblock %}
+{% block title %}ECSS Merch 2018-19{% endblock %}
 
 {% block pagestyle %}
 {{ block.super }}
@@ -11,13 +11,14 @@
 {% endblock %}
 
 {% block portalcontent %}
+<div class="mb-2">
+  <a href="{% url 'shop:merch1819' %}"><i class="fas fa-arrow-circle-left"></i> ECSS Merch 2018-19</a>
+</div>
 <section>
-  <h1>Shop</h1>
-  {% if sales %}
-  {% for sale in sales %}
+  <h1>ECSS Merch 2018-19</h1>
   <div class="card my-3">
     <h5 class="card-header">
-      {{ sale.name }}
+      {{ category_name }}
     </h5>
     <div class="card-body">
       {% if sale.is_future %}
@@ -25,9 +26,8 @@
         This sale is not yet open.
       </div>
       {% endif %}
-      {% if sale.item_set.all %}
       <div class="d-inline-flex flex-wrap">
-        {% for item in sale.item_set.all|msort:"sort_order" %}
+        {% for item in items|msort:"sort_order" %}
         <div class="card shop-item-card">
           {% if item.itemimage_set.all %}
           {% with default_itemimage=item.itemimage_set.all|msort:"sort_order"|first %}
@@ -51,17 +51,10 @@
         </div>
         {% endfor %}
       </div>
-      {% else %}
-      <p class="card-text">Nothing is on sale in this sale.</p>
-      {% endif %}
       <div>
         This sale ends on {{ sale.end|date }} at {{ sale.end|time:"H:i" }}.
       </div>
     </div>
   </div>
-  {% endfor %}
-  {% else %}
-  <p>Nothing is currently on sale here.</p>
-  {% endif %}
 </section>
 {% endblock %}

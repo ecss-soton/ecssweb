@@ -9,10 +9,12 @@ sponsors.yaml
 sponsors1819.yaml
 committee.yaml
 data/jumpstart/
+data/merch1819/
 
 # website content
 website/static/website/content/
 media/
+shop/static/shop/content/
 
 # SAML config
 ecsswebauth/saml_config/settings.json

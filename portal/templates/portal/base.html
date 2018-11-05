@@ -46,7 +46,14 @@
         </li>
         -->
         <li class="list-group-item">
-          <a href="{% url 'shop:shop' %}">Shop</a>
+          <ul class="list-unstyled">
+            <li>
+              <a href="{% url 'shop:shop' %}">Shop</a>
+            </li>
+            <li>
+              <a href="{% url 'shop:merch1819' %}">ECSS Merch 2018-19</a>
+            </li>
+          </ul>
         </li>
         <li class="list-group-item">
           <ul class="list-unstyled">
@@ -59,6 +66,7 @@
           </ul>
         </li>
         {% if user|has_group:"committee" or user|is_fresher or user|is_helper %}
+        <!--
         <li class="list-group-item">
           <ul class="list-unstyled">
             <li>
@@ -85,10 +93,18 @@
             {% endif %}
           </ul>
         </li>
+        -->
         {% endif %}
-        {% if user.is_staff %}
+        {% if user|has_group:"committee" %}
         <li class="list-group-item">
-          <a href="/admin/">Django admin</a>
+          <ul class="list-unstyled">
+            <li>
+              <a href="/admin/">Django admin</a>
+            </li>
+            <li>
+              <a href="/filestore/">Committee Files</a>
+            </li>
+          </ul>
         </li>
         {% endif %}
       </ul>

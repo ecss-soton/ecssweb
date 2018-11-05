@@ -118,6 +118,10 @@ section {
   text-decoration: none;
 }
 
+.border-ecssweb {
+  border-color: darkred!important;
+}
+
 
 /* Header */
 

@@ -1,0 +1,322 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+
+{% block title %}ECSS Merch 2018-19{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>ECSS Merch 2018-19</h1>
+  <hr>
+  {% if not sale.is_current %}
+  <div class="alert alert-warning">
+    This sale is not currently open. This sale opens between {{ sale.start|date }} {{ sale.start|time:"H:i" }} and {{ sale.end|date }} {{ sale.end|time:"H:i" }}.
+  </div>
+  {% endif %}
+  <section class="container">
+    <h2 class="text-center">Browse Categories</h2>
+    <div class="row">
+      <a class="col border border-ecssweb m-1" href="{% url 'shop:merch1819-category' 'tshirts' %}">
+        <img class="img-fluid" src="{% static 'shop/content/tshirts.png' %}" alt="t-shirts">
+        <div class="text-center">T-shirts</div>
+      </a>
+      <a class="col border border-ecssweb m-1" href="{% url 'shop:merch1819-category' 'hoodies' %}">
+        <img class="img-fluid" src="{% static 'shop/content/hoodie.png' %}" alt="hoodies">
+        <div class="text-center">Hoodies</div>
+      </a>
+      <a class="col border border-ecssweb m-1" href="{% url 'shop:merch1819-category' 'sweatshirts' %}">
+        <img class="img-fluid" src="{% static 'shop/content/sweatshirts.png' %}">
+        <div class="text-center">Sweatshirts</div>
+      </a>
+    </div>
+  </section>
+  <div class="my-3">
+    <p>
+      Welcome to the all-new ECSS Webstore for 2018!
+    </p>
+    <p>
+      Within each category you can find our classic logo/slogan designs, as well as a bunch of new merch for this year, including the winners of the T-Shirt Design Contest!
+    </p>
+    <p>
+      The store is only open for <b>1 week</b> so grab your ECSS gear while you can!
+    </p>
+    <p>
+      This sale ends on {{ sale.end|date }} at {{ sale.end|time:"H:i" }}.
+    </p>
+  </div>
+  <section>
+    <h2>Slogans</h2>
+    <hr>
+    <div>
+      We love slogans, and you can have optional slogans on the back of some items. Here is a list of slogans available this year picked by the committee:
+      <ul>
+        <li>
+          Have you tried turning it off and on again?
+        </li>
+        <li>
+          No, I will not fix your computer.
+        </li>
+        <li>
+          ["hip", "hip"]
+        </li>
+        <li>
+          There is no place like 127.0.0.1
+        </li>
+        <li>
+          #titanic: { float:none; }
+        </li>
+        <li>
+          Byte me
+        </li>
+        <li>
+          Switches be trippin'
+        </li>
+        <li>
+          Keep out of direct sunlight
+        </li>
+      </ul>
+      Don't fancy having slogans? Leave it blank is an option, or you can have "Electronics and Computer Science" saying there.
+    </div>
+  </section>
+  <section>
+    <h2>Size Guide</h2>
+    <hr>
+    <div>
+      <p>
+        All inches represent chest measurement.
+      </p>
+    </div>
+    <div>
+      T-shirt
+      <table class="table table-bordered table-sm ">
+        <thead>
+          <tr>
+            <th scope="col">
+              S
+            </th>
+            <th scope="col">
+              M
+            </th>
+            <th scope="col">
+              L
+            </th>
+            <th scope="col">
+              XL
+            </th>
+            <th scope="col">
+              XXL
+            </th>
+            <th scope="col">
+              XXXL
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              34/36''
+            </td>
+            <td>
+              38/40''
+            </td>
+            <td>
+              42/44''
+            </td>
+            <td>
+              46/48''
+            </td>
+            <td>
+              50/52''
+            </td>
+            <td>
+              54/56''
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      Sports tee
+      <table class="table table-bordered table-sm ">
+        <thead>
+          <tr>
+            <th scope="col">
+              S
+            </th>
+            <th scope="col">
+              M
+            </th>
+            <th scope="col">
+              L
+            </th>
+            <th scope="col">
+              XL
+            </th>
+            <th scope="col">
+              XXL
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              38''
+            </td>
+            <td>
+              40''
+            </td>
+            <td>
+              43''
+            </td>
+            <td>
+              45''
+            </td>
+            <td>
+              48''
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      Non-zipped hoodie
+      <table class="table table-bordered table-sm ">
+        <thead>
+          <tr>
+            <th scope="col">
+              S
+            </th>
+            <th scope="col">
+              M
+            </th>
+            <th scope="col">
+              L
+            </th>
+            <th scope="col">
+              XL
+            </th>
+            <th scope="col">
+              XXL
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              38''
+            </td>
+            <td>
+              40''
+            </td>
+            <td>
+              42''
+            </td>
+            <td>
+              44''
+            </td>
+            <td>
+              46''
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      Zipped hoodie
+      <table class="table table-bordered table-sm ">
+        <thead>
+          <tr>
+            <th scope="col">
+              S
+            </th>
+            <th scope="col">
+              M
+            </th>
+            <th scope="col">
+              L
+            </th>
+            <th scope="col">
+              XL
+            </th>
+            <th scope="col">
+              XXL
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              38''
+            </td>
+            <td>
+              40/42''
+            </td>
+            <td>
+              42/44''
+            </td>
+            <td>
+              44/46''
+            </td>
+            <td>
+              46/48''
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      Sweatshirt
+      <table class="table table-bordered table-sm ">
+        <thead>
+          <tr>
+            <th scope="col">
+              S
+            </th>
+            <th scope="col">
+              M
+            </th>
+            <th scope="col">
+              L
+            </th>
+            <th scope="col">
+              XL
+            </th>
+            <th scope="col">
+              XXL
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              38''
+            </td>
+            <td>
+              40''
+            </td>
+            <td>
+              42''
+            </td>
+            <td>
+              44''
+            </td>
+            <td>
+              46''
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <div>
+    <small class="text-muted">
+      If having difficulities purchasing on the website, please contact the committee.
+    </small>
+  </div>
+  <div>
+    <small class="text-muted">
+      To get refund or amend your order, please contact the committee. Please note the refund or changes after the sale ends might not be possible.
+    </small>
+  </div>
+</section>
+{% endblock %}
