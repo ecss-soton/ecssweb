@@ -1,7 +1,10 @@
 tshirts:
   - ecss-logo-embroidery-tee
   - ecss-logo-embroidery-sports-tee
-  - t-shirt-contest-winner-tee
+  - t-shirt-contest-winner-tee-1st-place
+  - t-shirt-contest-winner-tee-2nd-place
+  - t-shirt-contest-winner-tee-3rd-place-1
+  - t-shirt-contest-winner-tee-3rd-place-2
   - half-logo-graphic-tee
   - ecss-heart-tee
   - ecss-circle-tee
@@ -13,7 +16,10 @@ hoodies:
   - ecss-circle-non-zip-hoodie
 sweatshirts:
   - ecss-logo-embroidery-sweatshirt
-  - t-shirt-contest-winner-sweatshirt
+  - t-shirt-contest-winner-sweatshirt-1st-place
+  - t-shirt-contest-winner-sweatshirt-2nd-place
+  - t-shirt-contest-winner-sweatshirt-3rd-place-1
+  - t-shirt-contest-winner-sweatshirt-3rd-place-2
   - half-logo-graphic-sweatshirt
   - ecss-heart-sweatshirt
   - ecss-circle-sweatshirt
