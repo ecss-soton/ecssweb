@@ -57,7 +57,7 @@ def merch1819_category(request, category):
         items = Item.objects.filter(Q(sale='ecss-merch-2018-19') & Q(codename__in=data[category]))
 
     category_names = {
-        'tshirts': 'T-shiirts',
+        'tshirts': 'T-shirts',
         'hoodies': 'Hoodies',
         'sweatshirts': 'Sweatshirts',
     }
