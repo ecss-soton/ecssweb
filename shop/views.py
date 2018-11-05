@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.db.models import Q
 
+import yaml
+
 from .models import Sale, Item
 
 
@@ -35,11 +37,34 @@ def item(request, sale, item):
 @login_required
 def merch1819(request):
     sale = get_object_or_404(Sale, codename='ecss-merch-2018-19')
-    if sale.end < timezone.now():
-        raise Http404()
-    if sale.start > timezone.now() and not request.user.groups.filter(name='committee').exists():
-        raise Http404()
     context = {
         'sale': sale,
     }
     return render(request, 'shop/merch1819/merch1819.html', context)
+
+@login_required
+def merch1819_category(request, category):
+    sale = get_object_or_404(Sale, codename='ecss-merch-2018-19')
+    if sale.end < timezone.now():
+        raise Http404()
+    if sale.start > timezone.now() and not request.user.groups.filter(name='committee').exists():
+        raise Http404()
+
+    with open('shop/data/merch1819.yaml') as data_file:
+        data = yaml.load(data_file)
+        items = Item.objects.filter(Q(sale='ecss-merch-2018-19') & Q(codename__in=data[category]))
+
+    category_names = {
+        'tshirts': 'T-shiirts',
+        'hoodies': 'Hoodies',
+        'sweatshirts': 'Sweatshirts',
+    }
+
+    category_name = category_names[category]
+
+    context = {
+        'sale': sale,
+        'items': items,
+        'category_name': category_name,
+    }
+    return render(request, 'shop/merch1819/category.html', context)
