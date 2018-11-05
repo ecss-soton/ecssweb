@@ -18,6 +18,15 @@
     <link rel="stylesheet" href="{% static 'website/styles/base.css' %}">
     {% block pagestyle %}{% endblock %}
     <title>{% block title %}ECSS - University of Southampton Electronics and Computer Science Society{% endblock %}</title>
+
+    <!-- For merch sale-->
+    <style>
+      .merch-nav-link {
+        color: red!important;
+        text-shadow: -.05rem -.05rem .1rem white, .05rem -.05rem .1rem white, -.05rem .05rem .1rem white, .05rem .05rem .1rem white; 
+      }
+    </style>
+
   </head>
   <body>
     <header>
@@ -95,6 +104,14 @@
                 </div>
               </li>
             </ul>
+
+            <!-- For merch sale-->
+            <span class="nav-item">
+              <a class="nav-link merch-nav-link" href="{% url 'shop:merch1819' %}">
+                2018/19 Merch
+              </a>
+            </span>
+
           </div>
         </nav>
       </div>
