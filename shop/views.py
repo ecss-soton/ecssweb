@@ -2,8 +2,10 @@ from django.shortcuts import render, get_object_or_404, Http404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.db.models import Q
+from django.conf import settings
 
 import yaml
+import os
 
 from .models import Sale, Item
 
@@ -50,7 +52,7 @@ def merch1819_category(request, category):
     if sale.start > timezone.now() and not request.user.groups.filter(name='committee').exists():
         raise Http404()
 
-    with open('shop/data/merch1819.yaml') as data_file:
+    with open(os.path.join(settings.BASE_DIR, 'shop/data/merch1819.yaml')) as data_file:
         data = yaml.load(data_file)
         items = Item.objects.filter(Q(sale='ecss-merch-2018-19') & Q(codename__in=data[category]))
 
