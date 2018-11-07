@@ -23,7 +23,7 @@
     <div class="card-body">
       {% if sale.is_future %}
       <div class="alert alert-warning">
-        This sale is not yet open.
+        This sale is not yet open. This sale opens between {{ sale.start|date }} {{ sale.start|time:"H:i" }} and {{ sale.end|date }} {{ sale.end|time:"H:i" }}.
       </div>
       {% endif %}
       <div class="d-inline-flex flex-wrap">
@@ -52,7 +52,7 @@
         {% endfor %}
       </div>
       <div>
-        This sale ends on {{ sale.end|date }} at {{ sale.end|time:"H:i" }}.
+        <b>This sale ends on {{ sale.end|date }} at {{ sale.end|time:"H:i" }}.</b>
       </div>
     </div>
   </div>
