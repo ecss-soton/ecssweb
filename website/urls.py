@@ -1,9 +1,19 @@
 from django.urls import path, re_path, reverse_lazy
 from django.views.generic.base import RedirectView
+from django.contrib.sitemaps.views import sitemap
 
 from . import views
+from .sitemaps import StaticViewSitemap, CommitteeSitemap, SocietySitemap, SponsorSitemap
 
 app_name='website'
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'committee': CommitteeSitemap,
+    'societies': SocietySitemap,
+    'sponsor': SponsorSitemap,
+}
+
 urlpatterns = [
     path('', views.home, name='home'),
 
@@ -45,4 +55,5 @@ urlpatterns = [
 
     # Meta pages
     path('media-notice/', views.media_notice, name='media-notice'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},name='django.contrib.sitemaps.views.sitemap'),
 ]
