@@ -28,6 +28,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# Sites
+SITE_ID = 1
+
+
 # Set to None to use session-based CSRF cookies
 # https://docs.djangoproject.com/en/2.0/ref/settings/#csrf-cookie-age
 CSRF_COOKIE_AGE = None
@@ -44,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'website.apps.WebsiteConfig',
     'ecsswebauth.apps.EcsswebauthConfig',
     'ecsswebadmin.apps.EcsswebadminConfig',

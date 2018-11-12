@@ -2,3 +2,4 @@ User-agent: *
 Disallow: /auth/
 Disallow: /admin/
 Disallow: /media/jumpstart2018/
+Sitemap: https://society.ecs.soton.ac.uk/sitemap.xml
