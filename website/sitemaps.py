@@ -14,6 +14,8 @@ class CommitteeSitemap(Sitemap):
 
 
 class SocietySitemap(Sitemap):
+    changefreq = 'yearly'
+
     def items(self):
         return Society.objects.all()
 
@@ -22,6 +24,8 @@ class SocietySitemap(Sitemap):
 
 
 class SponsorSitemap(Sitemap):
+    changefreq = 'monthly'
+
     def items(self):
         return Sponsor.objects.all()
 
@@ -30,6 +34,7 @@ class SponsorSitemap(Sitemap):
 
 
 class StaticViewSitemap(Sitemap):
+
     def items(self):
         return [
             'home',
@@ -44,7 +49,7 @@ class StaticViewSitemap(Sitemap):
             'football',
             'netball',
             'running',
-            'sports_others',
+            'sports-others',
             'about',
             'contact',
             'media-notice',
