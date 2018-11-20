@@ -50,9 +50,6 @@
             <li>
               <a href="{% url 'shop:shop' %}">Shop</a>
             </li>
-            <li>
-              <a href="{% url 'shop:merch1819' %}">ECSS Merch 2018-19</a>
-            </li>
           </ul>
         </li>
         <li class="list-group-item">
@@ -65,36 +62,6 @@
             </li>
           </ul>
         </li>
-        {% if user|has_group:"committee" or user|is_fresher or user|is_helper %}
-        <!--
-        <li class="list-group-item">
-          <ul class="list-unstyled">
-            <li>
-              <a href="{% url 'jumpstart:home' %}">Jumpstart</a>
-            </li>
-            {% if user|is_helper %}
-            <li>
-              <a href="{% url 'jumpstart:profile-edit' %}">Edit Profile</a>
-            </li>
-            <li>
-              <a href="{% url 'jumpstart:city-challenge-edit' %}">Submit City Challenge</a>
-            </li>
-            <li>
-              <a href="{% url 'jumpstart:scavenger-hunt-edit' %}">Submit Scavenger Hunt</a>
-            </li>
-            {% endif %}
-            <li>
-              <a href="{% url 'jumpstart:scavenger-hunt' %}">View Scavenger Hunt</a>
-            </li>
-            {% if user|is_helper or user|is_fresher %}
-            <li>
-              <a href="{% url 'jumpstart:groups' %}">Jumpstart Groups</a>
-            </li>
-            {% endif %}
-          </ul>
-        </li>
-        -->
-        {% endif %}
         {% if user|has_group:"committee" %}
         <li class="list-group-item">
           <ul class="list-unstyled">

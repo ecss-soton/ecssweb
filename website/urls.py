@@ -47,7 +47,7 @@ urlpatterns = [
     path('sports/football/', views.football, name='football'),
     path('sports/netball/', views.netball, name='netball'),
     path('sports/running/', views.running, name='running'),
-    path('sports/others/', views.sports_others, name='sports_others'),
+    path('sports/others/', views.sports_others, name='sports-others'),
 
     # About
     path('about/', views.about, name='about'),
@@ -55,5 +55,5 @@ urlpatterns = [
 
     # Meta pages
     path('media-notice/', views.media_notice, name='media-notice'),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},name='django.contrib.sitemaps.views.sitemap'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
