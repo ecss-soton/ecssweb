@@ -1,3 +1,20 @@
+.societies-item {
+  margin: 2rem 1rem 0 1rem;
+  width: 10rem;
+}
+
+.societies-img-link {
+  height: 9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.societies-item img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 @media (max-width: 991.98px) {
   .societies-logo {
     max-width: 15rem;

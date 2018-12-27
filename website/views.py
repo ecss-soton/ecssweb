@@ -37,14 +37,21 @@ def committee_member(request, role):
 
 # Societies
 
-def societies(request, society):
+def societies(request):
+    societies = Society.objects.all()
+    context = {
+        'societies': societies,
+    }
+    return render(request, 'website/societies/societies.html', context)
+
+def societies_detail(request, society):
     societies = Society.objects.all()
     society_obj = get_object_or_404(Society, pk=society)
     context = {
         'society': society_obj,
         'societies': societies,
     }
-    return render(request, 'website/societies.html', context)
+    return render(request, 'website/societies/society.html', context)
 
 
 # Sponsors

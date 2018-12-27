@@ -11,10 +11,11 @@
 
 {% block content %}
 <div class="container mt-3">
+  <div class="mb-3"><a href="{% url 'website:societies' %}"><i class="fas fa-arrow-circle-left"></i> societies in ECS overview</a></div>
   <ul class="nav nav-tabs">
     {% for soc in societies %}
     <li class="nav-item">
-      <a class="nav-link {% if soc.codename == society.codename %}active{% endif %}" href="{% url 'website:societies' soc.codename %}">
+      <a class="nav-link {% if soc.codename == society.codename %}active{% endif %}" href="{% url 'website:societies-details' soc.codename %}">
         {{ soc.short_name }}
       </a>
     </li>
