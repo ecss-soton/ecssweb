@@ -1,0 +1,33 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Societies in ECS{% endblock title %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'website/styles/societies.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="container mt-3">
+  <h1>Societies in ECS</h1>
+  <hr>
+  <ul class="list-unstyled d-flex justify-content-around flex-wrap">
+    {% for society in societies %}
+    <li class="text-center societies-item">
+      <a href="{% url 'website:societies-details' society.codename %}" class="societies-img-link">
+        <img class="img-fluid" src="{% static society.logo_file %}" alt="{{ society.name }}">
+      </a>
+      <a href="{% url 'website:societies-details' society.codename %}" class="committee-member-name-link">
+        <div>{{ society.name }}</div>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  <hr>
+  <small class="text-muted">
+    For committees of societies in ECS: please contact <a href="{%url 'website:committee-member' 'web' %}">ECSS webmaster</a> if information here need to be updated or anything need to be added to the list.
+  </small>
+</section>
+{% endblock %}

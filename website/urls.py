@@ -27,8 +27,8 @@ urlpatterns = [
     re_path(r'^committee/(?P<role>[\w-]+)/$', views.committee_member, name='committee-member'),
 
     # Societies
-    path('societies/', RedirectView.as_view(url=reverse_lazy('website:societies', kwargs={'society': 'ecss'})), name='societies-default'),
-    re_path(r'^societies/(?P<society>[\w-]+)/$', views.societies, name='societies'),
+    path('societies/', views.societies, name='societies'),
+    re_path(r'^societies/(?P<society>[\w-]+)/$', views.societies_detail, name='societies-details'),
 
     # Sponsors
     path('sponsors/', views.sponsors, name='sponsors'),
