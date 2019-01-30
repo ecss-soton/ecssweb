@@ -18,6 +18,7 @@ urlpatterns = [
     path('', views.home, name='home'),
 
     path('jumpstart/', RedirectView.as_view(pattern_name='website:jumpstart-2018'), name='jumpstart-redirect'),
+    path('campus-hack/', RedirectView.as_view(pattern_name='website:campus-hack-19'), name='merch-redirect'),
     path('feedback/', RedirectView.as_view(pattern_name='feedback:submit', permanent=True), name='feedback-redirect'),
     path('shop/', RedirectView.as_view(pattern_name='shop:shop', permanent=True), name='shop-redirect'),
     path('merch/', RedirectView.as_view(pattern_name='shop:merch1819'), name='merch-redirect'),
@@ -38,6 +39,7 @@ urlpatterns = [
     path('events/socials/', views.socials, name='socials'),
     path('events/gaming-socials/', views.gaming_socials, name='gaming-socials'),
     path('events/jumpstart-2018/', views.jumpstart_2018, name='jumpstart-2018'),
+    path('events/campus-hack-19/', views.campus_hack_19, name='campus-hack-19'),
 
     # Welfare
     path('welfare/', views.welfare, name='welfare'),
