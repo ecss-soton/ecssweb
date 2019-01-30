@@ -20,7 +20,7 @@ class SocietySitemap(Sitemap):
         return Society.objects.all()
 
     def location(self, item):
-        return reverse('website:societies', kwargs={'society': item.codename})
+        return reverse('website:societies-details', kwargs={'society': item.codename})
 
 
 class SponsorSitemap(Sitemap):
@@ -39,7 +39,7 @@ class StaticViewSitemap(Sitemap):
         return [
             'home',
             'committee-overview',
-            #'societies-overview',
+            'societies',
             'sponsors',
             'events',
             'socials',
@@ -54,6 +54,7 @@ class StaticViewSitemap(Sitemap):
             'contact',
             'media-notice',
             'jumpstart-2018',
+            'campus-hack-19',
         ]
 
     def location(self, item):
