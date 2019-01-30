@@ -1,0 +1,74 @@
+.bg-campushack19 {
+  background-color: #ae1427!important;
+}
+
+.color-campushack19 {
+  color: #ae1427!important;
+}
+
+.date-campushack19 {
+  font-size: 1.5rem;
+}
+
+.btn-campushack19 {
+  width: 20rem;
+}
+
+.btn-outline-campushack19 {
+  color: #ae1427;
+  border-color: #ae1427;
+}
+
+.btn-outline-campushack19:hover {
+  color: white;
+  background-color: #ae1427;
+}
+
+.btn-outline-campushack19:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220,53,69,.5);
+}
+
+
+/*
+CampusHack19 navbar
+*/
+
+.navbar-campushack19 {
+  opacity: 0.9;
+}
+
+.navbar-sticky-campushack19 + main {
+  padding-top: 56px;
+}
+
+@media (max-width: 575.98px) {
+  .navbar-campushack19 {
+    display: none;
+  }
+
+  .navbar-campushack19 + main {
+    padding-top: 0;
+  }
+}
+
+
+/*
+Logos
+*/
+
+.logo-container-campushack19 {
+  max-width: 50rem;
+}
+
+
+/*
+Pictures
+*/
+
+.pics-campushack19 {
+  font-size: 0;
+}
+
+.pic-campushack19 {
+  width: 33.33%;
+}

@@ -102,6 +102,10 @@ def jumpstart_2018(request):
     return render(request, 'website/events/jumpstart-2018.html')
 
 
+def campus_hack_19(request):
+    return render(request, 'website/events/campus-hack-19.html')
+
+
 # Welfare
 
 def welfare(request):
