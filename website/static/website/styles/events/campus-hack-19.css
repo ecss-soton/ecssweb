@@ -1,9 +1,9 @@
 .bg-campushack19 {
-  background-color: #ae1427!important;
+  background-color: #bd2031!important;
 }
 
 .color-campushack19 {
-  color: #ae1427!important;
+  color: #bd2031!important;
 }
 
 .date-campushack19 {
@@ -15,13 +15,13 @@
 }
 
 .btn-outline-campushack19 {
-  color: #ae1427;
-  border-color: #ae1427;
+  color: #bd2031;
+  border-color: #bd2031;
 }
 
 .btn-outline-campushack19:hover {
   color: white;
-  background-color: #ae1427;
+  background-color: #bd2031;
 }
 
 .btn-outline-campushack19:focus {
@@ -33,9 +33,11 @@
 CampusHack19 navbar
 */
 
+/*
 .navbar-campushack19 {
   opacity: 0.9;
 }
+*/
 
 .navbar-sticky-campushack19 + main {
   padding-top: 56px;
