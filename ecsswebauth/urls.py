@@ -5,6 +5,7 @@ from . import views
 app_name='ecsswebauth'
 urlpatterns = [
     path('', views.auth, name='auth'),
+    path('user.json', views.user_json, name='auth-user-json'),
     path('saml/login/', views.saml_login, name='saml-login'),
     path('saml/metadata', views.saml_metadata, name='saml-metadata'),
     path('saml/acs', views.saml_acs, name='saml-acs'),

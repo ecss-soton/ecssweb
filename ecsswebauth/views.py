@@ -1,5 +1,5 @@
 from django.utils.http import is_safe_url
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
 from django.shortcuts import render, resolve_url
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
@@ -35,6 +35,22 @@ def auth(request):
     }
     return render(request, 'ecsswebauth/auth.html', context)
 
+def user_json(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'authenticated': False})
+    else:
+        user = request.user
+        print(user.groups.values('name'))
+        userinfo = {
+            'authenticated': True,
+            'username': user.username,
+            'givenname': user.first_name,
+            'surname': user.last_name,
+            'email': user.email,
+            'groups': [group.name for group in user.groups.all()],
+        }
+        return JsonResponse(userinfo)
+
 def _get_request_for_saml(request):
     result = {
         'https': 'on' if request.is_secure() else 'off',
@@ -44,7 +60,7 @@ def _get_request_for_saml(request):
         'get_data': request.GET.copy(),
         # Uncomment if using ADFS as IdP, https://github.com/onelogin/python-saml/pull/144
         'lowercase_urlencoding': True,
-        'post_data': request.POST.copy()
+        'post_data': request.POST.copy(),
     }
     return result
 
