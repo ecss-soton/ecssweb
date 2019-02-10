@@ -20,7 +20,7 @@
     <h5 class="card-header">
       {{ sale.name }}
     </h5>
-    <div class="card-body pt-0">
+    <div class="card-body pt-2">
       {% if sale.is_future %}
       <div class="alert alert-warning">
         This sale is not yet open. This sale opens between {{ sale.start|date }} {{ sale.start|time:"H:i" }} and {{ sale.end|date }} {{ sale.end|time:"H:i" }}.
