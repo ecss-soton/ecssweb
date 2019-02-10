@@ -8,12 +8,15 @@ import yaml
 import os
 
 from .models import Sale, Item
+from .utils import has_any_perms_item
 
 
 @login_required
 def shop(request):
+    # show all current and future sales for committee
     if request.user.groups.filter(name='committee').exists():
         sales = Sale.objects.filter(end__gte=timezone.now()).order_by('start')
+    # only show current sales for other users
     else:
         sales = Sale.objects.filter(Q(start__lte=timezone.now()) & Q(end__gte=timezone.now())).order_by('start')
     context = {
@@ -25,11 +28,16 @@ def shop(request):
 @login_required
 def item(request, sale, item):
     sale = get_object_or_404(Sale, codename=sale)
+    # do not show past sales items
     if sale.end < timezone.now():
         raise Http404()
+    # only show future sales items to committee
     if sale.start > timezone.now() and not request.user.groups.filter(name='committee').exists():
         raise Http404()
+
     item = get_object_or_404(Item, codename=item, sale=sale)
+    if not request.user.groups.filter(name='committee').exists() and not has_any_perms_item(request.user, item):
+        raise Http404()
     context = {
         'item': item,
     }

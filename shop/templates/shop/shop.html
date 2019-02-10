@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load website_extra %}
+{% load shop_extra %}
 
 {% block title %}Shop - ECSS{% endblock %}
 
@@ -19,7 +20,7 @@
     <h5 class="card-header">
       {{ sale.name }}
     </h5>
-    <div class="card-body">
+    <div class="card-body pt-0">
       {% if sale.is_future %}
       <div class="alert alert-warning">
         This sale is not yet open. This sale opens between {{ sale.start|date }} {{ sale.start|time:"H:i" }} and {{ sale.end|date }} {{ sale.end|time:"H:i" }}.
@@ -28,6 +29,7 @@
       {% if sale.item_set.all %}
       <div class="d-inline-flex flex-wrap">
         {% for item in sale.item_set.all|msort:"sort_order" %}
+        {% if user|has_group:"committee" or not item.itempermission_set.all or user|has_any_perms_item:item %}
         <div class="card shop-item-card">
           {% if item.itemimage_set.all %}
           {% with default_itemimage=item.itemimage_set.all|msort:"sort_order"|first %}
@@ -47,15 +49,28 @@
               {{ item.description }}
             </div>
             <div class="badge badge-info">£{{ item.price }}</div>
+            {% if item.itempermission_set.all and not user|has_any_perms_item:item %}
+            <div class="alert alert-warning mb-0 mt-3">
+              This item is not for the current user.
+            </div>
+            {% endif %}
           </div>
         </div>
+        {% endif %}
         {% endfor %}
       </div>
       {% else %}
       <p class="card-text">Nothing is on sale in this sale.</p>
       {% endif %}
       <div>
-        <b>This sale ends on {{ sale.end|date }} at {{ sale.end|time:"H:i" }}.</b>
+        {% if not user|has_group:"committee" %}
+        <p>
+          <small>There are {{ sale.item_set.count }} items in this sale, and any items not for the current user are hidden.</small>
+        </p>
+        {% endif %}
+        <p class="mb-0">
+          <b>This sale ends on {{ sale.end|date }} at {{ sale.end|time:"H:i" }}.</b>
+        </p>
       </div>
     </div>
   </div>

@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load website_extra %}
+{% load shop_extra %}
 
 {% block title %}Shop - ECSS{% endblock %}
 
@@ -59,6 +60,11 @@
         {% if item.sale.is_future %}
         <div class="alert alert-warning">
           Sale for this item is not yet open. The sale opens between {{ item.sale.start|date }} {{ item.sale.start|time:"H:i" }} and {{ item.sale.end|date }} {{ item.sale.end|time:"H:i" }}.
+        </div>
+        {% endif %}
+        {% if item.itempermission_set.all and not user|has_any_perms_item:item %}
+        <div class="alert alert-warning">
+          This item is not for the current user.
         </div>
         {% endif %}
         <div class="alert alert-danger" id="jsWarning">
