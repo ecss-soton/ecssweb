@@ -26,14 +26,14 @@ class Election(models.Model):
 
     @property
     def is_nomination_future(self):
-        if has_nomination:
+        if self.has_nomination:
             return self.nomination_start > timezone.now()
         else:
             raise DoesNotHaveNominationException()
 
     @property
     def is_nomination_pase(self):
-        if has_nomination:
+        if self.has_nomination:
             return self.nomination_end < timezone.now()
         else:
             raise DoesNotHaveNominationException()
@@ -58,6 +58,13 @@ class Election(models.Model):
     @property
     def is_voting_current(self):
         return not (self.is_voting_future or self.is_voting_past)
+
+    @property
+    def is_election_current(self):
+        if self.has_nomination:
+            return self.nomination_start <= timezone.now() and self.voting_end >= timezone.now()
+        else:
+            return self.voting_start <= timezone.now() and self.voting_end >= timezone.now()
 
     
     def clean(self):

@@ -5,27 +5,43 @@
 {% block title %}Elections - ECSS{% endblock %}
 
 {% block portalcontent %}
+<div class="alert alert-warning">
+  Support feature will be implemented soon.
+</div>
+{% for message in messages %}
+<div class="alert alert-success">
+  {{ message }}
+</div>
+{% endfor %}
 <section>
   <h1>{{ election.name }}</h1>
   <p>
     This election is for ECSS members.
   </p>
-  {% if election.has_nomination and election.is_nomination_future %}
-  <div>
-    <b>Nomination opens on {{ election.nomination_start|date }} {{ election.nomination_start|time:"H:i" }}.</b>
-  </div>
+  {% if not perms.ecsswebauth.is_ecs_user %}
+  <p>
+    Unfortunately you are unable to nominate, support nominations or vote in this election. If you think it is an error please contact us.
+  </p>
   {% else %}
-  <div>
-    <b>Voting opens on {{ election.voting_start|date }} {{ election.voting_start|time:"H:i" }}.</b>
-  </div>
+  <p>
+    You are able to nominate yourself for as many roles, and each nomination requires two supports. You are able to support one nomination for each role.
+  </p>
   {% endif %}
+  <div>
+    <b>Nomination ends on {{ election.nomination_end|date }} {{ election.nomination_end|time:"H:i" }}.</b>
+  </div>
   <div class="list-group mt-3">
     {% for position in election.position_set.all %}
     <div class="list-group-item">
       <h2>{{ position.name }}</h2>
       <p>
-        {{ position.description }}
+        <i>{{ position.description }}</i>
       </p>
+      {% if perms.ecsswebauth.is_ecs_user %}
+      <div>
+        <a href="{% url 'election:nomination' election.codename position.codename %}">Nominate for this role</a>
+      </div>
+      {% endif %}
       {% if not position.nomination_set.all %}
       <p>
         There is currently no nomination for this role.
