@@ -32,6 +32,7 @@ urlpatterns = [
     path('portal/feedback/', include('feedback.urls')),
     path('portal/auditlog/', include('auditlog.urls')),
     path('portal/jumpstart/', include('jumpstart.urls')),
+    path('portal/elections/', include('election.urls')),
     # Admin
     path('admin/', include('ecsswebadmin.urls')),
     path('admin/', admin.site.urls),

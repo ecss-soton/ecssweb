@@ -1,0 +1,42 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+
+{% block title %}Elections - ECSS{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>{{ election.name }}</h1>
+  <p>
+    This election is for ECSS members.
+  </p>
+  {% if election.has_nomination and not election.is_nomination_current or not election.is_voting_current %}
+  <div>
+    <b>Not currently open.</b>
+  </div>
+  {% elif election.has_nomination and election.is_nomination_current %}
+  <div>
+    <b>Nomination ends on {{ election.nomination_end|date }} {{ election.nomination_end|time:"H:i" }}.</b>
+  </div>
+  {% elif election.is_voting_current %}
+  <div>
+    <b>Voting ends on {{ election.voting_end|date }} {{ election.voting_end|time:"H:i" }}</b>
+  </div>
+  {% endif %}
+  <div class="list-group mt-3">
+    {% for position in election.position_set.all %}
+    <div class="list-group-item">
+      <h2>{{ position.name }}</h2>
+      <p>
+        {{ position.description }}
+      </p>
+      {% if perms.ecsswebauth.is_ecs_user %}
+      <div>
+        <a href="{% url 'election:nomination' election.codename position.codename %}">Nominate for this role</a>
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -21,6 +21,7 @@ urlpatterns = [
     path('campus-hack/', RedirectView.as_view(pattern_name='website:campus-hack-19'), name='merch-redirect'),
     path('feedback/', RedirectView.as_view(pattern_name='feedback:submit', permanent=True), name='feedback-redirect'),
     path('shop/', RedirectView.as_view(pattern_name='shop:shop', permanent=True), name='shop-redirect'),
+    path('elections/', RedirectView.as_view(pattern_name='election:elections'), name='elections-redirect'),
     path('merch/', RedirectView.as_view(pattern_name='shop:merch1819'), name='merch-redirect'),
 
     # Committee

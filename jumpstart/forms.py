@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 from .models import Helper, Group, ScavengerHunt
 
-from website.utils import rotate_image, clean_image
+from website.utils import clean_image
 
 
 class HelperEditProfileForm(ModelForm):

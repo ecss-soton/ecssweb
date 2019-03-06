@@ -1,0 +1,35 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+
+{% block title %}Elections - ECSS{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>{{ election.name }}</h1>
+  <div>
+    <b>Nomination ends on {{ election.nomination_end|date }} {{ election.nomination_end|time:"H:i" }}.</b>
+  </div>
+  <div class="card mt-3">
+    <div class="card-body">
+      <p>
+        You are nominating for {{ position.name }} in {{ election.name }}.
+      </p>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in nomination_form %}
+        <div class="form-group">
+          {{ field.label_tag }}{{ field }}
+          {% if field.errors %}
+          <small class="form-text text-danger">
+            {% for err in field.errors %}{{ err }}{% endfor %}
+          </small>
+          {% endif %}
+        </div>
+        {% endfor %}
+        <input type="submit" class="btn btn-ecssweb" value="Submit Nomination">
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
