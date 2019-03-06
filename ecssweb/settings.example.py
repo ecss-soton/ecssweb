@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'fbevents.apps.FbeventsConfig',
     'jumpstart.apps.JumpstartConfig',
     'shop.apps.ShopConfig',
+    'election.apps.ElectionConfig',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,38 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+
+{% block title %}Elections - ECSS{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>Elections</h1>
+  {% if elections %}
+  <p>Elections listed are for ECSS members.</p>
+  <div class="list-group">
+    {% for election in elections %}
+    <div class="list-group-item">
+      <a href="{% url 'election:election' election=election.codename %}">
+        <h2>{{ election.name }}</h2>
+      </a>
+      {% if election.has_nomination and not election.is_nomination_current or not election.is_voting_current %}
+      <div class="badge badge-warning">
+        Not currently open
+      </div>
+      {% elif election.has_nomination and election.is_nomination_current %}
+      <div class="badge badge-info">
+        Nomination ends on {{ election.nomination_end|date }} {{ election.nomination_end|time:"H:i" }}
+      </div>
+      {% elif election.is_voting_current %}
+      <div class="badge badge-info">
+        Voting ends on {{ election.voting_end|date }} {{ election.voting_end|time:"H:i" }}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p>No ECSS elections currently.</p>
+  {% endif %}
+</section>
+{% endblock %}
