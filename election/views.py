@@ -9,6 +9,8 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import ValidationError
+from django.core.mail import EmailMessage
+from django.conf import settings
 import uuid
 
 from .models import Election, Position, Nomination, Support
@@ -91,8 +93,10 @@ class NominationView(PermissionRequiredMixin, View):
         try:
             nomination = Nomination.objects.get(username=request.user.username, position=position)
             nomination_form = NominationForm(request.POST, request.FILES, instance=nomination)
+            is_new = False
         except Nomination.DoesNotExist:
             nomination_form = NominationForm(request.POST, request.FILES)
+            is_new = True
         nomination_form.fields['username'].initial = request.user.username
         nomination_form.fields['name'].initial = '{} {}'.format(request.user.first_name, request.user.last_name)
         if nomination_form.is_valid():
@@ -100,6 +104,19 @@ class NominationView(PermissionRequiredMixin, View):
             nomination.position = position
             nomination.save()
             messages.success(request, 'Your nomination for {} has been submitted.'.format(position.name))
+            if True:
+                name = nomination.nickname or nomination.name
+                support_shareable_link = '{}?nomination={}'.format(request.build_absolute_uri(reverse('website:election-support-shareable', args=[election.codename])), nomination.uuid)
+                nominate_link = request.build_absolute_uri(reverse('election:nomination', args=[election.codename, position.codename]))
+                message_agm_2019 = 'Voting will be open shortly after AGM. Come to AGM on 19th March :)\nhttps://www.facebook.com/events/232644371006061/\n\nSee you there,\n'
+                message = 'Hi {},\n\nThank you for your nomination for {} in {}.\n\nYou will need at least two members to support each of your nomination(s) before the nomination closes and you can share this link for others to support your nomination: {}\n\nYou can modify your nomination at {} before nomination closes.\n\n{}ECSS\nhttps://society.ecs.soton.ac.uk'.format(name, position.name, election.name, support_shareable_link, nominate_link, message_agm_2019)
+                EmailMessage(
+                    '[ECSS] Nomination submitted for {} in {}'.format(position.name, election.name),
+                    message,
+                    'no-reply@society.ecs.soton.ac.uk',
+                    ['allen@localhost'],
+                    reply_to = ['society@ecs.soton.ac.uk'],
+                ).send(fail_silently=False)
             return redirect(to=reverse('election:election', args=[election.codename]))
         context = {
             'election': election,
