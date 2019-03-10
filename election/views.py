@@ -104,7 +104,7 @@ class NominationView(PermissionRequiredMixin, View):
             nomination.position = position
             nomination.save()
             messages.success(request, 'Your nomination for {} has been submitted.'.format(position.name))
-            if True:
+            if is_new:
                 name = nomination.nickname or nomination.name
                 support_shareable_link = '{}?nomination={}'.format(request.build_absolute_uri(reverse('website:election-support-shareable', args=[election.codename])), nomination.uuid)
                 nominate_link = request.build_absolute_uri(reverse('election:nomination', args=[election.codename, position.codename]))
@@ -114,7 +114,7 @@ class NominationView(PermissionRequiredMixin, View):
                     '[ECSS] Nomination submitted for {} in {}'.format(position.name, election.name),
                     message,
                     'no-reply@society.ecs.soton.ac.uk',
-                    ['allen@localhost'],
+                    [request.user.email],
                     reply_to = ['society@ecs.soton.ac.uk'],
                 ).send(fail_silently=False)
             return redirect(to=reverse('election:election', args=[election.codename]))
