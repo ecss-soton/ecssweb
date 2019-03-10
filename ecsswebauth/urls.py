@@ -11,5 +11,4 @@ urlpatterns = [
     path('saml/acs', views.saml_acs, name='saml-acs'),
     path('saml/logout/', views.saml_logout, name='saml-logout'),
     path('saml/sls', views.saml_sls, name='saml-sls'),
-    path('saml/test/', views.saml_test, name='saml-test'),
 ]

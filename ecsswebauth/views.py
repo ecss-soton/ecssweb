@@ -165,8 +165,3 @@ def saml_sls(request):
             return HttpResponseRedirect(resolve_url(settings.LOGOUT_REDIRECT_URL))
     else:
         raise Exception('Error when processing SLO: {}'.format((', '.join(errors))))
-
-@login_required
-@permission_required('auth.add_permission', raise_exception=True)
-def saml_test(request):
-    return HttpResponse((request.user.samluser.is_persistent))

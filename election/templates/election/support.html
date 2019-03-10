@@ -1,0 +1,46 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+{% load election_extra %}
+
+{% block title %}Elections - ECSS{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>{{ nomination.position.election.name }}</h1>
+  <div>
+    <b>Nomination ends on {{ nomination.position.election.nomination_end|date }} {{ nomination.position.election.nomination_end|time:"H:i" }}.</b>
+  </div>
+  <div class="card mt-3">
+    <div class="card-body">
+      {% if nomination|is_supporting:user %}
+      <p>
+        You have already supported {{ nomination.name }} for {{ nomination.position.name }} in {{ nomination.position.election.name }}.
+      </p>
+      {% else %}
+      <form method="POST" action="{% url 'election:support' nomination.position.election.codename nomination.position.codename %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-1">
+          Do you want to support {{ nomination.name }} for {{ nomination.position.name }} in {{ nomination.position.election.name }}?
+          {% if supporting_name %}
+          You will no longer be supporting {{ supporting_name }} for {{ nomination.position.name }} in {{ nomination.position.election.name }}.
+          {% else %}
+          You are currently supporting no one for {{ nomination.position.name }} in {{ nomination.position.election.name }}.
+          {% endif %}
+        </div>
+        <input type="hidden" name="nomination" value="{{ nomination.uuid }}">
+        <input type="submit" class="btn btn-ecssweb" value="Support">
+      </form>
+      <div class="small text-muted mt-3">
+        <p>
+          You are able to support one nomination for each role and change your support before nomination closes.
+        </p>
+      </div>
+      {% endif %}
+      <div>
+        <a href="{% url 'election:election' nomination.position.election.codename %}">{{ nomination.position.election.name }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

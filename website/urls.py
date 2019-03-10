@@ -4,6 +4,7 @@ from django.contrib.sitemaps.views import sitemap
 
 from . import views
 from .sitemaps import StaticViewSitemap, CommitteeSitemap, SocietySitemap, SponsorSitemap
+from election.views import support_shareable
 
 app_name='website'
 
@@ -16,6 +17,8 @@ sitemaps = {
 
 urlpatterns = [
     path('', views.home, name='home'),
+
+    re_path(r'^elections/(?P<election>[\w-]+)/support/$', support_shareable, name='election-support-shareable'),
 
     path('jumpstart/', RedirectView.as_view(pattern_name='website:jumpstart-2018'), name='jumpstart-redirect'),
     path('campus-hack/', RedirectView.as_view(pattern_name='website:campus-hack-19'), name='merch-redirect'),
