@@ -13,9 +13,8 @@ class Migration(migrations.Migration):
 
     def fill_nomination_uuid(apps, schema_editor):
         for nomination in Nomination.objects.all():
-            if not nomination.uuid:
-                nomination.uuid = uuid.uuid4()
-                nomination.save()
+            nomination.uuid = uuid.uuid4()
+            nomination.save()
 
     operations = [
         migrations.AddField(
