@@ -1,0 +1,12 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block title %}Elections - ECSS{% endblock %}
+
+{% block content %}
+<div class="alert alert-danger mt-3 container">
+  <h1>No such nomination or nomination closed</h1>
+  <a href="{% url 'election:elections' %}" class="alert-link">Current elections</a>
+</div>
+{% endblock %}

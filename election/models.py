@@ -6,7 +6,7 @@ import os
 
 
 def nomination_image_file_name(instance, filename):
-        return ('election/{}/{}-{}{}'.format(instance.position.election.codename, instance.username, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
+        return ('election/{}/{}-{}{}'.format(instance.position.election.codename, instance.uuid, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
 
 
 class DoesNotHaveNominationException(Exception):
@@ -96,6 +96,7 @@ class Position(models.Model):
 
 
 class Nomination(models.Model):
+    uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
     username = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
     nickname = models.CharField(max_length=50, null=True, blank=True)
@@ -104,8 +105,14 @@ class Nomination(models.Model):
     photo = models.ImageField(upload_to=nomination_image_file_name)
     time = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        unique_together = ('username', 'position')
+
 
 class Support(models.Model):
     nomination = models.ForeignKey(Nomination, on_delete=models.CASCADE)
     supporter = models.CharField(max_length=50)
     time = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('nomination', 'supporter')
