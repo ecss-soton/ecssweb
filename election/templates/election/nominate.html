@@ -4,6 +4,22 @@
 
 {% block title %}Elections - ECSS{% endblock %}
 
+{% block pagestyle %}
+{{ block.super }}
+<style>
+.copy-button {
+  background: none;
+  border: none;
+  color: darkred;
+  cursor: pointer;
+}
+
+.copy-button:hover {
+  color: #d82129;
+}
+</style>
+{% endblock %}
+
 {% block portalcontent %}
 <section>
   <h1>{{ election.name }}</h1>
@@ -15,6 +31,15 @@
       <p>
         You are nominating for {{ position.name }} in {{ election.name }}.
       </p>
+      {% if support_shareable_link %}
+      <div class="form-inline">
+        <label for="support-shareable-link">
+          You can share this link for others to support your nomination for {{ position.name }} in {{ election.name }}:
+        </label>
+        <input id="support-shareable-link" class="form-control-plaintext col-10" value="{{ support_shareable_link }}" readonly>
+        <button class="col-2 copy-button" data-toggle="popover" data-placement="top" data-trigger="manual" data-content="Support link copied to clipboard" aria-label="Copy support link to clipboard"><i class="far fa-copy" aria-hidden="true"></i></button>
+      </div>
+      {% endif %}
       <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in nomination_form %}
@@ -27,12 +52,16 @@
           {% endif %}
         </div>
         {% endfor %}
+        {% if support_shareable_link %}
+        <input type="submit" class="btn btn-ecssweb" value="Update Nomination">
+        {% else %}
         <input type="submit" class="btn btn-ecssweb" value="Submit Nomination">
+        {% endif %}
       </form>
       <div class="small text-muted mt-3">
         <ul>
           <li>
-            You can come back to this page to modify your nomination before nomination closes.
+            You can come back to this page to update your nomination before nomination closes.
           </li>
           <li>
             Each of your nomination will require two supports from two members before nomination closes.
@@ -42,4 +71,22 @@
     </div>
   </div>
 </section>
+{% endblock %}
+
+{% block pagescript %}
+{{ block.super }}
+<script>
+$('#support-shareable-link').click(function() {
+  $(this).select();
+})
+var copy_button = $('.copy-button');
+copy_button.click(function() {
+  $('#support-shareable-link').select();
+  document.execCommand('copy');
+  copy_button.popover('show');
+  setTimeout(function() {
+    copy_button.popover('hide');
+  }, 1500);
+})
+</script>
 {% endblock %}

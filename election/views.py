@@ -68,15 +68,18 @@ class NominationView(PermissionRequiredMixin, View):
         try:
             nomination = Nomination.objects.get(username=request.user.username, position=position)
             nomination_form = NominationForm(instance=nomination)
+            support_shareable_link = '{}?nomination={}'.format(request.build_absolute_uri(reverse('website:election-support-shareable', args=[election.codename])), nomination.uuid)
         except Nomination.DoesNotExist:
             nomination_form = NominationForm(initial = {
                 'username': request.user.username,
                 'name': '{} {}'.format(request.user.first_name,     request.user.last_name)
             })
+            support_shareable_link = None
         context = {
             'election': election,
             'position': position,
             'nomination_form': nomination_form,
+            'support_shareable_link': support_shareable_link,
         }
         return render(request, 'election/nominate.html', context)
 
