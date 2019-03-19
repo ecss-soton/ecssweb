@@ -26,6 +26,10 @@ SECRET_KEY = 'secret_key'
 DEBUG = True
 
 
+SERVER_EMAIL = 'ecssweb@example.com'
+EMAIL_SUBJECT_PREFIX = '[ECSSWEB] '
+
+
 ADMINS = [('Example', 'example@example.com')]
 
 
@@ -174,10 +178,14 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 #         'console': {
 #             'class': 'logging.StreamHandler',
 #         },
+#     'mail_admins': {
+#         'level': 'ERROR',
+#         'class': 'django.utils.log.AdminEmailHandler',
 #     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['console'],
+# },
+# 'loggers': {
+#     'django': {
+#         'handlers': ['console', 'mail_admins'],
 #             'level': 'WARN',
 #             'propagate': True,
 #         },

@@ -109,7 +109,7 @@ class NominationView(PermissionRequiredMixin, View):
                 support_shareable_link = '{}?nomination={}'.format(request.build_absolute_uri(reverse('website:election-support-shareable', args=[election.codename])), nomination.uuid)
                 nominate_link = request.build_absolute_uri(reverse('election:nomination', args=[election.codename, position.codename]))
                 message_agm_2019 = 'Voting will be open shortly after the AGM. Come to the AGM on 19th March :)\nhttps://society.ecs.soton.ac.uk/agm/fb\n\nSee you there,\n'
-                message = 'Hi {},\n\nThank you for your nomination for {} in {}.\n\nYou will need at least two members to support each of your nomination(s) before the nomination closes and you can share this link for others to support your nomination: {}\n\nYou can modify your nomination at {} before nomination closes.\n\n{}ECSS\nhttps://society.ecs.soton.ac.uk'.format(name, position.name, election.name, support_shareable_link, nominate_link, message_agm_2019)
+                message = 'Hi {},\n\nThank you for your nomination for {} in {}.\n\nYou will need at least two members to support each of your nomination(s) before the nomination closes and you can share this link for others to support your nomination: {}.\n\nYou can modify your nomination at {} before nomination closes.\n\n{}ECSS\nhttps://society.ecs.soton.ac.uk'.format(name, position.name, election.name, support_shareable_link, nominate_link, message_agm_2019)
                 EmailMessage(
                     '[ECSS] Nomination submitted for {} in {}'.format(position.name, election.name),
                     message,
