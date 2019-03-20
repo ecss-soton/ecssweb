@@ -1,0 +1,94 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+{% load website_extra %}
+{% load election_extra %}
+
+{% block title %}Elections - ECSS{% endblock %}
+
+{% block pagestyle %}
+{{ block.super }}
+<style>
+.voted {
+  background-color: antiquewhite;
+}
+</style>
+{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>{{ election.name }}</h1>
+  <p>
+    This election is for ECSS members.
+  </p>
+  {% if not perms.ecsswebauth.is_ecs_user %}
+  <p>
+    Unfortunately you are unable to nominate, support nominations or vote in this election. If you think it is an error please contact us.
+  </p>
+  {% endif %}
+  <div>
+    <b>Voting ends on {{ election.voting_end|date }} {{ election.voting_end|time:"H:i" }}.</b>
+  </div>
+  <div class="mt-3">
+    <input type="checkbox" id="description-checkbox" checked>
+    <label for="description-checkbox">Show roles description</label>
+  </div>
+  <div class="list-group">
+    {% for position in election.position_set.all %}
+    <div class="list-group-item
+    {% if position|has_voted:user %}voted{% endif %}
+    ">
+      <h2>{{ position.name }}</h2>
+      <p class="position-description">
+        <i>{{ position.description }}</i>
+      </p>
+      {% if perms.ecsswebauth.is_ecs_user %}
+      <div>
+        {% if position|has_voted:user %}
+        You have voted for {{ position.name }}.
+        {% else %}
+        <a href="{% url 'election:nomination' election.codename position.codename %}">Vote for {{ position.name }}</a>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if not position.nomination_set.all %}
+      <p>
+        There is no nomination for {{ position.name }}.
+      </p>
+      {% else %}
+      <div>
+        <a href="#">{{ position.name }} nominations</a>:
+        <ul>
+          {% for nomination in position.nomination_set.all|shuffle %}
+          <li>
+            <div>
+              {{ nomination.name }}
+              {% if nomination.nickname %}
+              ({{ nomination.nickname }})
+              {% endif %}
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block pagescript %}
+{{ block.super }}
+<script>
+$('.position-description').prop('hidden', true);
+$('#description-checkbox').prop('checked', false);
+$('#description-checkbox').change(function() {
+  if (this.checked) {
+    $('.position-description').prop('hidden', false);
+  } else {
+    $('.position-description').prop('hidden', true);
+  }
+});
+</script>
+{% endblock %}

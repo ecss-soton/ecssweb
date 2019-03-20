@@ -46,7 +46,7 @@ def election(request, election):
     if is_nomination_current(election):
         return render(request, 'election/nomination.html', context)
     if is_voting_current(election):
-        return HttpResponse('Voting')
+        return render(request, 'election/voting.html', context)
     if election.has_nomination and election.nomination_start <= timezone.now() and election.voting_end >= timezone.now():
         return render(request, 'election/election.html', context)
     if request.user.groups.filter(name='committee').exists():

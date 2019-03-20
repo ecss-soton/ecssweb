@@ -116,3 +116,27 @@ class Support(models.Model):
 
     class Meta:
         unique_together = ('nomination', 'supporter')
+
+
+class Voter(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    username = models.CharField(max_length=50)
+    position = models.ForeignKey(Position, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('username', 'position')
+
+
+class Vote(models.Model):
+    position = models.ForeignKey(Position, on_delete=models.CASCADE)
+    time = models.DateTimeField(auto_now_add=True)
+
+
+class VoteRecord(models.Model):
+    vote = models.ForeignKey(Vote, on_delete=models.CASCADE)
+    nomination = models.ForeignKey(Nomination, on_delete=models.CASCADE)
+    rank = models.IntegerField()
+
+    def clean(self):
+        if nomination.position != vote.position:
+            raise ValidationError('Nomination does not match with the position.')
