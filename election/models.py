@@ -94,6 +94,9 @@ class Position(models.Model):
     description = models.TextField(verbose_name='position description')
     sort_order = models.IntegerField(null=True, blank=True, verbose_name='position sort order')
 
+    def __str__(self):
+        return self.name
+
 
 class Nomination(models.Model):
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
@@ -107,6 +110,9 @@ class Nomination(models.Model):
 
     class Meta:
         unique_together = ('username', 'position')
+
+    def __str__(self):
+        return '{} ({})'.format(self.name, self.position.name)
 
 
 class Support(models.Model):

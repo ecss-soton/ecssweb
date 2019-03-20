@@ -1,0 +1,89 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+{% load website_extra %}
+{% load election_extra %}
+
+{% block title %}Elections - ECSS{% endblock %}
+
+{% block pagestyle %}
+{{ block.super }}
+<style>
+.nomination-photo {
+  max-height: 10rem;
+}
+.nomination {
+  height: 15rem;
+}
+.manifesto {
+  height: 14rem;
+  overflow: scroll;
+}
+</style>
+{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>{{ position.election.name }}</h1>
+  <p>
+    This election is for ECSS members.
+  </p>
+  {% if not perms.ecsswebauth.is_ecs_user %}
+  <p>
+    Unfortunately you are unable to nominate, support nominations or vote in this election. If you think it is an error please contact us.
+  </p>
+  {% endif %}
+  <div>
+    <b>Voting ends on {{ position.election.voting_end|date }} {{ position.election.voting_end|time:"H:i" }}.</b>
+  </div>
+  <div class="card mt-3">
+    <div class="card-body">
+      <h2 class="card-title">
+        {{ position.name }}
+      </h2>
+      <p class="font-italic">
+        {{ position.description }}
+      </p>
+      <div class="list-group">
+        Nominations:
+        {% for nomination in nominations %}
+        <div class="list-group-item nomination">
+          <div class="row">
+            <div class="col-4">
+              {% if nomination.photo %}
+              <img src="{{ nomination.photo.url }}" alt="{{ nomination.name }}" class="img-fluid nomination-photo">
+              {% else %}
+              <img src="" alt="{{ nomination.name }}">
+              {% endif %}
+              <div>
+                {{ nomination.name }}
+                {% if nomination.nickname %}
+                <br>({{nomination.nickname}})
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-8 manifesto">
+              <pre>{{ nomination.manifesto }}</pre>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% if perms.ecsswebauth.is_ecs_user %}
+      <div class="mt-3">
+        {% if position|has_voted:user %}
+        <p>You have already voted for {{ position.name }}.</p>
+        {% else %}
+        Voting goes here...
+        {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block pagescript %}
+{{ block.super }}
+
+{% endblock %}

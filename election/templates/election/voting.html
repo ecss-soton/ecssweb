@@ -47,7 +47,7 @@
         {% if position|has_voted:user %}
         You have voted for {{ position.name }}.
         {% else %}
-        <a href="{% url 'election:nomination' election.codename position.codename %}">Vote for {{ position.name }}</a>
+        <a href="{% url 'election:position' election.codename position.codename %}">Vote for {{ position.name }}</a>
         {% endif %}
       </div>
       {% endif %}
@@ -57,7 +57,7 @@
       </p>
       {% else %}
       <div>
-        <a href="#">{{ position.name }} nominations</a>:
+        nominations:
         <ul>
           {% for nomination in position.nomination_set.all|shuffle %}
           <li>

@@ -5,13 +5,14 @@ from django.contrib import messages
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage
 from django.conf import settings
 import uuid
+import random
 
 from .models import Election, Position, Nomination, Support
 from .forms import NominationForm
@@ -194,3 +195,19 @@ def support_shareable(request, election):
     if not request.user.has_perm('ecsswebauth.is_ecs_user'):
         return render(request, 'election/error-pages/support-500.html', status=500)
     return redirect(to='{}?nomination={}'.format(reverse('election:support', args=[election.codename, nomination.position.codename]), nomination.uuid))
+
+
+class PositionView(LoginRequiredMixin, View):
+
+    def get(self, request, election, position):
+        election = get_object_or_404(Election, codename=election)
+        position = get_object_or_404(Position, election=election, codename=position)
+        if not is_voting_current(election):
+            raise Http404()
+        nominations = list(position.nomination_set.all())
+        random.shuffle(nominations)
+        context = {
+            'position': position,
+            'nominations': nominations,
+        }
+        return render(request, 'election/position.html', context)

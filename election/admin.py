@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Election, Position
+from .models import Election, Position, Nomination
 
 
 class PositionInline(admin.StackedInline):
@@ -20,4 +20,14 @@ class ElectionAdmin(admin.ModelAdmin):
         PositionInline,
     ]
 
+
+class NominationAdmin(admin.ModelAdmin):
+    list_display = ['name', 'nickname', 'position', 'position_election']
+    list_filter = ['position__election']
+
+    def position_election(self, nomination):
+        return nomination.position.election
+
+
 admin.site.register(Election, ElectionAdmin)
+admin.site.register(Nomination, NominationAdmin)
