@@ -5,13 +5,14 @@ from django.contrib import messages
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage
 from django.conf import settings
 import uuid
+import random
 
 from .models import Election, Position, Nomination, Support
 from .forms import NominationForm
@@ -46,7 +47,7 @@ def election(request, election):
     if is_nomination_current(election):
         return render(request, 'election/nomination.html', context)
     if is_voting_current(election):
-        return HttpResponse('Voting')
+        return render(request, 'election/voting.html', context)
     if election.has_nomination and election.nomination_start <= timezone.now() and election.voting_end >= timezone.now():
         return render(request, 'election/election.html', context)
     if request.user.groups.filter(name='committee').exists():
@@ -109,7 +110,7 @@ class NominationView(PermissionRequiredMixin, View):
                 support_shareable_link = '{}?nomination={}'.format(request.build_absolute_uri(reverse('website:election-support-shareable', args=[election.codename])), nomination.uuid)
                 nominate_link = request.build_absolute_uri(reverse('election:nomination', args=[election.codename, position.codename]))
                 message_agm_2019 = 'Voting will be open shortly after the AGM. Come to the AGM on 19th March :)\nhttps://society.ecs.soton.ac.uk/agm/fb\n\nSee you there,\n'
-                message = 'Hi {},\n\nThank you for your nomination for {} in {}.\n\nYou will need at least two members to support each of your nomination(s) before the nomination closes and you can share this link for others to support your nomination: {}\n\nYou can modify your nomination at {} before nomination closes.\n\n{}ECSS\nhttps://society.ecs.soton.ac.uk'.format(name, position.name, election.name, support_shareable_link, nominate_link, message_agm_2019)
+                message = 'Hi {},\n\nThank you for your nomination for {} in {}.\n\nYou will need at least two members to support each of your nomination(s) before the nomination closes and you can share this link for others to support your nomination: {}.\n\nYou can modify your nomination at {} before nomination closes.\n\n{}ECSS\nhttps://society.ecs.soton.ac.uk'.format(name, position.name, election.name, support_shareable_link, nominate_link, message_agm_2019)
                 EmailMessage(
                     '[ECSS] Nomination submitted for {} in {}'.format(position.name, election.name),
                     message,
@@ -194,3 +195,19 @@ def support_shareable(request, election):
     if not request.user.has_perm('ecsswebauth.is_ecs_user'):
         return render(request, 'election/error-pages/support-500.html', status=500)
     return redirect(to='{}?nomination={}'.format(reverse('election:support', args=[election.codename, nomination.position.codename]), nomination.uuid))
+
+
+class PositionView(LoginRequiredMixin, View):
+
+    def get(self, request, election, position):
+        election = get_object_or_404(Election, codename=election)
+        position = get_object_or_404(Position, election=election, codename=position)
+        if not is_voting_current(election):
+            raise Http404()
+        nominations = list(position.nomination_set.all())
+        random.shuffle(nominations)
+        context = {
+            'position': position,
+            'nominations': nominations,
+        }
+        return render(request, 'election/position.html', context)

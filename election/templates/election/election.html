@@ -34,7 +34,7 @@
       <div>
         Current nominations:
         <ul>
-          {% for nomination in position.nomination_set.all %}
+          {% for nomination in position.nomination_set.all|shuffle %}
           <li>
             {{ nomination.name }}
             {% if nomination.nickname %}

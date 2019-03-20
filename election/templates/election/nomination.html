@@ -85,7 +85,7 @@
         {% else %}
         <ul>
         {% endif %}
-          {% for nomination in position.nomination_set.all %}
+          {% for nomination in position.nomination_set.all|shuffle %}
           <li>
             {% if perms.ecsswebauth.is_ecs_user %}
             <div class="d-inline-flex support">

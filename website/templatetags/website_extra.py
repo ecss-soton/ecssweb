@@ -1,4 +1,5 @@
 from django import template
+import random
 
 
 register = template.Library()
@@ -12,3 +13,10 @@ def msort(l, key):
 @register.filter
 def has_group(user, group_name):
     return user.groups.filter(name=group_name).exists()
+
+
+@register.filter
+def shuffle(l):
+    l = list(l)
+    random.shuffle(l)
+    return l
