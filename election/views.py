@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.db.models import Q
+from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage
@@ -14,7 +15,7 @@ from django.conf import settings
 import uuid
 import random
 
-from .models import Election, Position, Nomination, Support
+from .models import Election, Position, Nomination, Support, Voter, Vote, VoteRecord
 from .forms import NominationForm
 from .utils import is_nomination_current, is_voting_current
 
@@ -211,3 +212,62 @@ class PositionView(LoginRequiredMixin, View):
             'nominations': nominations,
         }
         return render(request, 'election/position.html', context)
+
+
+@method_decorator(login_required, name='dispatch')
+class VoteView(PermissionRequiredMixin, View):
+
+    permission_required = 'ecsswebauth.is_ecs_user'
+    raise_exception = True
+
+    def post(self, request, election, position):
+        election = get_object_or_404(Election, codename=election)
+        position = get_object_or_404(Position, codename=position)
+        if not is_voting_current(election):
+            raise Http404()
+
+        # check if the user has already voted for the position
+        if Voter.objects.filter(username=request.user.username, position=position):
+            messages.error(request, 'You have already voted for {} in {}'.format(position.name, election.name))
+            return redirect(to=reverse('election:position', args=[election.codename, position.codename]))
+
+        nominations_rank = dict.fromkeys([str(nomination.uuid) for nomination in position.nomination_set.all()])
+        ranks = set(map(str, (range(1, len(nominations_rank) + 2))))
+
+        # check if ranks are valid and unique, check if ron in has a valid rank
+        has_ron = False
+        for k, v in request.POST.items():
+            if k == 'ron':
+                if v in ranks:
+                    ranks.remove(v)
+                    has_ron = True
+                else:
+                    messages.error(request, 'Error. Your vote has not been recorded for {} in {}'.format(position.name, election.name))
+                    return redirect(to=reverse('election:position', args=[election.codename, position.codename]))
+            elif k in nominations_rank:
+                if v in ranks:
+                    nominations_rank[k] = int(v)
+                    ranks.remove(v)
+                else:
+                    messages.error(request, 'Error. Your vote has not been recorded for {} in {}'.format(position.name, election.name))
+                    return redirect(to=reverse('election:position', args=[election.codename, position.codename]))
+        if not has_ron:
+            messages.error(request, 'Error. Your vote has not been recorded for {} in {}'.format(position.name, election.name))
+            return redirect(to=reverse('election:position', args=[election.codename, position.codename]))
+        # check if all nominations for the position has a rank
+        for _, v in nominations_rank.items():
+            if v == None:
+                messages.error(request, 'Error. Your vote has not been recorded for {} in {}'.format(position.name, election.name))
+                return redirect(to=reverse('election:position', args=[election.codename, position.codename]))
+
+        with transaction.atomic():
+            Voter(username=request.user.username, position=position).save()
+            vote = Vote(position=position)
+            vote.save()
+            for k, v in nominations_rank.items():
+                nomination = Nomination.objects.get(uuid=k)
+                VoteRecord(vote=vote, nomination=nomination, rank=v).save()
+
+        messages.success(request, 'Your vote for {} in {} has been recorded'.format(position.name, election.name))
+
+        return redirect(to=reverse('election:position', args=[election.codename, position.codename]))
