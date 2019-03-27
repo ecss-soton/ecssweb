@@ -12,7 +12,7 @@
     <div class="list-group-item">
       <h2>{{ result.role }}: {{ result.elected }} is elected</h2>
       {% for round in result.rounds %}
-      <div id="{{ result.role }}Round{{ forloop.counter }}"></div>
+      <div id="{{ result.role|cut:' ' }}Round{{ forloop.counter }}"></div>
       {% endfor %}
     </div>
     {% endfor %}
@@ -44,7 +44,7 @@ function drawChart() {
     title: '{{ result.role }} - {{ round|title }}',
     {% endfor %}
   };
-  chart = new google.visualization.PieChart(document.getElementById('{{ result.role }}Round{{ forloop.counter }}'));
+  chart = new google.visualization.PieChart(document.getElementById('{{ result.role|cut:" " }}Round{{ forloop.counter }}'));
   chart.draw(data, options);
   {% endfor %}
   {% endfor %}
