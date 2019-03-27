@@ -14,6 +14,8 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 import uuid
 import random
+import yaml
+import os
 
 from .models import Election, Position, Nomination, Support, Voter, Vote, VoteRecord
 from .forms import NominationForm
@@ -271,3 +273,15 @@ class VoteView(PermissionRequiredMixin, View):
         messages.success(request, 'Your vote for {} in {} has been recorded'.format(position.name, election.name))
 
         return redirect(to=reverse('election:position', args=[election.codename, position.codename]))
+
+@login_required
+def results(request):
+    try:
+        with open(os.path.join(settings.BASE_DIR, 'election/data/agm2019.yaml')) as data_file:
+            election = yaml.load(data_file)
+    except:
+        raise Http404()
+    context = {
+        'election': election,
+    }
+    return render(request, 'election/results.html', context)
