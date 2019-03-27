@@ -276,9 +276,11 @@ class VoteView(PermissionRequiredMixin, View):
 
 
 def results(request):
-    with open(os.path.join(settings.BASE_DIR, 'election/data/agm2019.yaml')) as data_file:
-        election = yaml.load(data_file)
-        print(election)
+    try:
+        with open(os.path.join(settings.BASE_DIR, 'election/data/agm2019.yaml')) as data_file:
+            election = yaml.load(data_file)
+    except:
+        raise Http404()
     context = {
         'election': election,
     }
