@@ -7,6 +7,9 @@
 {% block portalcontent %}
 <section>
   <h1>{{ election.name }}: Results</h1>
+  <p>
+    {{ election.voters }} voters voted in {{ election.name }}.
+  </p>
   <div class="list-group">
     {% for result in election.results %}
     <div class="list-group-item">
