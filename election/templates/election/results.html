@@ -1,0 +1,53 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+
+{% block title %}Elections - ECSS{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>{{ election.name }}: Results</h1>
+  <div class="list-group">
+    {% for result in election.results %}
+    <div class="list-group-item">
+      <h2>{{ result.role }}: {{ result.elected }} is elected</h2>
+      {% for round in result.rounds %}
+      <div id="{{ result.role }}Round{{ forloop.counter }}"></div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block pagescript %}
+{{ block.super }}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+function drawChart() {
+  {% for result in election.results %}
+  {% for round in result.rounds %}
+  data = google.visualization.arrayToDataTable([
+    ['Person', 'Votes'],
+    {% for _, round in round.items %}
+    {% for nomination in round %}
+    {% for person, votes in nomination.items %}
+    ['{{ person }}', {{ votes }}],
+    {% endfor %}
+    {% endfor %}
+    {% endfor %}
+  ]);
+  options = {
+    {% for round, _ in round.items %}
+    title: '{{ result.role }} - {{ round|title }}',
+    {% endfor %}
+  };
+  chart = new google.visualization.PieChart(document.getElementById('{{ result.role }}Round{{ forloop.counter }}'));
+  chart.draw(data, options);
+  {% endfor %}
+  {% endfor %}
+}
+</script>
+{% endblock %}
