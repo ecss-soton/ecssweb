@@ -1,8 +1,14 @@
 {% extends 'website/base.html' %}
 
+{% load static %}
+
 {% block content %}
 <div class="container mt-3 alert alert-danger">
   <h1>Page not found</h1>
   <!--<p>Got lost? The <a href="#" class="alert-link">sitemap</a> might help!</p>-->
 </div>
+<figure class="container mt-3">
+  <img src="{% static 'website/content/eso1907a.jpg' %}" alt="Black Hole image" class="img-fluid">
+  <figcaption>Here is a black hole.</figcaption>
+</figure>
 {% endblock %}
