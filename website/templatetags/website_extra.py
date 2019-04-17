@@ -1,5 +1,9 @@
 from django import template
 import random
+import markdown
+from bleach import Cleaner
+from bleach.linkifier import LinkifyFilter
+from functools import partial
 
 
 register = template.Library()
@@ -20,3 +24,8 @@ def shuffle(l):
     l = list(l)
     random.shuffle(l)
     return l
+
+@register.filter
+def md(s):
+    cleaner = Cleaner(tags=['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i', 'li', 'ol', 'strong', 'ul', 'p'], filters=[partial(LinkifyFilter, parse_email=True)])
+    return cleaner.clean(markdown.markdown(s))

@@ -46,7 +46,7 @@
           </a>
           <div class="card-body">
             <div>
-              {{ item.description|truncatewords:20 }}
+              {{ item.description|md|striptags|truncatewords:20 }}
             </div>
             <div class="badge badge-info">£{{ item.price }}</div>
             {% if item.itempermission_set.all and not user|has_any_perms_item:item %}
