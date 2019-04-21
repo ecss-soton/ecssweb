@@ -8,10 +8,16 @@ from ecsswebauth.models import EcsswebUserGroup
 
 admin.site.unregister(User)
 admin.site.register(Permission)
-admin.site.register(EcsswebUserGroup)
-
 
 admin.site.register(CommitteeRoleMember)
+
+class EcsswebUserGroupAdmin(admin.ModelAdmin):
+    search_fields = [
+        'group',
+    ]
+
+
+admin.site.register(EcsswebUserGroup, EcsswebUserGroupAdmin)
 
 
 class SocietyLinkInline(admin.StackedInline):
