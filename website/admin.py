@@ -13,7 +13,7 @@ admin.site.register(CommitteeRoleMember)
 
 class EcsswebUserGroupAdmin(admin.ModelAdmin):
     search_fields = [
-        'group',
+        'group__name',
     ]
 
 
