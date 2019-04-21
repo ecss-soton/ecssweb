@@ -3,10 +3,12 @@ from django.contrib.auth.models import User, Permission
 
 
 from .models import CommitteeRoleMember, Society, SocietyLink, Sponsor, SponsorLink
+from ecsswebauth.models import EcsswebUserGroup
 
 
 admin.site.unregister(User)
 admin.site.register(Permission)
+admin.site.register(EcsswebUserGroup)
 
 
 admin.site.register(CommitteeRoleMember)
