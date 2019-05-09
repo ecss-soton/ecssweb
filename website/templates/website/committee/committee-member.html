@@ -23,7 +23,7 @@
   </ul>
   <div class="row mt-2">
     <div class="col-lg-3 my-2">
-      <img class="img-fluid mx-auto d-block committee-member-img" src="{% static current_committee_member.member_pic_file %}" alt="{{ current_committee_member.member_name }}">
+      <img class="img-fluid mx-auto d-block committee-member-img" src="{{ current_committee_member.member_image.url }}" alt="{{ current_committee_member.member_name }}">
     </div>
     <div class="col-lg-9">
       <div>
@@ -43,7 +43,7 @@
       </div>
       <hr>
       <div>
-        {{ current_committee_member.member_manifesto | safe }}
+        {{ current_committee_member.member_manifesto | md | safe }}
       </div>
 
       <ul class="list-unstyled">

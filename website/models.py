@@ -1,7 +1,13 @@
 from django.db import models
+from django.template.defaultfilters import slugify
+
+import os
 
 
 # Committee
+
+def committee_member_image_file_name(instance, filename):
+    return ('committee/{}-{}{}'.format(instance.role_codename, slugify(instance.member_name), os.path.splitext(filename)[1].lower()))
 
 # Simple model works for each role held by only one member.
 # In cases of change of circumstances, this model might need to be rewritten though it might be possible to continue using this model with some workaround.
@@ -11,11 +17,11 @@ class CommitteeRoleMember(models.Model):
     role_name = models.CharField(max_length=100)
     role_description = models.TextField()
     member_name = models.CharField(max_length=100)
-    member_nickname = models.CharField(max_length=50)
-    member_pic_file = models.CharField(max_length=100)
+    member_nickname = models.CharField(max_length=50, blank=True)
+    member_image = models.ImageField(upload_to=committee_member_image_file_name)
     member_manifesto = models.TextField()
     member_email = models.EmailField(max_length=100)
-    member_facebook = models.URLField()
+    member_facebook = models.URLField(blank=True)
 
     class Meta:
         verbose_name_plural = 'committee roles members'
