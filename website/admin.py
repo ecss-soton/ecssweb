@@ -9,7 +9,12 @@ from ecsswebauth.models import EcsswebUserGroup
 admin.site.unregister(User)
 admin.site.register(Permission)
 
-admin.site.register(CommitteeRoleMember)
+class CommitteeRoleMemberAdmin(admin.ModelAdmin):
+    prepopulated_fields = {
+        'role_codename': ('role_short_name',)
+    }
+
+admin.site.register(CommitteeRoleMember, CommitteeRoleMemberAdmin)
 
 class EcsswebUserGroupAdmin(admin.ModelAdmin):
     search_fields = [
