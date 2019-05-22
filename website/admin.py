@@ -13,6 +13,12 @@ class CommitteeRoleMemberAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         'role_codename': ('role_short_name',)
     }
+    search_fields = [
+        'role_name',
+        'member_name',
+        'member_nickname',
+    ]
+    list_display = ('role_name', 'member_name', 'member_nickname')
 
 admin.site.register(CommitteeRoleMember, CommitteeRoleMemberAdmin)
 

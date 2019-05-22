@@ -40,7 +40,12 @@
           <img class="img-fluid" src="{{ committee_role_member.member_image.url }}" alt="{{ committee_role_member.member_name }}">
         </a>
         <a href="{% url 'website:committee-member' committee_role_member.role_codename %}" class="committee-member-name-link">
-          <div>{{ committee_role_member.member_name }}</div>
+          <div>
+            {{ committee_role_member.member_name }}
+            {% if committee_role_member.member_nickname %}
+            ({{ committee_role_member.member_nickname }})
+            {% endif %}
+          </div>
         </a>
         <a href="{% url 'website:committee-member' committee_role_member.role_codename %}" class="committee-role-name-link">
           <div class="text-muted">{{ committee_role_member.role_name }}</div>

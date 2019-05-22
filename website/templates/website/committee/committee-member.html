@@ -28,7 +28,12 @@
     </div>
     <div class="col-lg-9">
       <div>
-        <h2 class="d-inline-block mr-3">{{ current_committee_member.member_name }}</h2>
+        <h2 class="d-inline-block mr-3">
+          {{ current_committee_member.member_name }}
+          {% if current_committee_member.member_nickname %}
+          <span class="h3">({{ current_committee_member.member_nickname }})</span>
+          {% endif %}
+        </h2>
         <div class="d-inline-block">
           {% if current_committee_member.member_email %}
           <a href="mailto:{{ current_committee_member.member_email }}" class="mr-2 committee-member-contact-icon" aria-label="Email"><i class="fas fa-envelope-square" title="Email" aria-hidden="true"></i></a>
