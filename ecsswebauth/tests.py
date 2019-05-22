@@ -85,7 +85,7 @@ class CleanNextUrlTestCase(TestCase):
         self.assertEqual(_clean_next_url(url4), url4)
         url5 = 'ftp://{}/auth/'.format(settings.ALLOWED_HOSTS[0])
         self.assertEqual(_clean_next_url(url5), default_url)
-        url6 = 'javascript:alert("alert!");'.format(settings.ALLOWED_HOSTS[0])
+        url6 = 'javascript:alert("alert!");'
         self.assertEqual(_clean_next_url(url6), default_url)
 
 
