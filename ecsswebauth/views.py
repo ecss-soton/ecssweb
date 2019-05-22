@@ -3,14 +3,11 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonRespons
 from django.shortcuts import render, resolve_url
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required, permission_required
 from django.conf import settings
 
-from .models import SamlUser, ConsumedAssertionRecord
+from .models import ConsumedAssertionRecord
 from .forms import SamlRequestForm
 
-import json
 import datetime
 import pytz
 

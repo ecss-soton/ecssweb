@@ -1,9 +1,12 @@
 from django.test import TestCase
+from django.shortcuts import resolve_url
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User, Group
+from django.conf import settings
 
 from ecsswebauth.models import EcsswebUserGroup, SamlUser
+from ecsswebauth.views import _clean_next_url
 
 class AuthTestCase(TestCase):
 
@@ -66,3 +69,20 @@ class UserTestCase(TestCase):
         user = User.objects.create(username='test01', email='test01@example.com', last_name='givenname01', first_name='surname01')
         samluser = SamlUser.objects.create(user=user, is_persistent=True)
         self.assertEqual(SamlUser.objects.get_by_natural_key('test01'), samluser)
+
+class CleanNextUrlTestCase(TestCase):
+
+    def test__clean_next_url(self):
+        default_url = resolve_url(settings.LOGIN_REDIRECT_URL)
+        url1 = '/auth/'
+        self.assertEqual(_clean_next_url(url1), url1)
+        url2 = 'https://example.com'
+        self.assertEqual(_clean_next_url(url2), default_url)
+        url3 = 'https://{}/auth/'.format(settings.ALLOWED_HOSTS[0])
+        self.assertEqual(_clean_next_url(url3), url3)
+        url4 = 'http://{}/auth/'.format(settings.ALLOWED_HOSTS[0])
+        self.assertEqual(_clean_next_url(url4), url4)
+        url5 = 'ftp://{}/auth/'.format(settings.ALLOWED_HOSTS[0])
+        self.assertEqual(_clean_next_url(url5), default_url)
+        url6 = 'javascript:alert("alert!");'.format(settings.ALLOWED_HOSTS[0])
+        self.assertEqual(_clean_next_url(url6), default_url)
