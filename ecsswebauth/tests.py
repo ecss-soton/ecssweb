@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, Group
 from django.conf import settings
 
 from ecsswebauth.models import EcsswebUserGroup, SamlUser
-from ecsswebauth.views import _clean_next_url
+from ecsswebauth.views import _clean_next_url, _get_user_info_from_attributes
 
 class AuthTestCase(TestCase):
 
@@ -70,6 +70,7 @@ class UserTestCase(TestCase):
         samluser = SamlUser.objects.create(user=user, is_persistent=True)
         self.assertEqual(SamlUser.objects.get_by_natural_key('test01'), samluser)
 
+
 class CleanNextUrlTestCase(TestCase):
 
     def test__clean_next_url(self):
@@ -86,3 +87,29 @@ class CleanNextUrlTestCase(TestCase):
         self.assertEqual(_clean_next_url(url5), default_url)
         url6 = 'javascript:alert("alert!");'.format(settings.ALLOWED_HOSTS[0])
         self.assertEqual(_clean_next_url(url6), default_url)
+
+
+class AttributesTestCase(TestCase):
+
+    def test__get_user_info_from_attributes(self):
+        attributes = {
+            'http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsaccountname': ['username1'],
+            'http://schemas.xmlsoap.org/claims/Group': [
+                'group1',
+                'group2',
+            ],
+            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress': ['example@example.com'],
+            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname': ['givenname1'],
+            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname': ['surname1'],
+        }
+        userinfo = {
+            'username': 'username1',
+            'groups': [
+                'group1',
+                'group2',
+            ],
+            'email': 'example@example.com',
+            'givenname': 'givenname1',
+            'surname': 'surname1',
+        }
+        self.assertEqual(_get_user_info_from_attributes(attributes), userinfo)
