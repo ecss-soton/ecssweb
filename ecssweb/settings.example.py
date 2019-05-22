@@ -33,7 +33,7 @@ EMAIL_SUBJECT_PREFIX = '[ECSSWEB] '
 ADMINS = [('Example', 'example@example.com')]
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Sites

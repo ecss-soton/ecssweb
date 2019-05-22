@@ -7,7 +7,7 @@ from django.utils import timezone
 from datetime import timedelta
 
 class Command(BaseCommand):
-    
+
     help = 'Clear non-persistent users did not login within the last 24 hours'
 
     def handle(self, *args, **options):

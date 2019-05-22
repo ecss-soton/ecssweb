@@ -3,15 +3,13 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonRespons
 from django.shortcuts import render, resolve_url
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required, permission_required
 from django.conf import settings
 
-from .models import SamlUser, ConsumedAssertionRecord
+from .models import ConsumedAssertionRecord
 from .forms import SamlRequestForm
 
-import json
 import datetime
+import pytz
 
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 
@@ -116,6 +114,8 @@ def saml_acs(request):
     except ConsumedAssertionRecord.DoesNotExist:
         not_on_or_after = auth.get_last_assertion_not_on_or_after()
         not_on_or_after = datetime.datetime.fromtimestamp(not_on_or_after)
+        # convert native time from SAML to with timezone UTC to store with timezone support
+        not_on_or_after = pytz.timezone('UTC').localize(not_on_or_after)
         consumed_assertion_record = ConsumedAssertionRecord(assertion_id=assertion_id, not_on_or_after=not_on_or_after)
         consumed_assertion_record.save()
 
