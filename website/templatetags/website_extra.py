@@ -6,6 +6,9 @@ from bleach.linkifier import LinkifyFilter
 from functools import partial
 
 
+markdown_allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i', 'li', 'ol', 'strong', 'ul', 'p']
+
+
 register = template.Library()
 
 
@@ -27,5 +30,11 @@ def shuffle(l):
 
 @register.filter
 def md(s):
-    cleaner = Cleaner(tags=['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i', 'li', 'ol', 'strong', 'ul', 'p'], filters=[partial(LinkifyFilter, parse_email=True)])
+    cleaner = Cleaner(tags=markdown_allowed_tags, filters=[partial(LinkifyFilter, parse_email=True)])
+    return cleaner.clean(markdown.markdown(s))
+
+
+@register.filter
+def md_nourl(s):
+    cleaner = Cleaner(tags=markdown_allowed_tags)
     return cleaner.clean(markdown.markdown(s))

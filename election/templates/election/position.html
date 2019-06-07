@@ -1,6 +1,7 @@
 {% extends 'portal/base.html' %}
 
 {% load static %}
+{% load website_extra %}
 {% load election_extra %}
 
 {% block title %}Elections - ECSS{% endblock %}
@@ -83,7 +84,7 @@
               </div>
             </div>
             <div class="col-8 manifesto">
-              <pre>{{ nomination.manifesto }}</pre>
+              {{ nomination.manifesto | md_nourl | safe }}
             </div>
           </div>
         </div>
