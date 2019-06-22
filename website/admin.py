@@ -3,11 +3,11 @@ from django.contrib.auth.models import User, Permission
 
 
 from .models import CommitteeRoleMember, Society, SocietyLink, Sponsor, SponsorLink
-from ecsswebauth.models import EcsswebUserGroup
+from ecsswebauth.models import EcsswebUserGroup, SamlUser
 
 
-admin.site.unregister(User)
 admin.site.register(Permission)
+admin.site.register(SamlUser)
 
 class CommitteeRoleMemberAdmin(admin.ModelAdmin):
     prepopulated_fields = {
