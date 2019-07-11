@@ -54,6 +54,7 @@ class StaticViewSitemap(Sitemap):
             'contact',
             'media-notice',
             'jumpstart-2018',
+            'jumpstart-2019',
             'campus-hack-19',
         ]
 
