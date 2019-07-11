@@ -20,7 +20,7 @@ urlpatterns = [
 
     re_path(r'^elections/(?P<election>[\w-]+)/support/$', support_shareable, name='election-support-shareable'),
 
-    path('jumpstart/', RedirectView.as_view(pattern_name='website:jumpstart-2018'), name='jumpstart-redirect'),
+    path('jumpstart/', RedirectView.as_view(pattern_name='website:jumpstart-2019'), name='jumpstart-redirect'),
     path('campus-hack/', RedirectView.as_view(pattern_name='website:campus-hack-19'), name='merch-redirect'),
     path('feedback/', RedirectView.as_view(pattern_name='feedback:submit', permanent=True), name='feedback-redirect'),
     path('shop/', RedirectView.as_view(pattern_name='shop:shop', permanent=True), name='shop-redirect'),
@@ -45,7 +45,7 @@ urlpatterns = [
     path('events/', views.events, name='events'),
     path('events/socials/', views.socials, name='socials'),
     path('events/gaming-socials/', views.gaming_socials, name='gaming-socials'),
-    path('events/jumpstart-2018/', views.jumpstart_2018, name='jumpstart-2018'),
+    path('events/jumpstart-2018/', RedirectView.as_view(pattern_name='website:jumpstart-2018', permanent=True), name='jumpstart-2018-redirect'),
     path('events/campus-hack-19/', views.campus_hack_19, name='campus-hack-19'),
 
     # Welfare
@@ -57,6 +57,11 @@ urlpatterns = [
     path('sports/netball/', views.netball, name='netball'),
     path('sports/running/', views.running, name='running'),
     path('sports/others/', views.sports_others, name='sports-others'),
+
+    # Freshers
+    path('jumpstart-2018/', views.jumpstart_2018, name='jumpstart-2018'),
+    path('freshers/jumpstart/', views.jumpstart_2019, name='jumpstart-2019'),
+
 
     # About
     path('about/', views.about, name='about'),

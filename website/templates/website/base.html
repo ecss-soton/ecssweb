@@ -58,9 +58,6 @@
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'website:socials' %}">Socials</a>
                   <a class="dropdown-item" href="{% url 'website:gaming-socials' %}">Gaming Socials</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'website:jumpstart-2018' %}">Jumpstart 2018</a>
-                  <!--<a class="dropdown-item" href="{% url 'website:campus-hack-19' %}">CampusHack19</a>-->
                 </div>
               </li>
               <li class="nav-item">
@@ -82,6 +79,14 @@
                 </div>
               </li>
               <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarFreshersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Freshers
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarFreshersDropdown">
+                  <a class="dropdown-item" href="#">Jumpstart 2019</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="{% url 'website:about' %}" id="navbarAboutDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   About
                 </a>
@@ -89,7 +94,6 @@
                   <a class="dropdown-item" href="{% url 'website:about' %}">About</a>
                   <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/constitution/">Constitution</a>
                   <a class="dropdown-item" href="{% url 'website:contact' %}">Contact Us</a>
-                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/about/credits.php">Credits</a>
                 </div>
               </li>
               <li class="nav-item dropdown">

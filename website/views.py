@@ -97,10 +97,6 @@ def gaming_socials(request):
     return render(request, 'website/events/gaming-socials.html')
 
 
-def jumpstart_2018(request):
-    return render(request, 'website/events/jumpstart-2018.html')
-
-
 def campus_hack_19(request):
     return render(request, 'website/events/campus-hack-19.html')
 
@@ -131,6 +127,16 @@ def running(request):
 
 def sports_others(request):
     return render(request, 'website/sports/others.html')
+
+
+#  Freshers
+
+def jumpstart_2018(request):
+    return render(request, 'website/freshers/jumpstart-2018.html')
+
+
+def jumpstart_2019(request):
+    return render(request, 'website/freshers/jumpstart-2019.html')
 
 
 # About
