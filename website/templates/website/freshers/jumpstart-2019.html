@@ -7,7 +7,11 @@
 {% block pagestyle %}
 {{ block.super }}
 <meta name="description" content="University of Southampton Electronics and Computer Science Jumpstart Freshers 2019. Hosted by University of Southampton Electronics and Computer Science Society (ECSS), sponsored by IBM."/>
-<meta name="keywords" content="University of Southampton, Electronics and Computer Science, ECS, Electronics and Computer Science Society, ECSS, ECS Jumpstart, Southampton, Freshers"/>
+<meta name="keywords" content="University of Southampton, Electronics and Computer Science, ECS, Electronics and Computer Science Society, ECSS, ECS Jumpstart, Southampton, University Freshers, Freshers 2019, Freshers"/>
+<meta property="og:title" content="ECS Jumpstart Freshers 2019" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{% url 'website:jumpstart-2019' %}" />
+<meta property="og:image" content="{% static 'website/images/jumpstart-logo.png' %}" />
 <link rel="stylesheet" href="{% static 'website/styles/freshers/jumpstart-2019.css' %}">
 {% endblock %}
 
@@ -44,7 +48,7 @@
           <div class="text-center">Proud Sponsor</div>
           <div class="sponsor-logo-container-jumpstart">
             <a href="https://www.ibm.com/">
-              <img class="img-fluid" src="{% static 'website/content/freshers/jumpstart-2018/ibm-logo.jpg' %}" alt="IBM">
+              <img class="img-fluid" src="{% static 'website/content/freshers/jumpstart-2019/ibm-logo.jpg' %}" alt="IBM">
             </a>
           </div>
         </div>
