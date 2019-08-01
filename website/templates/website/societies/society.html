@@ -28,7 +28,7 @@
     <div class="col-lg-9">
       <h2>{{ society.name }}</h2>
       <div>
-        {{ society.description | safe }}
+        {{ society.description | md_nourl | safe }}
       </div>
       <hr>
       <ul class="list-unstyled">
