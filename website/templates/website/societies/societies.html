@@ -17,7 +17,7 @@
     {% for society in societies %}
     <li class="text-center societies-item">
       <a href="{% url 'website:societies-details' society.codename %}" class="societies-img-link">
-        <img class="img-fluid" src="{% static society.logo_file %}" alt="{{ society.name }}">
+        <img class="img-fluid" src="{{ society.logo.url }}" alt="{{ society.name }}">
       </a>
       <a href="{% url 'website:societies-details' society.codename %}" class="committee-member-name-link">
         <div>{{ society.name }}</div>

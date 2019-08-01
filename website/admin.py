@@ -38,6 +38,9 @@ class SocietyLinkInline(admin.StackedInline):
 
 
 class SocietyAdmin(admin.ModelAdmin):
+    prepopulated_fields = {
+        'codename': ('short_name',)
+    }
     inlines = [
         SocietyLinkInline,
     ]

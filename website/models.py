@@ -32,11 +32,16 @@ class CommitteeRoleMember(models.Model):
 
 # Societies
 
+
+def society_logo_image_file_name(instance, filename):
+    return ('societies/{}{}'.format(instance.codename, os.path.splitext(filename)[1].lower()))
+
+
 class Society(models.Model):
     codename = models.CharField(max_length=50, primary_key=True)
     short_name = models.CharField(max_length=50)
     name = models.CharField(max_length=100)
-    logo_file = models.CharField(max_length=100)
+    logo = models.ImageField(upload_to=society_logo_image_file_name)
 
     description = models.TextField(blank=True)
 
