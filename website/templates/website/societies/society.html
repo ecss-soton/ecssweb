@@ -64,6 +64,21 @@
           <a href="https://twitter.com/{{ society.twitter }}" class="icon-link" aria-label="Twitter"><i class="fab fa-twitter" title="Twitter" aria-hidden="true"></i> @{{ society.twitter }}</a>
         </li>
         {% endif %}
+        {% if society.instagram %}
+        <li class="my-1">
+          <a href="https://www.instagram.com/{{ society.instagram }}/" class="icon-link" aria-label="Instagram"><i class="fab fa-instagram" title="Instagram" aria-hidden="true"></i> Instagram</a>
+        </li>
+        {% endif %}
+        {% if society.youtube %}
+        <li class="my-1">
+          <a href="{{ society.youtube }}/" class="icon-link" aria-label="YouTube"><i class="fab fa-youtube" title="YouTube" aria-hidden="true"></i> YouTube</a>
+        </li>
+        {% endif %}
+        {% if society.github %}
+        <li class="my-1">
+          <a href="https://github.com/{{ society.github }}/" class="icon-link" aria-label="GitHub"><i class="fab fa-github" title="GitHub" aria-hidden="true"></i> GitHub</a>
+        </li>
+        {% endif %}
         {% for link in society.societylink_set.all %}
         <li><a href="{{ link.url }}">{{ link.name }}</a></li>
         {% endfor %}

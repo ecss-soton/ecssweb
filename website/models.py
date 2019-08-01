@@ -50,9 +50,12 @@ class Society(models.Model):
     email = models.EmailField(max_length=100, blank=True)
     website = models.URLField(blank=True)
 
-    fb_page = models.URLField(blank=True)
-    fb_group = models.URLField(blank=True)
-    twitter = models.CharField(max_length=100, blank=True)
+    fb_page = models.URLField(blank=True, verbose_name='Facebook Page URL')
+    fb_group = models.URLField(blank=True, verbose_name='Facebook group URL')
+    twitter = models.CharField(max_length=100, blank=True, verbose_name='Twitter username')
+    instagram = models.CharField(max_length=100, blank=True, verbose_name='Instagram username')
+    youtube = models.URLField(blank=True, verbose_name='YouTube URL')
+    github = models.CharField(max_length=100, blank=True, verbose_name='GitHub username/orgnisation')
 
     class Meta:
         verbose_name_plural = 'societies'
