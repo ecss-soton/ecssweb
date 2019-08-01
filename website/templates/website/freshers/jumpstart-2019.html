@@ -10,8 +10,8 @@
 <meta name="keywords" content="University of Southampton, Electronics and Computer Science, ECS, Electronics and Computer Science Society, ECSS, ECS Jumpstart, Southampton, University Freshers, Freshers 2019, Freshers"/>
 <meta property="og:title" content="ECS Jumpstart Freshers 2019" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="{% url 'website:jumpstart-2019' %}" />
-<meta property="og:image" content="{% static 'website/images/jumpstart-logo.png' %}" />
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{% url 'website:jumpstart-2019' %}" />
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'website/images/jumpstart-logo.png' %}" />
 <link rel="stylesheet" href="{% static 'website/styles/freshers/jumpstart-2019.css' %}">
 {% endblock %}
 
@@ -118,7 +118,7 @@
   <section id="maps" class="pt-4 bg-light">
     <div class="container">
       <h2>Maps</h2>
-      <p>Jumpstart maps will be available later</p>
+      <p>Jumpstart maps will be available later.</p>
     </div>
     <!--
     <div id="map"></div>
@@ -243,4 +243,5 @@ $("#pgScheduleButton").click(function() {
     });
   });
 </script>
+-->
 {% endblock %}
