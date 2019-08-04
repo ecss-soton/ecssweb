@@ -9,28 +9,12 @@
   <section class="container">
     <h1>Running</h1>
     <p>
-      Since the end of last year, members of ECSS have started taking part in running events.<br>
-      Some students took part in 10km runs or half marathons, but the attendance was highest at the weekly park run.
+      Within ECS we participate in the Parkrun on Southampton Common. Each Saturday at 9am there is a 5km run hosted which anyone can participate in of any ability. We are a running club registered with Parkrun and you can find out <a href="https://www.parkrun.org.uk/southampton/results/clubhistory/?clubNum=26404" title="ECSS at Southampton parkrun">our Southampton parkrun profile</a>. If interested please feel free to <a href="https://www.facebook.com/groups/320944961653059/" title="ECSS Parkrun Facebook group">join us on Facebook</a> or <a href="{% url 'website:contact' %}" title="Contact us">contact us</a>. You can learn more on <a href="https://www.parkrun.org.uk/southampton/" title="Southampton Parkrun">Southampton Parkrun's website</a>.
     </p>
   </section>
 </div>
 <div class="container mt-3">
-  <section class="row">
-    <div class="col-md-7 order-md-1">
-      <h2>Parkrun</h2>
-      <p>
-        The local Southampton Parkrun is held every Saturday in the common.<br>
-        A group of us meet every week to start the run together and meet after to chat about times and the run.
-      </p>
-      <p>
-        It's a really easy way to be active, requires no money, experience or equipment (perfect for people who never go outside).
-      </p>
-      <p>
-        This year the park runs will continue, whilst some fun runs, fancy dress runs, and maybe even some longer distance events to raise money for charities or the society. The society may even look into getting ECSS branded running tops if there is enough interest.
-      </p>
-    </div>
-    <div class="col-md-5 order-md-0 d-flex align-items-center">
-      <img class="img-fluid" src="{% static 'website/content/sports/parkrun.jpg' %}" alt="Parkrun">
-    </div>
+  <img class="img-fluid mx-auto d-block" src="{% static 'website/content/sports/parkrun.jpg' %}" alt="ECSS at Southampton Parkrun">
+  <div class="mt-3"><a href="{% url 'website:sports' %}"><i class="fas fa-arrow-circle-left"></i> sports overview</a></div>
 </div>
 {% endblock %}
