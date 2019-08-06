@@ -4,6 +4,37 @@
 
 {% block title %}Football in ECSS{% endblock title %}
 
+{% block pagestyle %}
+<style>
+.football-position-item {
+  margin: 2rem 1rem 0 1rem;
+  width: 9rem;
+}
+.football-position-img-link {
+  height: 9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.football-position-item img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.football-position-member-name-link {
+  color: black;
+}
+.football-position-member-name-link:hover {
+  text-decoration: none;
+  color: black;
+}
+.football-position-role-name-link:hover {
+  text-decoration-color: #6c757d;
+  -webkit-text-decoration-color: #6c757d;
+  -moz-text-decoration-color: #6c757d;
+}
+</style>
+{% endblock pagestyle %}
+
 {% block content %}
 <div class="page-header">
   <section class="container">
@@ -25,7 +56,7 @@
       </p>
     </div>
     <div class="col-md-5 order-md-0 d-flex align-items-center">
-      <img class="img-fluid" src="{% static 'website/content/sports/squad.jpg' %}" alt="ECSS Football team">
+      <img class="img-fluid" src="{% static 'website/content/sports/football-team-2nd-team.jpg' %}" alt="ECSS Football team 2nd team">
     </div>
   </section>
   <section class="row">
@@ -49,6 +80,26 @@
     <div class="col-md-5 order-md-0 d-flex align-items-center">
         <img class="img-fluid" src="{% static 'website/content/sports/football-tour.jpg' %}" alt="Football tour">
       </div>
+  </section>
+  <section>
+    <h2>Positions</h2>
+    <hr>
+    <ul class="list-unstyled d-flex justify-content-around flex-wrap">
+      {% for position in positions.positions %}
+      <li class="text-center football-position-item">
+        <a href="{{ position.link }}" title="{{ position.position }} {{ position.name }}" class="football-position-img-link">
+          <img class="img-fluid" src="{% static position.image %}" alt="{{ position.position }} {{ position.name }}">
+        </a>
+        <a href="{{ position.link }}" title="{{ position.position }} {{ position.name }}" class="football-position-member-name-link">
+          <div>
+            {{ position.name }}
+          </div>
+        </a>
+        <a href="{{ position.link }}" title="{{ position.position }} {{ position.name }}" class="football-position-role-name-link">
+          <div class="text-muted">{{ position.position }}</div>
+        </a>
+      </li>
+      {% endfor %}
   </section>
   <div class="mt-3"><a href="{% url 'website:sports' %}"><i class="fas fa-arrow-circle-left"></i> sports overview</a></div>
 </div>
