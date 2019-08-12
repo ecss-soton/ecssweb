@@ -79,10 +79,12 @@
                 </div>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'website:jumpstart-2019' %}" id="navbarFreshersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="{% url 'website:freshers-2019' %}" id="navbarFreshersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Freshers
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarFreshersDropdown">
+                  <a class="dropdown-item" href="{% url 'website:freshers-2019' %}">Freshers 2019</a>
+                  <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'website:jumpstart-2019' %}">Jumpstart 2019</a>
                 </div>
               </li>
@@ -92,6 +94,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarAboutDropdown">
                   <a class="dropdown-item" href="{% url 'website:about' %}">About</a>
+                  <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/constitution/">Constitution</a>
                   <a class="dropdown-item" href="{% url 'website:contact' %}">Contact Us</a>
                 </div>

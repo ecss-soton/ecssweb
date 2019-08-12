@@ -1,0 +1,45 @@
+{% extends '../base.html' %}
+
+{% load static %}
+
+{% block title %}Freshers 2019 - ECSS{% endblock title %}
+
+{% block pagestyle %}
+{{ block.super }}
+<meta name="description" content="University of Southampton Electronics and Computer Science Society (ECSS) Freshers 2019."/>
+<meta name="keywords" content="University of Southampton, Electronics and Computer Science, ECS, Electronics and Computer Science Society, ECSS, Southampton, University Freshers, Freshers 2019, Freshers"/>
+<meta property="og:title" content="ECSS Freshers 2019" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{% url 'website:freshers-2019' %}" />
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'website/images/ecssweb-logo.png' %}" />
+<!-- <link rel="stylesheet" href="{% static 'website/styles/freshers/freshers-2019.css' %}"> -->
+{% endblock %}
+
+{% block content %}
+<main class="container mt-3">
+  <section>
+    <h1>ECSS Freshers 2019</h1>
+    <p>
+      Welcome freshers!
+    </p>
+  </section>
+  <section>
+    <h2>Jumpstart</h2>
+    <p>
+      Jumpstart is an opportunity for ECS freshers to meet other students in ECS, take part in a range of activities, and settle into Southampton. It is our first ECSS event of the year, and is sponsored by IBM. You can learn more at the <a href="{% url 'website:jumpstart-2019' %}">Jumpstart page</a>.
+    </p>
+  </section>
+  <section>
+    <h2>ECSS Student Guide</h2>
+    <p>
+      Feel excited, worried or lost? Have a look at our <a href="http://web.archive.org/web/20070724145311/http://society.ecs.soton.ac.uk/Freshtips">ECSS Student Guide from more than 12 years ago on Internet Archive</a> (things might have changed though)!
+    </p>
+  </section>
+  <section>
+    <h2>Social Groups and Chat</h2>
+    <p>
+      We have an <a href="https://www.facebook.com/groups/ecss.soton/">ECSS Facebook group</a> for infomation about events, opportunities and members' discussions. We also manage an <a href="https://www.facebook.com/groups/ECSFreshers201920/">ECS Freshers 2019/2020 Facebook Group</a> for more freshers related discussions, and there is a chat which you can join after joining the freshers group or <a href="{% url 'website:contact' %}">contact us</a> for more information.
+    </p>
+  </section>
+</main>
+{% endblock %}

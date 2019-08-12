@@ -60,6 +60,7 @@ urlpatterns = [
 
     # Freshers
     path('jumpstart-2018/', views.jumpstart_2018, name='jumpstart-2018'),
+    path('freshers/', views.freshers_2019, name='freshers-2019'),
     path('freshers/jumpstart/', views.jumpstart_2019, name='jumpstart-2019'),
 
 

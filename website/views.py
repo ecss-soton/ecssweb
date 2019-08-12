@@ -150,6 +150,10 @@ def jumpstart_2018(request):
     return render(request, 'website/freshers/jumpstart-2018.html')
 
 
+def freshers_2019(request):
+    return render(request, 'website/freshers/freshers-2019.html')
+
+
 def jumpstart_2019(request):
     return render(request, 'website/freshers/jumpstart-2019.html')
 
