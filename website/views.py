@@ -1,8 +1,14 @@
 from django.shortcuts import render, get_object_or_404
+from django.shortcuts import Http404
+from django.conf import settings
 
 from .models import Society, Sponsor, CommitteeRoleMember
 
 from fbevents.utils import get_upcoming_events
+
+import os
+import yaml
+
 
 # Homepage
 
@@ -19,8 +25,14 @@ def home(request):
 
 def committee_overview(request):
     committee = CommitteeRoleMember.objects.all()
+    try:
+        with open(os.path.join(settings.BASE_DIR, 'website/data/previous-committee.yaml')) as data_file:
+            previous_committees = yaml.load(data_file)
+    except:
+        raise Http404()
     context = {
         'committee': committee,
+        'previous_committees': previous_committees,
     }
     return render(request, 'website/committee/committee-overview.html', context)
 
@@ -114,7 +126,15 @@ def sports(request):
 
 
 def football(request):
-    return render(request, 'website/sports/football.html')
+    try:
+        with open(os.path.join(settings.BASE_DIR, 'website/data/football-positions.yaml')) as data_file:
+            positions = yaml.load(data_file)
+    except:
+        raise Http404()
+    context = {
+        'positions': positions,
+    }
+    return render(request, 'website/sports/football.html', context)
 
 
 def netball(request):
@@ -133,6 +153,10 @@ def sports_others(request):
 
 def jumpstart_2018(request):
     return render(request, 'website/freshers/jumpstart-2018.html')
+
+
+def freshers_2019(request):
+    return render(request, 'website/freshers/freshers-2019.html')
 
 
 def jumpstart_2019(request):

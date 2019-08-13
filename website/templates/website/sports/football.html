@@ -4,15 +4,46 @@
 
 {% block title %}Football in ECSS{% endblock title %}
 
+{% block pagestyle %}
+<style>
+.football-position-item {
+  margin: 2rem 1rem 0 1rem;
+  width: 9rem;
+}
+.football-position-img-link {
+  height: 9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.football-position-item img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.football-position-member-name-link {
+  color: black;
+}
+.football-position-member-name-link:hover {
+  text-decoration: none;
+  color: black;
+}
+.football-position-role-name-link:hover {
+  text-decoration-color: #6c757d;
+  -webkit-text-decoration-color: #6c757d;
+  -moz-text-decoration-color: #6c757d;
+}
+</style>
+{% endblock pagestyle %}
+
 {% block content %}
 <div class="page-header">
   <section class="container">
     <h1>Football</h1>
     <p>
-      ECSS FC (Est. 2007) is an intramural football team that plays in the weekend league. Last year the football team massively improved on the previous year placing mid table in the division, and also winning a plate for coming first in the bottom half of a weekend tournament. There are currently socials every couple weeks, where we go to whatever club the team are feeling on the day.
+      ECSS FC (Est. 2007) is an intramural football team that plays in the weekend league. Last year the football team massively improved on the previous year placing mid table in their division, as well as the development of a second team. There are currently socials every couple weeks, which involve themed nights and games, before we head out to a club that is decided that week. Also a yearly tour which involves less football but more time with the team, involving alcohol if inclined.
     </p>
     <p>
-      For more information about training, socials, and tour, join our <a href="https://www.facebook.com/groups/687261761358331/">Facebook group</a>.
+      For more information regarding training, socials and tour, feel free to view our <a href="https://www.facebook.com/ecssfc/" title="ECSS Football Club Facebook page">Facebook page</a> and join the <a href="https://www.facebook.com/groups/687261761358331/" title="ECSS Football Facebook group">group</a>. 
     </p>
   </section>
 </div>
@@ -21,46 +52,55 @@
     <div class="col-md-7 order-md-1">
       <h2>Performance</h2>
       <p>
-        In the coming year, we aim of course to improve our league position, but also to enhance the social aspect via club society cards, fresher involvement and through shirt sponsors. We are planning to branch out to similar departments in other universities for friendlies and social events.
+        For the 2019/20 season we aim to continue the successful campaigns of our first team, and continue to improve our second team to follow in their footsteps and continue developing as a side, with the aid of new recruits.
       </p>
     </div>
     <div class="col-md-5 order-md-0 d-flex align-items-center">
-      <img class="img-fluid" src="{% static 'website/content/sports/squad.jpg' %}" alt="ECSS Football team">
+      <img class="img-fluid" src="{% static 'website/content/sports/football-team-2nd-team.jpg' %}" alt="ECSS Football team 2nd team">
     </div>
   </section>
-  <section  class="row">
+  <section class="row">
     <div class="col-md-7 order-md-1">
-      <h2>Tour</h2>
+      <h2>Socials</h2>
       <p>
-        Every year we go on a football tour, which involves absolutely no football whatsoever. Last year we went to Budapest, had a great 4 days and 4 nights seeing the city, spa, and clubs.<br>
-        You don’t have to get very drunk to enjoy our tour, but it helps.
+        Under our new social secs we also aim to expand the social aspect of ECS with more enthralling socials, involving us with other societies and former members of the team (The Old Boys). These events involve alcohol but it is not enforced if you do not wish to drink.
       </p>
     </div>
     <div class="col-md-5 order-md-0 d-flex align-items-center">
         <img class="img-fluid" src="{% static 'website/content/sports/football-tour.jpg' %}" alt="Football tour">
       </div>
   </section>
-  <section  class="row">
+  <section class="row">
     <div class="col-md-7 order-md-1">
-      <h2>Captain</h2>
+      <h2>Tour</h2>
       <p>
-        <a href="https://www.facebook.com/brad.elvy.1">Brad Elvy</a>
+        Every year we go on tour, which features little to no football. Last year we went to Krakow, where we enjoyed 4 days and nights of sightseeing, exploring their nightlife and even managed a friendly match against their Maths and Computer Science society.
       </p>
     </div>
     <div class="col-md-5 order-md-0 d-flex align-items-center">
-        <img class="img-fluid" src="{% static 'website/content/sports/brad.jpg' %}" alt="Brad Elvy">
+        <img class="img-fluid" src="{% static 'website/content/sports/football-tour.jpg' %}" alt="Football tour">
       </div>
   </section>
-  <section  class="row">
-    <div class="col-md-7 order-md-1">
-      <h2>Social and Tour Secretary</h2>
-      <p>
-        <a href="https://www.facebook.com/charlie.geen.7">Charlie Geen</a>
-      </p>
-    </div>
-    <div class="col-md-5 order-md-0 d-flex align-items-center">
-        <img class="img-fluid" src="{% static 'website/content/sports/geen.jpg' %}" alt="Charlie Geen">
-      </div>
+  <section>
+    <h2>Positions</h2>
+    <hr>
+    <ul class="list-unstyled d-flex justify-content-around flex-wrap">
+      {% for position in positions.positions %}
+      <li class="text-center football-position-item">
+        <a href="{{ position.link }}" title="{{ position.position }} {{ position.name }}" class="football-position-img-link">
+          <img class="img-fluid" src="{% static position.image %}" alt="{{ position.position }} {{ position.name }}">
+        </a>
+        <a href="{{ position.link }}" title="{{ position.position }} {{ position.name }}" class="football-position-member-name-link">
+          <div>
+            {{ position.name }}
+          </div>
+        </a>
+        <a href="{{ position.link }}" title="{{ position.position }} {{ position.name }}" class="football-position-role-name-link">
+          <div class="text-muted">{{ position.position }}</div>
+        </a>
+      </li>
+      {% endfor %}
   </section>
+  <div class="mt-3"><a href="{% url 'website:sports' %}"><i class="fas fa-arrow-circle-left"></i> sports overview</a></div>
 </div>
 {% endblock %}

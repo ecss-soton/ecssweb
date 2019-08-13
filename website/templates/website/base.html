@@ -18,15 +18,6 @@
     <link rel="stylesheet" href="{% static 'website/styles/base.css' %}">
     {% block pagestyle %}{% endblock %}
     <title>{% block title %}ECSS - University of Southampton Electronics and Computer Science Society{% endblock %}</title>
-
-    <!-- For merch sale-->
-    <style>
-      .merch-nav-link {
-        color: red!important;
-        text-shadow: -.05rem -.05rem .1rem white, .05rem -.05rem .1rem white, -.05rem .05rem .1rem white, .05rem .05rem .1rem white; 
-      }
-    </style>
-
   </head>
   <body>
     <header>
@@ -73,17 +64,18 @@
                   <a class="dropdown-item" href="{% url 'website:football' %}">Football</a>
                   <a class="dropdown-item" href="{% url 'website:netball' %}">Netball</a>
                   <!--<a class="dropdown-item" href="#">Basketball</a>-->
-                  <!--<a class="dropdown-item" href="#">Parkrun</a>-->
                   <a class="dropdown-item" href="{% url 'website:running' %}">Running</a>
                   <a class="dropdown-item" href="{% url 'website:sports-others' %}">Others</a>
                 </div>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'website:jumpstart-2019' %}" id="navbarFreshersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="{% url 'website:freshers-2019' %}" id="navbarFreshersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Freshers
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarFreshersDropdown">
-                  <a class="dropdown-item" href="{% url 'website:jumpstart-2019' %}">Jumpstart 2019</a>
+                  <a class="dropdown-item" href="{% url 'website:freshers-2019' %}">Freshers</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'website:jumpstart-2019' %}">Jumpstart</a>
                 </div>
               </li>
               <li class="nav-item dropdown">
@@ -92,6 +84,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarAboutDropdown">
                   <a class="dropdown-item" href="{% url 'website:about' %}">About</a>
+                  <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/constitution/">Constitution</a>
                   <a class="dropdown-item" href="{% url 'website:contact' %}">Contact Us</a>
                 </div>

@@ -2,31 +2,23 @@
 
 {% load static %}
 
-{% block title %}Others Sports in ECSS{% endblock title %}
+{% block title %}Other Sports in ECSS{% endblock title %}
 
 {% block content %}
 <div class="page-header">
   <section class="container">
-    <h1>Others</h1>
+    <h1>Other Sports</h1>
     <p>
-      Compete for the title of best player in ECSS! We have annual ladders in Table tennis, badminton, pool and squash. The ladders are set up in the first few weeks but anyone can join at any time.
+      Within ECS we have also created a Hub for sports we don’t offer clubs for, but instead offer a meeting place within ECS for matches. Once your match has been played you can record the scores and they will be updated in a ladder on the Facebook groups listed below. 
     </p>
   </section>
 </div>
 <div class="container mt-3">
-  <section>
-    <h2>How it works</h2>
-    <p>
-      Players challenge each other no higher than 2 places above them, they play a best of 3 game, and report back to the league. If the challenger wins, they are moved above the player they challenged.
-    </p>
-  </section>
-  <section>
-    <h2>Get in touch</h2>
-    <ul>
-      <li><a href="https://www.facebook.com/groups/1676587752611911/">Table tennis</a></li>
-      <li><a href="https://www.facebook.com/groups/1079814182050120/">Badminton</a></li>
-      <li><a href="https://www.facebook.com/groups/947358788681509/">Squash</a></li>
-    </ul>
-  </section>
+  <ul>
+    <li><a href="https://www.facebook.com/groups/1676587752611911/" title="ECSS table tennis Facebook groups">Table tennis</a></li>
+    <li><a href="https://www.facebook.com/groups/1079814182050120/" title="ECSS badminton Facebook groups">Badminton</a></li>
+    <li><a href="https://www.facebook.com/groups/947358788681509/" title="ECSS squash Facebook groups">Squash</a></li>
+  </ul>
+  <div class="mt-3"><a href="{% url 'website:sports' %}"><i class="fas fa-arrow-circle-left"></i> sports overview</a></div>
 </div>
 {% endblock %}

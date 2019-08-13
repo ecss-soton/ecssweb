@@ -27,7 +27,7 @@
     </div>
   </div>
   <section class="mt-3">
-    <h2>2019-2020 Committee</h2>
+    <h2>2019/2020 Committee</h2>
     <hr>
     Click any of the roles below to see who currently holds the role, and their pledges.
     <ul class="list-unstyled d-flex justify-content-around flex-wrap">
@@ -50,6 +50,24 @@
       </li>
       {% endfor %}
     </ul>
+  </section>
+  <section>
+    <h2>Previous Committee</h2>
+    <hr>
+    {% for previous_committee in previous_committees.committees reversed %}
+    <h3>{{ previous_committee.year }}</h3>
+    {% if previous_committee.roles %}
+    <ul>
+      {% for role in previous_committee.roles %}
+      <li>
+        {{ role.role }}: {{ role.name }}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    Unknown
+    {% endif %}
+    {% endfor %}
   </section>
 </section>
 {% endblock %}
