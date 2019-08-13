@@ -25,8 +25,14 @@ def home(request):
 
 def committee_overview(request):
     committee = CommitteeRoleMember.objects.all()
+    try:
+        with open(os.path.join(settings.BASE_DIR, 'website/data/previous-committee.yaml')) as data_file:
+            previous_committees = yaml.load(data_file)
+    except:
+        raise Http404()
     context = {
         'committee': committee,
+        'previous_committees': previous_committees,
     }
     return render(request, 'website/committee/committee-overview.html', context)
 
@@ -120,7 +126,6 @@ def sports(request):
 
 
 def football(request):
-    print(os.path.join(settings.BASE_DIR, 'website/data/football-positions.yaml'))
     try:
         with open(os.path.join(settings.BASE_DIR, 'website/data/football-positions.yaml')) as data_file:
             positions = yaml.load(data_file)
