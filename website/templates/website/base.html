@@ -18,15 +18,6 @@
     <link rel="stylesheet" href="{% static 'website/styles/base.css' %}">
     {% block pagestyle %}{% endblock %}
     <title>{% block title %}ECSS - University of Southampton Electronics and Computer Science Society{% endblock %}</title>
-
-    <!-- For merch sale-->
-    <style>
-      .merch-nav-link {
-        color: red!important;
-        text-shadow: -.05rem -.05rem .1rem white, .05rem -.05rem .1rem white, -.05rem .05rem .1rem white, .05rem .05rem .1rem white; 
-      }
-    </style>
-
   </head>
   <body>
     <header>
@@ -73,7 +64,6 @@
                   <a class="dropdown-item" href="{% url 'website:football' %}">Football</a>
                   <a class="dropdown-item" href="{% url 'website:netball' %}">Netball</a>
                   <!--<a class="dropdown-item" href="#">Basketball</a>-->
-                  <!--<a class="dropdown-item" href="#">Parkrun</a>-->
                   <a class="dropdown-item" href="{% url 'website:running' %}">Running</a>
                   <a class="dropdown-item" href="{% url 'website:sports-others' %}">Others</a>
                 </div>
