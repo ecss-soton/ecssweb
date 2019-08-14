@@ -12,7 +12,119 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{% url 'website:jumpstart-2019' %}" />
 <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'website/images/jumpstart-logo.png' %}" />
-<link rel="stylesheet" href="{% static 'website/styles/freshers/jumpstart-2019.css' %}">
+<style>
+/* Jumpstart navbar */
+.navbar-jumpstart {
+  opacity: 0.9;
+}
+.navbar-sticky-jumpstart + main {
+  padding-top: 56px;
+}
+@media (max-width: 575.98px) {
+  .navbar-jumpstart {
+    display: none;
+  }
+  .navbar-jumpstart + main {
+    padding-top: 0;
+  }
+}
+/* Logos */
+.logos-jumpstart {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+.logo-container-jumpstart {
+  width: 10rem;
+  height: 10rem;
+  margin: 4rem;
+  align-items: center;
+  justify-content: center;
+}
+.sponsor-logo-text-container-jumpstart {
+  width: 10rem;
+  height: 10rem;
+  margin: 2rem;
+  font-family: Helvetica, sans-serif!important;
+  font-size: 1rem;
+}
+.sponsor-logo-container-jumpstart {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Pictures */
+.pics-jumpstart {
+  font-size: 0;
+}
+.pic-jumpstart {
+  width: 33.33%;
+}
+/* Content */
+.content-jumpstart {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 1.1rem;
+}
+.notes {
+  font-size: 1rem;
+}
+h1, h2, h3 {
+  font-family: 'Bahnschrift Condensed', 'Din Condensed', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#jumpstart h1 {
+  color: #9e0000;
+}
+/* Bckground */
+body {
+  background: url("{% static 'website/images/freshers/freshers-2019/bg-pcb.jpg' %}") repeat;
+}
+/* Timetable */
+#timetable {
+  border: 5px solid rgb(237, 125, 49);
+  background: url("{% static 'website/images/freshers/freshers-2019/bg-pcb-orange.jpg' %}") repeat;
+  color: rgb(134, 61, 12);
+}
+#timetable h2 {
+  color: #ed7c31;
+}
+.calendar-container {
+  overflow-x: scroll;
+}
+.calendar {
+  border: 0;
+  min-width: 40rem;
+}
+/* City Challenge */
+#cityChallenge {
+  border: 5px solid rgb(46, 117, 182);
+  background: url("{% static 'website/images/freshers/freshers-2019/bg-pcb-blue.jpg' %}") repeat;
+  color: rgb(21, 53, 83);
+}
+#cityChallenge h2 {
+  color: #2e74b6;
+}
+#cityChallengeGroups {
+  border:3px solid rgb(153, 92, 180);
+  background: url("{% static 'website/images/freshers/freshers-2019/bg-pcb-purple.jpg' %}") repeat;
+  color: rgb(74, 41, 89);
+}
+#cityChallengeGroups h3 {
+  color: #995cb4;
+}
+/* Maps */
+#maps {
+  border: 5px solid rgb(84, 130, 53);
+  background: url("{% static 'website/images/freshers/freshers-2019/bg-pcb-green.jpg' %}") repeat;
+  color: rgb(56, 87, 35);
+}
+#maps h2 {
+  color: #528034;
+}
+#map {
+  height: 30rem;
+}
+</style>
 {% endblock %}
 
 {% block content %}
@@ -42,7 +154,7 @@
     <div class="container">
       <div class="logos-jumpstart">
         <div class="logo-container-jumpstart">
-          <img class="img-fluid" src="{% static 'website/images/jumpstart-logo.png' %}" alt="Jumpstart">
+          <img class="img-fluid" src="{% static 'website/images/freshers/freshers-2019/jumpstart-logo.png' %}" alt="Jumpstart">
         </div>
         <div class="sponsor-logo-text-container-jumpstart">
           <div class="text-center">Proud Sponsor</div>
@@ -53,7 +165,7 @@
           </div>
         </div>
       </div>
-      <h1>Jumpstart Freshers 2019</h1>
+      <h1 class="text-uppercase">Jumpstart Freshers 2019</h1>
       <p>Jumpstart is an opportunity for freshers to meet other students in the faculty, take part in a range of activities, and settle into Southampton. It is our first ECSS event of the year, and is sponsored by IBM. See below for the week’s timetable, and information on the City Challenge which is part of the UG timetable. If you have any questions feel free to <a href="{% url 'website:contact' %}">contact our committee</a>, and have fun!</p>      
     </div>
     <div class="pics-jumpstart mt-4">
@@ -62,9 +174,9 @@
       <img class="img-fluid pic-jumpstart" src="{% static 'website/content/freshers/jumpstart-2018/jumpstart-3.jpg' %}" alt="Jumpstart City Challenge">
     </div>
   </section>
-  <section id="timetable" class="py-4 bg-light">
+  <section id="timetable" class="py-4">
     <div class="container">
-      <h2>Timetable</h2>
+      <h2 class="text-uppercase">Timetable</h2>
       <p>Jumpstart schedule for undergraduate and postgraduate taught will be available later.</p>
       <!--
       <div class="accordion mt-3" id="timetableAccordion">
@@ -102,11 +214,11 @@
   </section>
   <section id="cityChallenge" class="pt-4">
     <div class="container">
-      <h2>City Challenge</h2>
+      <h2 class="text-uppercase">City Challenge</h2>
       <p>Get ready for The Jumpstart City Challenge 2019, Freshers! We'll be splitting you into teams and giving you the opportunity to compete in a series of group challenges and games, seeing some of our favourite things Southampton has to offer, alongside your assigned Jumpstart Group Leader (a current ECS student). This is the first of many chances you'll have to interact with the committee members, who will be glad to answer any of your questions and learn a bit more about us as a society.</p>
       <p>Completion of any of our smorgasbord of activities with be worth some point value so be sure to bring your A-game!</p>
       <p>Of course, it wouldn't be much of a challenge without prizes; be sure to attend the Jumpstart reception on Friday 27th September, where we'll have some goodies from ECSS and IBM up for grabs.</p>
-      <section id="cityChallengeGroups">
+      <section id="cityChallengeGroups" class="p-1">
         <h3>City Challenge Groups</h3>
         <p>
           City challenge groups will be available later.
@@ -115,9 +227,9 @@
       </section>
     </div>
   </section>
-  <section id="maps" class="pt-4 bg-light">
+  <section id="maps" class="pt-4">
     <div class="container">
-      <h2>Maps</h2>
+      <h2 class="text-uppercase">Maps</h2>
       <p>Jumpstart maps will be available later.</p>
     </div>
     <!--
@@ -134,7 +246,7 @@
     </div>
     -->
   </section>
-  <div class="container">
+  <div class="container notes">
     <hr>
     <p>Please note that photography and filming might be taking place at our events and ECSS will be using them. Please let us know if you do not want to be photographed/filmed. Find out more in our <a href="{% url 'website:media-notice' %}">media notice</a>.</p>
     <small class="text-muted">Pictures on this page are from Jumpstart 2017.</small>
@@ -144,7 +256,7 @@
 
 {% block pagescript %}
 {{ block.super }}
-<!-- Make Jumpstart 2018 navbar stick on the top -->
+<!-- Make Jumpstart navbar stick on the top -->
 <script>
 var jumpstartNavbarOffsetTop = $(".navbar-jumpstart").offset().top;
 $(window).bind("scroll", function () {
