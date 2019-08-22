@@ -83,7 +83,7 @@ body {
 #timetable {
   border: 5px solid rgb(237, 125, 49);
   background: url("{% static 'website/images/freshers/freshers-2019/bg-pcb-orange.jpg' %}") repeat;
-  color: rgb(134, 61, 12);
+  color: #cf6f34;
 }
 #timetable h2 {
   color: #ed7c31;
@@ -177,8 +177,9 @@ body {
   <section id="timetable" class="py-4">
     <div class="container">
       <h2 class="text-uppercase">Timetable</h2>
-      <p>Jumpstart schedule for undergraduate and postgraduate taught will be available soon.</p>
-      <!--
+      <p>
+        The timetables below shows the ECS Jumpstart Freshers events and some other Freshers events in the university, to find out about other Freshers events in the university, see <a href="https://www.southampton.ac.uk/welcome-events/" title="University of Southampton welcome events calendar">the university welcome events timetable</a> and <a href="https://www.susu.org/calendar/" title="University of Southampton Students' Union calendar">Students' Union calendar</a>. The timetables below are currently provisional and subject to change.
+      </p>
       <div class="accordion mt-3" id="timetableAccordion">
         <div class="card">
           <div class="card-header" id="ugScheduleHeading">
@@ -190,7 +191,10 @@ body {
           </div>
           <div id="ugSchedule" class="collapse show" aria-labelledby="ugScheduleHeading">
             <div class="card-body calendar-container">
-              <iframe src="https://calendar.google.com/calendar/embed?showNav=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=500&amp;wkst=1&amp;bgcolor=%23f2a8a6&amp;src=fsntjlpn55svbf7u4rphn354bc%40group.calendar.google.com&amp;dates=20180923%2F20180929&amp;color=%23A32929&amp;ctz=Europe%2FLondon" height="500" class="calendar w-100"></iframe>
+              <iframe src="https://calendar.google.com/calendar/embed?src=71ljirlsoe8abh639ldph488rc%40group.calendar.google.com&ctz=Europe%2FLondon&showNav=1&showCalendars=0&mode=WEEK&height=550&wkst=1&bgcolor=%23f2a8a6&dates=20190922%2F20190928&color=%23A32929" height="550" class="calendar w-100"></iframe>
+            </div>
+            <div class="mx-3 mb-3 text-right">
+              <a href="https://calendar.google.com/calendar/ical/71ljirlsoe8abh639ldph488rc%40group.calendar.google.com/public/basic.ics" title="Jumpstart 2019 UG Schedule iCal">Available in iCal format</a>
             </div>
           </div>
         </div>
@@ -204,12 +208,12 @@ body {
           </div>
           <div id="pgSchedule" class="collapse show" aria-labelledby="pgScheduleHeading">
             <div class="card-body calendar-container">
-              <iframe src="https://calendar.google.com/calendar/embed?showNav=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=500&amp;wkst=1&amp;bgcolor=%23f2a77b&amp;src=tdibdfq86v9p2vfedjj7r7fqq0%40group.calendar.google.com&amp;dates=20180923%2F20180929&amp;color=%23BE6D00&amp;ctz=Europe%2FLondon" height="500" class="calendar w-100"></iframe>
+              <!-- <iframe src="https://calendar.google.com/calendar/embed?showNav=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=500&amp;wkst=1&amp;bgcolor=%23f2a77b&amp;src=tdibdfq86v9p2vfedjj7r7fqq0%40group.calendar.google.com&amp;dates=20180923%2F20180929&amp;color=%23BE6D00&amp;ctz=Europe%2FLondon" height="500" class="calendar w-100"></iframe> -->
+              <p>Jumpstart schedule for postgraduate taught will be available soon.</p>
             </div>
           </div>
         </div>
       </div>
-      -->
     </div>
   </section>
   <section id="cityChallenge" class="pt-4">
@@ -250,7 +254,7 @@ body {
     <hr>
     <p>Please note that photography and filming might be taking place at our events and ECSS will be using them. Please let us know if you do not want to be photographed/filmed. Find out more in our <a href="{% url 'website:media-notice' %}">media notice</a>.</p>
     <small class="text-muted d-block">Pictures on this page are from Jumpstart 2017.</small>
-    <small class="text-muted d-block">Last updated on 16th Aug 2019.</small>
+    <small class="text-muted d-block">Last updated on 22 Aug 2019.</small>
   </div>
 </main>
 {% endblock %}
@@ -270,7 +274,6 @@ $(window).bind("scroll", function () {
 </script>
 
 <!-- Timetable -->
-<!--
 <script>
 // cloapse timetable when page loads
 $("#timetableAccordion .collapse").removeClass("show");
@@ -298,7 +301,6 @@ $("#pgScheduleButton").click(function() {
   }
 });
 </script>
--->
 
 <!-- Google maps -->
 <!--
