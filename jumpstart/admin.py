@@ -16,13 +16,19 @@ class GroupAdmin(admin.ModelAdmin):
 class HelperAdmin(admin.ModelAdmin):
     list_display = ('name', 'prefered_name', 'username', 'group')
     ordering = ('group',)
-    search_fields = ('name', 'username')
+    search_fields = ('name', 'prefered_name', 'username')
 
 
     def helper(self, obj):
         return obj.helper.username
 
 
+class FresherAdmin(admin.ModelAdmin):
+    list_display = ('name', 'prefered_name', 'username', 'group', 'is_checked_in')
+    ordering = ('group', 'is_checked_in', 'name')
+    search_fields = ('name', 'prefered_name', 'username')
+
+
 admin.site.register(Helper, HelperAdmin)
 admin.site.register(Group, GroupAdmin)
-admin.site.register(Fresher)
+admin.site.register(Fresher, FresherAdmin)
