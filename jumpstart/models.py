@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericRelation
+from django.core.validators import MinValueValidator
 import os
 import uuid
 from .validators import validate_photo_file_extension
@@ -20,13 +21,18 @@ def scavenger_hunt_photo_file_name(instance, filename):
 
 
 class Group(models.Model):
+    number = models.PositiveSmallIntegerField(unique=True, validators=[MinValueValidator(1)], verbose_name='Group Number')
     name = models.CharField(max_length=50, null=True, blank=True, verbose_name='Group Name')
-    charity_shop_challenge_photo = models.ImageField(upload_to=charity_shop_challenge_photo_file_name, validators=[validate_photo_file_extension], null=True, blank=True, verbose_name='Charity Shop Challenge photo')
+    charity_shop_challenge_photo = models.ImageField(upload_to=charity_shop_challenge_photo_file_name, validators=[validate_photo_file_extension], null=True, blank=True, verbose_name='Charity Shop Challenge Photo')
     mitre_challenge_score = models.IntegerField(null=True, blank=True)
     coding_challenge_score = models.IntegerField(null=True, blank=True)
     stags_quiz_score = models.IntegerField(null=True, blank=True)
     games_challenge_score = models.IntegerField(null=True, blank=True)
     sports_challenge_score = models.IntegerField(null=True, blank=True)
+
+
+    def __str__(self):
+        return 'Group {}'.format(self.number)
 
 
 class Fresher(models.Model):
@@ -36,11 +42,15 @@ class Fresher(models.Model):
 
 
 class Helper(models.Model):
-    username = models.CharField(max_length=20, primary_key=True)
-    name = models.CharField(max_length=50)
-    nickname = models.CharField(max_length=50, null=True, blank=True)
-    photo = models.ImageField(upload_to=helper_photo_file_name, validators=[validate_photo_file_extension])
-    group = models.OneToOneField(Group, on_delete=models.SET_NULL, null=True)
+    username = models.CharField(max_length=20, primary_key=True, verbose_name='Username')
+    name = models.CharField(max_length=50, verbose_name='Name')
+    prefered_name = models.CharField(max_length=50, null=True, blank=True, verbose_name='Preferend Name')
+    photo = models.ImageField(upload_to=helper_photo_file_name, blank=True, validators=[validate_photo_file_extension], verbose_name='Photo')
+    group = models.OneToOneField(Group, on_delete=models.SET_NULL, null=True, verbose_name='Group')
+
+
+    def __str__(self):
+        return self.username
 
 
 class ScavengerHunt(models.Model):

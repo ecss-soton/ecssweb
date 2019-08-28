@@ -9,7 +9,7 @@ from website.utils import clean_image
 class HelperEditProfileForm(ModelForm):
     class Meta:
         model = Helper
-        fields = ['name', 'nickname', 'photo']
+        fields = ['name', 'prefered_name', 'photo']
 
     def __init__(self, *args, **kwargs):
         super(HelperEditProfileForm, self).__init__(*args, **kwargs)
