@@ -47,7 +47,7 @@ class HomeView(UserPassesTestMixin, View):
                 'helper': helper,
                 'groups': groups,
             }
-            return render(request, 'jumpstart/helper.html', context)
+            return render(request, 'jumpstart/jumpstart-helper.html', context)
         elif is_committee(request.user):
             groups = Group.objects.all().order_by('id')
             context = {

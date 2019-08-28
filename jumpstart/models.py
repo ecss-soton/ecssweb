@@ -1,8 +1,11 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.sites.models import Site
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 import os
 import uuid
+from django.utils import timezone
 from .validators import validate_photo_file_extension
 
 from auditlog.models import AuditLog
@@ -18,6 +21,29 @@ def charity_shop_challenge_photo_file_name(instance, filename):
 
 def scavenger_hunt_photo_file_name(instance, filename):
     return ('jumpstart2018/city-challenge/scavenger-hunt-group{}-{}{}'.format(instance.group.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
+
+'''
+Jumpstart config, does not link to other models (except Site so only one is allowed).
+'''
+class Jumpstart(models.Model):
+    site = models.OneToOneField(Site, on_delete=models.PROTECT)
+    start_time = models.DateTimeField(verbose_name='Start Time')
+    end_time = models.DateTimeField(verbose_name='End Time')
+
+
+    def clean(self):
+        super(Jumpstart, self)
+        if self.start_time > self.end_time:
+            raise ValidationError('End time cannot be earlier than start time.')
+
+
+    @property
+    def is_now(self):
+        return timezone.now >= self.start_time and timezone.now <= self.end_time
+
+    
+    def __str__(self):
+        return 'Jumpstart'
 
 
 class Group(models.Model):
@@ -48,7 +74,7 @@ class Fresher(models.Model):
 
 
 class Helper(models.Model):
-    username = models.CharField(max_length=20, primary_key=True, verbose_name='Username')
+    username = models.CharField(max_length=50, primary_key=True, verbose_name='Username')
     name = models.CharField(max_length=50, verbose_name='Name')
     prefered_name = models.CharField(max_length=50, null=True, blank=True, verbose_name='Preferend Name')
     photo = models.ImageField(upload_to=helper_photo_file_name, blank=True, validators=[validate_photo_file_extension], verbose_name='Photo')
