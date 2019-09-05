@@ -70,12 +70,9 @@ class HomeView(UserPassesTestMixin, View):
             raise PermissionDenied()
 
 
-'''
-Show group and member info for helpers.
-'''
 @method_decorator(login_required, name='dispatch')
 class HelperGroupView(UserPassesTestMixin, View):
-
+    """Show group and member info for helpers."""
 
     raise_exception = True
 
@@ -99,61 +96,50 @@ class HelperGroupView(UserPassesTestMixin, View):
 
 
 @method_decorator(login_required, name='dispatch')
-class ProfileEditView(UserPassesTestMixin, View):
+class HelperProfileView(UserPassesTestMixin, View):
+    """Show helper profile for helpers and allow edit if profile is unlocked."""
 
     raise_exception = True
 
+
     def test_func(self):
-        return jumpstart_check(self.request.user)
+        return is_helper(self.request.user)
+
 
     def get(self, request):
-        if is_fresher(request.user):
-            raise Http404()
-        elif is_helper(request.user):
-            helper = Helper.objects.get(pk=request.user.username)
+        helper = Helper.objects.get(pk=request.user.username)
+        jumpstart = get_current_site(request).jumpstart
+        if jumpstart.is_helper_profile_locked:
+            pass
+        else:
             profile_edit_form = HelperEditProfileForm(instance=helper)
             context = {
+                'helper': helper,
                 'profile_edit_form': profile_edit_form,
             }
             return render(request, 'jumpstart/helper-profile-edit.html', context)
-        else:
-            raise Http404()
+
 
     def post(self, request):
-        if is_fresher(request.user):
-            raise Http404()
-        elif is_helper(request.user):
-            helper = Helper.objects.get(pk=request.user.username)
+        # check if profile is unlocked
+        jumpstart = get_current_site(request).jumpstart
+        if jumpstart.is_helper_profile_locked:
+            messages.error('Your profile is locked. Failed to update your profile.')
+            return redirect('jumpstart:profile')
+        # update profile
+        helper = Helper.objects.get(pk=request.user.username)
+        profile_edit_form = HelperEditProfileForm(request.POST, request.FILES, instance=helper)
+        if profile_edit_form.is_valid():
+            profile_edit_form.save()
+            messages.success(request, 'Successfully updated your profile.')
+            return redirect('jumpstart:profile')
+        helper = Helper.objects.get(pk=request.user.username) # retrieve the instance from the database (otherwise the photo won't show correctly)
+        context = {
+            'helper': helper,
+            'profile_edit_form': profile_edit_form,
+        }
+        return render(request, 'jumpstart/helper-profile-edit.html', context)
 
-            profile_edit_form = HelperEditProfileForm(request.POST, request.FILES, instance=helper)
-
-            if profile_edit_form.is_valid():
-                profile_edit_form.save()
-                message = 'Your profile has been updated successfully.'
-
-                if 'photo' in profile_edit_form.changed_data and settings.FACE_DETECT_ENABLED:
-                    files = {
-                        'image': helper.photo.file,
-                    }
-                    response = requests.post(settings.FACE_DETECT_API, files=files)
-                    if response.status_code == 200:
-                        response = json.loads(response.text)
-                        if response['num_faces'] == 1:
-                            message += ' Nice photo!'
-                        elif response['num_faces'] > 1:
-                            messages.warning(request, 'How many people are there in the photo? (Face detection is an experimental feature)')
-                        else:
-                            messages.warning(request, 'Are you in the picture? (Face detection is an experimental feature)')
-
-                messages.success(request, message)
-                return redirect('jumpstart:home')
-
-            context = {
-                'profile_edit_form': profile_edit_form,
-            }
-            return render(request, 'jumpstart/helper-profile-edit.html', context)
-        else:
-            raise Http404()
 
 @method_decorator(login_required, name='dispatch')
 class CityChallengeEditView(UserPassesTestMixin, View):
@@ -401,12 +387,9 @@ class CityChallengeView(UserPassesTestMixin, View):
         return render(request, 'jumpstart/city-challenge.html', context)
 
 
-'''
-Update freshers' check in status.
-'''
 @method_decorator(login_required, name='dispatch')
 class MemberCheckInView(UserPassesTestMixin, View):
-
+    """Update freshers' check in status."""
 
     raise_exception = True
 
@@ -416,6 +399,11 @@ class MemberCheckInView(UserPassesTestMixin, View):
 
 
     def post(self, request):
+        # check if update is unlocked
+        jumpstart = get_current_site().jumpstart
+        if not jumpstart.is_now:
+            messages.error(request, 'Members check in status is locked. Failed to update members check in status.')
+            return redirect('jumpstart:group')
         helper = Helper.objects.get(pk=request.user.username)
         # check if update is allowed
         group_members = helper.group.fresher_set.all()
@@ -436,7 +424,7 @@ class MemberCheckInView(UserPassesTestMixin, View):
                         member.save()
                     messages.success(request, 'Successfully updated members check in status.')
             else:
-                messages.error(request, 'Permission denined. Failed to update.')
+                messages.error(request, 'Permission denined. Failed to update members check in status.')
         except:
-            messages.error(request, 'An error occurred. Failed to update.')
+            messages.error(request, 'An error occurred. Failed to update members check in status.')
         return redirect('jumpstart:group')

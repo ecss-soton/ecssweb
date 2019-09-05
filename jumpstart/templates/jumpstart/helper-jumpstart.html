@@ -23,7 +23,7 @@
     <h2 class="h6">Group {{ helper.group.number }}</h2>
     {% endif %}
     <div class="card-text">
-      You are the helper of {% if helper.group.name %}{{ helper.group.name }} (Group {{ helper.group.number }}){% else %}Group {{ helper.group.number }}{% endif %}.<br>
+      You are the helper for Group {{ helper.group.number }}.<br>
       <a href="{% url 'jumpstart:group' %}" title="View Members in Your Group">{{ helper.group.fresher_set.all|length }} member{{ helper.group.fresher_set.all|length|pluralize }}</a> in your group{% if jumpstart.is_now or jumpstart.is_after%} ({{ num_checked_in_group_members }} marked as checked in){% endif %}.
     </div>
   </div>
@@ -36,11 +36,11 @@
     <div class="card-text">
       <ul>
         <li>Name: {{ helper.name }}</li>
-        <li>Prefered Name: {% if helper.nickname %}{{ helper.nickname }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
+        <li>Prefered Name: {% if helper.prefered_name %}{{ helper.prefered_name }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
         <li>{% if helper.photo %}<span class="text-success">Profile photo uploaded.</span>{% else %}<span class="text-danger">Profile photo not uploaded.</span>{% endif %}</li>
       </ul>
       {% if not jumpstart.is_helper_profile_locked %}
-      <a href="{% url 'jumpstart:profile-edit' %}" title="Edit Your Profile">Edit Profile</a>
+      <a href="{% url 'jumpstart:profile' %}" title="Edit Your Profile">Edit Your Profile</a>
       {% else %}
       <a href="#" title="View Your Profile">View Profile</a>
       {% endif %}

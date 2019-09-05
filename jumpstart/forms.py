@@ -25,7 +25,6 @@ class HelperEditProfileForm(ModelForm):
     def clean_photo(self):
         photo = self.cleaned_data.get('photo', False)
         return clean_image(photo)
-        
 
 
 class EditCityChallengeForm(ModelForm):

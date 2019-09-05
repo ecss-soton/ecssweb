@@ -4,7 +4,7 @@
 <div class="mb-3">
   <a href="{% url 'jumpstart:home' %}" title="Jumpstart Portal"><i class="fas fa-arrow-circle-left"></i> Jumpstart portal</a>
 </div>
-<div class="card">
+<div class="card my-3">
   <div class="card-header">
     Your Group
   </div>
@@ -16,10 +16,10 @@
     <h2 class="h6">Group {{ helper.group.number }}</h2>
     {% endif %}
     <div class="card-text">
-      You are the helper of {% if helper.group.name %}{{ helper.group.name }} (Group {{ helper.group.number }}){% else %}Group {{ helper.group.number }}{% endif %}.<br>
+      You are the helper for Group {{ helper.group.number }}.<br>
       {{ helper.group.fresher_set.all|length }} member{{ helper.group.fresher_set.all|length|pluralize }} in your group{% if jumpstart.is_now or jumpstart.is_after %} ({{ num_checked_in_group_members }} marked as checked in){% endif %}:
       <table class="table table-bordered mt-3">
-        {% if True or jumpstart.is_now or jumpstart.is_after%}
+        {% if jumpstart.is_now or jumpstart.is_after%}
         <thead>
           <tr>
             <th scope="col">Name</th>
@@ -31,7 +31,7 @@
           {% for fresher in helper.group.fresher_set.all %}
           <tr>
             <td>{{ fresher.name }}</td>
-            {% if True or jumpstart.is_now or jumpstart.is_after %}
+            {% if jumpstart.is_now or jumpstart.is_after %}
             <td>
               {% if True or jumpstart.is_now %}
               <input type="checkbox" name="{{ fresher.uuid }}" form="groupMembersCheckInForm" value="checked in" {% if fresher.is_checked_in %}checked{% endif %}>
@@ -48,7 +48,7 @@
           {% endfor %}
         </tbody>
       </table>
-      {% if True or jumpstart.is_now %}
+      {% if jumpstart.is_now %}
       <form class="mb-3" id="groupMembersCheckInForm" method="POST" action="{% url 'jumpstart:member-check-in' %}">
         {% csrf_token %}
         <input type="hidden" name="group_members" value="{{ group_members_uuid_serialized }}">

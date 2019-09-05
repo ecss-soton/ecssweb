@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.sites.models import Site
+from django.template.defaultfilters import slugify
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 import os
@@ -12,7 +13,7 @@ from auditlog.models import AuditLog
 
 
 def helper_photo_file_name(instance, filename):
-    return ('jumpstart2018/helpers/{}-{}{}'.format(instance.username, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
+    return ('jumpstart/helpers/group-{}-{}-{}{}'.format(instance.group.number, slugify(instance.name), uuid.uuid4(), os.path.splitext(filename)[1].lower()))
 
 
 def charity_shop_challenge_photo_file_name(instance, filename):

@@ -1,12 +1,26 @@
 {% extends 'jumpstart/base.html' %}
 
 {% block jumpstartcontent %}
-<div class="card mt-3">
+<div class="mb-3">
+  <a href="{% url 'jumpstart:home' %}" title="Jumpstart Portal"><i class="fas fa-arrow-circle-left"></i> Jumpstart portal</a>
+</div>
+<div class="card my-3">
   <div class="card-header">
-    Edit Profile
+    Edit Your Profile
   </div>
   <div class="card-body">
     <form method="post" enctype="multipart/form-data">
+      {% for message in messages %}
+      <div class="alert
+      {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}
+      {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}
+      ">{{ message }}</div>
+      {% endfor %}
+      {% if helper.photo %}
+      <img class="d-block mb-3 img-fluid helper-photo" src="{{ helper.photo.url }}" alt="Helper for group {{ helper.group.number }}: {{ helper.name }}">
+      {% else %}
+      <span class="text-danger">Profile photo not uploaded.</span>
+      {% endif %}
       {% csrf_token %}
       {% for field in profile_edit_form %}
       <div class="form-group">
@@ -18,12 +32,10 @@
         {% endif %}
       </div>
       {% endfor %}
-      <input type="Submit" class="btn btn-ecssweb" value="Update">
+      <input type="submit" class="btn btn-ecssweb" value="Update">
       <div class="my-2">
-        <small class="text-muted">When updating your photo, the old file will not be immediately removed from the server. It need to be removed manually by us.</small>
-      </div>
-      <div class="mt-2">
-        <small class="text-muted">Your profile is visible to ECSS committee, City Challenge helpers and all freshers participating in City Challenge.</small>
+        <small class="text-muted">When you update your photo, the old file will not be immediately removed from the server. It will need to be removed manually by us.<br>
+        Your profile is visible to freshers in your group for City Challenge and ECSS committee.</small>
       </div>
     </form>
   </div>
