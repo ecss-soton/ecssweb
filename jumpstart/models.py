@@ -29,21 +29,44 @@ class Jumpstart(models.Model):
     site = models.OneToOneField(Site, on_delete=models.PROTECT)
     start_time = models.DateTimeField(verbose_name='Start Time')
     end_time = models.DateTimeField(verbose_name='End Time')
+    helper_profile_lock_time = models.DateTimeField(verbose_name='Helper Profile Lock Time')
 
 
     def clean(self):
         super(Jumpstart, self)
         if self.start_time > self.end_time:
             raise ValidationError('End time cannot be earlier than start time.')
+        if self.helper_profile_lock_time > self.start_time:
+            raise ValidationError('Helper profile lock time cannot be later than start time.')
+
+
+    @property
+    def is_before(self):
+        return timezone.now() < self.start_time
 
 
     @property
     def is_now(self):
-        return timezone.now >= self.start_time and timezone.now <= self.end_time
+        return timezone.now() >= self.start_time and timezone.now() <= self.end_time
+
+
+    @property
+    def is_after(self):
+        return timezone.now() > self.end_time
+
+
+    @property
+    def is_helper_profile_locked(self):
+        return timezone.now() > self.helper_profile_lock_time
 
     
     def __str__(self):
         return 'Jumpstart'
+
+    
+    class Meta:
+        verbose_name = 'Jumpstart'
+        verbose_name_plural = 'Jumpstart'
 
 
 class Group(models.Model):
@@ -61,8 +84,13 @@ class Group(models.Model):
         return 'Group {}'.format(self.number)
 
 
+    class Meta:
+        ordering = ['number']
+
+
 class Fresher(models.Model):
     username = models.CharField(max_length=20, primary_key=True, verbose_name='Username')
+    uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name='UUID')
     name = models.CharField(max_length=50, verbose_name='Name')
     prefered_name = models.CharField(max_length=50, null=True, blank=True, verbose_name='Prefered Name')
     group = models.ForeignKey(Group, on_delete=models.PROTECT, verbose_name='Group')
@@ -71,6 +99,10 @@ class Fresher(models.Model):
 
     def __str__(self):
         return self.username
+
+
+    class Meta:
+        ordering = ['group', 'name']
 
 
 class Helper(models.Model):
@@ -83,6 +115,10 @@ class Helper(models.Model):
 
     def __str__(self):
         return self.username
+
+
+    class Meta:
+        ordering = ['group']
 
 
 class ScavengerHunt(models.Model):

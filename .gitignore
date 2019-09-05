@@ -12,6 +12,7 @@ data/jumpstart/
 data/merch1819/
 website/data/
 election/data/
+jumpstart/data/
 
 # website content
 website/static/website/content/

@@ -1,0 +1,67 @@
+{% extends 'jumpstart/base.html' %}
+
+{% block jumpstartcontent %}
+<div class="mb-3">
+  <a href="{% url 'jumpstart:home' %}" title="Jumpstart Portal"><i class="fas fa-arrow-circle-left"></i> Jumpstart portal</a>
+</div>
+<div class="card">
+  <div class="card-header">
+    Your Group
+  </div>
+  <div class="card-body">
+    {% if helper.group.name %}
+    <h2 class="h6">{{ helper.group.name }}</h2>
+    <small class="text-muted d-block">Group {{ helper.group.number }}</small>
+    {% else %}
+    <h2 class="h6">Group {{ helper.group.number }}</h2>
+    {% endif %}
+    <div class="card-text">
+      You are the helper of {% if helper.group.name %}{{ helper.group.name }} (Group {{ helper.group.number }}){% else %}Group {{ helper.group.number }}{% endif %}.<br>
+      {{ helper.group.fresher_set.all|length }} member{{ helper.group.fresher_set.all|length|pluralize }} in your group{% if jumpstart.is_now or jumpstart.is_after %} ({{ num_checked_in_group_members }} marked as checked in){% endif %}:
+      <table class="table table-bordered mt-3">
+        {% if True or jumpstart.is_now or jumpstart.is_after%}
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Checked in</th>
+          </tr>
+        </thead>
+        {% endif %}
+        <tbody>
+          {% for fresher in helper.group.fresher_set.all %}
+          <tr>
+            <td>{{ fresher.name }}</td>
+            {% if True or jumpstart.is_now or jumpstart.is_after %}
+            <td>
+              {% if True or jumpstart.is_now %}
+              <input type="checkbox" name="{{ fresher.uuid }}" form="groupMembersCheckInForm" value="checked in" {% if fresher.is_checked_in %}checked{% endif %}>
+              {% else %}
+              {% if fresher.is_checked_in %}
+              <i class="fas fa-check-circle text-success" title="Yes" aria-label="Yes"></span>
+              {% else %}
+              <i class="fas fa-times-circle text-danger" title="No" aria-label="No"></span>
+              {% endif %}
+              {% endif %}
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if True or jumpstart.is_now %}
+      <form class="mb-3" id="groupMembersCheckInForm" method="POST" action="{% url 'jumpstart:member-check-in' %}">
+        {% csrf_token %}
+        <input type="hidden" name="group_members" value="{{ group_members_uuid_serialized }}">
+        <input class="btn btn-ecssweb" type="submit" value="Update">
+      </form>
+      {% endif %}
+      {% for message in messages %}
+      <div class="alert
+      {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}
+      {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}
+      ">{{ message }}</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

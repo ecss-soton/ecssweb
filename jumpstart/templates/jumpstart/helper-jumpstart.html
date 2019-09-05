@@ -1,0 +1,103 @@
+{% extends 'jumpstart/base.html' %}
+
+{% load website_extra %}
+
+{% block jumpstartcontent %}
+<!-- {% for message in messages %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+<div class="alert alert-success">{{ message }}</div>
+{% endif %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+<div class="alert alert-warning">{{ message }}</div>
+{% endif %}
+{% endfor %} -->
+<div class="card my-3">
+  <div class="card-header">
+    Your Group
+  </div>
+  <div class="card-body">
+    {% if helper.group.name %}
+    <h2 class="h6">{{ helper.group.name }}</h2>
+    <small class="text-muted d-block">Group {{ helper.group.number }}</small>
+    {% else %}
+    <h2 class="h6">Group {{ helper.group.number }}</h2>
+    {% endif %}
+    <div class="card-text">
+      You are the helper of {% if helper.group.name %}{{ helper.group.name }} (Group {{ helper.group.number }}){% else %}Group {{ helper.group.number }}{% endif %}.<br>
+      <a href="{% url 'jumpstart:group' %}" title="View Members in Your Group">{{ helper.group.fresher_set.all|length }} member{{ helper.group.fresher_set.all|length|pluralize }}</a> in your group{% if jumpstart.is_now or jumpstart.is_after%} ({{ num_checked_in_group_members }} marked as checked in){% endif %}.
+    </div>
+  </div>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    Your Profile
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      <ul>
+        <li>Name: {{ helper.name }}</li>
+        <li>Prefered Name: {% if helper.nickname %}{{ helper.nickname }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
+        <li>{% if helper.photo %}<span class="text-success">Profile photo uploaded.</span>{% else %}<span class="text-danger">Profile photo not uploaded.</span>{% endif %}</li>
+      </ul>
+      {% if not jumpstart.is_helper_profile_locked %}
+      <a href="{% url 'jumpstart:profile-edit' %}" title="Edit Your Profile">Edit Profile</a>
+      {% else %}
+      <a href="#" title="View Your Profile">View Profile</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    City Challenge
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      <ul>
+        <li>
+          Group name: {% if helper.group.name %}{{ helper.group.name }}{% else %}<span class="text-muted">Not set</span>{% endif %}
+        </li>
+        <li>{% if helper.group.charity_shop_challenge_photo %}<span class="text-success">Charity Shop Challenge photo uploaded.</span>{% else %}<span class="text-danger">Charity Shop Challenge photo not uploaded.</span>{% endif %}</li>
+      </ul>
+      {% if jumpstart.is_now %}
+      <a href="{% url 'jumpstart:city-challenge-edit' %}" title="Edit City Challenge for Your Group">Edit City Challenge</a>
+      {% else %}
+      <a href="#" title="View City Challenge of Your Group">View City Challenge</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    Scavenger Hunt
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      <p>
+        Submitted {{ group.scavengerhunt_set.all|length }} photo{{ group.scavengerhunt_set.all|length|pluralize }}.
+      </p>
+      {% if jumpstart.is_now %}
+      <a href="#" title="Edit Scavenger Hunt for Your Group">Edit Scavenger Hunt</a>
+      {% else %}
+      <a href="#" title="View Scavenger Hunt of Your Group">View Scavenger Hunt</a>
+      {% endif %}
+    </div>
+    <!-- <div class="my-3">
+      <a href="{% url 'jumpstart:scavenger-hunt-edit' %}">Submit Scavenger Hunt</a>
+    </div>
+    <div class="mt-3">
+        <a href="{% url 'jumpstart:scavenger-hunt' %}">View Scavenger Hunt</a>
+    </div> -->
+  </div>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    More Information
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      {{ info|md|safe }}
+    </div>
+  </div>
+</div>
+{% endblock %}
