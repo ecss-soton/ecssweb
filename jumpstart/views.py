@@ -110,7 +110,10 @@ class HelperProfileView(UserPassesTestMixin, View):
         helper = Helper.objects.get(pk=request.user.username)
         jumpstart = get_current_site(request).jumpstart
         if jumpstart.is_helper_profile_locked:
-            pass
+            context = {
+                'helper': helper,
+            }
+            return render(request, 'jumpstart/helper-profile.html', context)
         else:
             profile_edit_form = HelperEditProfileForm(instance=helper)
             context = {

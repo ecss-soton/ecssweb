@@ -42,7 +42,7 @@
       {% if not jumpstart.is_helper_profile_locked %}
       <a href="{% url 'jumpstart:profile' %}" title="Edit Your Profile">Edit Your Profile</a>
       {% else %}
-      <a href="#" title="View Your Profile">View Profile</a>
+      <a href="{% url 'jumpstart:profile' %}" title="View Your Profile">View Profile</a>
       {% endif %}
     </div>
   </div>
