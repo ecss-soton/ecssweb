@@ -128,14 +128,14 @@ class HelperProfileView(UserPassesTestMixin, View):
         jumpstart = get_current_site(request).jumpstart
         if jumpstart.is_helper_profile_locked:
             messages.error('Your profile is locked. Failed to update your profile.')
-            return redirect('jumpstart:profile')
+            return redirect('jumpstart:home')
         # update profile
         helper = Helper.objects.get(pk=request.user.username)
         profile_edit_form = HelperEditProfileForm(request.POST, request.FILES, instance=helper)
         if profile_edit_form.is_valid():
             profile_edit_form.save()
             messages.success(request, 'Successfully updated your profile.')
-            return redirect('jumpstart:profile')
+            return redirect('jumpstart:home')
         helper = Helper.objects.get(pk=request.user.username) # retrieve the instance from the database (otherwise the photo won't show correctly)
         context = {
             'helper': helper,
@@ -411,23 +411,20 @@ class MemberCheckInView(UserPassesTestMixin, View):
         # check if update is allowed
         group_members = helper.group.fresher_set.all()
         group_members_uuid = set(map(str, group_members.values_list('uuid', flat=True)))
-        try:
-            members_uuid_base64 = request.POST['group_members']
-            members_uuid_json = base64.urlsafe_b64decode(members_uuid_base64.encode()).decode('utf-8')
-            members_uuid = set(json.loads(members_uuid_json))
-            if members_uuid.issubset(group_members_uuid):
-                # update check in status
-                with transaction.atomic():
-                    for member_uuid in members_uuid:
-                        member = Fresher.objects.get(uuid=member_uuid)
-                        if member_uuid in request.POST:
-                            member.is_checked_in = True
-                        else:
-                            member.is_checked_in = False
-                        member.save()
-                    messages.success(request, 'Successfully updated members check in status.')
-            else:
-                messages.error(request, 'Permission denined. Failed to update members check in status.')
-        except:
-            messages.error(request, 'An error occurred. Failed to update members check in status.')
+        members_uuid_base64 = request.POST['group_members']
+        members_uuid_json = base64.urlsafe_b64decode(members_uuid_base64.encode()).decode('utf-8')
+        members_uuid = set(json.loads(members_uuid_json))
+        if members_uuid.issubset(group_members_uuid):
+            # update check in status
+            with transaction.atomic():
+                for member_uuid in members_uuid:
+                    member = Fresher.objects.get(uuid=member_uuid)
+                    if member_uuid in request.POST:
+                        member.is_checked_in = True
+                    else:
+                        member.is_checked_in = False
+                    member.save()
+                messages.success(request, 'Successfully updated members check in status.')
+        else:
+            messages.error(request, 'Permission denined. Failed to update members check in status.')
         return redirect('jumpstart:group')

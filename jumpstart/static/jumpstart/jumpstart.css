@@ -1,5 +1,8 @@
+.helper-photo-small {
+  max-height: 10rem;
+}
 .helper-photo {
-  max-height: 20rem;
+  max-height: 30rem;
 }
 
 .city-challenge-photo, .scavenger-hunt-photo {

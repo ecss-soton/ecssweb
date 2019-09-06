@@ -12,5 +12,5 @@ urlpatterns = [
     path('group-<int:group_id>/city-challenge/', views.CityChallengeView.as_view(), name='city-challenge'),
     path('scavenger-hunt/', views.ScavengerHuntView.as_view(), name='scavenger-hunt'),
     path('scavenger-hunt/edit/', views.ScavengerHuntEditView.as_view(), name='scavenger-hunt-edit'),
-    path('member-check-in/', views.MemberCheckInView.as_view(), name='member-check-in'),
+    path('members-check-in/', views.MemberCheckInView.as_view(), name='members-check-in'),
 ]

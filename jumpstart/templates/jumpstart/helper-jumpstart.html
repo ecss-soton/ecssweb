@@ -3,17 +3,15 @@
 {% load website_extra %}
 
 {% block jumpstartcontent %}
-<!-- {% for message in messages %}
-{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-<div class="alert alert-success">{{ message }}</div>
-{% endif %}
-{% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
-<div class="alert alert-warning">{{ message }}</div>
-{% endif %}
-{% endfor %} -->
+{% for message in messages %}
+<div class="alert
+{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}
+">{{ message }}</div>
+{% endfor %}
 <div class="card my-3">
   <div class="card-header">
-    Your Group
+    <a href="{% url 'jumpstart:group' %}" title="Your Group">Your Group</a>
   </div>
   <div class="card-body">
     {% if helper.group.name %}
@@ -23,26 +21,45 @@
     <h2 class="h6">Group {{ helper.group.number }}</h2>
     {% endif %}
     <div class="card-text">
-      You are the helper for Group {{ helper.group.number }}.<br>
-      <a href="{% url 'jumpstart:group' %}" title="View Members in Your Group">{{ helper.group.fresher_set.all|length }} member{{ helper.group.fresher_set.all|length|pluralize }}</a> in your group{% if jumpstart.is_now or jumpstart.is_after%} ({{ num_checked_in_group_members }} marked as checked in){% endif %}.
+      <p>
+        You are the helper for Group {{ helper.group.number }}.<br>
+        {{ helper.group.fresher_set.all|length }} member{{ helper.group.fresher_set.all|length|pluralize }} in your group{% if jumpstart.is_now or jumpstart.is_after%} ({{ num_checked_in_group_members }} marked as checked in){% endif %}.
+      </p>
+      <a href="{% url 'jumpstart:group' %}" title="View Your Group{% if jumpstart.is_now %} and Check in Members{% endif %}">View Group {% if jumpstart.is_now %} and Check in Members{% endif %}</a>
     </div>
   </div>
 </div>
 <div class="card my-3">
   <div class="card-header">
-    Your Profile
+    <a href="{% url 'jumpstart:profile' %}" title="Your Profile">Your Profile</a>
   </div>
   <div class="card-body">
     <div class="card-text">
+      {% if helper.photo %}
+      <div class="row">
+        <div class="col-4">
+          <img class="d-block mb-3 img-fluid helper-photo-small" src="{{ helper.photo.url }}" alt="Helper for group {{ helper.group.number }}: {{ helper.name }}">
+        </div>
+        <div class="col-8">
+          <ul>
+            <li>Name: {{ helper.name }}</li>
+            <li>Prefered Name: {% if helper.prefered_name %}{{ helper.prefered_name }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
+          </ul>
+        </div>
+      </div>
+      {% else %}
       <ul>
         <li>Name: {{ helper.name }}</li>
         <li>Prefered Name: {% if helper.prefered_name %}{{ helper.prefered_name }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
-        <li>{% if helper.photo %}<span class="text-success">Profile photo uploaded.</span>{% else %}<span class="text-danger">Profile photo not uploaded.</span>{% endif %}</li>
+        <li><span class="text-danger">Profile photo not uploaded.</span></li>
       </ul>
+      {% endif %}
       {% if not jumpstart.is_helper_profile_locked %}
       <a href="{% url 'jumpstart:profile' %}" title="Edit Your Profile">Edit Your Profile</a>
       {% else %}
-      <a href="{% url 'jumpstart:profile' %}" title="View Your Profile">View Profile</a>
+      <small class="text-muted d-block">
+        Your profile is visible to freshers in your group for City Challenge and ECSS committee.
+      </small>
       {% endif %}
     </div>
   </div>

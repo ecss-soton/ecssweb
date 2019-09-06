@@ -30,7 +30,7 @@
         <tbody>
           {% for fresher in helper.group.fresher_set.all %}
           <tr>
-            <td>{{ fresher.name }}</td>
+            <td>{{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %}</td>
             {% if jumpstart.is_now or jumpstart.is_after %}
             <td>
               {% if True or jumpstart.is_now %}
@@ -49,7 +49,7 @@
         </tbody>
       </table>
       {% if jumpstart.is_now %}
-      <form class="mb-3" id="groupMembersCheckInForm" method="POST" action="{% url 'jumpstart:member-check-in' %}">
+      <form class="mb-3" id="groupMembersCheckInForm" method="POST" action="{% url 'jumpstart:members-check-in' %}">
         {% csrf_token %}
         <input type="hidden" name="group_members" value="{{ group_members_uuid_serialized }}">
         <input class="btn btn-ecssweb" type="submit" value="Update">
