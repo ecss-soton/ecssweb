@@ -1,0 +1,22 @@
+{% extends 'jumpstart/base.html' %}
+
+{% block jumpstartcontent %}
+<div class="mb-3">
+  <a href="{% url 'jumpstart:home' %}" title="Jumpstart Portal"><i class="fas fa-arrow-circle-left"></i> Jumpstart portal</a>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    Your Group Helper
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      <p>
+        Your group helper is {{ fresher.group.helper.name }}{% if fresher.group.helper.nickname %} ({{ fresher.group.helper.nickname }}){% endif %}.
+      </p>
+      {% if fresher.group.helper.photo %}
+      <img class="img-fluid d-block helper-photo" src="{{ fresher.group.helper.photo.url }}" alt="{{ fresher.group.helper.name }}">
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

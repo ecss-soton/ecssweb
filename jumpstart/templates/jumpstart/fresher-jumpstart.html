@@ -1,0 +1,109 @@
+{% extends 'jumpstart/base.html' %}
+
+{% block jumpstartcontent %}
+{% for message in messages %}
+<div class="alert
+{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}
+">{{ message }}</div>
+{% endfor %}
+<div class="card my-3">
+  <div class="card-header">
+    <a href="{% url 'jumpstart:group' %}" title="Your Group">Your Group</a>
+  </div>
+  <div class="card-body">
+    {% if fresher.group.name %}
+    <h2 class="h6">{{ fresher.group.name }}</h2>
+    <small class="text-muted d-block">Group {{ fresher.group.number }}</small>
+    {% else %}
+    <h2 class="h6">Group {{ fresher.group.number }}</h2>
+    {% endif %}
+    <div class="card-text">
+      <p>
+        You are in Group {{ fresher.group.number }}.<br>
+        {{ fresher.group.fresher_set.all|length }} member{{ fresher.group.fresher_set.all|length|pluralize }} in your group.<br>
+        {% if jumpstart.is_now %}
+        {% if fresher.is_checked_in %}
+        <span class="text-success">You are marked as checked in.</span>
+        {% else %}
+        <span class="text-danger">You are not marked as checked in. Please let your helper check in for you.</span>
+        {% endif %}
+        {% endif %}
+      </p>
+      <a href="{% url 'jumpstart:group' %}" title="View Your Group">View Group</a>
+    </div>
+  </div>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    <a href="{% url 'jumpstart:group-helper' %}" title="Your Group Helper">Your Group Helper</a>
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      <p>
+        Your group helper is {{ fresher.group.helper.name }}{% if fresher.group.helper.nickname %} ({{ fresher.group.helper.nickname }}){% endif %}.
+      </p>
+      {% if fresher.group.helper.photo %}
+      <img class="img-fluid d-block helper-photo-small" src="{{ fresher.group.helper.photo.url }}" alt="{{ fresher.group.helper.name }}">
+      {% endif %}
+    </div>
+  </div>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    <a href="{% url 'jumpstart:profile' %}" title="Your Profile">Your Profile</a>
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      <ul>
+        <li>Name: {{ fresher.name }}</li>
+        <li>Prefered Name: {% if fresher.prefered_name %}{{ fresher.prefered_name }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
+      </ul>
+      {% if jumpstart.is_before or jumpstart.is_now %}
+      <a href="{% url 'jumpstart:profile' %}" title="Edit Your Profile">Edit Your Profile</a>
+      {% else %}
+      <small class="text-muted d-block">
+        Your profile is visible to your group helper, members in your group and ECSS committee.
+      </small>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<div class="card mt-3">
+  <div class="card-header">
+    City Challenge
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      This section is to complete by your group during the event.
+      <ul>
+        <li>
+          Group name: {% if fresher.group.name %}{{ fresher.group.name }}{% else %}<span class="text-muted">Not set</span>{% endif %}
+        </li>
+        <li>
+            Charity Shop Challenge photo:
+            {% if fresher.group.charity_shop_challenge_photo %}
+            <img class="img-fluid d-block city-challenge-photo" src="{{ fresher.group.charity_shop_challenge_photo.url }}" alt="Charity Shop Challenge">
+            {% else %}
+            <span class="text-muted">Not submitted</span>
+            {% endif %}
+          </li>
+        </ul>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    Scavenger Hunt
+  </div>
+  <div class="card-body">
+    <div class="mb-3">
+      Submitted {{ group.scavengerhunt_set.all|length }} photo{{ group.scavengerhunt_set.all|length|pluralize }}.
+    </div>
+    <div class="mt-3">
+        <a href="{% url 'jumpstart:scavenger-hunt' %}">View Scavenger Hunt</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

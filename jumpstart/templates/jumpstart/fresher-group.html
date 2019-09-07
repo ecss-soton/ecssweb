@@ -1,0 +1,36 @@
+{% extends 'jumpstart/base.html' %}
+
+{% block jumpstartcontent %}
+<div class="mb-3">
+  <a href="{% url 'jumpstart:home' %}" title="Jumpstart Portal"><i class="fas fa-arrow-circle-left"></i> Jumpstart portal</a>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    Your Group
+  </div>
+  <div class="card-body">
+    {% if fresher.group.name %}
+    <h2 class="h6">{{ fresher.group.name }}</h2>
+    <small class="text-muted d-block">Group {{ fresher.group.number }}</small>
+    {% else %}
+    <h2 class="h6">Group {{ fresher.group.number }}</h2>
+    {% endif %}
+    <div class="card-text">
+      You are in Group {{ fresher.group.number }}.<br>
+      {% if fresher.is_checked_in %}
+      <span class="text-success">You are marked as checked in.</span>
+      {% else %}
+      <span class="text-danger">You are not marked as checked in. Please let your helper check in for you.</span>
+      {% endif %}<br>
+      {{ fresher.group.fresher_set.all|length }} member{{ fresher.group.fresher_set.all|length|pluralize }} in your group:
+      <ul>
+        {% for fresher in fresher.group.fresher_set.all %}
+        <li>
+          {{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

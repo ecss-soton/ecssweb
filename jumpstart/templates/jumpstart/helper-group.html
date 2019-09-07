@@ -18,20 +18,18 @@
     <div class="card-text">
       You are the helper for Group {{ helper.group.number }}.<br>
       {{ helper.group.fresher_set.all|length }} member{{ helper.group.fresher_set.all|length|pluralize }} in your group{% if jumpstart.is_now or jumpstart.is_after %} ({{ num_checked_in_group_members }} marked as checked in){% endif %}:
+      {% if jumpstart.is_now or jumpstart.is_after %}
       <table class="table table-bordered mt-3">
-        {% if jumpstart.is_now or jumpstart.is_after%}
         <thead>
           <tr>
             <th scope="col">Name</th>
             <th scope="col">Checked in</th>
           </tr>
         </thead>
-        {% endif %}
         <tbody>
           {% for fresher in helper.group.fresher_set.all %}
           <tr>
             <td>{{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %}</td>
-            {% if jumpstart.is_now or jumpstart.is_after %}
             <td>
               {% if True or jumpstart.is_now %}
               <input type="checkbox" name="{{ fresher.uuid }}" form="groupMembersCheckInForm" value="checked in" {% if fresher.is_checked_in %}checked{% endif %}>
@@ -43,11 +41,19 @@
               {% endif %}
               {% endif %}
             </td>
-            {% endif %}
           </tr>
           {% endfor %}
         </tbody>
       </table>
+      {% else %}
+      <ul>
+        {% for fresher in helper.group.fresher_set.all %}
+        <li>
+          {{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
       {% if jumpstart.is_now %}
       <form class="mb-3" id="groupMembersCheckInForm" method="POST" action="{% url 'jumpstart:members-check-in' %}">
         {% csrf_token %}

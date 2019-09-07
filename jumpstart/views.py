@@ -30,64 +30,94 @@ import base64
 
 @method_decorator(login_required, name='dispatch')
 class HomeView(UserPassesTestMixin, View):
-
+    """Jumpstart portal homepage for freshers, helpers and committee."""
 
     raise_exception = True
 
 
     def test_func(self):
+        """Only people involved in Jumpstart have access."""
         return jumpstart_check(self.request.user)
 
 
     def get(self, request):
         if is_fresher(request.user):
-            fresher = Fresher.objects.get(pk=request.user.username)
-            groups = Group.objects.all().order_by('id')
-            context = {
-                'fresher': fresher,
-                'groups': groups,
-            }
-            return render(request, 'jumpstart/fresher.html', context)
+            return self._get_freshers(request)
         elif is_helper(request.user):
-            jumpstart = get_current_site(request).jumpstart
-            helper = Helper.objects.get(pk=request.user.username)
-            num_checked_in_group_members = helper.group.fresher_set.filter(is_checked_in=True).count()
-            info = open(os.path.join(settings.BASE_DIR, 'jumpstart/data/helper-info.md'), 'r').read()
-            context = {
-                'jumpstart': jumpstart,
-                'helper': helper,
-                'num_checked_in_group_members': num_checked_in_group_members,
-                'info': info,
-            }
-            return render(request, 'jumpstart/helper-jumpstart.html', context)
+            return self._get_helpers(request)
         elif is_committee(request.user):
-            groups = Group.objects.all().order_by('id')
-            context = {
-                'groups': groups,
-            }
-            return render(request, 'jumpstart/committee.html', context)
+            return self._get_committee(request)
         else:
             raise PermissionDenied()
 
 
+    def _get_freshers(self, request):
+        """Render page for freshers."""
+        jumpstart = get_current_site(request).jumpstart
+        fresher = Fresher.objects.get(pk=request.user.username)
+        context = {
+            'jumpstart': jumpstart,
+            'fresher': fresher,
+        }
+        return render(request, 'jumpstart/fresher-jumpstart.html', context)
+
+
+    def _get_helpers(self, request):
+        """Render page for helpers."""
+        jumpstart = get_current_site(request).jumpstart
+        helper = Helper.objects.get(pk=request.user.username)
+        num_checked_in_group_members = helper.group.fresher_set.filter(is_checked_in=True).count()
+        info = open(os.path.join(settings.BASE_DIR, 'jumpstart/data/helper-info.md'), 'r').read()
+        context = {
+            'jumpstart': jumpstart,
+            'helper': helper,
+            'num_checked_in_group_members': num_checked_in_group_members,
+            'info': info,
+        }
+        return render(request, 'jumpstart/helper-jumpstart.html', context)
+
+
+    def _get_committee(self, request):
+        """Render page for committee."""
+        #TODO: Redesign the page.
+        groups = Group.objects.all().order_by('id')
+        context = {
+            'groups': groups,
+        }
+        return render(request, 'jumpstart/committee.html', context)
+
+
 @method_decorator(login_required, name='dispatch')
-class HelperGroupView(UserPassesTestMixin, View):
-    """Show group and member info for helpers."""
+class GroupView(UserPassesTestMixin, View):
+    """Show group info for helpers and freshers."""
 
     raise_exception = True
 
 
     def test_func(self):
-        return is_helper(self.request.user)
+        """Only helpers and freshers have access to group page for their own group."""
+        return  is_helper(self.request.user) or is_fresher(self.request.user)
 
 
     def get(self, request):
+        if is_helper(self.request.user):
+            return self._get_helpers(request)
+        elif is_fresher(self.request.user):
+            return self._get_freshers(request)
+        else:
+            raise PermissionDenied()
+
+
+    def _get_helpers(self, request):
+        """Render page for helpers."""
+        jumpstart = get_current_site(request).jumpstart
         helper = Helper.objects.get(pk=request.user.username)
         group_members = helper.group.fresher_set
         num_checked_in_group_members = group_members.filter(is_checked_in=True).count()
         group_members_uuid_json = json.dumps(list(map(str, group_members.all().values_list('uuid', flat=True))))
         group_members_uuid_serialized = base64.urlsafe_b64encode(group_members_uuid_json.encode()).decode('utf-8')
         context = {
+            'jumpstart': jumpstart,
             'helper': helper,
             'num_checked_in_group_members': num_checked_in_group_members,
             'group_members_uuid_serialized': group_members_uuid_serialized,
@@ -95,26 +125,48 @@ class HelperGroupView(UserPassesTestMixin, View):
         return render(request, 'jumpstart/helper-group.html', context)
 
 
+    def _get_freshers(self, request):
+        """Render page for freshers."""
+        fresher = Fresher.objects.get(pk=request.user.username)
+        context = {
+            'fresher': fresher,
+        }
+        return render(request, 'jumpstart/fresher-group.html', context)
+
+
 @method_decorator(login_required, name='dispatch')
-class HelperProfileView(UserPassesTestMixin, View):
-    """Show helper profile for helpers and allow edit if profile is unlocked."""
+class ProfileView(UserPassesTestMixin, View):
+    """Show helpers and freshers their profile and allow edit if profile is unlocked."""
 
     raise_exception = True
 
 
     def test_func(self):
-        return is_helper(self.request.user)
+        """Only helpers and freshers have access to this view."""
+        return is_helper(self.request.user) or is_fresher(self.request.user)
 
 
     def get(self, request):
-        helper = Helper.objects.get(pk=request.user.username)
+        if is_helper(request.user):
+            return self._get_helper(request)
+        else:
+            raise PermissionDenied()
+
+
+    def _get_helper(self, request):
+        """Render page for helpers."""
+        # Check if profile is locked
         jumpstart = get_current_site(request).jumpstart
         if jumpstart.is_helper_profile_locked:
+            # Render view only if profile is locked
+            helper = Helper.objects.get(pk=request.user.username)
             context = {
                 'helper': helper,
             }
             return render(request, 'jumpstart/helper-profile.html', context)
         else:
+            # Render edit form if profile is unlocked
+            helper = Helper.objects.get(pk=request.user.username)
             profile_edit_form = HelperEditProfileForm(instance=helper)
             context = {
                 'helper': helper,
@@ -124,24 +176,52 @@ class HelperProfileView(UserPassesTestMixin, View):
 
 
     def post(self, request):
-        # check if profile is unlocked
+        if is_helper(request.user):
+            return self._post_helper(request)
+        else:
+            raise PermissionDenied()
+
+
+    def _post_helper(self, request):
+        # Check if profile is unlocked
         jumpstart = get_current_site(request).jumpstart
         if jumpstart.is_helper_profile_locked:
             messages.error('Your profile is locked. Failed to update your profile.')
             return redirect('jumpstart:home')
-        # update profile
+        # Validate form and update profile
         helper = Helper.objects.get(pk=request.user.username)
         profile_edit_form = HelperEditProfileForm(request.POST, request.FILES, instance=helper)
         if profile_edit_form.is_valid():
             profile_edit_form.save()
             messages.success(request, 'Successfully updated your profile.')
             return redirect('jumpstart:home')
-        helper = Helper.objects.get(pk=request.user.username) # retrieve the instance from the database (otherwise the photo won't show correctly)
+        # Show edit form again if form was not valid
+        helper = Helper.objects.get(pk=request.user.username) # Retrieve the instance from the database to render the page with valid data 
         context = {
             'helper': helper,
             'profile_edit_form': profile_edit_form,
         }
         return render(request, 'jumpstart/helper-profile-edit.html', context)
+
+
+@method_decorator(login_required, name='dispatch')
+class FresherGroupHelperView(UserPassesTestMixin, View):
+    """Show group helper for freshers."""
+
+    raise_exception = True
+
+
+    def test_func(self):
+        """Only freshers have access."""
+        return is_fresher(self.request.user)
+
+
+    def get(self, request):
+        fresher = Fresher.objects.get(pk=request.user.username)
+        context = {
+            'fresher': fresher,
+        }
+        return render(request, 'jumpstart/fresher-group-helper.html', context)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -391,19 +471,25 @@ class CityChallengeView(UserPassesTestMixin, View):
 
 
 @method_decorator(login_required, name='dispatch')
-class MemberCheckInView(UserPassesTestMixin, View):
-    """Update freshers' check in status."""
+class MembersCheckInView(UserPassesTestMixin, View):
+    """Update freshers' check in status.
+       POST method only.
+    """
 
     raise_exception = True
 
 
     def test_func(self):
+        """Only helpers have access"""
         return is_helper(self.request.user)
 
 
     def post(self, request):
+        """Update freshers' check in status.
+           Only helpers can update check in status for members in their group during the event.
+        """
         # check if update is unlocked
-        jumpstart = get_current_site().jumpstart
+        jumpstart = get_current_site(request).jumpstart
         if not jumpstart.is_now:
             messages.error(request, 'Members check in status is locked. Failed to update members check in status.')
             return redirect('jumpstart:group')
