@@ -14,7 +14,7 @@ from django.conf import settings
 
 from .models import Fresher, Helper, Group, CityChallengeScoreAuditlog
 
-from .forms import HelperEditProfileForm, EditCityChallengeForm, EditScavengerHuntForm, ScoreMitreChallengeForm, ScoreCodingChallengeForm, ScoreStagsQuizForm, ScoreGamesChallengeForm, ScoreSportsChallengeForm
+from .forms import HelperProfileEditForm, FresherProfileEditForm, EditCityChallengeForm, EditScavengerHuntForm, ScoreMitreChallengeForm, ScoreCodingChallengeForm, ScoreStagsQuizForm, ScoreGamesChallengeForm, ScoreSportsChallengeForm
 
 from .utils import jumpstart_check, is_fresher, is_helper
 
@@ -42,16 +42,16 @@ class HomeView(UserPassesTestMixin, View):
 
     def get(self, request):
         if is_fresher(request.user):
-            return self._get_freshers(request)
+            return self._get_fresher(request)
         elif is_helper(request.user):
-            return self._get_helpers(request)
+            return self._get_helper(request)
         elif is_committee(request.user):
             return self._get_committee(request)
         else:
             raise PermissionDenied()
 
 
-    def _get_freshers(self, request):
+    def _get_fresher(self, request):
         """Render page for freshers."""
         jumpstart = get_current_site(request).jumpstart
         fresher = Fresher.objects.get(pk=request.user.username)
@@ -62,7 +62,7 @@ class HomeView(UserPassesTestMixin, View):
         return render(request, 'jumpstart/fresher-jumpstart.html', context)
 
 
-    def _get_helpers(self, request):
+    def _get_helper(self, request):
         """Render page for helpers."""
         jumpstart = get_current_site(request).jumpstart
         helper = Helper.objects.get(pk=request.user.username)
@@ -79,12 +79,10 @@ class HomeView(UserPassesTestMixin, View):
 
     def _get_committee(self, request):
         """Render page for committee."""
-        #TODO: Redesign the page.
-        groups = Group.objects.all().order_by('id')
         context = {
-            'groups': groups,
+
         }
-        return render(request, 'jumpstart/committee.html', context)
+        return render(request, 'jumpstart/committee-jumpstart.html', context)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -101,14 +99,14 @@ class GroupView(UserPassesTestMixin, View):
 
     def get(self, request):
         if is_helper(self.request.user):
-            return self._get_helpers(request)
+            return self._get_helper(request)
         elif is_fresher(self.request.user):
-            return self._get_freshers(request)
+            return self._get_fresher(request)
         else:
             raise PermissionDenied()
 
 
-    def _get_helpers(self, request):
+    def _get_helper(self, request):
         """Render page for helpers."""
         jumpstart = get_current_site(request).jumpstart
         helper = Helper.objects.get(pk=request.user.username)
@@ -125,7 +123,7 @@ class GroupView(UserPassesTestMixin, View):
         return render(request, 'jumpstart/helper-group.html', context)
 
 
-    def _get_freshers(self, request):
+    def _get_fresher(self, request):
         """Render page for freshers."""
         fresher = Fresher.objects.get(pk=request.user.username)
         context = {
@@ -149,13 +147,15 @@ class ProfileView(UserPassesTestMixin, View):
     def get(self, request):
         if is_helper(request.user):
             return self._get_helper(request)
+        elif is_fresher(request.user):
+            return self._get_fresher(request)
         else:
             raise PermissionDenied()
 
 
     def _get_helper(self, request):
         """Render page for helpers."""
-        # Check if profile is locked
+        # Check if helpers profile is locked
         jumpstart = get_current_site(request).jumpstart
         if jumpstart.is_helper_profile_locked:
             # Render view only if profile is locked
@@ -167,7 +167,7 @@ class ProfileView(UserPassesTestMixin, View):
         else:
             # Render edit form if profile is unlocked
             helper = Helper.objects.get(pk=request.user.username)
-            profile_edit_form = HelperEditProfileForm(instance=helper)
+            profile_edit_form = HelperProfileEditForm(instance=helper)
             context = {
                 'helper': helper,
                 'profile_edit_form': profile_edit_form,
@@ -175,22 +175,45 @@ class ProfileView(UserPassesTestMixin, View):
             return render(request, 'jumpstart/helper-profile-edit.html', context)
 
 
+    def _get_fresher(self, request):
+        """Render page for freshers."""
+        # Check if freshers profile is locked
+        jumpstart = get_current_site(request).jumpstart
+        if jumpstart.is_after:
+            # Render view only if profile is locked
+            fresher = Fresher.objects.get(pk=request.user.username)
+            context = {
+                'fresher': fresher,
+            }
+            return render(request, 'jumpstart/fresher-profile.html', context)
+        else:
+            # Render edit form if profile is unlocked
+            fresher = Fresher.objects.get(pk=request.user.username)
+            profile_edit_form = FresherProfileEditForm(instance=fresher)
+            context = {
+                'profile_edit_form': profile_edit_form,
+            }
+            return render(request, 'jumpstart/fresher-profile-edit.html', context)
+
+
     def post(self, request):
         if is_helper(request.user):
             return self._post_helper(request)
+        elif is_fresher(request.user):
+            return self._post_fresher(request)
         else:
             raise PermissionDenied()
 
 
     def _post_helper(self, request):
-        # Check if profile is unlocked
+        # Check if helpers profile is unlocked
         jumpstart = get_current_site(request).jumpstart
         if jumpstart.is_helper_profile_locked:
             messages.error('Your profile is locked. Failed to update your profile.')
             return redirect('jumpstart:home')
         # Validate form and update profile
         helper = Helper.objects.get(pk=request.user.username)
-        profile_edit_form = HelperEditProfileForm(request.POST, request.FILES, instance=helper)
+        profile_edit_form = HelperProfileEditForm(request.POST, request.FILES, instance=helper)
         if profile_edit_form.is_valid():
             profile_edit_form.save()
             messages.success(request, 'Successfully updated your profile.')
@@ -202,6 +225,26 @@ class ProfileView(UserPassesTestMixin, View):
             'profile_edit_form': profile_edit_form,
         }
         return render(request, 'jumpstart/helper-profile-edit.html', context)
+
+
+    def _post_fresher(self, request):
+        # Check if freshers profile is unlocked
+        jumpstart = get_current_site(request).jumpstart
+        if jumpstart.is_after:
+            messages.error('Your profile is locked. Failed to update your profile.')
+            return redirect('jumpstart:home')
+        # Validate form and update profile
+        fresher = Fresher.objects.get(pk=request.user.username)
+        profile_edit_form = FresherProfileEditForm(request.POST, instance=fresher)
+        if profile_edit_form.is_valid():
+            profile_edit_form.save()
+            messages.success(request, 'Successfully updated your profile.')
+            return redirect('jumpstart:home')
+        # Show edit form again if form was not valid
+        context = {
+            'profile_edit_form': profile_edit_form,
+        }
+        return render(request, 'jumpstart/fresher-profile-edit.html', context)
 
 
 @method_decorator(login_required, name='dispatch')

@@ -1,0 +1,21 @@
+{% extends 'jumpstart/base.html' %}
+
+{% block jumpstartcontent %}
+<div class="mb-3">
+  <a href="{% url 'jumpstart:home' %}" title="Jumpstart Portal"><i class="fas fa-arrow-circle-left"></i> Jumpstart portal</a>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    Your Profile
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      <ul>
+        <li>Name: {{ fresher.name }}</li>
+        <li>Prefered Name: {% if fresher.prefered_name %}{{ fresher.prefered_name }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
+      </ul>
+      <small class="text-muted d-block">Your profile is visible to your group helper, members in your group and ECSS committee.</small>
+    </div>
+  </div>
+</div>
+{% endblock %}

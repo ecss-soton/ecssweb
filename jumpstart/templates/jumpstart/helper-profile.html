@@ -4,12 +4,6 @@
 <div class="mb-3">
   <a href="{% url 'jumpstart:home' %}" title="Jumpstart Portal"><i class="fas fa-arrow-circle-left"></i> Jumpstart portal</a>
 </div>
-{% for message in messages %}
-<div class="alert
-{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}
-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}
-">{{ message }}</div>
-{% endfor %}
 <div class="card my-3">
   <div class="card-header">
     Your Profile

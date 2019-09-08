@@ -1,18 +1,21 @@
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
-from .models import Helper, Group, ScavengerHunt
+from .models import Helper, Fresher, Group, ScavengerHunt
 
 from website.utils import clean_image
 
 
-class HelperEditProfileForm(ModelForm):
+class HelperProfileEditForm(ModelForm):
+    """Form for helpers to edit their profile."""
+
     class Meta:
         model = Helper
         fields = ['name', 'prefered_name', 'photo']
 
+
     def __init__(self, *args, **kwargs):
-        super(HelperEditProfileForm, self).__init__(*args, **kwargs)
+        super(HelperProfileEditForm, self).__init__(*args, **kwargs)
         self.fields['name'].disabled = True
         self.fields['photo'].widget.attrs.update({
             'accept': 'image/jpeg, image/png'
@@ -22,9 +25,27 @@ class HelperEditProfileForm(ModelForm):
                 'class': 'form-control',
             })
 
+
     def clean_photo(self):
         photo = self.cleaned_data.get('photo', False)
         return clean_image(photo) if photo else photo
+
+
+class FresherProfileEditForm(ModelForm):
+    """Form for freshers to edit their profile."""
+
+    class Meta:
+        model = Fresher
+        fields = ['name', 'prefered_name']
+
+
+    def __init__(self, *args, **kwargs):
+        super(FresherProfileEditForm, self).__init__(*args, **kwargs)
+        self.fields['name'].disabled = True
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+            })
 
 
 class EditCityChallengeForm(ModelForm):
