@@ -417,7 +417,8 @@ class CommitteeGroupsHelpersImportView(UserPassesTestMixin, View):
                     helper.save()
                     num_helpers += 1
                 messages.success(request, 'Successfully imported {} helper(s). {} new group(s) created.'.format(num_helpers, num_new_groups))
-        except:
+        except Exception as e:
+            print(e)
             messages.error(request, 'Error occurred. Failed to import.')
         return redirect('jumpstart:groups-import-export')
 
@@ -464,7 +465,8 @@ class CommitteeGroupsFreshersImportView(UserPassesTestMixin, View):
                     fresher.save()
                     num_freshers += 1
                 messages.success(request, 'Successfully imported {} fresher(s). {} new group(s) created.'.format(num_freshers, num_new_groups))
-        except:
+        except Exception as e:
+            print(e)
             messages.error(request, 'Error occurred. Failed to import.')
         return redirect('jumpstart:groups-import-export')
 
