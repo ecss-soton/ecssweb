@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='group',
             name='number',
-            field=models.PositiveSmallIntegerField(default=1, unique=True, validators=[django.core.validators.MinValueValidator(1)], verbose_name='Group Number'),
+            field=models.PositiveSmallIntegerField(default=1, validators=[django.core.validators.MinValueValidator(1)], verbose_name='Group Number'),
             preserve_default=False,
         ),
         migrations.AlterField(
