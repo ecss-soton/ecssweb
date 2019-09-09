@@ -4,6 +4,9 @@
 .helper-photo {
   max-height: 30rem;
 }
+.committee-group-table-checked-in-column {
+  width: 25%;
+}
 
 .city-challenge-photo, .scavenger-hunt-photo {
   width: 15rem;

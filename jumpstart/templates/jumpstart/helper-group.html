@@ -17,7 +17,7 @@
     {% endif %}
     <div class="card-text">
       You are the helper for Group {{ helper.group.number }}.<br>
-      {{ helper.group.fresher_set.all|length }} member{{ helper.group.fresher_set.all|length|pluralize }} in your group{% if jumpstart.is_now or jumpstart.is_after %} ({{ num_checked_in_group_members }} marked as checked in){% endif %}:
+      {{ helper.group.fresher_set.all|length }} member{{ helper.group.fresher_set.all|length|pluralize }} in your group{% if jumpstart.is_now or jumpstart.is_after %} ({{ helper.group.fresher_set.all|checked_in_freshers|length }} marked as checked in){% endif %}:
       {% if jumpstart.is_now or jumpstart.is_after %}
       <table class="table table-bordered mt-3">
         <thead>
@@ -31,7 +31,7 @@
           <tr>
             <td>{{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %}</td>
             <td>
-              {% if True or jumpstart.is_now %}
+              {% if jumpstart.is_now %}
               <input type="checkbox" name="{{ fresher.uuid }}" form="groupMembersCheckInForm" value="checked in" {% if fresher.is_checked_in %}checked{% endif %}>
               {% else %}
               {% if fresher.is_checked_in %}

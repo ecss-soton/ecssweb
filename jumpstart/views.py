@@ -66,12 +66,10 @@ class HomeView(UserPassesTestMixin, View):
         """Render page for helpers."""
         jumpstart = get_current_site(request).jumpstart
         helper = Helper.objects.get(pk=request.user.username)
-        num_checked_in_group_members = helper.group.fresher_set.filter(is_checked_in=True).count()
         info = open(os.path.join(settings.BASE_DIR, 'jumpstart/data/helper-info.md'), 'r').read()
         context = {
             'jumpstart': jumpstart,
             'helper': helper,
-            'num_checked_in_group_members': num_checked_in_group_members,
             'info': info,
         }
         return render(request, 'jumpstart/helper-jumpstart.html', context)
@@ -111,13 +109,11 @@ class GroupView(UserPassesTestMixin, View):
         jumpstart = get_current_site(request).jumpstart
         helper = Helper.objects.get(pk=request.user.username)
         group_members = helper.group.fresher_set
-        num_checked_in_group_members = group_members.filter(is_checked_in=True).count()
         group_members_uuid_json = json.dumps(list(map(str, group_members.all().values_list('uuid', flat=True))))
         group_members_uuid_serialized = base64.urlsafe_b64encode(group_members_uuid_json.encode()).decode('utf-8')
         context = {
             'jumpstart': jumpstart,
             'helper': helper,
-            'num_checked_in_group_members': num_checked_in_group_members,
             'group_members_uuid_serialized': group_members_uuid_serialized,
         }
         return render(request, 'jumpstart/helper-group.html', context)
@@ -268,6 +264,54 @@ class FresherGroupHelperView(UserPassesTestMixin, View):
 
 
 @method_decorator(login_required, name='dispatch')
+class CommitteeGroupsView(UserPassesTestMixin, View):
+    """Show Jumpstart groups for committee."""
+
+    raise_exception = True
+
+
+    def test_func(self):
+        """Only committee have access."""
+        return is_committee(self.request.user)
+
+    
+    def get(self, request):
+        jumpstart = get_current_site(request).jumpstart
+        groups = Group.objects.all().order_by('number')
+        is_show_helper_photos = request.GET.get('show_helper_photos', False) == 'yes'
+        is_show_members = request.GET.get('show_members', False) == 'yes'
+        context = {
+            'jumpstart': jumpstart,
+            'groups': groups,
+            'is_show_helper_photos': is_show_helper_photos,
+            'is_show_members': is_show_members,
+        }
+        return render(request, 'jumpstart/committee-groups.html', context)
+
+
+@method_decorator(login_required, name='dispatch')
+class CommitteeGroupView(UserPassesTestMixin, View):
+    """Show Jumpstart group for committee."""
+
+    raise_exception = True
+
+
+    def test_func(self):
+        """Only committee have access."""
+        return is_committee(self.request.user)
+
+    
+    def get(self, request, group_number):
+        jumpstart = get_current_site(request).jumpstart
+        group = Group.objects.get(number=group_number)
+        context = {
+            'jumpstart': jumpstart,
+            'group': group,
+        }
+        return render(request, 'jumpstart/committee-group.html', context)
+
+
+@method_decorator(login_required, name='dispatch')
 class CityChallengeEditView(UserPassesTestMixin, View):
     
     raise_exception = True
@@ -381,31 +425,6 @@ class ScavengerHuntEditView(UserPassesTestMixin, View):
                 'scavenger_hunt_edit_form': scavenger_hunt_edit_form,
             }
             return render(request, 'jumpstart/scavenger-hunt-edit.html', context)
-        else:
-            raise Http404()
-
-
-@method_decorator(login_required, name='dispatch')
-class GroupsView(UserPassesTestMixin, View):
-
-    raise_exception = True
-
-    def test_func(self):
-        return jumpstart_check(self.request.user)
-
-    def get(self, request):
-        if is_fresher(request.user):
-            groups = Group.objects.all().order_by('id')
-            context = {
-                'groups': groups,
-            }
-            return render(request, 'jumpstart/groups.html', context)
-        elif is_helper(request.user):
-            groups = Group.objects.all().order_by('id')
-            context = {
-                'groups': groups,
-            }
-            return render(request, 'jumpstart/groups.html', context)
         else:
             raise Http404()
 

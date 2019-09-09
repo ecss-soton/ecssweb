@@ -44,9 +44,9 @@ Respond Feedback - ECSS
         {% endfor %}
         <input id="saveButton" name="submit" type="submit" value="Save" class="btn btn-ecssweb">
         {% if not is_new %}
-        <input id="deleteButton" name="submit" type="submit" value="Delete" class="btn btn-ecssweb-light">
+        <input id="deleteButton" name="submit" type="submit" value="Delete" class="btn btn-outline-ecssweb">
         {% endif %}
-        <a href="{% url 'feedback:view' %}" class="btn">Cancel</a>
+        <a href="{% url 'feedback:view' %}" class="btn" role="button">Cancel</a>
       </form>
     </div>
   </div>

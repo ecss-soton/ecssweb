@@ -1,0 +1,118 @@
+{% extends 'jumpstart/base.html' %}
+
+{% load website_extra %}
+{% load jumpstart_extra %}
+
+{% block jumpstartcontent %}
+<div class="mb-3">
+  <a href="{% url 'jumpstart:home' %}" title="Jumpstart Portal"><i class="fas fa-arrow-circle-left"></i> Jumpstart portal</a>
+</div>
+<div>
+  {% if is_show_helper_photos %}
+  <a class="btn btn-sm btn-ecssweb" href="{{ request.path }}?{% update_query show_helper_photos='no' %}" title="Hide Helper Photos" role="button">Hide Helper Photos</a>
+  {% else %}
+  <a class="btn btn-sm btn-outline-ecssweb" href="{{ request.path }}?{% update_query show_helper_photos='yes' %}" title="Show Helper Photos" role="button">Show Helper Photos</a>
+  {% endif %}
+  {% if is_show_members %}
+  <a class="btn btn-sm btn-ecssweb" href="{{ request.path }}?{% update_query show_members='no' %}" title="Hide Group Members" role="button">Hide Group Members</a>
+  {% else %}
+  <a class="btn btn-sm btn-outline-ecssweb" href="{{ request.path }}?{% update_query show_members='yes' %}" title="Show Group Members" role="button">Show Group Members</a>
+  {% endif %}
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    Admin
+  </div>
+  <div class="card-body">
+    <ul>
+      <li>
+        <a href="" title="Import and Export Jumpstart Groups and Helpers">Import/Export Jumpstart Groups and Helpers</a>
+      </li>
+      <li>
+        <a href="/admin/jumpstart/group/" title="ECSSWEB Jumpstart Groups Admin">ECSSWEB Jumpstart Groups Admin</a>
+      </li>
+      <li>
+        <a href="/admin/jumpstart/helper/" title="ECSSWEB Jumpstart Helpers Admin">ECSSWEB Jumpstart Helpers Admin</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    Groups and Helpers
+  </div>
+  <ul class="list-group list-group-flush">
+    {% for group in groups %}
+    <li class="list-group-item">
+      <a href="{% url 'jumpstart:committee-group' group.number %}" title="Group {{ group.number }}">
+        {% if group.name %}
+        <h2 class="h6">{{ group.name }}</h2>
+        <small class="text-muted">Group {{ group.number }}</small>
+        {% else %}
+        <h2 class="h6">Group {{ group.number }}</h2>
+        {% endif %}
+      </a>
+      <div>
+        {% if group.helper.photo and is_show_helper_photos %}
+        <div class="row">
+          <div class="col-4">
+            <img class="d-block mb-3 img-fluid helper-photo-small" src="{{ group.helper.photo.url }}" alt="Helper for group {{ group.helper.group.number }}: {{ group.helper.name }}">
+          </div>
+          <div class="col-8">
+            Group Helper: {{ group.helper.name }}{% if group.helper.prefered_name %} ({{ group.helper.prefered_name }}){% endif %} <small class="text-muted">{{ group.helper.username }}</small>
+          </div>
+        </div>
+        {% else %}
+        <ul>
+          <li>Group Helper: {{ group.helper.name }}{% if group.helper.prefered_name %} ({{ group.helper.prefered_name }}){% endif %} <small class="text-muted">{{ group.helper.username }}</small></li>
+          <li>
+            {% if group.helper.photo %}
+            <span class="text-success">Group helper profile photo uploaded.</span></li>
+            {% else %}
+            <span class="text-danger">Group helper profile photo not uploaded.</span></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+        {{ group.fresher_set.all|length }} member{{ group.fresher_set.all|length|pluralize }}{% if jumpstart.is_now or jumpstart.is_after %} ({{ group.fresher_set.all|checked_in_freshers|length }} marked as checked in){% endif %}{% if is_show_members %}:
+        {% if jumpstart.is_now or jumpstart.is_after %}
+        <table class="table table-sm table-bordered mt-3">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col" class="committee-group-table-checked-in-column">Checked in</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for fresher in group.fresher_set.all %}
+            <tr>
+              <td>
+                {{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %} <small class="text-muted">{{ fresher.username }}</small>
+              </td>
+              <td>
+                {% if fresher.is_checked_in %}
+                <i class="fas fa-check-circle text-success" title="Yes" aria-label="Yes"></span>
+                {% else %}
+                <i class="fas fa-times-circle text-danger" title="No" aria-label="No"></span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <ul>
+          {% for fresher in group.fresher_set.all %}
+          <li>
+            {{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %} <small class="text-muted">{{ fresher.username }}</small>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% else %}.
+        {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

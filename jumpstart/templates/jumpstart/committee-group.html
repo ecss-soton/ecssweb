@@ -1,0 +1,79 @@
+{% extends 'jumpstart/base.html' %}
+
+{% load website_extra %}
+{% load jumpstart_extra %}
+
+{% block jumpstartcontent %}
+<div class="mb-3">
+  <a href="{% url 'jumpstart:groups' %}" title="Jumpstart groups and helpers"><i class="fas fa-arrow-circle-left"></i> Jumpstart groups and helpers</a>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    Group {{ group.number }}
+  </div>
+  <div class="card-body">
+    {% if group.name %}
+    <h2 class="h6">{{ group.name }}</h2>
+    <small class="text-muted">Group {{ group.number }}</small>
+    {% else %}
+    <h2 class="h6">Group {{ group.number }}</h2>
+    {% endif %}
+    <div class="card-text">
+      {% if group.helper.photo %}
+      <div class="row">
+        <div class="col-4">
+          <img class="d-block mb-3 img-fluid helper-photo-small" src="{{ group.helper.photo.url }}" alt="Helper for group {{ group.helper.group.number }}: {{ group.helper.name }}">
+        </div>
+        <div class="col-8">
+          Group Helper: {{ group.helper.name }}{% if group.helper.prefered_name %} ({{ group.helper.prefered_name }}){% endif %} <small class="text-muted">{{ group.helper.username }}</small>
+        </div>
+      </div>
+      {% else %}
+      <ul>
+        <li>
+          Group Helper: {{ group.helper.name }}{% if group.helper.prefered_name %} ({{ group.helper.prefered_name }}){% endif %} <small class="text-muted">{{ group.helper.username }}</small>
+        </li>
+        <li>
+          <span class="text-danger">Group helper profile photo not uploaded.</span>
+        </li>
+      </ul>
+      {% endif %}
+      {{ group.fresher_set.all|length }} member{{ group.fresher_set.all|length|pluralize }}{% if jumpstart.is_now or jumpstart.is_after %} ({{ group.fresher_set.all|checked_in_freshers|length }} marked as checked in){% endif %}:
+      {% if jumpstart.is_now or jumpstart.is_after %}
+      <table class="table table-sm table-bordered mt-3">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Checked in</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for fresher in group.fresher_set.all %}
+          <tr>
+            <td>
+              {{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %} <small class="text-muted">{{ fresher.username }}</small>
+            </td>
+            <td>
+              {% if fresher.is_checked_in %}
+              <i class="fas fa-check-circle text-success" title="Yes" aria-label="Yes"></span>
+              {% else %}
+              <i class="fas fa-times-circle text-danger" title="No" aria-label="No"></span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <ul>
+        {% for fresher in group.fresher_set.all %}
+        <li>
+          {{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %} <small class="text-muted">{{ fresher.username }}</small>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      </div>
+  </div>
+</div>
+{% endblock %}

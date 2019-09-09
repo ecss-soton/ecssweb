@@ -23,7 +23,7 @@
     <div class="card-text">
       <p>
         You are the helper for Group {{ helper.group.number }}.<br>
-        {{ helper.group.fresher_set.all|length }} member{{ helper.group.fresher_set.all|length|pluralize }} in your group{% if jumpstart.is_now or jumpstart.is_after%} ({{ num_checked_in_group_members }} marked as checked in){% endif %}.
+        {{ helper.group.fresher_set.all|length }} member{{ helper.group.fresher_set.all|length|pluralize }} in your group{% if jumpstart.is_now or jumpstart.is_after%} ({{ helper.group.fresher_set.all|checked_in_freshers|length }} marked as checked in){% endif %}.
       </p>
       <a href="{% url 'jumpstart:group' %}" title="View Your Group{% if jumpstart.is_now %} and Check in Members{% endif %}">View Group {% if jumpstart.is_now %} and Check in Members{% endif %}</a>
     </div>
