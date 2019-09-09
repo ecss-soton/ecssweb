@@ -103,7 +103,7 @@ class Fresher(models.Model):
 
 
     class Meta:
-        ordering = ['group', 'name']
+        ordering = ['group__number', 'name']
 
 
 class Helper(models.Model):
@@ -119,7 +119,7 @@ class Helper(models.Model):
 
 
     class Meta:
-        ordering = ['group']
+        ordering = ['group__number']
 
 
 class ScavengerHunt(models.Model):

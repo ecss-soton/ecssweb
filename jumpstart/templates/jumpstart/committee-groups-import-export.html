@@ -1,0 +1,59 @@
+{% extends 'jumpstart/base.html' %}
+
+{% block jumpstartcontent %}
+<div class="mb-3">
+  <a href="{% url 'jumpstart:groups' %}" title="Jumpstart groups and helpers"><i class="fas fa-arrow-circle-left"></i> Jumpstart groups and helpers</a>
+</div>
+{% for message in messages %}
+<div class="alert
+{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}
+">{{ message }}</div>
+{% endfor %}
+<div class="card my-3">
+  <div class="card-header">
+    Helpers Import/Export
+  </div>
+  <div class="card-body">
+    <div>
+      <a class="btn btn-ecssweb" href="{% url 'jumpstart:groups-helpers-export' %}" title="Export Helpers" role="button" aria-label="Export Helpers">Export Helpers</a>
+    </div>
+    {% if user.is_superuser %}
+    <form class="mt-3" method="POST" action="{% url 'jumpstart:groups-helpers-import' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="col-auto">
+          <input class="form-control" name="helpers_file" type="file" accept=".csv" required title="Choose Helpers File" aria-label="Choose Helpers File">
+        </div>
+        <div class="col-auto">
+          <input class="btn btn-ecssweb" type="submit" value="Import Helpers" title="Import Helpers" aria-label="Import Helpers">
+        </div>
+      </div>
+    </form>
+    {% endif %}
+  </div>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    Freshers Import/Export
+  </div>
+  <div class="card-body">
+    <div>
+      <a class="btn btn-ecssweb" href="{% url 'jumpstart:groups-freshers-export' %}" title="Export Freshers" role="button" aria-label="Export Freshers">Export Freshers</a>
+    </div>
+    {% if user.is_superuser %}
+    <form class="mt-3" method="POST" action="{% url 'jumpstart:groups-freshers-import' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="col-auto">
+          <input class="form-control" name="freshers_file" type="file" accept=".csv" required title="Choose Freshers File" aria-label="Choose Freshers File">
+        </div>
+        <div class="col-auto">
+          <input class="btn btn-ecssweb" type="submit" value="Import Freshers" title="Import Freshers" aria-label="Import Freshers">
+        </div>
+      </div>
+    </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
