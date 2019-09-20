@@ -72,26 +72,7 @@
           <ul class="list-unstyled">	
             <li>	
               <a href="{% url 'jumpstart:home' %}">Jumpstart</a>	
-            </li>	
-            {% if user|is_helper %}	
-            <li>	
-              <a href="#">Edit Profile</a>	
-            </li>	
-            <li>	
-              <a href="{% url 'jumpstart:city-challenge-edit' %}">Submit City Challenge</a>	
-            </li>	
-            <li>	
-              <a href="{% url 'jumpstart:scavenger-hunt-edit' %}">Submit Scavenger Hunt</a>	
-            </li>	
-            {% endif %}	
-            <li>	
-              <a href="{% url 'jumpstart:scavenger-hunt' %}">View Scavenger Hunt</a>	
-            </li>	
-            {% if user|is_helper or user|is_fresher %}	
-            <li>	
-              <a href="{% url 'jumpstart:groups' %}">Jumpstart Groups</a>	
-            </li>	
-            {% endif %}	
+            </li>
           </ul>	
         </li>	
         {% endif %}
