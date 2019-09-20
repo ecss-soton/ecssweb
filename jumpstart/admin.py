@@ -12,6 +12,10 @@ class GroupAdmin(admin.ModelAdmin):
     search_fields = ('number', 'name')
 
 
+    def has_module_permission(self,request):
+        return True
+
+
     def helper(self, obj):
         return obj.helper.username
 
@@ -21,6 +25,10 @@ class HelperAdmin(admin.ModelAdmin):
     search_fields = ('name', 'prefered_name', 'username')
 
 
+    def has_module_permission(self,request):
+        return True
+
+
     def has_photo(self, obj):
         return bool(obj.photo)
     has_photo.boolean = True
@@ -28,6 +36,10 @@ class HelperAdmin(admin.ModelAdmin):
 class FresherAdmin(admin.ModelAdmin):
     list_display = ('name', 'prefered_name', 'username', 'group', 'is_checked_in')
     search_fields = ('name', 'prefered_name', 'username')
+
+
+    def has_module_permission(self,request):
+        return True
 
 
 admin.site.register(Jumpstart, JumpstartAdmin)
