@@ -62,12 +62,12 @@
             <img class="d-block mb-3 img-fluid helper-photo-small" src="{{ group.helper.photo.url }}" alt="Helper for group {{ group.helper.group.number }}: {{ group.helper.name }}">
           </div>
           <div class="col-8">
-            Group Helper: {{ group.helper.name }}{% if group.helper.prefered_name %} ({{ group.helper.prefered_name }}){% endif %} <small class="text-muted">{{ group.helper.username }}</small>
+            Group Helper: {{ group.helper.name }}{% if group.helper.preferred_name %} ({{ group.helper.preferred_name }}){% endif %} <small class="text-muted">{{ group.helper.username }}</small>
           </div>
         </div>
         {% else %}
         <ul>
-          <li>Group Helper: {{ group.helper.name }}{% if group.helper.prefered_name %} ({{ group.helper.prefered_name }}){% endif %} <small class="text-muted">{{ group.helper.username }}</small></li>
+          <li>Group Helper: {{ group.helper.name }}{% if group.helper.preferred_name %} ({{ group.helper.preferred_name }}){% endif %} <small class="text-muted">{{ group.helper.username }}</small></li>
           <li>
             {% if group.helper.photo %}
             <span class="text-success">Group helper profile photo uploaded.</span></li>
@@ -89,7 +89,7 @@
             {% for fresher in group.fresher_set.all %}
             <tr>
               <td>
-                {{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %} <small class="text-muted">{{ fresher.username }}</small>
+                {{ fresher.name }}{% if fresher.preferred_name %} ({{ fresher.preferred_name }}){% endif %} <small class="text-muted">{{ fresher.username }}</small>
               </td>
               <td>
                 {% if fresher.is_checked_in %}
@@ -106,7 +106,7 @@
         <ul>
           {% for fresher in group.fresher_set.all %}
           <li>
-            {{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %} <small class="text-muted">{{ fresher.username }}</small>
+            {{ fresher.name }}{% if fresher.preferred_name %} ({{ fresher.preferred_name }}){% endif %} <small class="text-muted">{{ fresher.username }}</small>
           </li>
           {% endfor %}
         </ul>

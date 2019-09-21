@@ -14,7 +14,7 @@ from django.conf import settings
 
 from .models import Fresher, Helper, Group, CityChallengeScoreAuditlog
 
-from .forms import HelperProfileEditForm, FresherProfileEditForm, EditCityChallengeForm, EditScavengerHuntForm, ScoreMitreChallengeForm, ScoreCodingChallengeForm, ScoreStagsQuizForm, ScoreGamesChallengeForm, ScoreSportsChallengeForm
+from .forms import HelperProfileEditForm, FresherProfileEditForm, EditCityChallengeForm, EditScavengerHuntForm#, ScoreMitreChallengeForm, ScoreCodingChallengeForm, ScoreStagsQuizForm, ScoreGamesChallengeForm, ScoreSportsChallengeForm
 
 from .utils import jumpstart_check, is_fresher, is_helper
 
@@ -331,7 +331,7 @@ class CommitteeGroupsImportExportView(UserPassesTestMixin, View):
 
 @method_decorator(login_required, name='dispatch')
 class CommitteeGroupsHelpersExportView(UserPassesTestMixin, View):
-    """Export CSV file of groups helpers for committee, with columns of group number, username, name, prefered name and photo file."""
+    """Export CSV file of groups helpers for committee, with columns of group number, username, name, preferred name and photo file."""
 
     raise_exception = True
 
@@ -346,15 +346,15 @@ class CommitteeGroupsHelpersExportView(UserPassesTestMixin, View):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="helpers.csv"'
         csv_writer = csv.writer(response)
-        csv_writer.writerow(['group_number', 'username', 'name', 'prefered_name', 'photo_file'])
+        csv_writer.writerow(['group_number', 'username', 'name', 'preferred_name', 'photo_file'])
         for helper in helpers:
-            csv_writer.writerow([helper.group.number, helper.username, helper.name, helper.prefered_name, helper.photo])
+            csv_writer.writerow([helper.group.number, helper.username, helper.name, helper.preferred_name, helper.photo])
         return response
 
 
 @method_decorator(login_required, name='dispatch')
 class CommitteeGroupsFreshersExportView(UserPassesTestMixin, View):
-    """Export CSV file of freshers for committee, with columns of group number, username, name, prefered name and if checked in."""
+    """Export CSV file of freshers for committee, with columns of group number, username, name, preferred name and if checked in."""
 
     raise_exception = True
 
@@ -369,16 +369,16 @@ class CommitteeGroupsFreshersExportView(UserPassesTestMixin, View):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="freshers.csv"'
         csv_writer = csv.writer(response)
-        csv_writer.writerow(['group_number', 'username', 'name', 'prefered_name', 'is_checked_in'])
+        csv_writer.writerow(['group_number', 'username', 'name', 'preferred_name', 'is_checked_in'])
         for fresher in freshers:
-            csv_writer.writerow([fresher.group.number, fresher.username, fresher.name, fresher.prefered_name, fresher.is_checked_in])
+            csv_writer.writerow([fresher.group.number, fresher.username, fresher.name, fresher.preferred_name, fresher.is_checked_in])
         return response
 
 
 @method_decorator(login_required, name='dispatch')
 class CommitteeGroupsHelpersImportView(UserPassesTestMixin, View):
     """Import helpers from a CSV file for committee.
-       The CSV file has columns of group number, username, name, prefered name (optional) and photo file (optional).
+       The CSV file has columns of group number, username, name, preferred name (optional) and photo file (optional).
        POST method only.
     """
 
@@ -407,13 +407,13 @@ class CommitteeGroupsHelpersImportView(UserPassesTestMixin, View):
                     group_number = int(row['group_number'])
                     username = row['username']
                     name = row['name']
-                    prefered_name = row.get('prefered_name', None)
+                    preferred_name = row.get('preferred_name', None)
                     photo_file = row.get('photo_file', None)
                     # Create instances
                     group, created = Group.objects.get_or_create(number=group_number)
                     if created:
                         num_new_groups += 1
-                    helper = Helper.objects.create(username=username, name=name, group=group, prefered_name=prefered_name, photo=photo_file)
+                    helper = Helper.objects.create(username=username, name=name, group=group, preferred_name=preferred_name, photo=photo_file)
                     helper.save()
                     num_helpers += 1
                 messages.success(request, 'Successfully imported {} helper(s). {} new group(s) created.'.format(num_helpers, num_new_groups))
@@ -426,7 +426,7 @@ class CommitteeGroupsHelpersImportView(UserPassesTestMixin, View):
 @method_decorator(login_required, name='dispatch')
 class CommitteeGroupsFreshersImportView(UserPassesTestMixin, View):
     """Import freshers from a CSV file for committee.
-       The CSV file has columns of group number, username, name, prefered name (optional) and if checked in (default False).
+       The CSV file has columns of group number, username, name, preferred name (optional) and if checked in (default False).
        POST method only.
     """
 
@@ -455,13 +455,13 @@ class CommitteeGroupsFreshersImportView(UserPassesTestMixin, View):
                     group_number = int(row['group_number'])
                     username = row['username']
                     name = row['name']
-                    prefered_name = row.get('prefered_name', None)
+                    preferred_name = row.get('preferred_name', None)
                     is_checked_in = row.get('is_checked_in', False)
                     # Create instances
                     group, created = Group.objects.get_or_create(number=group_number)
                     if created:
                         num_new_groups += 1
-                    fresher = Fresher.objects.create(username=username, name=name, group=group, prefered_name=prefered_name, is_checked_in=is_checked_in)
+                    fresher = Fresher.objects.create(username=username, name=name, group=group, preferred_name=preferred_name, is_checked_in=is_checked_in)
                     fresher.save()
                     num_freshers += 1
                 messages.success(request, 'Successfully imported {} fresher(s). {} new group(s) created.'.format(num_freshers, num_new_groups))

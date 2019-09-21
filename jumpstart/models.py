@@ -17,11 +17,12 @@ def helper_photo_file_name(instance, filename):
 
 
 def charity_shop_challenge_photo_file_name(instance, filename):
-    return ('jumpstart2018/city-challenge/charity-shop-challenge-group{}-{}{}'.format(instance.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
+    return ('jumpstart/city-challenge/charity-shop-challenge-group{}-{}{}'.format(instance.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
 
 
 def scavenger_hunt_photo_file_name(instance, filename):
     return ('jumpstart2018/city-challenge/scavenger-hunt-group{}-{}{}'.format(instance.group.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
+
 
 '''
 Jumpstart config, does not link to other models (except Site so only one is allowed).
@@ -73,12 +74,6 @@ class Jumpstart(models.Model):
 class Group(models.Model):
     number = models.PositiveSmallIntegerField(unique=True, validators=[MinValueValidator(1)], verbose_name='Group Number')
     name = models.CharField(max_length=50, null=True, blank=True, verbose_name='Group Name')
-    charity_shop_challenge_photo = models.ImageField(upload_to=charity_shop_challenge_photo_file_name, validators=[validate_photo_file_extension], null=True, blank=True, verbose_name='Charity Shop Challenge Photo')
-    mitre_challenge_score = models.IntegerField(null=True, blank=True)
-    coding_challenge_score = models.IntegerField(null=True, blank=True)
-    stags_quiz_score = models.IntegerField(null=True, blank=True)
-    games_challenge_score = models.IntegerField(null=True, blank=True)
-    sports_challenge_score = models.IntegerField(null=True, blank=True)
 
 
     def __str__(self):
@@ -93,7 +88,7 @@ class Fresher(models.Model):
     username = models.CharField(max_length=20, primary_key=True, verbose_name='Username')
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, verbose_name='UUID')
     name = models.CharField(max_length=50, verbose_name='Name')
-    prefered_name = models.CharField(max_length=50, null=True, blank=True, verbose_name='Prefered Name')
+    preferred_name = models.CharField(max_length=50, null=True, blank=True, verbose_name='preferred Name')
     group = models.ForeignKey(Group, on_delete=models.PROTECT, verbose_name='Group')
     is_checked_in = models.BooleanField(default=False, null=False, verbose_name='Checked In')
 
@@ -109,7 +104,7 @@ class Fresher(models.Model):
 class Helper(models.Model):
     username = models.CharField(max_length=50, primary_key=True, verbose_name='Username')
     name = models.CharField(max_length=50, verbose_name='Name')
-    prefered_name = models.CharField(max_length=50, null=True, blank=True, verbose_name='Preferend Name')
+    preferred_name = models.CharField(max_length=50, null=True, blank=True, verbose_name='Preferred Name')
     photo = models.ImageField(upload_to=helper_photo_file_name, blank=True, validators=[validate_photo_file_extension], verbose_name='Photo')
     group = models.OneToOneField(Group, on_delete=models.PROTECT, verbose_name='Group')
 
@@ -120,6 +115,12 @@ class Helper(models.Model):
 
     class Meta:
         ordering = ['group__number']
+
+
+class CharityShopChallengeSubmission(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.PROTECT)
+    description = models.TextField()
+    photo = models.ImageField(upload_to=charity_shop_challenge_photo_file_name, validators=[validate_photo_file_extension], null=True, blank=True, verbose_name='Charity Shop Challenge Photo')
 
 
 class ScavengerHunt(models.Model):

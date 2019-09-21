@@ -44,14 +44,14 @@
         <div class="col-8">
           <ul>
             <li>Name: {{ helper.name }}</li>
-            <li>Prefered Name: {% if helper.prefered_name %}{{ helper.prefered_name }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
+            <li>Preferred Name: {% if helper.preferred_name %}{{ helper.preferred_name }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
           </ul>
         </div>
       </div>
       {% else %}
       <ul>
         <li>Name: {{ helper.name }}</li>
-        <li>Prefered Name: {% if helper.prefered_name %}{{ helper.prefered_name }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
+        <li>Preferred Name: {% if helper.preferred_name %}{{ helper.preferred_name }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
         <li><span class="text-danger">Profile photo not uploaded.</span></li>
       </ul>
       {% endif %}
@@ -67,7 +67,7 @@
 </div>
 <div class="card my-3">
   <div class="card-header">
-    City Challenge
+    <a href="#">City Challenge</a>
   </div>
   <div class="card-body">
     <div class="card-text">
@@ -75,9 +75,17 @@
         <li>
           Group name: {% if helper.group.name %}{{ helper.group.name }}{% else %}<span class="text-muted">Not set</span>{% endif %}
         </li>
-        <li>{% if helper.group.charity_shop_challenge_photo %}<span class="text-success">Charity Shop Challenge photo uploaded.</span>{% else %}<span class="text-danger">Charity Shop Challenge photo not uploaded.</span>{% endif %}</li>
+        <li>
+          {% if helper.group.charityshopchallengesubmission_set.all %}
+          <span class="text-success">Charity Shop Challenge submitted.</span>
+          {% else %}
+          <span class="text-danger">Charity Shop Challenge not submitted.</span>
+          {% endif %}
+        </li>
       </ul>
-      {% if jumpstart.is_now %}
+      {% if jumpstart.is_before %}
+      <small class="d-block text-muted"></small>
+      {% elif jumpstart.is_now %}
       <a href="{% url 'jumpstart:city-challenge-edit' %}" title="Edit City Challenge for Your Group">Edit City Challenge</a>
       {% else %}
       <a href="#" title="View City Challenge of Your Group">View City Challenge</a>

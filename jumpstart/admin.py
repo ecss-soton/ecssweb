@@ -17,8 +17,8 @@ class GroupAdmin(admin.ModelAdmin):
 
 
 class HelperAdmin(admin.ModelAdmin):
-    list_display = ('name', 'prefered_name', 'username', 'group', 'has_photo')
-    search_fields = ('name', 'prefered_name', 'username')
+    list_display = ('name', 'preferred_name', 'username', 'group', 'has_photo')
+    search_fields = ('name', 'preferred_name', 'username')
 
 
     def has_photo(self, obj):
@@ -26,8 +26,8 @@ class HelperAdmin(admin.ModelAdmin):
     has_photo.boolean = True
 
 class FresherAdmin(admin.ModelAdmin):
-    list_display = ('name', 'prefered_name', 'username', 'group', 'is_checked_in')
-    search_fields = ('name', 'prefered_name', 'username')
+    list_display = ('name', 'preferred_name', 'username', 'group', 'is_checked_in')
+    search_fields = ('name', 'preferred_name', 'username')
 
 
 admin.site.register(Jumpstart, JumpstartAdmin)

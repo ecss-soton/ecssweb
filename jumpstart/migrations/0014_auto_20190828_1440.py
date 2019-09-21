@@ -20,8 +20,8 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='fresher',
-            name='prefered_name',
-            field=models.CharField(blank=True, max_length=50, null=True, verbose_name='Prefered Name'),
+            name='preferred_name',
+            field=models.CharField(blank=True, max_length=50, null=True, verbose_name='preferred Name'),
         ),
         migrations.AlterField(
             model_name='fresher',

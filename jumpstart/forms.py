@@ -11,7 +11,7 @@ class HelperProfileEditForm(ModelForm):
 
     class Meta:
         model = Helper
-        fields = ['name', 'prefered_name', 'photo']
+        fields = ['name', 'preferred_name', 'photo']
 
 
     def __init__(self, *args, **kwargs):
@@ -36,7 +36,7 @@ class FresherProfileEditForm(ModelForm):
 
     class Meta:
         model = Fresher
-        fields = ['name', 'prefered_name']
+        fields = ['name', 'preferred_name']
 
 
     def __init__(self, *args, **kwargs):
@@ -51,7 +51,7 @@ class FresherProfileEditForm(ModelForm):
 class EditCityChallengeForm(ModelForm):
     class Meta:
         model = Group
-        fields = ['name', 'charity_shop_challenge_photo']
+        fields = ['name']
 
     def __init__(self, *args, **kwargs):
         super(EditCityChallengeForm, self).__init__(*args, **kwargs)
@@ -89,66 +89,66 @@ class EditScavengerHuntForm(ModelForm):
         return clean_image(photo)
 
 
-class ScoreMitreChallengeForm(ModelForm):
-    class Meta:
-        model = Group
-        fields = ['mitre_challenge_score']
+# class ScoreMitreChallengeForm(ModelForm):
+#     class Meta:
+#         model = Group
+#         fields = ['mitre_challenge_score']
 
-    def __init__(self, *args, **kwargs):
-        super(ScoreMitreChallengeForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control mx-3',
-            })
-
-
-class ScoreCodingChallengeForm(ModelForm):
-    class Meta:
-        model = Group
-        fields = ['coding_challenge_score']
-
-    def __init__(self, *args, **kwargs):
-        super(ScoreCodingChallengeForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control mx-3',
-            })
+#     def __init__(self, *args, **kwargs):
+#         super(ScoreMitreChallengeForm, self).__init__(*args, **kwargs)
+#         for field in iter(self.fields):
+#             self.fields[field].widget.attrs.update({
+#                 'class': 'form-control mx-3',
+#             })
 
 
-class ScoreStagsQuizForm(ModelForm):
-    class Meta:
-        model = Group
-        fields = ['stags_quiz_score']
+# class ScoreCodingChallengeForm(ModelForm):
+#     class Meta:
+#         model = Group
+#         fields = ['coding_challenge_score']
 
-    def __init__(self, *args, **kwargs):
-        super(ScoreStagsQuizForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control mx-3',
-            })
-
-
-class ScoreGamesChallengeForm(ModelForm):
-    class Meta:
-        model = Group
-        fields = ['games_challenge_score']
-
-    def __init__(self, *args, **kwargs):
-        super(ScoreGamesChallengeForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control mx-3',
-            })
+#     def __init__(self, *args, **kwargs):
+#         super(ScoreCodingChallengeForm, self).__init__(*args, **kwargs)
+#         for field in iter(self.fields):
+#             self.fields[field].widget.attrs.update({
+#                 'class': 'form-control mx-3',
+#             })
 
 
-class ScoreSportsChallengeForm(ModelForm):
-    class Meta:
-        model = Group
-        fields = ['sports_challenge_score']
+# class ScoreStagsQuizForm(ModelForm):
+#     class Meta:
+#         model = Group
+#         fields = ['stags_quiz_score']
 
-    def __init__(self, *args, **kwargs):
-        super(ScoreSportsChallengeForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control mx-3',
-            })
+#     def __init__(self, *args, **kwargs):
+#         super(ScoreStagsQuizForm, self).__init__(*args, **kwargs)
+#         for field in iter(self.fields):
+#             self.fields[field].widget.attrs.update({
+#                 'class': 'form-control mx-3',
+#             })
+
+
+# class ScoreGamesChallengeForm(ModelForm):
+#     class Meta:
+#         model = Group
+#         fields = ['games_challenge_score']
+
+#     def __init__(self, *args, **kwargs):
+#         super(ScoreGamesChallengeForm, self).__init__(*args, **kwargs)
+#         for field in iter(self.fields):
+#             self.fields[field].widget.attrs.update({
+#                 'class': 'form-control mx-3',
+#             })
+
+
+# class ScoreSportsChallengeForm(ModelForm):
+#     class Meta:
+#         model = Group
+#         fields = ['sports_challenge_score']
+
+#     def __init__(self, *args, **kwargs):
+#         super(ScoreSportsChallengeForm, self).__init__(*args, **kwargs)
+#         for field in iter(self.fields):
+#             self.fields[field].widget.attrs.update({
+#                 'class': 'form-control mx-3',
+#             })

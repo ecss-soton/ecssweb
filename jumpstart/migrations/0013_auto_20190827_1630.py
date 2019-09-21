@@ -16,11 +16,11 @@ class Migration(migrations.Migration):
         migrations.RenameField(
             model_name='helper',
             old_name='nickname',
-            new_name='prefered_name',
+            new_name='preferred_name',
         ),
         migrations.AlterField(
             model_name='helper',
-            name='prefered_name',
+            name='preferred_name',
             field=models.CharField(blank=True, max_length=50, null=True, verbose_name='Preferend Name'),
         ),
         migrations.AlterField(

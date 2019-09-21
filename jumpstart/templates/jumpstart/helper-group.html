@@ -31,7 +31,7 @@
         <tbody>
           {% for fresher in helper.group.fresher_set.all %}
           <tr>
-            <td>{{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %}</td>
+            <td>{{ fresher.name }}{% if fresher.preferred_name %} ({{ fresher.preferred_name }}){% endif %}</td>
             <td>
               {% if jumpstart.is_now %}
               <input type="checkbox" name="{{ fresher.uuid }}" form="groupMembersCheckInForm" value="checked in" {% if fresher.is_checked_in %}checked{% endif %}>
@@ -51,7 +51,7 @@
       <ul>
         {% for fresher in helper.group.fresher_set.all %}
         <li>
-          {{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %}
+          {{ fresher.name }}{% if fresher.preferred_name %} ({{ fresher.preferred_name }}){% endif %}
         </li>
         {% endfor %}
       </ul>

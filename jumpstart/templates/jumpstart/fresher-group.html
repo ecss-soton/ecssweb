@@ -26,7 +26,7 @@
       <ul>
         {% for fresher in fresher.group.fresher_set.all %}
         <li>
-          {{ fresher.name }}{% if fresher.prefered_name %} ({{ fresher.prefered_name }}){% endif %}
+          {{ fresher.name }}{% if fresher.preferred_name %} ({{ fresher.preferred_name }}){% endif %}
         </li>
         {% endfor %}
       </ul>

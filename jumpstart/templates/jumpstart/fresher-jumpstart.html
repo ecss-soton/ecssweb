@@ -41,7 +41,7 @@
   <div class="card-body">
     <div class="card-text">
       <p>
-        Your group helper is {{ fresher.group.helper.name }}{% if fresher.group.helper.prefered_name %} ({{ fresher.group.helper.prefered_name }}){% endif %}.
+        Your group helper is {{ fresher.group.helper.name }}{% if fresher.group.helper.preferred_name %} ({{ fresher.group.helper.preferred_name }}){% endif %}.
       </p>
       {% if fresher.group.helper.photo %}
       <img class="img-fluid d-block helper-photo-small" src="{{ fresher.group.helper.photo.url }}" alt="{{ fresher.group.helper.name }}">
@@ -57,7 +57,7 @@
     <div class="card-text">
       <ul>
         <li>Name: {{ fresher.name }}</li>
-        <li>Prefered Name: {% if fresher.prefered_name %}{{ fresher.prefered_name }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
+        <li>Preferred Name: {% if fresher.preferred_name %}{{ fresher.preferred_name }}{% else %}<span class="text-muted">Not set</span>{% endif %}</li>
       </ul>
       {% if jumpstart.is_before or jumpstart.is_now %}
       <a href="{% url 'jumpstart:profile' %}" title="Edit Your Profile">Edit Your Profile</a>
