@@ -149,6 +149,7 @@ USE_TZ = True
 
 AUTHENTICATION_BACKENDS = [
     'ecsswebauth.backends.SamlBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 LOGIN_REDIRECT_URL = 'portal:overview'
