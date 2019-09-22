@@ -112,18 +112,6 @@ body {
 #cityChallengeGroups h3 {
   color: #995cb4;
 }
-/* Maps */
-#maps {
-  border: 5px solid rgb(84, 130, 53);
-  background: url("{% static 'website/images/freshers/freshers-2019/bg-pcb-green.jpg' %}") repeat;
-  color: rgb(56, 87, 35);
-}
-#maps h2 {
-  color: #528034;
-}
-#map {
-  height: 30rem;
-}
 </style>
 {% endblock %}
 
@@ -142,9 +130,6 @@ body {
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#cityChallengeGroups">Groups</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#maps">Maps</a>
       </li>
     </ul>
   </nav>
@@ -227,30 +212,10 @@ body {
       <section id="cityChallengeGroups" class="p-2 pt-3">
         <h3 class="text-uppercase">City Challenge Groups</h3>
         <p>
-          City challenge groups will be available soon.
-          <!--<a href="{% url 'jumpstart:home' %}">Login to view groups</a>.-->
+          <a href="{% url 'jumpstart:home' %}">Login to view groups</a>.
         </p>
       </section>
     </div>
-  </section>
-  <section id="maps" class="pt-4">
-    <div class="container">
-      <h2 class="text-uppercase">Maps</h2>
-      <p>Jumpstart maps will be available soon.</p>
-    </div>
-    <!--
-    <div id="map"></div>
-    <div class="container">
-      <ul>
-        <li>
-          Red markers are City Challenge stations.
-        </li>
-        <li>
-          Blue markers are places you might be interested in.
-        </li>
-      </ul>
-    </div>
-    -->
   </section>
   <div class="container notes">
     <hr>
@@ -303,62 +268,4 @@ $("#pgScheduleButton").click(function() {
   }
 });
 </script>
-
-<!-- Google maps -->
-<!--
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-kOxwIwSTTy1aT79V_l4LSijhFCKLlgM"></script>
-<script>
-  var mapOptions = {
-    center: new google.maps.LatLng(50.9264099,-1.3953199),
-    zoom: 13,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-
-  var locations = [{"label":"Mountbatten","description":"This building houses our amazing external talks - make sure you don't miss out on great opportunities!","lat":50.937599,"lng":-1.398318,"cityChallenge":"true"},{"label":"Zepler","description":"As your new second home, Zepler is where you will find the majority of our high-tech computer labs - open until 11pm (you can even play games in here!!)","lat":50.937319,"lng":-1.397701,"cityChallenge":"true"},{"label":"Wild Lime","description":"A great student pub on Portswood High Street","lat":50.924746,"lng":-1.39362,"cityChallenge":null},{"label":"The Hobbit","description":"An even better student pub in Portswood - the name is no coincidence!","lat":50.918778,"lng":-1.395142,"cityChallenge":null},{"label":"Scoops","description":"Ice cream and other sinful pleasures","lat":50.926757,"lng":-1.391594,"cityChallenge":"true"},{"label":"The Common","description":"This is a big big park - the biggest in Southampton! (it's very big)","lat":50.931007,"lng":-1.408199,"cityChallenge":null},{"label":"Stags","description":"This is the only pub\/bar we have on Highfield campus - Karaoke Thursdays!","lat":50.934619,"lng":-1.397355,"cityChallenge":"true"},{"label":"Switch","description":"Night club right in the middle of the city centre!","lat":50.907285,"lng":-1.404765,"cityChallenge":null},{"label":"Student Union Building","description":"AKA SUSU Building - here you can find the Cinema, Piazza (food) and most of our societies!","lat":50.93435,"lng":-1.397234,"cityChallenge":null},{"label":"Jubilee Sports Hall","description":"Gym and other sports!","lat":50.933886,"lng":-1.396328,"cityChallenge":null},{"label":"Student Services","description":"This is where you go for important stuff & for help - acommodation, various documents, fees & funding and many more!","lat":50.934014,"lng":-1.395934,"cityChallenge":null},{"label":"Post Office","description":"This is the University post office - you can send mail out, buy stamps for your collection, and even collect mail!","lat":50.937749,"lng":-1.398195,"cityChallenge":null},{"label":"Barclays","description":"It's a bank!","lat":50.937721,"lng":-1.398131,"cityChallenge":null},{"label":"Santander","description":"It's a bank!","lat":50.937774,"lng":-1.398003,"cityChallenge":null},{"label":"Costa","description":"Coffee shop - for those long days in the Zepler computer labs!","lat":50.937796,"lng":-1.39746,"cityChallenge":null},{"label":"Pret a Manger","description":"Fancy coffee shop & food","lat":50.937765,"lng":-1.397729,"cityChallenge":null},{"label":"Hartley Library","description":"The university library - it's full of books (and PCs) - you can study there!","lat":50.934988,"lng":-1.395858,"cityChallenge":null},{"label":"Avenue Campus","description":"This is the second campus!","lat":50.928737,"lng":-1.402415,"cityChallenge":null},{"label":"Jesters Nightclub","description":"Affectionately known as the 'Palace of Dreams', Jesters is a student favourite on Portswood","lat":50.918297,"lng":-1.395309,"cityChallenge":null},{"label":"The Edge Nightclub","description":"As Southampton's best gay club you will probably end up spending a lot of time here, regardless of your sexual orientation","lat":50.910069,"lng":-1.399512,"cityChallenge":null},{"label":"The Mitre","description":"One of the best student pubs in Portswood","lat":50.926695,"lng":-1.390737,"cityChallenge":"true"}];
-
-  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-  var markers = [];
-
-  function makeNameTag(name, description){
-    return "<span><h3>" + name + "</h3><p>" + description + "</p></span>";
-  }
-
-
-  $(document).ready(function(){
-    google.maps.event.addDomListener(window, 'load');
-
-    $(locations).each(function(index, position){
-      var options = {
-        position: position,
-        map: map,
-        title: position.label,
-      };
-
-      if(position.cityChallenge){
-          options.icon = 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
-      } else {
-          options.icon = 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-      }
-          
-      var marker = new google.maps.Marker(options);
-
-      marker.infowindow = new google.maps.InfoWindow({
-          content: makeNameTag(position.label, position.description)
-      });
-
-
-      marker.addListener('click', function(){
-        $(markers).each(function(){
-            this.infowindow.close();
-        });
-
-        marker.infowindow.open(map, marker);
-      });
-
-      markers.push(marker);
-    });
-  });
-</script>
--->
 {% endblock %}
