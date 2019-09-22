@@ -1,0 +1,76 @@
+{% extends 'jumpstart/base.html' %}
+
+{% block jumpstartcontent %}
+<div class="mb-3">
+  <a href="{% url 'jumpstart:home' %}" title="Jumpstart Portal"><i class="fas fa-arrow-circle-left"></i> Jumpstart portal</a>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    City Challenge
+  </div>
+  <div class="card-body">
+    <h2 class="h6">Group {{ group.number }}</h2>
+    <div class="card-text">
+      Group name: {% if group.name %}{{ group.name }}{% else %}<span class="text-danger">Not set</span>{% endif %}<br>
+      {% if group.charityshopchallengesubmission_set.all %}
+      {% else %}
+      <span class="text-danger">Charity Shop Challenge not submitted.</span>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    Edit Group Name
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      {% for field in edit_group_name_form %}
+      <div class="form-group">
+        {{ field.label_tag }}{{ field }}
+        {% if field.errors %}
+        <small class="form-text text-danger">
+          {% for err in field.errors %}{{ err }}{% endfor %}
+        </small>
+        {% endif %}
+      </div>
+      {% endfor %}
+      <input type="Submit" class="btn btn-ecssweb" value="Update">
+      <div class="mt-2">
+        <small class="text-muted">Your group name will be visible to ECSS committee, City Challenge helpers and all freshers participating in City Challenge. Your other submissions will be visible to your group members and ECSS committee members.</small>
+      </div>
+      <div class="mt-2">
+        <small class="text-muted">Your submissions might be used for other part of the Jumpstart event.</small>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    Submit Charity Shop Challenge
+  </div>
+  <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for field in submit_charity_shop_challenge %}
+      <div class="form-group">
+        {{ field.label_tag }}{{ field }}
+        {% if field.errors %}
+        <small class="form-text text-danger">
+          {% for err in field.errors %}{{ err }}{% endfor %}
+        </small>
+        {% endif %}
+      </div>
+      {% endfor %}
+      <input type="Submit" class="btn btn-ecssweb" value="Submit">
+      <div class="mt-2">
+        <small class="text-muted">Your group name will be visible to ECSS committee, City Challenge helpers and all freshers participating in City Challenge. Your other submissions will be visible to your group members and ECSS committee members.</small>
+      </div>
+      <div class="mt-2">
+        <small class="text-muted">Your submissions might be used for other part of the Jumpstart event.</small>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

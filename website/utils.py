@@ -9,7 +9,7 @@ def is_committee(user):
 
 
 def rotate_image(image):
-    """ Rotate an image according to it's exif info. """
+    """ Rotate an image according to it's EXIF info. """
 
     try:
         orientation_tag = 274 # 0x0112

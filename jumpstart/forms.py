@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
-from .models import Helper, Fresher, Group, ScavengerHunt
+from .models import Helper, Fresher, Group, CharityShopChallengeSubmission, ScavengerHunt
 
 from website.utils import clean_image
 
@@ -48,23 +48,46 @@ class FresherProfileEditForm(ModelForm):
             })
 
 
-class EditCityChallengeForm(ModelForm):
+class EditGroupNameForm(ModelForm):
+    """Form for helpers to edit their group name."""
+
     class Meta:
         model = Group
         fields = ['name']
 
+
     def __init__(self, *args, **kwargs):
-        super(EditCityChallengeForm, self).__init__(*args, **kwargs)
-        self.fields['charity_shop_challenge_photo'].widget.attrs.update({
+        super(EditGroupNameForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+            })
+
+
+class SubmitCharityShopChallengeForm(ModelForm):
+    """Form for helpers to make charity shop challenge submissions."""
+
+    class Meta:
+        model = CharityShopChallengeSubmission
+        fields = ['photo', 'description']
+
+
+    def __init__(self, *args, **kwargs):
+        super(SubmitCharityShopChallengeForm, self).__init__(*args, **kwargs)
+        self.fields['photo'].widget.attrs.update({
             'accept': 'image/jpeg, image/png',
+        })
+        self.fields['description'].widget.attrs.update({
+            'rows': 3,
         })
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control',
             })
 
-    def clean_charity_shop_challenge_photo(self):
-        photo = self.cleaned_data.get('charity_shop_challenge_photo', False)
+    
+    def clean_photo(self):
+        photo = self.cleaned_data.get('photo', False)
         return clean_image(photo)
 
 

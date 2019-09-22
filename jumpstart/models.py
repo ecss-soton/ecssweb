@@ -119,7 +119,7 @@ class Helper(models.Model):
 
 class CharityShopChallengeSubmission(models.Model):
     group = models.ForeignKey(Group, on_delete=models.PROTECT)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     photo = models.ImageField(upload_to=charity_shop_challenge_photo_file_name, validators=[validate_photo_file_extension], null=True, blank=True, verbose_name='Charity Shop Challenge Photo')
 
 

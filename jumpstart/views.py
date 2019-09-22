@@ -14,7 +14,7 @@ from django.conf import settings
 
 from .models import Fresher, Helper, Group, CityChallengeScoreAuditlog
 
-from .forms import HelperProfileEditForm, FresherProfileEditForm, EditCityChallengeForm, EditScavengerHuntForm#, ScoreMitreChallengeForm, ScoreCodingChallengeForm, ScoreStagsQuizForm, ScoreGamesChallengeForm, ScoreSportsChallengeForm
+from .forms import HelperProfileEditForm, FresherProfileEditForm, EditGroupNameForm, SubmitCharityShopChallengeForm, EditScavengerHuntForm
 
 from .utils import jumpstart_check, is_fresher, is_helper
 
@@ -472,47 +472,75 @@ class CommitteeGroupsFreshersImportView(UserPassesTestMixin, View):
 
 
 @method_decorator(login_required, name='dispatch')
-class CityChallengeEditView(UserPassesTestMixin, View):
+class CityChallengeView(UserPassesTestMixin, View):
+    """Show City Challenge for freshers and helpers and allow helpers to submit during the event."""
     
     raise_exception = True
 
     def test_func(self):
-        return jumpstart_check(self.request.user)
+        """Only freshers and helpers have access to this view."""
+        return is_fresher(self.request.user) or is_helper(self.request.user)
 
     def get(self, request):
-        if is_committee(request.user):
-            raise Http404()
+        if is_fresher(request.user):
+            pass
         elif is_helper(request.user):
+            # group = Group.objects.get(helper=request.user.username)
+            # city_challenge_edit_form = EditCityChallengeForm(instance=group)
+            # context = {
+            #     'group': group,
+            #     'city_challenge_edit_form': city_challenge_edit_form,
+            # }
+            # return render(request, 'jumpstart/city-challenge-edit.html', context)
+            return self._get_helper(request)
+        else:
+            raise PermissionDenied()
+
+
+    def _get_helper(self, request):
+        """Render page for helpers."""
+        # Check if is during the event
+        jumpstart = get_current_site(request).jumpstart
+        if jumpstart.is_now:
+            # Render submission forms if during the event
             group = Group.objects.get(helper=request.user.username)
-            city_challenge_edit_form = EditCityChallengeForm(instance=group)
+            edit_group_name_form = EditGroupNameForm(instance=group)
+            submit_charity_shop_challenge = SubmitCharityShopChallengeForm()
             context = {
                 'group': group,
-                'city_challenge_edit_form': city_challenge_edit_form,
+                'edit_group_name_form': edit_group_name_form,
+                'submit_charity_shop_challenge': submit_charity_shop_challenge,
             }
-            return render(request, 'jumpstart/city-challenge-edit.html', context)
+            return render(request, 'jumpstart/helper-city-challenge-edit.html', context)
         else:
-            raise Http404()
-
-    def post(self, request):
-        if is_committee(request.user):
-            raise Http404()
-        elif is_helper(request.user):
+            # Render view only if not during the event
             group = Group.objects.get(helper=request.user.username)
-
-            city_challenge_edit_form = EditCityChallengeForm(request.POST, request.FILES, instance=group)
-
-            if city_challenge_edit_form.is_valid():
-                city_challenge_edit_form.save()
-                messages.success(request, 'Your group\'s City Challenge has been updated successfully.')
-                return redirect('jumpstart:home')
-
             context = {
                 'group': group,
-                'city_challenge_edit_form': city_challenge_edit_form,
             }
-            return render(request, 'jumpstart/city-challenge-edit.html', context)
-        else:
-            raise Http404()
+            return render(request, 'jumpstart/helper-city-challenge.html', context)
+
+
+    # def post(self, request):
+    #     if is_committee(request.user):
+    #         raise Http404()
+    #     elif is_helper(request.user):
+    #         group = Group.objects.get(helper=request.user.username)
+
+    #         city_challenge_edit_form = EditCityChallengeForm(request.POST, request.FILES, instance=group)
+
+    #         if city_challenge_edit_form.is_valid():
+    #             city_challenge_edit_form.save()
+    #             messages.success(request, 'Your group\'s City Challenge has been updated successfully.')
+    #             return redirect('jumpstart:home')
+
+    #         context = {
+    #             'group': group,
+    #             'city_challenge_edit_form': city_challenge_edit_form,
+    #         }
+    #         return render(request, 'jumpstart/city-challenge-edit.html', context)
+    #     else:
+    #         raise Http404()
 
 
 @method_decorator(login_required, name='dispatch')
@@ -589,107 +617,107 @@ class ScavengerHuntEditView(UserPassesTestMixin, View):
             raise Http404()
 
 
-@method_decorator(login_required, name='dispatch')
-class CityChallengeView(UserPassesTestMixin, View):
+# @method_decorator(login_required, name='dispatch')
+# class CityChallengeView(UserPassesTestMixin, View):
 
-    raise_exception = True
+#     raise_exception = True
 
-    def test_func(self):
-        return is_committee(self.request.user)
+#     def test_func(self):
+#         return is_committee(self.request.user)
 
-    def get(self, request, group_id):
-        group = get_object_or_404(Group, pk=group_id)
-        score_mitre_challenge_form = ScoreMitreChallengeForm(instance=group)
-        score_coding_challenge_form = ScoreCodingChallengeForm(instance=group)
-        stags_quiz_score_form = ScoreStagsQuizForm(instance=group)
-        games_challenge_score_form = ScoreGamesChallengeForm(instance=group)
-        sports_challenge_score_form = ScoreSportsChallengeForm(instance=group)
-        context = {
-            'forms': [
-                    (score_mitre_challenge_form, 'mitre'),
-                    (score_coding_challenge_form, 'coding'),
-                    (stags_quiz_score_form, 'stags'),
-                    (games_challenge_score_form, 'games'),
-                    (sports_challenge_score_form, 'sports'),
-                ],
-            'group': group,
-        }
-        return render(request, 'jumpstart/city-challenge.html', context)
+#     def get(self, request, group_id):
+#         group = get_object_or_404(Group, pk=group_id)
+#         score_mitre_challenge_form = ScoreMitreChallengeForm(instance=group)
+#         score_coding_challenge_form = ScoreCodingChallengeForm(instance=group)
+#         stags_quiz_score_form = ScoreStagsQuizForm(instance=group)
+#         games_challenge_score_form = ScoreGamesChallengeForm(instance=group)
+#         sports_challenge_score_form = ScoreSportsChallengeForm(instance=group)
+#         context = {
+#             'forms': [
+#                     (score_mitre_challenge_form, 'mitre'),
+#                     (score_coding_challenge_form, 'coding'),
+#                     (stags_quiz_score_form, 'stags'),
+#                     (games_challenge_score_form, 'games'),
+#                     (sports_challenge_score_form, 'sports'),
+#                 ],
+#             'group': group,
+#         }
+#         return render(request, 'jumpstart/city-challenge.html', context)
 
-    def post(self, request, group_id):
-        if 'challenge' not in request.GET:
-            raise Http404()
+#     def post(self, request, group_id):
+#         if 'challenge' not in request.GET:
+#             raise Http404()
 
-        group = get_object_or_404(Group, pk=group_id)
+#         group = get_object_or_404(Group, pk=group_id)
 
-        if request.GET.get('challenge') == 'mitre':
-            form = ScoreMitreChallengeForm(request.POST, instance=group)
-        elif request.GET.get('challenge') == 'coding':
-            form = ScoreCodingChallengeForm(request.POST, instance=group)
-        elif request.GET.get('challenge') == 'stags':
-            form = ScoreStagsQuizForm(request.POST, instance=group)
-        elif request.GET.get('challenge') == 'games':
-            form = ScoreGamesChallengeForm(request.POST, instance=group)
-        elif request.GET.get('challenge') == 'sports':
-            form = ScoreSportsChallengeForm(request.POST, instance=group)
-        else:
-            raise Http404()
+#         if request.GET.get('challenge') == 'mitre':
+#             form = ScoreMitreChallengeForm(request.POST, instance=group)
+#         elif request.GET.get('challenge') == 'coding':
+#             form = ScoreCodingChallengeForm(request.POST, instance=group)
+#         elif request.GET.get('challenge') == 'stags':
+#             form = ScoreStagsQuizForm(request.POST, instance=group)
+#         elif request.GET.get('challenge') == 'games':
+#             form = ScoreGamesChallengeForm(request.POST, instance=group)
+#         elif request.GET.get('challenge') == 'sports':
+#             form = ScoreSportsChallengeForm(request.POST, instance=group)
+#         else:
+#             raise Http404()
         
-        if form.is_valid():
-            form.save()
-            challenges = {
-                'mitre': 'Mitre Challenge',
-                'coding': 'Coding Challenge',
-                'stags': 'Stags Quiz',
-                'games': 'Games Challenge',
-                'sports': 'Sports Challenge',
-            }
+#         if form.is_valid():
+#             form.save()
+#             challenges = {
+#                 'mitre': 'Mitre Challenge',
+#                 'coding': 'Coding Challenge',
+#                 'stags': 'Stags Quiz',
+#                 'games': 'Games Challenge',
+#                 'sports': 'Sports Challenge',
+#             }
 
-            if request.GET.get('challenge') == 'mitre':
-                score = group.mitre_challenge_score
-            elif request.GET.get('challenge') == 'coding':
-                score = group.coding_challenge_score
-            elif request.GET.get('challenge') == 'stags':
-                score = group.stags_quiz_score
-            elif request.GET.get('challenge') == 'games':
-                score = group.games_challenge_score
-            elif request.GET.get('challenge') == 'sports':
-                score = group.sports_challenge_score
+#             if request.GET.get('challenge') == 'mitre':
+#                 score = group.mitre_challenge_score
+#             elif request.GET.get('challenge') == 'coding':
+#                 score = group.coding_challenge_score
+#             elif request.GET.get('challenge') == 'stags':
+#                 score = group.stags_quiz_score
+#             elif request.GET.get('challenge') == 'games':
+#                 score = group.games_challenge_score
+#             elif request.GET.get('challenge') == 'sports':
+#                 score = group.sports_challenge_score
 
-            city_challenge_score_auditlog = CityChallengeScoreAuditlog.objects.create(user=request.user.username, group=group, challenge=challenges[request.GET.get('challenge')], score=score)
-            AuditLog.objects.create(content_object=city_challenge_score_auditlog)
+#             city_challenge_score_auditlog = CityChallengeScoreAuditlog.objects.create(user=request.user.username, group=group, challenge=challenges[request.GET.get('challenge')], score=score)
+#             AuditLog.objects.create(content_object=city_challenge_score_auditlog)
 
-            messages.success(request, 'You have updated score of {} for Group {}'.format(challenges[request.GET.get('challenge')], group.id))
-            return redirect(reverse_lazy('jumpstart:city-challenge', kwargs={'group_id': group.id}))
-        else:
-            score_mitre_challenge_form = ScoreMitreChallengeForm(instance=group)
-            score_coding_challenge_form = ScoreCodingChallengeForm(instance=group)
-            stags_quiz_score_form = ScoreStagsQuizForm(instance=group)
-            games_challenge_score_form = ScoreGamesChallengeForm(instance=group)
-            sports_challenge_score_form = ScoreSportsChallengeForm(instance=group)
+#             messages.success(request, 'You have updated score of {} for Group {}'.format(challenges[request.GET.get('challenge')], group.id))
+#             return redirect(reverse_lazy('jumpstart:city-challenge', kwargs={'group_id': group.id}))
+#         else:
+#             score_mitre_challenge_form = ScoreMitreChallengeForm(instance=group)
+#             score_coding_challenge_form = ScoreCodingChallengeForm(instance=group)
+#             stags_quiz_score_form = ScoreStagsQuizForm(instance=group)
+#             games_challenge_score_form = ScoreGamesChallengeForm(instance=group)
+#             sports_challenge_score_form = ScoreSportsChallengeForm(instance=group)
 
-            if request.GET.get('challenge') == 'mitre':
-                score_mitre_challenge_form = form
-            elif request.GET.get('challenge') == 'coding':
-                score_coding_challenge_form = form
-            elif request.GET.get('challenge') == 'stags':
-                stags_quiz_score_form = form
-            elif request.GET.get('challenge') == 'games':
-                games_challenge_score_form = form
-            elif request.GET.get('challenge') == 'sports':
-                sports_challenge_score_form = form
+#             if request.GET.get('challenge') == 'mitre':
+#                 score_mitre_challenge_form = form
+#             elif request.GET.get('challenge') == 'coding':
+#                 score_coding_challenge_form = form
+#             elif request.GET.get('challenge') == 'stags':
+#                 stags_quiz_score_form = form
+#             elif request.GET.get('challenge') == 'games':
+#                 games_challenge_score_form = form
+#             elif request.GET.get('challenge') == 'sports':
+#                 sports_challenge_score_form = form
 
-            context = {
-                'forms': [
-                    (score_mitre_challenge_form, 'mitre'),
-                    (score_coding_challenge_form, 'coding'),
-                    (stags_quiz_score_form, 'stags'),
-                    (games_challenge_score_form, 'games'),
-                    (sports_challenge_score_form, 'sports'),
-                ],
-                'group': group,
-            }
-        return render(request, 'jumpstart/city-challenge.html', context)
+#             context = {
+#                 'forms': [
+#                     (score_mitre_challenge_form, 'mitre'),
+#                     (score_coding_challenge_form, 'coding'),
+#                     (stags_quiz_score_form, 'stags'),
+#                     (games_challenge_score_form, 'games'),
+#                     (sports_challenge_score_form, 'sports'),
+#                 ],
+#                 'group': group,
+#             }
+#         return render(request, 'jumpstart/city-challenge.html', context)
 
 
 @method_decorator(login_required, name='dispatch')
