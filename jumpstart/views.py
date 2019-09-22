@@ -521,26 +521,38 @@ class CityChallengeView(UserPassesTestMixin, View):
             return render(request, 'jumpstart/helper-city-challenge.html', context)
 
 
-    # def post(self, request):
-    #     if is_committee(request.user):
-    #         raise Http404()
-    #     elif is_helper(request.user):
-    #         group = Group.objects.get(helper=request.user.username)
+@method_decorator(login_required, name='dispatch')
+class HelperGroupNameUpdateView(UserPassesTestMixin, View):
+    """Helpers to update group names for their group during the event.
+       POST method only. 
+    """
+    
+    raise_exception = True
 
-    #         city_challenge_edit_form = EditCityChallengeForm(request.POST, request.FILES, instance=group)
+    def test_func(self):
+        """Only helpers have access to this view."""
+        return is_helper(self.request.user)
 
-    #         if city_challenge_edit_form.is_valid():
-    #             city_challenge_edit_form.save()
-    #             messages.success(request, 'Your group\'s City Challenge has been updated successfully.')
-    #             return redirect('jumpstart:home')
 
-    #         context = {
-    #             'group': group,
-    #             'city_challenge_edit_form': city_challenge_edit_form,
-    #         }
-    #         return render(request, 'jumpstart/city-challenge-edit.html', context)
-    #     else:
-    #         raise Http404()
+    def post(self, request):
+        jumpstart = get_current_site(request).jumpstart
+        if not jumpstart.is_now:
+            messages.error(request, 'Group name can only be updated during the event. Failed to update group name.')
+            return redirect('jumpstart:city-challenge')
+        else:
+            group = Group.objects.get(helper=request.user.username)
+            edit_group_name_form = EditGroupNameForm(request.POST, instance=group)
+            if edit_group_name_form.is_valid():
+                edit_group_name_form.save()
+                messages.success(request, 'Successfully updated your group name.')
+                return redirect('jumpstart:city-challenge')
+            submit_charity_shop_challenge = SubmitCharityShopChallengeForm()
+            context = {
+                'group': group,
+                'edit_group_name_form': edit_group_name_form,
+                'submit_charity_shop_challenge': submit_charity_shop_challenge,
+            }
+            return render(request, 'jumpstart/helper-city-challenge-edit.html', context)
 
 
 @method_decorator(login_required, name='dispatch')

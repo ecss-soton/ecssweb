@@ -61,7 +61,14 @@ class EditGroupNameForm(ModelForm):
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control',
+                'required': 'required',
             })
+
+
+    def clean_name(self):
+        name = self.cleaned_data.get('name', False)
+        if not name:
+            raise ValidationError('Group name cannot be empty.')
 
 
 class SubmitCharityShopChallengeForm(ModelForm):
@@ -104,7 +111,6 @@ class EditScavengerHuntForm(ModelForm):
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control',
-                #'multiple': 'true',
             })
 
     def clean_photo(self):
