@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.db import transaction
 from django.core import serializers
 from django.core.exceptions import PermissionDenied
@@ -483,18 +483,21 @@ class CityChallengeView(UserPassesTestMixin, View):
 
     def get(self, request):
         if is_fresher(request.user):
-            pass
+            return self._get_fresher(request)
         elif is_helper(request.user):
-            # group = Group.objects.get(helper=request.user.username)
-            # city_challenge_edit_form = EditCityChallengeForm(instance=group)
-            # context = {
-            #     'group': group,
-            #     'city_challenge_edit_form': city_challenge_edit_form,
-            # }
-            # return render(request, 'jumpstart/city-challenge-edit.html', context)
             return self._get_helper(request)
         else:
             raise PermissionDenied()
+
+
+    def _get_fresher(self, request):
+        """Render page for freshers."""
+        fresher = Fresher.objects.get(username=request.user.username)
+        group = fresher.group
+        context = {
+            'group': group,
+        }
+        return render(request, 'jumpstart/fresher-city-challenge.html', context)
 
 
     def _get_helper(self, request):
@@ -505,11 +508,11 @@ class CityChallengeView(UserPassesTestMixin, View):
             # Render submission forms if during the event
             group = Group.objects.get(helper=request.user.username)
             edit_group_name_form = EditGroupNameForm(instance=group)
-            submit_charity_shop_challenge = SubmitCharityShopChallengeForm()
+            submit_charity_shop_challenge_form = SubmitCharityShopChallengeForm()
             context = {
                 'group': group,
                 'edit_group_name_form': edit_group_name_form,
-                'submit_charity_shop_challenge': submit_charity_shop_challenge,
+                'submit_charity_shop_challenge_form': submit_charity_shop_challenge_form,
             }
             return render(request, 'jumpstart/helper-city-challenge-edit.html', context)
         else:
@@ -521,20 +524,20 @@ class CityChallengeView(UserPassesTestMixin, View):
             return render(request, 'jumpstart/helper-city-challenge.html', context)
 
 
-@method_decorator(login_required, name='dispatch')
-class HelperGroupNameUpdateView(UserPassesTestMixin, View):
-    """Helpers to update group names for their group during the event.
-       POST method only. 
-    """
-    
-    raise_exception = True
-
-    def test_func(self):
-        """Only helpers have access to this view."""
-        return is_helper(self.request.user)
-
-
     def post(self, request):
+        if is_helper(request.user):
+            action = request.POST.get('action', None)
+            if action == 'update_group_name':
+                return self._helper_update_group_name_post(request)
+            elif action == 'submit_charity_shop_challenge':
+                return self._helper_submit_charity_shop_challenge_post(request)
+            else:
+                return HttpResponseBadRequest()
+        else:
+            raise PermissionDenied()
+
+
+    def _helper_update_group_name_post(self, request):
         jumpstart = get_current_site(request).jumpstart
         if not jumpstart.is_now:
             messages.error(request, 'Group name can only be updated during the event. Failed to update group name.')
@@ -546,11 +549,34 @@ class HelperGroupNameUpdateView(UserPassesTestMixin, View):
                 edit_group_name_form.save()
                 messages.success(request, 'Successfully updated your group name.')
                 return redirect('jumpstart:city-challenge')
-            submit_charity_shop_challenge = SubmitCharityShopChallengeForm()
+            submit_charity_shop_challenge_form = SubmitCharityShopChallengeForm()
             context = {
                 'group': group,
                 'edit_group_name_form': edit_group_name_form,
-                'submit_charity_shop_challenge': submit_charity_shop_challenge,
+                'submit_charity_shop_challenge_form': submit_charity_shop_challenge_form,
+            }
+            return render(request, 'jumpstart/helper-city-challenge-edit.html', context)
+
+
+    def _helper_submit_charity_shop_challenge_post(self, request):
+        jumpstart = get_current_site(request).jumpstart
+        if not jumpstart.is_now:
+            messages.error(request, 'Submission to Charity Shop Challenge can only be done during the event. Failed to submit to Charity Shop Challenge.')
+            return redirect('jumpstart:city-challenge')
+        else:
+            submit_charity_shop_challenge_form = SubmitCharityShopChallengeForm(request.POST, request.FILES)
+            group = Group.objects.get(helper=request.user.username)
+            if submit_charity_shop_challenge_form.is_valid():
+                charity_shop_challenge_submission = submit_charity_shop_challenge_form.save(commit=False)
+                charity_shop_challenge_submission.group = group
+                charity_shop_challenge_submission.save()
+                messages.success(request, 'Successfully submitted to Charity Shop Challenge.')
+                return redirect('jumpstart:city-challenge')
+            edit_group_name_form = EditGroupNameForm()
+            context = {
+                'group': group,
+                'edit_group_name_form': edit_group_name_form,
+                'submit_charity_shop_challenge_form': submit_charity_shop_challenge_form,
             }
             return render(request, 'jumpstart/helper-city-challenge-edit.html', context)
 

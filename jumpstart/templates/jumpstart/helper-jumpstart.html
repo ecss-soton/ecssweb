@@ -85,7 +85,7 @@
       </ul>
       {% if jumpstart.is_now %}
       <a href="{% url 'jumpstart:city-challenge' %}" title="Submit to City Challenge for Your Group">Submit to City Challenge</a>
-      {% else %}
+      {% elif jumpstart.is_after %}
       <a href="{% url 'jumpstart:city-challenge' %}" title="View City Challenge of Your Group">View City Challenge</a>
       {% endif %}
     </div>

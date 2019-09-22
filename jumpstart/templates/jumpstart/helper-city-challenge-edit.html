@@ -19,6 +19,19 @@
     <div class="card-text">
       Group name: {% if group.name %}{{ group.name }}{% else %}<span class="text-danger">Not set</span>{% endif %}<br>
       {% if group.charityshopchallengesubmission_set.all %}
+      <div>
+        Charity Shop Challenge Submissions:
+        <div class="row m-3">
+          {% for charity_shop_challenge_submission in group.charityshopchallengesubmission_set.all %}
+          <div class="col-md-6 border p-1">
+            {% if charity_shop_challenge_submission.photo %}
+            <img src="{{ charity_shop_challenge_submission.photo.url }}" class="img-fluid">
+            {% endif %}
+            {{ charity_shop_challenge_submission.description }}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
       {% else %}
       <span class="text-danger">Charity Shop Challenge not submitted.</span>
       {% endif %}
@@ -30,8 +43,9 @@
     Edit Group Name
   </div>
   <div class="card-body">
-    <form method="post" action="{% url 'jumpstart:group-name-update' %}">
+    <form method="post">
       {% csrf_token %}
+      <input type="hidden" name="action" value="update_group_name">
       {% for field in edit_group_name_form %}
       <div class="form-group">
         {{ field.label_tag }}{{ field }}
@@ -58,8 +72,14 @@
   <div class="card-body">
     <form method="post" enctype="multipart/form-data">
       <p>You can use this form multiple times to provide more details of your submission. If you would like to submit files not supported by this form, you can use services such as <a href="https://safesend.soton.ac.uk/" title="University of Southampton SafeSend service">the university's SafeSend</a> and submit details with the description field below. Or you can <a href="mailto:society@ecs.soton.ac.uk?subject=[Jumpstart 2019 Submission] Charity Shop Challenge Group {{ group.number }}">send emails to society@ecs.soton.ac.uk</a> with "[Jumpstart 2019 Submission] Charity Shop Challenge Group {{ group.number }}" as the subject and and submit details with the description field below.</p>
+      {% if submit_charity_shop_challenge_form.non_field_errors %}
+      <div class="text-danger">
+      {{ submit_charity_shop_challenge_form.non_field_errors }}
+      </div>
+      {% endif %}
       {% csrf_token %}
-      {% for field in submit_charity_shop_challenge %}
+      <input type="hidden" name="action" value="submit_charity_shop_challenge">
+      {% for field in submit_charity_shop_challenge_form %}
       <div class="form-group">
         {{ field.label_tag }}{{ field }}
         {% if field.errors %}
@@ -72,12 +92,7 @@
       <input type="Submit" class="btn btn-ecssweb" value="Submit">
       <div class="mt-2">
         <small class="d-block text-muted">
-          Your submissions will be visible to your group members and ECSS committee.
-        </small>
-      </div>
-      <div class="mt-2">
-        <small class="text-muted">
-          Your submissions might be used for other part of the Jumpstart event or future Jumpstart events.
+          Your submissions is visible to your group members and ECSS committee. You will be unable to remove any submissions, and if anything need to be removed please contact us. Your submissions might be used for other part of the Jumpstart event or future Jumpstart events.
         </small>
       </div>
     </form>

@@ -1,0 +1,44 @@
+{% extends 'jumpstart/base.html' %}
+
+{% block jumpstartcontent %}
+<div class="mb-3">
+  <a href="{% url 'jumpstart:home' %}" title="Jumpstart Portal"><i class="fas fa-arrow-circle-left"></i> Jumpstart portal</a>
+</div>
+{% for message in messages %}
+<div class="alert
+{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}
+">{{ message }}</div>
+{% endfor %}
+<div class="card my-3">
+  <div class="card-header">
+    City Challenge
+  </div>
+  <div class="card-body">
+    <h2 class="h6">Group {{ group.number }}</h2>
+    <div class="card-text">
+      Group name: {% if group.name %}{{ group.name }}{% else %}<span class="text-danger">Not set</span>{% endif %}<br>
+      {% if group.charityshopchallengesubmission_set.all %}
+      <div>
+        Charity Shop Challenge Submissions:
+        <div class="row m-3">
+          {% for charity_shop_challenge_submission in group.charityshopchallengesubmission_set.all %}
+          <div class="col-md-6 border p-1">
+            {% if charity_shop_challenge_submission.photo %}
+            <img src="{{ charity_shop_challenge_submission.photo.url }}" class="img-fluid">
+            {% endif %}
+            {{ charity_shop_challenge_submission.description }}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% else %}
+      <span class="text-danger">Charity Shop Challenge not submitted.</span>
+      {% endif %}
+      <small class="text-muted">
+        Your group name is visible to all freshers participating in City Challenge, all helpers and ECSS committee. Your submissions is visible to your group members and ECSS committee. Your submissions might be used for other part of the Jumpstart event or future Jumpstart events.
+      </small>
+    </div>
+  </div>
+</div>
+{% endblock %}

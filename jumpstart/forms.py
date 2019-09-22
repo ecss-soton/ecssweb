@@ -27,7 +27,7 @@ class HelperProfileEditForm(ModelForm):
 
 
     def clean_photo(self):
-        photo = self.cleaned_data.get('photo', False)
+        photo = self.cleaned_data.get('photo', None)
         return clean_image(photo) if photo else photo
 
 
@@ -66,9 +66,10 @@ class EditGroupNameForm(ModelForm):
 
 
     def clean_name(self):
-        name = self.cleaned_data.get('name', False)
+        name = self.cleaned_data.get('name', None)
         if not name:
             raise ValidationError('Group name cannot be empty.')
+        return name
 
 
 class SubmitCharityShopChallengeForm(ModelForm):
@@ -94,8 +95,16 @@ class SubmitCharityShopChallengeForm(ModelForm):
 
     
     def clean_photo(self):
-        photo = self.cleaned_data.get('photo', False)
-        return clean_image(photo)
+        photo = self.cleaned_data.get('photo', None)
+        return clean_image(photo) if photo else photo
+
+
+    def clean(self):
+        super().clean()
+        photo = self.cleaned_data.get('photo', None)
+        description = self.cleaned_data.get('description', None)
+        if not (photo or description):
+            raise ValidationError('Photo and description cannot be both empty.')
 
 
 class EditScavengerHuntForm(ModelForm):
