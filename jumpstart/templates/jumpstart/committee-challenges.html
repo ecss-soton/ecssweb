@@ -23,7 +23,7 @@
       {% if submission.photo %}
       <img src="{{ submission.photo.url }}" style="width: 20rem;">
       {% endif %}
-      {{ submission.description }}
+      {{ submission.description }} ({{ submission.task.content }})
     </div>
     {% endfor %}
   </div>
