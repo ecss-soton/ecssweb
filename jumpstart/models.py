@@ -17,11 +17,11 @@ def helper_photo_file_name(instance, filename):
 
 
 def charity_shop_challenge_photo_file_name(instance, filename):
-    return ('jumpstart/city-challenge/charity-shop-challenge-group{}-{}{}'.format(instance.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
+    return ('jumpstart/city-challenge/charity-shop-challenge-group{}-{}{}'.format(instance.group.number, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
 
 
 def scavenger_hunt_submission_photo_file_name(instance, filename):
-    return ('jumpstart/scavenger-hunt/scavenger-hunt-group{}-{}{}'.format(instance.group.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
+    return ('jumpstart/scavenger-hunt/scavenger-hunt-group{}-{}{}'.format(instance.group.number, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
 
 
 '''
