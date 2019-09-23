@@ -5,14 +5,28 @@
 <div class="bordered">
   <h2>Group {{ group.number }}</h2>
   <div>Group name: {{ group.name }}</div>
-  {% for submission in group.charityshopchallengesubmission_set.all %}
   <div>
-    {% if submission.photo %}
-    <img src="{{ submission.photo.url }}" style="width: 20rem;">
-    {% endif %}
-    {{ submission.description }}
+    <h3 class="h6">Charity Shop Challenge</h3>
+    {% for submission in group.charityshopchallengesubmission_set.all %}
+    <div class="bordered">
+      {% if submission.photo %}
+      <img src="{{ submission.photo.url }}" style="width: 20rem;">
+      {% endif %}
+      {{ submission.description }}
+    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
+  <div>
+    <h3 class="h6">Scavenger Hunt</h3>
+    {% for submission in group.scavengerhuntsubmission_set.all %}
+    <div class="bordered">
+      {% if submission.photo %}
+      <img src="{{ submission.photo.url }}" style="width: 20rem;">
+      {% endif %}
+      {{ submission.description }}
+    </div>
+    {% endfor %}
+  </div>
 </div>
 {% endfor %}
 {% endblock %}
