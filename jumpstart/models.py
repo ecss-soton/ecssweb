@@ -59,7 +59,8 @@ class Jumpstart(models.Model):
 
     @property
     def is_helper_profile_locked(self):
-        return timezone.now() > self.helper_profile_lock_time
+        return False
+        #return timezone.now() > self.helper_profile_lock_time
 
     
     def __str__(self):

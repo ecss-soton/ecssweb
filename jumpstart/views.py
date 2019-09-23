@@ -659,6 +659,15 @@ class ScavengerHuntTaskView(UserPassesTestMixin, View):
         return render(request, 'jumpstart/helper-scavenger-hunt-task.html', context)
 
 
+    def post(self, request, id):
+        if is_helper(request.user):
+            jumpstart = get_current_site(request).jumpstart
+            if not jumpstart.is_now:
+                raise PermissionDenied()
+        else:
+            raise PermissionDenied()
+
+
 @method_decorator(login_required, name='dispatch')
 class ScavengerHuntEditView(UserPassesTestMixin, View):
 
