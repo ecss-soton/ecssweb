@@ -801,6 +801,26 @@ class ScavengerHuntPdfView(UserPassesTestMixin, View):
         return response
 
 
+@method_decorator(login_required, name='dispatch')
+class CommitteeChallengesView(UserPassesTestMixin, View):
+
+
+    raise_exception = True
+
+
+    def test_func(self):
+        """Only committee have access."""
+        return is_committee(self.request.user)
+
+
+    def get(self, request):
+        groups = Group.objects.all()
+        context = {
+            'groups': groups,
+        }
+        return render(request, 'jumpstart/committee-challenges.html', context)
+
+
 # @method_decorator(login_required, name='dispatch')
 # class CityChallengeView(UserPassesTestMixin, View):
 

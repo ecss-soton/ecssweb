@@ -19,5 +19,6 @@ urlpatterns = [
     path('scavenger-hunt/', views.ScavengerHuntView.as_view(), name='scavenger-hunt'),
     path('scavenger-hunt/scavenger-hunt.pdf', views.ScavengerHuntPdfView.as_view(), name='scavenger-hunt-pdf'),
     path('scavenger-hunt/<int:id>/', views.ScavengerHuntTaskView.as_view(), name='scavenger-hunt-task'),
+    path('challenges/', views.CommitteeChallengesView.as_view(), name='committee-challenges'),
     path('members-check-in/', views.MembersCheckInView.as_view(), name='members-check-in'),
 ]
