@@ -661,11 +661,45 @@ class ScavengerHuntTaskView(UserPassesTestMixin, View):
 
     def post(self, request, id):
         if is_helper(request.user):
-            jumpstart = get_current_site(request).jumpstart
-            if not jumpstart.is_now:
-                raise PermissionDenied()
+            action = request.POST.get('action', None)
+            if action == 'submit_scavenger_hunt':
+                return self._helper_submit_scavenger_hunt_post(request, id)
+            elif action == '':
+                pass
+            else:
+                return HttpResponseBadRequest()
         else:
             raise PermissionDenied()
+
+
+    def _helper_submit_scavenger_hunt_post(self, request, id):
+        jumpstart = get_current_site(request).jumpstart
+        if not jumpstart.is_now:
+            messages.error(request, 'Scavenger Hunt can only be submitted during the event. Failed to submit Scavenger Hunt.')
+            return redirect('jumpstart:scavenger-hunt')
+        else:
+            group = Group.objects.get(helper=request.user.username)
+            submit_scavenger_hunt_form = SubmitScavengerHuntForm(request.POST, request.FILES)
+            if submit_scavenger_hunt_form.is_valid():
+                submission = submit_scavenger_hunt_form.save(commit=False)
+                submission.group = group
+                submission.task = ScavengerHuntTask.objects.get(id=id)
+                submission.save()
+                messages.success(request, 'Successfully submitted Scavenger Hunt.')
+                return redirect('jumpstart:scavenger-hunt')
+            group = Group.objects.get(helper=request.user.username)
+            task = ScavengerHuntTask.objects.get(pk=id)
+            is_hint_revealed = ScavengerHuntHintRecord.objects.filter(group=group, task=task).exists()
+            submissions = ScavengerHuntSubmission.objects.filter(task=task, group=group)
+            context = {
+                'jumpstart': jumpstart,
+                'group': group,
+                'task': task,
+                'is_hint_revealed': is_hint_revealed,
+                'submissions': submissions,
+                'submit_scavenger_hunt_form': submit_scavenger_hunt_form,
+            }
+            return render(request, 'jumpstart/helper-scavenger-hunt-task.html', context)
 
 
 @method_decorator(login_required, name='dispatch')

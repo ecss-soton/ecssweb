@@ -64,7 +64,7 @@
     Submit to the Task
   </div>
   <div class="card-body">
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
       <input type="hidden" name="action" value="submit_scavenger_hunt">
       <p>You can use this form multiple times to provide more details of your submission. If you would like to submit files not supported by this form, you can use services such as <a href="https://safesend.soton.ac.uk/" title="University of Southampton SafeSend service">the university's SafeSend</a> and submit details with the description field below. Or you can <a href="mailto:society@ecs.soton.ac.uk?subject=[Jumpstart 2019 Submission] Scavenger Hunt {{ task.id }} Group {{ group.number }}">send emails to society@ecs.soton.ac.uk</a> with "[Jumpstart 2019 Submission] Scavenger Hunt {{ task.id }} Group {{ group.number }}" as the subject and and submit details with the description field below.</p>
       {% if submit_scavenger_hunt_form.non_field_errors %}
