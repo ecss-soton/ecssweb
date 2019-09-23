@@ -596,13 +596,26 @@ class ScavengerHuntView(UserPassesTestMixin, View):
 
     def get(self, request):
         if is_fresher(request.user):
-            pass
+            return self._fresher_get(request)
         elif is_helper(request.user):
             return self._helper_get(request)
         elif is_committee(request.user):
             pass
         else:
             raise PermissionDenied()
+
+    
+    def _fresher_get(self, request):
+        jumpstart = get_current_site(request).jumpstart
+        fresher = Fresher.objects.get(username=request.user.username)
+        group = fresher.group
+        scavenger_hunt_tasks = ScavengerHuntTask.objects.all()
+        context = {
+            'jumpstart': jumpstart,
+            'group': group,
+            'scavenger_hunt_tasks': scavenger_hunt_tasks,
+        }
+        return render(request, 'jumpstart/scavenger-hunt.html', context)
 
 
     def _helper_get(self, request):
@@ -630,13 +643,32 @@ class ScavengerHuntTaskView(UserPassesTestMixin, View):
 
     def get(self, request, id):
         if is_fresher(request.user):
-            pass
+            return self._fresher_get(request, id)
         elif is_helper(request.user):
             return self._helper_get(request, id)
         elif is_committee(request.user):
             pass
         else:
             raise PermissionDenied()
+
+
+    def _fresher_get(self, request, id):
+        jumpstart = get_current_site(request).jumpstart
+        if jumpstart.is_before:
+            raise PermissionDenied()
+        fresher = Fresher.objects.get(username=request.user.username)
+        group = fresher.group
+        task = ScavengerHuntTask.objects.get(pk=id)
+        is_hint_revealed = ScavengerHuntHintRecord.objects.filter(group=group, task=task).exists()
+        submissions = ScavengerHuntSubmission.objects.filter(task=task, group=group)
+        context = {
+            'jumpstart': jumpstart,
+            'group': group,
+            'task': task,
+            'is_hint_revealed': is_hint_revealed,
+            'submissions': submissions,
+        }
+        return render(request, 'jumpstart/fresher-scavenger-hunt-task.html', context)
 
 
     def _helper_get(self, request, id):

@@ -1,0 +1,55 @@
+{% extends 'jumpstart/base.html' %}
+
+{% load jumpstart_extra %}
+
+{% block jumpstartcontent %}
+<div class="mb-3">
+  <a href="{% url 'jumpstart:scavenger-hunt' %}" title="Jumpstart Portal"><i class="fas fa-arrow-circle-left"></i> Scavenger Hunt</a>
+</div>
+{% for message in messages %}
+<div class="alert
+{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}
+">{{ message }}</div>
+{% endfor %}
+<div class="card my-3">
+  <div class="card-header">
+    Scavenger Hunt
+  </div>
+  <div class="card-body">
+    <h2 class="h6">Group {{ group.number }}</h2>
+    <div class="card-text">
+      <div>
+        Task: {{ task.content }}<br>
+        {% if is_hint_revealed %}
+        Hint: {{ task.hint }}
+        {% endif %}
+        {% if jumpstart.is_after %}
+        Hint: {{ task.hint }}<br>
+        <small class="text-muted">{% if is_hint_revealed %}Your group used this hint reval{% else %}Your group did not use this hint reval{% endif %}</small>
+        {% endif %}
+        <div>
+          {% if submissions %}
+          Submissions:
+          <div class="row m-3">
+            {% for submission in submissions %}
+            <div class="col-md-6 border p-1">
+              {% if submission.photo %}
+              <img src="{{ submission.photo.url }}" class="img-fluid">
+              {% endif %}
+              {{ submission.description }}
+            </div>
+          {% endfor %}
+        </div>
+          {% else %}
+          <span class="text-danger">No submissions to this task.</span>
+          {% endif %}
+        </div>
+      </div>
+      {% if jumpstart.is_now %}
+      
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
