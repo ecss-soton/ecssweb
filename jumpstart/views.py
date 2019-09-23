@@ -12,9 +12,9 @@ from django.core import serializers
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
 
-from .models import Fresher, Helper, Group, CityChallengeScoreAuditlog
+from .models import Fresher, Helper, Group, ScavengerHuntTask, ScavengerHuntHintRecord, ScavengerHuntSubmission
 
-from .forms import HelperProfileEditForm, FresherProfileEditForm, EditGroupNameForm, SubmitCharityShopChallengeForm, EditScavengerHuntForm
+from .forms import HelperProfileEditForm, FresherProfileEditForm, EditGroupNameForm, SubmitCharityShopChallengeForm, SubmitScavengerHuntForm
 
 from .utils import jumpstart_check, is_fresher, is_helper
 
@@ -38,7 +38,7 @@ class HomeView(UserPassesTestMixin, View):
 
 
     def test_func(self):
-        """Only people involved in Jumpstart have access."""
+        """Only user involved in Jumpstart have access."""
         return jumpstart_check(self.request.user)
 
 
@@ -69,10 +69,12 @@ class HomeView(UserPassesTestMixin, View):
         jumpstart = get_current_site(request).jumpstart
         helper = Helper.objects.get(pk=request.user.username)
         info = open(os.path.join(settings.BASE_DIR, 'jumpstart/data/helper-info.md'), 'r').read()
+        num_scavenger_hunt_tasks = ScavengerHuntTask.objects.all().count()
         context = {
             'jumpstart': jumpstart,
             'helper': helper,
             'info': info,
+            'num_scavenger_hunt_tasks': num_scavenger_hunt_tasks,
         }
         return render(request, 'jumpstart/helper-jumpstart.html', context)
 
@@ -584,29 +586,77 @@ class CityChallengeView(UserPassesTestMixin, View):
 @method_decorator(login_required, name='dispatch')
 class ScavengerHuntView(UserPassesTestMixin, View):
 
+
     raise_exception = True
+
 
     def test_func(self):
         return jumpstart_check(self.request.user)
 
+
     def get(self, request):
         if is_fresher(request.user):
-            group = Fresher.objects.get(pk=request.user.username).group
+            pass
         elif is_helper(request.user):
-            group = Group.objects.get(helper=request.user.username)
+            return self._helper_get(request)
         elif is_committee(request.user):
-            groups = Group.objects.all().order_by('id')
-            context = {
-                'groups': groups,
-            }
-            return render(request, 'jumpstart/scavenger-hunt-all.html', context)
+            pass
         else:
             raise PermissionDenied()
 
+
+    def _helper_get(self, request):
+        jumpstart = get_current_site(request).jumpstart
+        group = Group.objects.get(helper=request.user.username)
+        scavenger_hunt_tasks = ScavengerHuntTask.objects.all()
         context = {
+            'jumpstart': jumpstart,
             'group': group,
+            'scavenger_hunt_tasks': scavenger_hunt_tasks,
         }
         return render(request, 'jumpstart/scavenger-hunt.html', context)
+
+
+@method_decorator(login_required, name='dispatch')
+class ScavengerHuntTaskView(UserPassesTestMixin, View):
+
+
+    raise_exception = True
+
+
+    def test_func(self):
+        return jumpstart_check(self.request.user)
+
+
+    def get(self, request, id):
+        if is_fresher(request.user):
+            pass
+        elif is_helper(request.user):
+            return self._helper_get(request, id)
+        elif is_committee(request.user):
+            pass
+        else:
+            raise PermissionDenied()
+
+
+    def _helper_get(self, request, id):
+        jumpstart = get_current_site(request).jumpstart
+        if jumpstart.is_before:
+            raise PermissionDenied()
+        group = Group.objects.get(helper=request.user.username)
+        task = ScavengerHuntTask.objects.get(pk=id)
+        is_hint_revealed = ScavengerHuntHintRecord.objects.filter(group=group, task=task).exists()
+        submissions = ScavengerHuntSubmission.objects.filter(task=task, group=group)
+        submit_scavenger_hunt_form = SubmitScavengerHuntForm()
+        context = {
+            'jumpstart': jumpstart,
+            'group': group,
+            'task': task,
+            'is_hint_revealed': is_hint_revealed,
+            'submissions': submissions,
+            'submit_scavenger_hunt_form': submit_scavenger_hunt_form,
+        }
+        return render(request, 'jumpstart/helper-scavenger-hunt-task.html', context)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -653,6 +703,27 @@ class ScavengerHuntEditView(UserPassesTestMixin, View):
             return render(request, 'jumpstart/scavenger-hunt-edit.html', context)
         else:
             raise Http404()
+
+
+@method_decorator(login_required, name='dispatch')
+class ScavengerHuntPdfView(UserPassesTestMixin, View):
+    """Download Scavenger Hunt PDF file."""
+
+    raise_exception = True
+
+    def test_func(self):
+        """Only user involved in Jumpstart have access."""
+        return jumpstart_check(self.request.user)
+
+
+    def get(self, request):
+        jumpstart = get_current_site(request).jumpstart
+        if (is_fresher(request.user) or is_helper(request.user)) and jumpstart.is_before:
+            raise PermissionDenied()
+        content = open(os.path.join(settings.BASE_DIR, 'jumpstart/data/Jumpstart 2019 Scavenger Hunt.pdf'), 'rb')
+        response = HttpResponse(content=content ,content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="Jumpstart 2019 Scavenger Hunt.pdf"'
+        return response
 
 
 # @method_decorator(login_required, name='dispatch')
@@ -768,7 +839,7 @@ class MembersCheckInView(UserPassesTestMixin, View):
 
 
     def test_func(self):
-        """Only helpers have access"""
+        """Only helpers have access."""
         return is_helper(self.request.user)
 
 

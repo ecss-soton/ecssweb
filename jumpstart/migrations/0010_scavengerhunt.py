@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='ScavengerHunt',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('photo', models.ImageField(upload_to=jumpstart.models.scavenger_hunt_photo_file_name, validators=[jumpstart.validators.validate_photo_file_extension])),
+                ('photo', models.ImageField(upload_to=jumpstart.models.scavenger_hunt_submission_photo_file_name, validators=[jumpstart.validators.validate_photo_file_extension])),
                 ('group', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='jumpstart.Group')),
             ],
         ),

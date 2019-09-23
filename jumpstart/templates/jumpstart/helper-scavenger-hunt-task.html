@@ -1,0 +1,94 @@
+{% extends 'jumpstart/base.html' %}
+
+{% load jumpstart_extra %}
+
+{% block jumpstartcontent %}
+<div class="mb-3">
+  <a href="{% url 'jumpstart:scavenger-hunt' %}" title="Jumpstart Portal"><i class="fas fa-arrow-circle-left"></i> Scavenger Hunt</a>
+</div>
+{% for message in messages %}
+<div class="alert
+{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}
+">{{ message }}</div>
+{% endfor %}
+<div class="card my-3">
+  <div class="card-header">
+    Scavenger Hunt
+  </div>
+  <div class="card-body">
+    <h2 class="h6">Group {{ group.number }}</h2>
+    <div class="card-text">
+      <div>
+        Task: {{ task.content }}<br>
+        {% if is_hint_revealed %}
+        Hint: {{ task.hint }}
+        {% endif %}
+        {% if jumpstart.is_after %}
+        Hint: {{ task.hint }}<br>
+        <small class="text-muted">{% if is_hint_revealed %}Your group used this hint reval{% else %}Your group did not use this hint reval{% endif %}</small>
+        {% endif %}
+        {% if task.hint and jumpstart.is_now %}
+        <form method="POST" onsubmit="return confirm('Are you sure you want to reveal the hint? (this will deduct 10 points from this task)');">
+          {% csrf_token %}
+          <input type="hidden" name="task" value="{{ task.id }}">
+          <input type="submit" value="Reveal Hint (this will deduct 10 points from this task)" class="btn btn-ecssweb">
+        </form>
+        {% endif %}
+        <div>
+          {% if submissions %}
+          Submissions:
+          <div class="row m-3">
+            {% for submission in submissions %}
+            <div class="col-md-6 border p-1">
+              {% if submission.photo %}
+              <img src="{{ submission.photo.url }}" class="img-fluid">
+              {% endif %}
+              {{ submission.description }}
+            </div>
+          {% endfor %}
+        </div>
+          {% else %}
+          <span class="text-danger">No submissions to this task.</span>
+          {% endif %}
+        </div>
+      </div>
+      {% if jumpstart.is_now %}
+      
+      {% endif %}
+    </div>
+  </div>
+</div>
+<div class="card my-3">
+  <div class="card-header">
+    Submit to the Task
+  </div>
+  <div class="card-body">
+    <form method="POST">
+      <p>You can use this form multiple times to provide more details of your submission. If you would like to submit files not supported by this form, you can use services such as <a href="https://safesend.soton.ac.uk/" title="University of Southampton SafeSend service">the university's SafeSend</a> and submit details with the description field below. Or you can <a href="mailto:society@ecs.soton.ac.uk?subject=[Jumpstart 2019 Submission] Scavenger Hunt {{ task.id }} Group {{ group.number }}">send emails to society@ecs.soton.ac.uk</a> with "[Jumpstart 2019 Submission] Scavenger Hunt {{ task.id }} Group {{ group.number }}" as the subject and and submit details with the description field below.</p>
+      {% if submit_scavenger_hunt_form.non_field_errors %}
+      <div class="text-danger">
+      {{ submit_scavenger_hunt_form.non_field_errors }}
+      </div>
+      {% endif %}
+      {% csrf_token %}
+      {% for field in submit_scavenger_hunt_form %}
+      <div class="form-group">
+        {{ field.label_tag }}{{ field }}
+        {% if field.errors %}
+        <small class="form-text text-danger">
+          {% for err in field.errors %}{{ err }}{% endfor %}
+        </small>
+        {% endif %}
+      </div>
+      {% endfor %}
+      <input type="Submit" class="btn btn-ecssweb" value="Submit">
+      <div class="mt-2">
+        <small class="text-muted">
+          Your submission is visible to freshers in your group and ECSS committee. You will be unable to remove any submissions, and if anything need to be removed please contact us. Your submissions might be used for other part of the Jumpstart event or future Jumpstart events.
+        </small>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

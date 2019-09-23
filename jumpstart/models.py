@@ -20,8 +20,8 @@ def charity_shop_challenge_photo_file_name(instance, filename):
     return ('jumpstart/city-challenge/charity-shop-challenge-group{}-{}{}'.format(instance.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
 
 
-def scavenger_hunt_photo_file_name(instance, filename):
-    return ('jumpstart2018/city-challenge/scavenger-hunt-group{}-{}{}'.format(instance.group.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
+def scavenger_hunt_submission_photo_file_name(instance, filename):
+    return ('jumpstart/scavenger-hunt/scavenger-hunt-group{}-{}{}'.format(instance.group.id, uuid.uuid4(), os.path.splitext(filename)[1].lower()))
 
 
 '''
@@ -123,18 +123,36 @@ class CharityShopChallengeSubmission(models.Model):
     photo = models.ImageField(upload_to=charity_shop_challenge_photo_file_name, validators=[validate_photo_file_extension], null=True, blank=True, verbose_name='Charity Shop Challenge Photo')
 
 
-class ScavengerHunt(models.Model):
-    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True)
-    photo = models.ImageField(upload_to=scavenger_hunt_photo_file_name, validators=[validate_photo_file_extension])
+class ScavengerHuntTask(models.Model):
+    content = models.TextField()
+    hint = models.TextField(null=True, blank=True)
+    points = models.IntegerField()
 
-
-class CityChallengeScoreAuditlog(models.Model):
-    user = models.CharField(max_length=150)
-    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True)
-    challenge = models.CharField(max_length=150)
-    score = models.IntegerField()
-
-    auditlog = GenericRelation(AuditLog)
 
     def __str__(self):
-        return '{} updated score of for {} for Group {} to {} at {}'.format(self.user, self.challenge, self.group.id, self.score, self.auditlog.get().time)
+        return self.content
+
+
+class ScavengerHuntSubmission(models.Model):
+    task = models.ForeignKey(ScavengerHuntTask, on_delete=models.PROTECT)
+    group = models.ForeignKey(Group, on_delete=models.PROTECT)
+    description = models.TextField(null=True, blank=True)
+    photo = models.ImageField(upload_to=scavenger_hunt_submission_photo_file_name, validators=[validate_photo_file_extension], null=True, blank=True, verbose_name='Scavenger Hunt Photo')
+
+
+class ScavengerHuntHintRecord(models.Model):
+    """Record if hint of a task if used by a group."""
+    group = models.ForeignKey(Group, on_delete=models.PROTECT)
+    task = models.ForeignKey(ScavengerHuntTask, on_delete=models.PROTECT)
+
+
+# class CityChallengeScoreAuditlog(models.Model):
+#     user = models.CharField(max_length=150)
+#     group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True)
+#     challenge = models.CharField(max_length=150)
+#     score = models.IntegerField()
+
+#     auditlog = GenericRelation(AuditLog)
+
+#     def __str__(self):
+#         return '{} updated score of for {} for Group {} to {} at {}'.format(self.user, self.challenge, self.group.id, self.score, self.auditlog.get().time)

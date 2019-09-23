@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Jumpstart, Group, Fresher, Helper
+from .models import Jumpstart, Group, Fresher, Helper, ScavengerHuntTask
 
 
 class JumpstartAdmin(admin.ModelAdmin):
@@ -35,3 +35,5 @@ admin.site.register(Jumpstart, JumpstartAdmin)
 admin.site.register(Helper, HelperAdmin)
 admin.site.register(Group, GroupAdmin)
 admin.site.register(Fresher, FresherAdmin)
+
+admin.site.register(ScavengerHuntTask)

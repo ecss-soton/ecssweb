@@ -93,25 +93,20 @@
 </div>
 <div class="card my-3">
   <div class="card-header">
-    Scavenger Hunt
+    <a href="{% url 'jumpstart:scavenger-hunt' %}">Scavenger Hunt</a>
   </div>
   <div class="card-body">
     <div class="card-text">
+      <a href="{% url 'jumpstart:scavenger-hunt-pdf' %}">Scavenger Hunt tasks PDF file</a>
       <p>
-        Submitted {{ group.scavengerhunt_set.all|length }} photo{{ group.scavengerhunt_set.all|length|pluralize }}.
+        Submitted to {{ group.scavengerhuntsubmission_set.all|length }} task{{ group.scavengerhuntsubmission_set.all|length|pluralize }} out of {{ num_scavenger_hunt_tasks }} task{{ num_scavenger_hunt_tasks|pluralize }}.
       </p>
       {% if jumpstart.is_now %}
-      <a href="#" title="Edit Scavenger Hunt for Your Group">Edit Scavenger Hunt</a>
+      <a href="{% url 'jumpstart:scavenger-hunt' %}" title="Submit Scavenger Hunt for Your Group">Submit Scavenger Hunt</a>
       {% else %}
-      <a href="#" title="View Scavenger Hunt of Your Group">View Scavenger Hunt</a>
+      <a href="{% url 'jumpstart:scavenger-hunt' %}" title="View Scavenger Hunt of Your Group">View Scavenger Hunt</a>
       {% endif %}
     </div>
-    <!-- <div class="my-3">
-      <a href="#">Submit Scavenger Hunt</a>
-    </div>
-    <div class="mt-3">
-        <a href="#">View Scavenger Hunt</a>
-    </div> -->
   </div>
 </div>
 <div class="card my-3">

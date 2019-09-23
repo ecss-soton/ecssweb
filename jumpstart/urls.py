@@ -16,8 +16,8 @@ urlpatterns = [
     path('groups/helpers-import/', views.CommitteeGroupsHelpersImportView.as_view(), name='groups-helpers-import'),
     path('groups/freshers-import/', views.CommitteeGroupsFreshersImportView.as_view(), name='groups-freshers-import'),
     path('city-challenge/', views.CityChallengeView.as_view(), name='city-challenge'),
-    #path('group-<int:group_id>/city-challenge/', views.CityChallengeView.as_view(), name='city-challenge'),
-    #path('scavenger-hunt/', views.ScavengerHuntView.as_view(), name='scavenger-hunt'),
-    #path('scavenger-hunt/edit/', views.ScavengerHuntEditView.as_view(), name='scavenger-hunt-edit'),
+    path('scavenger-hunt/', views.ScavengerHuntView.as_view(), name='scavenger-hunt'),
+    path('scavenger-hunt/scavenger-hunt.pdf', views.ScavengerHuntPdfView.as_view(), name='scavenger-hunt-pdf'),
+    path('scavenger-hunt/<int:id>/', views.ScavengerHuntTaskView.as_view(), name='scavenger-hunt-task'),
     path('members-check-in/', views.MembersCheckInView.as_view(), name='members-check-in'),
 ]

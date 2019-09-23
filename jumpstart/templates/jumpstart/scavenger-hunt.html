@@ -1,32 +1,67 @@
 {% extends 'jumpstart/base.html' %}
 
+{% load jumpstart_extra %}
+
 {% block jumpstartcontent %}
-<div class="card mt-3">
+<div class="mb-3">
+  <a href="{% url 'jumpstart:home' %}" title="Jumpstart Portal"><i class="fas fa-arrow-circle-left"></i> Jumpstart portal</a>
+</div>
+{% for message in messages %}
+<div class="alert
+{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}
+">{{ message }}</div>
+{% endfor %}
+<div class="card my-3">
   <div class="card-header">
     Scavenger Hunt
   </div>
   <div class="card-body">
-    {% if group.name %}
-    <h5>{{ group.name }}</h5>
-    <small class="text-muted">Group {{ group.id }}</small>
-    {% else %}
-    <h5>
-      Group {{ group.id }}
-    </h5>
-    {% endif %}
-    {% if not group.scavengerhunt_set.all %}
-    <div class="mt-3">
-      No submissions.
-    </div>
-    {% else %}
-    <div class="mt-3 card-columns">
-      {% for scavenger_hunt in group.scavengerhunt_set.all %}
-      <div class="card">
-        <img class="img-fluid" src="{{ scavenger_hunt.photo.url }}" alt="Scavenger Hunt">
+    <h2 class="h6">Group {{ group.number }}</h2>
+    <div class="card-text">
+      <p>
+        Submitted to {{ group.scavengerhuntsubmission_set.all|length }} task{{ group.scavengerhuntsubmission_set.all|length|pluralize }} out of {{ scavenger_hunt_tasks|length }} task{{ scavenger_hunt_tasks|length|pluralize }}.
+      </p>
+      {% if jumpstart.is_now or jumpstart.is_after %}
+      <a href="{% url 'jumpstart:scavenger-hunt-pdf' %}">Scavenger Hunt tasks PDF file</a>
+      <div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>
+                Task
+              </th>
+              <th>
+                Points
+              </th>
+              <th>
+                Submitted
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for task in scavenger_hunt_tasks %}
+            <tr>
+              <td>
+                <a href="{% url 'jumpstart:scavenger-hunt-task' task.id %}">{{ task.content }}</a>
+              </td>
+              <td>
+                {{ task.points }}
+              </td>
+              <td>
+                {% if task|is_scavenger_hunt_task_submitted:group %}
+                <i class="fas fa-check-circle text-success" title="Yes" aria-label="Yes">
+                {% else %}
+                <i class="fas fa-times-circle text-danger" title="No" aria-label="No"></i>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
-      {% endfor %}
+      {% endif %}
     </div>
-    {% endif %}
   </div>
 </div>
 {% endblock %}

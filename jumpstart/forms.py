@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
-from .models import Helper, Fresher, Group, CharityShopChallengeSubmission, ScavengerHunt
+from .models import Helper, Fresher, Group, CharityShopChallengeSubmission, ScavengerHuntTask, ScavengerHuntSubmission
 
 from website.utils import clean_image
 
@@ -107,24 +107,37 @@ class SubmitCharityShopChallengeForm(ModelForm):
             raise ValidationError('Photo and description cannot be both empty.')
 
 
-class EditScavengerHuntForm(ModelForm):
+class SubmitScavengerHuntForm(ModelForm):
     class Meta:
-        model = ScavengerHunt
-        fields = ['photo']
+        model = ScavengerHuntSubmission
+        fields = ['photo', 'description']
+
 
     def __init__(self, *args, **kwargs):
-        super(EditScavengerHuntForm, self).__init__(*args, **kwargs)
+        super(SubmitScavengerHuntForm, self).__init__(*args, **kwargs)
         self.fields['photo'].widget.attrs.update({
             'accept': 'image/jpeg, image/png',
+        })
+        self.fields['description'].widget.attrs.update({
+            'rows': 3,
         })
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control',
             })
 
+
     def clean_photo(self):
-        photo = self.cleaned_data.get('photo', False)
-        return clean_image(photo)
+        photo = self.cleaned_data.get('photo', None)
+        return clean_image(photo) if photo else photo
+
+
+    def clean(self):
+        super().clean()
+        photo = self.cleaned_data.get('photo', None)
+        description = self.cleaned_data.get('description', None)
+        if not (photo or description):
+            raise ValidationError('Photo and description cannot be both empty.')
 
 
 # class ScoreMitreChallengeForm(ModelForm):

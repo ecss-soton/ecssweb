@@ -37,9 +37,9 @@
               <input type="checkbox" name="{{ fresher.uuid }}" form="groupMembersCheckInForm" value="checked in" {% if fresher.is_checked_in %}checked{% endif %}>
               {% else %}
               {% if fresher.is_checked_in %}
-              <i class="fas fa-check-circle text-success" title="Yes" aria-label="Yes"></span>
+              <i class="fas fa-check-circle text-success" title="Yes" aria-label="Yes">
               {% else %}
-              <i class="fas fa-times-circle text-danger" title="No" aria-label="No"></span>
+              <i class="fas fa-times-circle text-danger" title="No" aria-label="No">
               {% endif %}
               {% endif %}
             </td>
