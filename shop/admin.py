@@ -12,6 +12,10 @@ class ItemInline(admin.StackedInline):
 class SaleAdmin(admin.ModelAdmin):
     list_display = ['name', 'start', 'end']
 
+    prepopulated_fields = {
+        'codename': ('name',),
+    }
+
     inlines = [
         ItemInline,
     ]
@@ -28,6 +32,10 @@ class ItemOptionInline(admin.StackedInline):
     extra = 0
     min_num = 0
 
+    prepopulated_fields = {
+        'paypal_option_name': ('name',),
+    }
+
 
 class ItemPermissionInline(admin.StackedInline):
     model = ItemPermission
@@ -38,6 +46,10 @@ class ItemPermissionInline(admin.StackedInline):
 class ItemAdmin(admin.ModelAdmin):
     list_display = ['name', 'sale']
     list_filter = ['sale__name']
+
+    prepopulated_fields = {
+        'codename': ('name',),
+    }
 
     inlines = [
         ItemImageInline,
@@ -51,6 +63,10 @@ class OptionChoiceInline(admin.StackedInline):
     extra = 2
     min_num = 0
 
+    prepopulated_fields = {
+        'value': ('name',),
+    }
+
 
 class ItemOptionAdmin(admin.ModelAdmin):
     list_display = ['name', 'item', 'get_sale_name']
@@ -59,6 +75,10 @@ class ItemOptionAdmin(admin.ModelAdmin):
     inlines = [
         OptionChoiceInline,
     ]
+
+    prepopulated_fields = {
+        'paypal_option_name': ('name',),
+    }
 
     def get_sale_name(self, obj):
         return obj.item.sale.name
