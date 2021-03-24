@@ -1,4 +1,4 @@
-from elections.models import Election, Position, Vote, Nomination, VoteRecord
+from election.models import Election, Position, Vote, Nomination, VoteRecord
 
 election_name = 'agm-2021'
 
@@ -9,7 +9,7 @@ positions = Position.objects.filter(election=election)
 for position in positions:
     nominees = Nomination.objects.filter(position=position)
     num_nominees = len(nominees) + 1
-    
+
     # This will store the number of each priority vote
     scores = {"RON": [0] * num_nominees}
     for nominee in nominees:
@@ -31,15 +31,18 @@ for position in positions:
             if i not in seen:
                 scores["RON"][i-1] +=1
 
-    print(position.name)
-    # Calculate each round
+    print(position.name)# Calculate each round
     for i in range(num_nominees - 1):
         actual = i + 1
-        print("Round " + actual)
-        for nominee, acc in d.items():
+        print("Round {}".format(actual))
+        for nominee, acc in scores.items():
             if nominee == "RON":
                 name = nominee
             else:
                 name = nominee.name
 
-            print(name + " scores " + sum(acc[:actual]))
+            print("{} scores {}".format(name, sum(acc[:actual])))
+    if num_nominees == 1:
+        print("RON scores {}".format(scores["RON"][0]))
+
+    print("\n")
