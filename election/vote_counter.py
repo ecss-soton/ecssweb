@@ -1,4 +1,5 @@
 from election.models import Election, Position, Vote, Nomination, VoteRecord
+from collections import defaultdict
 
 election_name = 'agm-2021'
 
@@ -10,39 +11,72 @@ for position in positions:
     nominees = Nomination.objects.filter(position=position)
     num_nominees = len(nominees) + 1
 
-    # This will store the number of each priority vote
-    scores = {"RON": [0] * num_nominees}
-    for nominee in nominees:
-        scores[nominee] = [0] * num_nominees
-
+    # Turn Django objects into mutable dicts
+    usable_votes = []
     # Go through each user's votes for this position
     votes = Vote.objects.filter(position=position)
     for vote in votes:
+        usable_vote = {}
         seen = set()
-        vote_records = VoteRecord.objects.filter(vote=vote)
 
-        # Add each vote for each nominee to accumulators
+        vote_records = VoteRecord.objects.filter(vote=vote)
+        # Add each vote to the new usable_vote dict
         for record in vote_records:
+            usable_vote[record.nomination] = record.rank
             seen.add(record.rank)
-            scores[record.nomination][record.rank-1] +=1
 
         # Find out RON's ranking
         for i in range(1, num_nominees + 1):
             if i not in seen:
-                scores["RON"][i-1] +=1
+                usable_vote["RON"] = i
 
-    print(position.name)# Calculate each round
+        usable_votes.append(usable_vote)
+
+    print(position.name)
+    previous_yeet = ""
+    # Calculate each round
     for i in range(num_nominees - 1):
-        actual = i + 1
-        print("Round {}".format(actual))
-        for nominee, acc in scores.items():
+        round_num = i + 1
+        print("Round {}".format(round_num))
+
+        # Redistribute votes from previous rounds before starting
+        for vote in usable_votes:
+            yeeted_ranking = vote.pop(previous_yeet, None)
+
+            # We have yeeted someone out of the election
+            if yeeted_ranking:
+                # Re-distribute votes of yeeted candidate
+                for nominee, ranking in vote.items():
+                    if ranking > yeeted_ranking:
+                        vote[nominee] = ranking - 1
+
+        # Count the votes
+        scores = defaultdict(0)
+        for vote in usable_votes:
+            # Invert votes (Clunky as hell but it works)
+            # Find the most favoured candidate for this round
+            inverted_vote = dict((v, k) for k, v in vote.iteritems())
+            most_favoured = inverted_vote[1]
+
+            # Add a vote for the most favoured candidate
+            scores[most_favoured] += 1
+
+        lowest_candidate = None
+        lowest_score = 100000
+        # Display the results
+        for nominee, score in vote.items():
             if nominee == "RON":
                 name = nominee
             else:
                 name = nominee.name
 
-            print("{} scores {}".format(name, sum(acc[:actual])))
-    if num_nominees == 1:
-        print("RON scores {}".format(scores["RON"][0]))
+            print("{} scores {}".format(name, score))
 
-    print("\n")
+            # Track who performed the worst
+            if score < lowest_score:
+                lowest_score = score
+                lowest_candidate = nominee
+
+        # YEET the worst performing candidate
+        previous_yeet = lowest_candidate
+        print("\n")
