@@ -51,7 +51,7 @@ for position in positions:
                         vote[nominee] = ranking - 1
 
         # Count the votes
-        scores = defaultdict(0)
+        scores = defaultdict(int)
         for vote in usable_votes:
             # Invert votes (Clunky as hell but it works)
             # Find the most favoured candidate for this round
@@ -64,7 +64,7 @@ for position in positions:
         lowest_candidate = None
         lowest_score = 100000
         # Display the results
-        for nominee, score in vote.items():
+        for nominee, score in scores.items():
             if nominee == "RON":
                 name = nominee
             else:
