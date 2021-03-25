@@ -55,7 +55,7 @@ for position in positions:
         for vote in usable_votes:
             # Invert votes (Clunky as hell but it works)
             # Find the most favoured candidate for this round
-            inverted_vote = dict((v, k) for k, v in vote.iteritems())
+            inverted_vote = dict((v, k) for k, v in vote.items())
             most_favoured = inverted_vote[1]
 
             # Add a vote for the most favoured candidate
