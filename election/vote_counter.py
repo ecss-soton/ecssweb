@@ -45,7 +45,7 @@ for position in positions:
 
             # We have yeeted someone out of the election
             if yeeted_ranking:
-                # Re-distribute votes of yeeted candidate
+                # Re-distribute the preferences of this voter
                 for nominee, ranking in vote.items():
                     if ranking > yeeted_ranking:
                         vote[nominee] = ranking - 1
@@ -79,4 +79,9 @@ for position in positions:
 
         # YEET the worst performing candidate
         previous_yeet = lowest_candidate
+        print("\n")
+
+    # If it's only RON then RIP
+    if num_nominees == 1:
+        print("RON scores {}".format(len(usable_votes)))
         print("\n")
