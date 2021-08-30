@@ -1,4 +1,4 @@
-from election.models import Election, Position, Vote, Nomination, VoteRecord
+from election.models import Election, Position, Vote, Nomination, VoteRecord, Voter
 from collections import defaultdict
 
 election_name = 'agm-2021'
