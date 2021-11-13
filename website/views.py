@@ -27,9 +27,10 @@ def committee_overview(request):
     committee = CommitteeRoleMember.objects.all()
     try:
         with open(os.path.join(settings.BASE_DIR, 'website/data/previous-committee.yaml')) as data_file:
-            previous_committees = yaml.load(data_file)
-    except:
-        raise Http404()
+            print("pain")
+            previous_committees = yaml.load(data_file, Loader=yaml.FullLoader)
+    except Exception as e:
+        print(e)
     context = {
         'committee': committee,
         'previous_committees': previous_committees,
