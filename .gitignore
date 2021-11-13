@@ -18,6 +18,7 @@ jumpstart/data/
 website/static/website/content/
 shop/static/shop/content/
 media/
+static/
 
 # SAML config
 ecsswebauth/saml_config/settings.json
