@@ -72,27 +72,36 @@ def _get_sponsors():
     gold_sponsors = Sponsor.objects.filter(level='gold')
     silver_sponsors = Sponsor.objects.filter(level='silver')
     bronze_sponsors = Sponsor.objects.filter(level='bronze')
+    sixtyfourbit_sponsors = Sponsor.objects.filter(level='64-bit')
+    thirtytwobit_sponsors = Sponsor.objects.filter(level='32-bit')
+    sixteenbit_sponsors = Sponsor.objects.filter(level='16-bit')
 
-    return gold_sponsors, silver_sponsors, bronze_sponsors
+    return gold_sponsors, silver_sponsors, bronze_sponsors, sixtyfourbit_sponsors, thirtytwobit_sponsors, sixteenbit_sponsors
 
 def sponsors(request):
     if 'sponsor' in request.GET:
         sponsor = get_object_or_404(Sponsor, pk=request.GET['sponsor'])
-        gold_sponsors, silver_sponsors, bronze_sponsors = _get_sponsors()
+        gold_sponsors, silver_sponsors, bronze_sponsors, sixtyfourbit_sponsors, thirtytwobit_sponsors, sixteenbit_sponsors = _get_sponsors()
         context = {
             'gold_sponsors': gold_sponsors,
             'silver_sponsors': silver_sponsors,
             'bronze_sponsors': bronze_sponsors,
+            '64bit_sponsors': sixtyfourbit_sponsors,
+            '32bit_sponsors': thirtytwobit_sponsors,
+            '16bit_sponsors': sixteenbit_sponsors,
             'current_sponsor': sponsor,
         }
         return render(request, 'website/sponsors/sponsor.html', context)
 
     else:
-        gold_sponsors, silver_sponsors, bronze_sponsors = _get_sponsors()
+        gold_sponsors, silver_sponsors, bronze_sponsors, sixtyfourbit_sponsors, thirtytwobit_sponsors, sixteenbit_sponsors = _get_sponsors()
         context = {
             'gold_sponsors': gold_sponsors,
             'silver_sponsors': silver_sponsors,
             'bronze_sponsors': bronze_sponsors,
+            '64bit_sponsors': sixtyfourbit_sponsors,
+            '32bit_sponsors': thirtytwobit_sponsors,
+            '16bit_sponsors': sixteenbit_sponsors,
         }
         return render(request, 'website/sponsors/sponsors.html', context)
 
