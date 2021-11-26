@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import Http404
 from django.conf import settings
+from django.db.models import Q
 
 from .models import Society, Sponsor, CommitteeRoleMember
 
@@ -13,9 +14,9 @@ import yaml
 # Homepage
 
 def home(request):
-    gold_sponsors = Sponsor.objects.filter(level='gold')
+    sponsors = Sponsor.objects.filter(Q(level='gold') | Q(level='silver') | Q(level='bronze'))
     context = {
-        'gold_sponsors': gold_sponsors,
+        'sponsors': sponsors,
         'events': get_upcoming_events(),
     }
     return render(request, 'website/home.html', context)

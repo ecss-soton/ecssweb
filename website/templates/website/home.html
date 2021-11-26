@@ -4,52 +4,52 @@
 
 {% block pagestyle %}
 <link rel="stylesheet" href="{% static 'website/styles/home.css' %}">
-<style>
-@media (max-width: 575.98px) {
-  h1 {
-    font-size: 1.7rem;
-  }
-}
-</style>
 {% endblock %}
 
 {% block content %}
+<div id="header">
+  <div id="header-bg-shade">
+    <div class="container">
+        <!--
+
+                   /####               %@@@@
+                    ##########.  @@@@@@@@@@
+                     ########(   %@@@@@@@@*
+                   #####.     .,.      @@@@@,
+                 #####   #############   %@@@@
+                ####   ####/        ....   .,,,
+               ####  ####   @@@@@@  @@@@@@  /@@@@@,  @@@@@@
+              /###  ###(    @@@     @@  @@. @@   @@  @@  @@
+          .#######  ###     @@@    .@@      @@@      @@*
+          ########          @@@@@@ .@@        @@@@,   %@@@@
+           #######  ###     @@@     @@           @@      @@
+              /###  ###(    @@@     @@  @@. @@   @@  @@  @@
+               ####  ####   @@@@@@  @@@@@@  /@@@@@/  @@@@@@
+                ####   ####(        ....   ,,,.
+                 #####   #############   &@@@@
+                   #####,      ..      @@@@@.
+                     #########   &@@@@@@@@*
+                    ##########.  @@@@@@@@@@
+                   /####               %@@@@
+
+        -->
+        <img src="{% static 'website/images/ecssweb-logo.png' %}" alt="ECSS logo" class="logo-home">
+        <h1 class="text-center text-nowrap">
+          <span id="uos-text">University of Southampton</span>
+          <br>Electronics and<wbr> Computer Science Society
+        </h1>
+    </div>
+  </div>
+</div>
 <div class="container mt-3">
-  <section>
-    <!--
-
-               /####               %@@@@               
-                ##########.  @@@@@@@@@@                
-                 ########(   %@@@@@@@@*                
-               #####.     .,.      @@@@@,              
-             #####   #############   %@@@@             
-            ####   ####/        ....   .,,,            
-           ####  ####   @@@@@@  @@@@@@  /@@@@@,  @@@@@@
-          /###  ###(    @@@     @@  @@. @@   @@  @@  @@
-      .#######  ###     @@@    .@@      @@@      @@*   
-      ########          @@@@@@ .@@        @@@@,   %@@@@
-       #######  ###     @@@     @@           @@      @@
-          /###  ###(    @@@     @@  @@. @@   @@  @@  @@
-           ####  ####   @@@@@@  @@@@@@  /@@@@@/  @@@@@@
-            ####   ####(        ....   ,,,.            
-             #####   #############   &@@@@             
-               #####,      ..      @@@@@.              
-                 #########   &@@@@@@@@*                
-                ##########.  @@@@@@@@@@                
-               /####               %@@@@               
-
-    -->
-    <img src="{% static 'website/images/ecss-logo-square.png' %}" alt="ECSS logo" class="logo-home">
-    <h1 class="text-center text-nowrap">University of Southampton<br> Electronics and<wbr> Computer Science Society</h1>
-    <p>Welcome to the University of Southampton Electronics and Computer Science (ECS) Society website.</p>
-    <p>We are a student-run society for ECS at the University of Southampton.</p>
-    <p>On this website you will find information about the society such as who we are, what we aim to do, as well as what events we are currently organising!</p>
-    <p>Still reading? You can even find out more <a href="https://society.ecs.soton.ac.uk/about/">about us</a>.</p>
-    <p>To keep up with the latest events, join the <a href="https://www.facebook.com/groups/ecss.soton/">ECSS Facebook group</a>, like <a href="https://www.facebook.com/ecss.soton/">our Facebook page</a> and follow us on Twitter, <a href="https://twitter.com/ecs_society">@ECS_Society</a>.</p>
-  </section>
+  <p>
+    <b>About Us</b>
+    <br>We are the University of Southampton's Electronics and Computer Science Society, better known as ECSS. We are a student-run society for ECS students at the University of Southampton, but welcome all students from the entire university.
+    <br><br>
+    We run all types of events for every student: from socials to talks, Hackathons to games nights and movie viewings to day trips. These events are planned and operated by a committee of volunteers: elected by ECS students, for ECS students.
+  </p>
   <section>
     <h2 class="text-center">Upcoming Events</h2>
-    <hr>
     {% if not events %}
     <p>Currently no upcoming events published, stay tuned.</p>
     {% endif %}
@@ -57,8 +57,8 @@
     {% for event in events %}
     <div class="events-cards-home">
       <div class="card event-card-home">
+         <a href="https://www.facebook.com/events/{{ event.fb_id }}/">
         <img class="card-img-top" src="{{ event.cover }}" alt="{{ event.name }}">
-        <a href="https://www.facebook.com/events/{{ event.fb_id }}/">
           <h5 class="card-header">
             {{ event.name }}
           </h5>
@@ -71,21 +71,18 @@
     </div>
     {% endfor %}
     </div>
-    <p>Find out more about our events on <a href="{% url 'website:events' %}">our events page</a>.</p>
   </section>
   <section>
-    <h2 class="text-center">Our Gold Sponsors</h2>
-    <hr>
-    <ul class="d-flex justify-content-around list-unstyled">
-      {% for gold_sponsor in gold_sponsors %}
+    <h2 class="text-center">Our Sponsors</h2>
+      <ul class="d-flex justify-content-around list-unstyled">
+      {% for gold_sponsor in sponsors %}
       <li class="sponsor-list-logo-home">
         <a href="{% url 'website:sponsors' %}?sponsor={{ gold_sponsor.codename }}" title="{{ gold_sponsor.name }}" aria-label="{{ gold_sponsor.name }}">
-          <img src="{% static gold_sponsor.logo_file %}" alt="{{ gold_sponsor.name }}" class="sponsor-logo-home" aria-hidden="true">
+          <img src="{% static gold_sponsor.logo_file %}" width="175" alt="{{ gold_sponsor.name }}" class="sponsor-logo-home" aria-hidden="true">
         </a>
       </li>
       {% endfor %}
     </ul>
-    <p>Find out more about our sponsors on <a href="https://society.ecs.soton.ac.uk/sponsors/">our sponsors page</a>.</p>
   </section>
 </div>
 {% endblock %}
