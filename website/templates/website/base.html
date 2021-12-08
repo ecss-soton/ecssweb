@@ -7,7 +7,7 @@
 
     <!-- Chrome, Firefox OS and Opera -->
     <meta name="theme-color" content="black">
-    
+
     <link rel="icon" href="{% static 'website/images/favicon.ico' %}">
 
     <!-- Bootstrap CSS -->
@@ -54,50 +54,14 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'website:welfare' %}">Welfare</a>
               </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'website:sports' %}" id="navbarSportsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Sports
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarSportsDropdown">
-                  <a class="dropdown-item" href="{% url 'website:sports' %}">Sports Overview</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'website:football' %}">Football</a>
-                  <a class="dropdown-item" href="{% url 'website:netball' %}">Netball</a>
-                  <!--<a class="dropdown-item" href="#">Basketball</a>-->
-                  <a class="dropdown-item" href="{% url 'website:running' %}">Running</a>
-                  <a class="dropdown-item" href="{% url 'website:sports-others' %}">Others</a>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'website:freshers-2019' %}" id="navbarFreshersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Freshers
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarFreshersDropdown">
-                  <a class="dropdown-item" href="{% url 'website:freshers-2019' %}">Freshers</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'website:jumpstart-2019' %}">Jumpstart</a>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'website:about' %}" id="navbarAboutDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  About
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarAboutDropdown">
-                  <a class="dropdown-item" href="{% url 'website:about' %}">About</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/constitution/">Constitution</a>
-                  <a class="dropdown-item" href="{% url 'website:contact' %}">Contact Us</a>
-                </div>
-              </li>
+            </ul>
+            <ul class="navbar-nav">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="{% url 'portal:overview' %}" id="navbarPortalDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Portal
+                  <i class="fas fa-user-alt"></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarPortalDropdown">
-                  <a class="dropdown-item" href="{% url 'portal:overview' %}">Portal Overview</a>
-                  <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'feedback:submit' %}">Feedback</a>
-                  <a class="dropdown-item" href="{% url 'shop:shop' %}">Shop</a>
                   <a class="dropdown-item" href="{% url 'election:elections' %}">Elections</a>
                 </div>
               </li>
@@ -127,10 +91,10 @@
         <div>
           <dl class="footer-list">
             <dt></dt>
-            <dd class="footer-item"><a href="{% url 'website:about' %}" class="footer-link">About</a></dd>
+            <dd class="footer-item"><a href="{% url 'website:about' %}" class="footer-link">About Us</a></dd>
+            <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/constitution" class="footer-link">Constitution</a></dd>
             <dd class="footer-item"><a href="{% url 'website:contact' %}" class="footer-link">Contact</a></dd>
             <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/meeting-minutes/" class="footer-link">Meeting Minutes</a></dd>
-            <dd class="footer-item"><a href="{% url 'website:societies' %}" class="footer-link">Societies in ECS</a></dd>
             <dd class="footer-item"><a href="https://www.ecs.soton.ac.uk" class="footer-link">ECS</a></dd>
           </dl>
           <dl class="footer-list">
