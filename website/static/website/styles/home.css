@@ -115,3 +115,11 @@
   color: white;
   text-shadow: 1px 1px #3c3c3c;
 }
+
+.dark-theme .event-card-home {
+  background-color: black;
+}
+
+.dark-theme .event-card-home .card-header {
+  background: #757575;
+}
