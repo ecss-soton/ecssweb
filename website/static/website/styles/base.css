@@ -9,7 +9,6 @@ a:hover {
   color: red;
 }
 
-
 /* Blocks styles */
 
 body {
@@ -143,7 +142,7 @@ footer {
   .footer-container {
     display: flex;
   }
-  
+
   .footer-social-medias {
     margin-left: auto;
     order: 2;
@@ -316,4 +315,95 @@ footer {
   .timeline-container-right {
     left: 0%;
   }
+}
+
+/* Dark theme */
+.toggle.dark, .toggle-on.dark, .toggle-off.dark { border-radius: 20rem; border: 1px solid black; }
+.toggle.dark .toggle-handle { border-radius: 20rem; background: #8a8a8a; border: 1px solid #686868; }
+.toggle-off.btn { background: #cacaca; color: #333; }
+.toggle-on.btn { background: #4f4f4f !important; color: white !important; }
+
+.dark-theme {
+  background-color: #2b2b2b;
+}
+
+.dark-theme #header-bg-shade {
+  background-color: #0000004a;
+}
+
+.dark-theme .content {
+  background-color: #484848;
+  color: white;
+}
+
+.dark-theme .dropdown-menu {
+  background: #646464;
+}
+
+.dark-theme .dropdown-item {
+  color: white;
+}
+
+.dark-theme .dropdown-item:hover {
+  background: #373737;
+  color: white;
+}
+
+.dark-theme .dropdown-divider {
+  border-top: 1px solid #434546;
+}
+
+.dark-theme .dropdown-item {
+  color: white !important;
+}
+
+.dark-theme a {
+  color: #66b0ff;
+}
+
+.dark-theme a:hover {
+  color: #66b0ff;
+}
+
+.dark-theme a:visited {
+  color: #66b0ff;
+}
+
+.dark-theme .text-muted {
+  color: #fff !important;
+}
+
+.dark-theme .footer-container a {
+  color: white;
+}
+
+.dark-theme .footer-container a:hover {
+  color: white;
+}
+
+.dark-theme .footer-container a:visited {
+  color: white;
+}
+
+.dark-theme .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  background-color: #282828;
+  border-color: #000 #000 #000;
+  color: white;
+}
+
+.dark-theme .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover {
+  border-color: #000 #000 #000;
+  color: white;
+}
+
+.dark-theme .nav-tabs {
+  border-bottom: 1px solid #000;
+}
+
+.dark-theme .page-header {
+  background-color: #333;
+}
+
+.dark-theme .timeline-content {
+  background-color: rgba(0, 0, 0, 0.29);
 }

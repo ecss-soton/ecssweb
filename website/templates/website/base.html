@@ -15,6 +15,9 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
+    <!-- Bootstrap Toggle -->
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet" data-style="ios">
+
     <link rel="stylesheet" href="{% static 'website/styles/base.css' %}">
     {% block pagestyle %}{% endblock %}
     <title>{% block title %}ECSS - University of Southampton Electronics and Computer Science Society{% endblock %}</title>
@@ -56,6 +59,7 @@
               </li>
             </ul>
             <ul class="navbar-nav">
+              <span style="margin-right: 20px;" ><input id="toggle-dark" type="checkbox" checked data-style="dark" data-toggle="toggle" data-on="<i class='fa fa-moon'></i>" data-off="<i class='fa fa-sun'></i>"></span>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="{% url 'portal:overview' %}" id="navbarPortalDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="fas fa-user-alt"></i>
@@ -113,6 +117,61 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+
+    <script>
+      const dark_toggle = "#toggle-dark";
+      const dark_theme = "dark-theme";
+      const cookie_name = "dark-mode";
+
+      const cookiesApi = Cookies.withAttributes({ sameSite: "strict" });
+
+      $(function() {
+        $(dark_toggle).change(function() {
+          let dark = document.getElementById("toggle-dark").checked;
+
+          toggleDarkMode(dark);
+          cookiesApi.set(cookie_name, dark, { expires: 1 });
+        })
+      });
+
+      window
+      	.matchMedia("(prefers-color-scheme: dark)")
+      	.addEventListener("change", function (e) {
+      		matchThemeToSystem();
+      	});
+
+      function matchThemeToSystem() {
+        let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        let cookieOverride = typeof(cookiesApi.get(cookie_name)) !== 'undefined';
+
+        if(cookieOverride) {
+          dark = cookiesApi.get(cookie_name) === 'true';
+        }
+
+        if (dark) {
+            $(dark_toggle).bootstrapToggle('on', true);
+            toggleDarkMode(true);
+    		} else {
+            $(dark_toggle).bootstrapToggle('off', true);
+            toggleDarkMode(false);
+    		}
+      }
+
+      function toggleDarkMode(toggle) {
+        if(toggle && !document.body.classList.contains(dark_theme)) {
+            document.body.classList.add(dark_theme);
+        } else if(!toggle) {
+          document.body.classList.remove(dark_theme);
+        }
+      }
+
+      $(function() {
+        matchThemeToSystem();
+      });
+    </script>
+
     {% block pagescript %}{% endblock %}
   </body>
 </html>
