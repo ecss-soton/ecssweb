@@ -117,7 +117,7 @@
 }
 
 .dark-theme .event-card-home {
-  background-color: black;
+  background-color: black !important;
 }
 
 .dark-theme .event-card-home .card-header {

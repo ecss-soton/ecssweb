@@ -417,3 +417,7 @@ footer {
   background-color: #282828;
   border: 1px solid #fff;
 }
+
+.dark-theme .card {
+  background-color: #484848;
+}
