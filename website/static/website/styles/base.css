@@ -409,6 +409,7 @@ footer {
 }
 
 .dark-theme .list-group-item {
+  background-color: #282828;
 }
 
 .dark-theme .form-control {
