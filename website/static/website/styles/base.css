@@ -407,3 +407,12 @@ footer {
 .dark-theme .timeline-content {
   background-color: rgba(0, 0, 0, 0.29);
 }
+
+.dark-theme .list-group-item {
+}
+
+.dark-theme .form-control {
+  color: #fdfeff;
+  background-color: #282828;
+  border: 1px solid #fff;
+}
