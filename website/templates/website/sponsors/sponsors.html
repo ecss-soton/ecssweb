@@ -12,7 +12,15 @@
 {% block content %}
 <section class="container mt-3">
   <section>
-    <h3><i class="medal medal-gold"></i> Gold Sponsors</h3>
+      <h2>Society Sponsors</h2>
+  </section>
+  <div class="alert alert-primary" role="alert">
+    <b>Interested in sponsoring ECSS?</b>
+    <br />
+    We're're actively looking for companies to join the ECSS team. <a style="color: inherit" href="{% url 'website:contact' %}">Click here to contact us.</a>
+  </div>
+  <section>
+    <h3><i class="medal medal-gold"></i> Gold</h3>
     <hr>
     <ul class="list-unstyled d-flex justify-content-around flex-wrap">
       {% for sponsor in gold_sponsors %}
@@ -25,7 +33,7 @@
     </ul>
   </section>
   <section>
-    <h3><i class="medal medal-silver"></i> Silver Sponsors</h3>
+    <h3><i class="medal medal-silver"></i> Silver</h3>
     <hr>
     <ul class="list-unstyled d-flex justify-content-around flex-wrap">
       {% for sponsor in silver_sponsors %}
@@ -38,7 +46,7 @@
     </ul>
   </section>
   <section>
-    <h3><i class="medal medal-bronze"></i> Bronze Sponsors</h3>
+    <h3><i class="medal medal-bronze"></i> Bronze</h3>
     <hr>
     <ul class="list-unstyled d-flex justify-content-around flex-wrap">
       {% for sponsor in bronze_sponsors %}
@@ -51,6 +59,58 @@
     </ul>
   </section>
   <hr>
+  <section>
+      <h2><span class="badge bg-success" style="color: white">NEW</span> Hackathon Sponsors</h2>
+  </section>
+  <div class="alert alert-success" role="alert">
+    We are now offering <span style="font-family: Consolas,monaco,monospace;">64-bit</span>, <span style="font-family: Consolas,monaco,monospace;">32-bit</span> and <span style="font-family: Consolas,monaco,monospace;">16-bit</span> Hackathon packages for our 2021 - 2022 Hackathon season.
+    <br /><br />If you are interested in partnering with ECSS in our popular Hackathons, <a style="color: inherit" href="{% url 'website:contact' %}">please click here to contact us.</a>
+  </div>
+  <hr />
+  <!--
+  <section>
+      <h2>Hackathon Sponsors</h2>
+  </section>
+  <section>
+    <h3><i class="medal medal-gold"></i> 64-bit</h3>
+    <hr>
+    <ul class="list-unstyled d-flex justify-content-around flex-wrap">
+      {% for sponsor in 64bit_sponsors %}
+      <li class="text-center sponsor-item">
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link" title="{{ sponsor.name }}">
+          <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  <section>
+    <h3><i class="medal medal-silver"></i> 32-bit</h3>
+    <hr>
+    <ul class="list-unstyled d-flex justify-content-around flex-wrap">
+      <br />
+      {% for sponsor in 32bit_sponsors %}
+      <li class="text-center sponsor-item">
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link" title="{{ sponsor.name }}">
+          <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  <section>
+    <h3><i class="medal medal-bronze"></i> 16-bit</h3>
+    <hr>
+    <ul class="list-unstyled d-flex justify-content-around flex-wrap">
+      {% for sponsor in 16bit_sponsors %}
+      <li class="text-center sponsor-item">
+        <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link" title="{{ sponsor.name }}">
+          <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>!-->
   <div>
     <p>
       Our sponsors are vital part of ECSS. Their funding makes all our events possible. Additionally, we work with them to host a variety of academic events throughout the year; everything from talks about their tech to interview days and hackathons.
@@ -63,9 +123,6 @@
     </p>
     <p>
       Besides talks, we host hackathons and interview days. Hackathons are valuable events where teams of engineers collaborate on hardware/software projects, with the common purpose of completing an assigned challenge. They are great opportunities to use new kit, enhance your skills, and make new friends. The interview days are great opportunities to meet with companies, gain experience with interviews, and of course land a job/internship! ECS graduates are highly sought after.
-    </p>
-    <p>
-      If you are a company interested in sponsoring ECSS, please contact us via our <a href="mailto:society@ecs.soton.ac.uk">email</a>, or our <a href="https://www.facebook.com/ecss.soton/">Facebook page</a>.
     </p>
   </div>
 </section>

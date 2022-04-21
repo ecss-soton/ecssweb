@@ -7,13 +7,16 @@
 
     <!-- Chrome, Firefox OS and Opera -->
     <meta name="theme-color" content="black">
-    
+
     <link rel="icon" href="{% static 'website/images/favicon.ico' %}">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+    <!-- Bootstrap Toggle -->
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet" data-style="ios">
 
     <link rel="stylesheet" href="{% static 'website/styles/base.css' %}">
     {% block pagestyle %}{% endblock %}
@@ -54,50 +57,15 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'website:welfare' %}">Welfare</a>
               </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'website:sports' %}" id="navbarSportsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Sports
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarSportsDropdown">
-                  <a class="dropdown-item" href="{% url 'website:sports' %}">Sports Overview</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'website:football' %}">Football</a>
-                  <a class="dropdown-item" href="{% url 'website:netball' %}">Netball</a>
-                  <!--<a class="dropdown-item" href="#">Basketball</a>-->
-                  <a class="dropdown-item" href="{% url 'website:running' %}">Running</a>
-                  <a class="dropdown-item" href="{% url 'website:sports-others' %}">Others</a>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'website:freshers-2019' %}" id="navbarFreshersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Freshers
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarFreshersDropdown">
-                  <a class="dropdown-item" href="{% url 'website:freshers-2019' %}">Freshers</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'website:jumpstart-2019' %}">Jumpstart</a>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'website:about' %}" id="navbarAboutDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  About
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarAboutDropdown">
-                  <a class="dropdown-item" href="{% url 'website:about' %}">About</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="https://society.ecs.soton.ac.uk/constitution/">Constitution</a>
-                  <a class="dropdown-item" href="{% url 'website:contact' %}">Contact Us</a>
-                </div>
-              </li>
+            </ul>
+            <ul class="navbar-nav">
+              <span style="margin-right: 20px;" ><input id="toggle-dark" type="checkbox" checked data-style="dark" data-toggle="toggle" data-on="<i class='fa fa-moon'></i>" data-off="<i class='fa fa-sun'></i>"></span>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="{% url 'portal:overview' %}" id="navbarPortalDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Portal
+                  <i class="fas fa-user-alt"></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarPortalDropdown">
-                  <a class="dropdown-item" href="{% url 'portal:overview' %}">Portal Overview</a>
-                  <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'feedback:submit' %}">Feedback</a>
-                  <a class="dropdown-item" href="{% url 'shop:shop' %}">Shop</a>
                   <a class="dropdown-item" href="{% url 'election:elections' %}">Elections</a>
                 </div>
               </li>
@@ -120,16 +88,17 @@
             <dd class="footer-item footer-item-icon"><a href="https://www.facebook.com/ecss.soton/" class="footer-link-icon" aria-label="Facebook page"><i class="fab fa-facebook" title="ECSS Facebook page" aria-hidden="true"></i></a></dd>
             <dd class="footer-item footer-item-icon"><a href="https://twitter.com/ecs_society" class="footer-link-icon" aria-label="Twitter"><i class="fab fa-twitter" title="ECSS Twitter" aria-hidden="true"></i></a></dd>
             <dd class="footer-item footer-item-icon"><a href="https://www.instagram.com/ecss_soton/" class="footer-link-icon" aria-label="Instagram"><i class="fab fa-instagram" title="ECSS Instagram" aria-hidden="true"></i></a></dd>
+            <dd class="footer-item footer-item-icon"><a href="https://discord.com/invite/thNwer4" class="footer-link-icon" aria-label="Discord"><i class="fab fa-discord" title="ECSS Discord" aria-hidden="true"></i></a></dd>
             <dd class="footer-item footer-item-icon"><a href="https://github.com/ecss-soton" class="footer-link-icon" aria-label="GitHub"><i class="fab fa-github" title="ECSS GitHub" aria-hidden="true"></i></a></dd>
           </dl>
         </div>
         <div>
           <dl class="footer-list">
             <dt></dt>
-            <dd class="footer-item"><a href="{% url 'website:about' %}" class="footer-link">About</a></dd>
+            <dd class="footer-item"><a href="{% url 'website:about' %}" class="footer-link">About Us</a></dd>
+            <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/constitution" class="footer-link">Constitution</a></dd>
             <dd class="footer-item"><a href="{% url 'website:contact' %}" class="footer-link">Contact</a></dd>
             <dd class="footer-item"><a href="https://society.ecs.soton.ac.uk/meeting-minutes/" class="footer-link">Meeting Minutes</a></dd>
-            <dd class="footer-item"><a href="{% url 'website:societies' %}" class="footer-link">Societies in ECS</a></dd>
             <dd class="footer-item"><a href="https://www.ecs.soton.ac.uk" class="footer-link">ECS</a></dd>
           </dl>
           <dl class="footer-list">
@@ -148,6 +117,61 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+
+    <script>
+      const dark_toggle = "#toggle-dark";
+      const dark_theme = "dark-theme";
+      const cookie_name = "dark-mode";
+
+      const cookiesApi = Cookies.withAttributes({ sameSite: "strict" });
+
+      $(function() {
+        $(dark_toggle).change(function() {
+          let dark = document.getElementById("toggle-dark").checked;
+
+          toggleDarkMode(dark);
+          cookiesApi.set(cookie_name, dark, { expires: 1 });
+        })
+      });
+
+      window
+      	.matchMedia("(prefers-color-scheme: dark)")
+      	.addEventListener("change", function (e) {
+      		matchThemeToSystem();
+      	});
+
+      function matchThemeToSystem() {
+        let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        let cookieOverride = typeof(cookiesApi.get(cookie_name)) !== 'undefined';
+
+        if(cookieOverride) {
+          dark = cookiesApi.get(cookie_name) === 'true';
+        }
+
+        if (dark) {
+            $(dark_toggle).bootstrapToggle('on', true);
+            toggleDarkMode(true);
+    		} else {
+            $(dark_toggle).bootstrapToggle('off', true);
+            toggleDarkMode(false);
+    		}
+      }
+
+      function toggleDarkMode(toggle) {
+        if(toggle && !document.body.classList.contains(dark_theme)) {
+            document.body.classList.add(dark_theme);
+        } else if(!toggle) {
+          document.body.classList.remove(dark_theme);
+        }
+      }
+
+      $(function() {
+        matchThemeToSystem();
+      });
+    </script>
+
     {% block pagescript %}{% endblock %}
   </body>
 </html>

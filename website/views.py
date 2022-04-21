@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import Http404
 from django.conf import settings
+from django.db.models import Q
 
 from .models import Society, Sponsor, CommitteeRoleMember
 
@@ -13,9 +14,9 @@ import yaml
 # Homepage
 
 def home(request):
-    gold_sponsors = Sponsor.objects.filter(level='gold')
+    sponsors = Sponsor.objects.filter(Q(level='gold') | Q(level='silver') | Q(level='bronze'))
     context = {
-        'gold_sponsors': gold_sponsors,
+        'sponsors': sponsors,
         'events': get_upcoming_events(),
     }
     return render(request, 'website/home.html', context)
@@ -27,9 +28,10 @@ def committee_overview(request):
     committee = CommitteeRoleMember.objects.all()
     try:
         with open(os.path.join(settings.BASE_DIR, 'website/data/previous-committee.yaml')) as data_file:
-            previous_committees = yaml.load(data_file)
-    except:
-        raise Http404()
+            print("pain")
+            previous_committees = yaml.load(data_file, Loader=yaml.FullLoader)
+    except Exception as e:
+        print(e)
     context = {
         'committee': committee,
         'previous_committees': previous_committees,
@@ -71,27 +73,36 @@ def _get_sponsors():
     gold_sponsors = Sponsor.objects.filter(level='gold')
     silver_sponsors = Sponsor.objects.filter(level='silver')
     bronze_sponsors = Sponsor.objects.filter(level='bronze')
+    sixtyfourbit_sponsors = Sponsor.objects.filter(level='64-bit')
+    thirtytwobit_sponsors = Sponsor.objects.filter(level='32-bit')
+    sixteenbit_sponsors = Sponsor.objects.filter(level='16-bit')
 
-    return gold_sponsors, silver_sponsors, bronze_sponsors
+    return gold_sponsors, silver_sponsors, bronze_sponsors, sixtyfourbit_sponsors, thirtytwobit_sponsors, sixteenbit_sponsors
 
 def sponsors(request):
     if 'sponsor' in request.GET:
         sponsor = get_object_or_404(Sponsor, pk=request.GET['sponsor'])
-        gold_sponsors, silver_sponsors, bronze_sponsors = _get_sponsors()
+        gold_sponsors, silver_sponsors, bronze_sponsors, sixtyfourbit_sponsors, thirtytwobit_sponsors, sixteenbit_sponsors = _get_sponsors()
         context = {
             'gold_sponsors': gold_sponsors,
             'silver_sponsors': silver_sponsors,
             'bronze_sponsors': bronze_sponsors,
+            '64bit_sponsors': sixtyfourbit_sponsors,
+            '32bit_sponsors': thirtytwobit_sponsors,
+            '16bit_sponsors': sixteenbit_sponsors,
             'current_sponsor': sponsor,
         }
         return render(request, 'website/sponsors/sponsor.html', context)
 
     else:
-        gold_sponsors, silver_sponsors, bronze_sponsors = _get_sponsors()
+        gold_sponsors, silver_sponsors, bronze_sponsors, sixtyfourbit_sponsors, thirtytwobit_sponsors, sixteenbit_sponsors = _get_sponsors()
         context = {
             'gold_sponsors': gold_sponsors,
             'silver_sponsors': silver_sponsors,
             'bronze_sponsors': bronze_sponsors,
+            '64bit_sponsors': sixtyfourbit_sponsors,
+            '32bit_sponsors': thirtytwobit_sponsors,
+            '16bit_sponsors': sixteenbit_sponsors,
         }
         return render(request, 'website/sponsors/sponsors.html', context)
 

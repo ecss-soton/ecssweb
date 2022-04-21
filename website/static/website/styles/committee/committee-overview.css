@@ -19,9 +19,17 @@
   color: black;
 }
 
+.dark-theme .committee-member-name-link {
+  color: white;
+}
+
 .committee-member-name-link:hover {
   text-decoration: none;
   color: black;
+}
+
+.dark-theme .committee-member-name-link:hover {
+  color: white;
 }
 
 .committee-role-name-link:hover {

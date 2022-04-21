@@ -81,7 +81,7 @@ class SocietyLink(models.Model):
 class Sponsor(models.Model):
     codename = models.CharField(max_length=50, primary_key=True)
     name = models.CharField(max_length=100)
-    level = models.CharField(choices=[('gold', 'gold'), ('silver', 'silver'), ('bronze', 'bronze')], max_length=20)
+    level = models.CharField(choices=[('gold', 'gold'), ('silver', 'silver'), ('bronze', 'bronze'), ('64-bit', '64-bit'), ('32-bit', '32-bit'), ('16-bit', '16-bit')], max_length=20)
     logo_file = models.CharField(max_length=100)
 
     description = models.TextField()
