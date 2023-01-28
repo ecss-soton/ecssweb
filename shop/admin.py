@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Sale, Item, ItemImage, ItemOption, ItemPermission, OptionChoice
+from .models import Sale, Item, ItemImage, ItemOption, ItemPermission, OptionChoice, ItemImageModelForm
 
 
 class ItemInline(admin.StackedInline):
@@ -22,9 +22,12 @@ class SaleAdmin(admin.ModelAdmin):
 
 
 class ItemImageInline(admin.StackedInline):
+    form = ItemImageModelForm
     model = ItemImage
     extra = 0
     min_num = 0
+
+    filter_horizontal = ('item_options',)
 
 
 class ItemOptionInline(admin.StackedInline):

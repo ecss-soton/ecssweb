@@ -43,17 +43,23 @@
         <li class="list-group-item">
           <ul class="list-unstyled">
             <li>
-              <a href="{% url 'shop:shop' %}">Shop</a>
+              <a href="{% url 'shop:shop' %}"><b>Shop</b></a>
+            </li>
+            <li>
+              <a href="{% url 'shop:basket' %}">↦ My Basket</a>
+            </li>
+            <li>
+              <a href="{% url 'shop:orders' %}">↦ My Orders</a>
             </li>
           </ul>
         </li>
         <li class="list-group-item">
           <ul class="list-unstyled">
             <li>
-              <a href="{% url 'election:elections' %}">Elections</a>
+              <a href="{% url 'election:elections' %}"><b>Elections</b></a>
             </li>
             <li>
-              <a href="{% url 'election:results' %}">Election Results</a>
+              <a href="{% url 'election:results' %}">↦ Election Results</a>
             </li>
           </ul>
         </li>

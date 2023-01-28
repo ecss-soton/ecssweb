@@ -1,4 +1,4 @@
-from django.utils.http import is_safe_url
+from django.utils.http import url_has_allowed_host_and_scheme 
 from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
 from django.shortcuts import render, resolve_url
 from django.views.decorators.csrf import csrf_exempt
@@ -14,7 +14,7 @@ import pytz
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 
 def _clean_next_url(next_url, default_url=settings.LOGIN_REDIRECT_URL):
-    if is_safe_url(next_url, settings.ALLOWED_HOSTS):
+    if url_has_allowed_host_and_scheme(next_url, settings.ALLOWED_HOSTS):
         return next_url.strip()
     else:
         return resolve_url(default_url)

@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from django import forms
 
 import os
 import uuid
@@ -69,16 +70,6 @@ class Item(models.Model):
         ordering = ['sort_order']
 
 
-class ItemImage(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to=item_image_file_name, verbose_name='item image')
-    sort_order = models.IntegerField(null=True, blank=True, verbose_name='item image sort order')
-
-
-    class Meta:
-        ordering = ['sort_order']
-
-
 class ItemOption(models.Model):
 
     AUTO_CHOICES = [
@@ -100,7 +91,6 @@ class ItemOption(models.Model):
 
         ordering = ['paypal_option_number']
 
-
 class OptionChoice(models.Model):
     item_option = models.ForeignKey(ItemOption, on_delete=models.CASCADE)
     sort_order = models.IntegerField(null=True, blank=True, verbose_name='option choice sort order')
@@ -114,6 +104,27 @@ class OptionChoice(models.Model):
     class Meta:
         ordering = ['sort_order']
 
+class ItemImage(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=item_image_file_name, verbose_name='item image')
+    sort_order = models.IntegerField(null=True, blank=True, verbose_name='item image sort order')
+    item_options = models.ManyToManyField(OptionChoice, blank=True, null=True)
+
+    class Meta:
+        ordering = ['sort_order']
+
+class ItemImageModelForm(forms.ModelForm):
+    class Meta:
+        model = ItemImage
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        forms.ModelForm.__init__(self, *args, **kwargs)
+
+        if hasattr(self.instance, 'item'):
+            self.fields['item_options'].queryset = OptionChoice.objects.filter(item_option__item=self.instance.item)
+        else:
+            self.fields['item_options'].queryset = OptionChoice.objects.all()
 
 class ItemPermission(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
@@ -121,3 +132,128 @@ class ItemPermission(models.Model):
 
     def __str__(self):
         return str(self.permission)
+
+class Basket(models.Model):
+    username = models.CharField(max_length=50)
+
+    COLLECTION = 1
+    UK_DELIVERY = 2
+    DELIVERY = (
+        (COLLECTION, 'Collection'),
+        (UK_DELIVERY, 'UK Delivery')
+    )
+
+    delivery_option = models.IntegerField(choices=DELIVERY, default=COLLECTION)
+
+    def total_price(self):
+        price = 0
+
+        for item in self.basketeditem_set.all():
+            price += item.total_price()
+
+        if self.should_include_delivery_cost():
+            price += self.delivery_cost()
+
+        return price
+
+    def should_include_delivery_cost(self):
+        return self.delivery_option == Basket.UK_DELIVERY
+
+    def delivery_cost(self):
+        price = 0
+
+        for item in self.basketeditem_set.all():
+            price += item.quantity * 5
+
+        return price
+
+class BasketedItem(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    choices = models.ManyToManyField(OptionChoice)
+    basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+    def total_price(self):
+        return self.item.price * self.quantity
+
+class DeliveryAddress(models.Model):
+    name = models.CharField(max_length=50, null=True)
+    city = models.CharField(max_length=50, null=True)
+    country = models.CharField(max_length=2, null=True)
+    line1 = models.CharField(max_length=50, null=True)
+    line2 = models.CharField(max_length=50, null=True)
+    postal_code = models.CharField(max_length=50, null=True)
+    state = models.CharField(max_length=50, null=True)
+
+class Transaction(models.Model):
+    stripe_id = models.CharField(max_length=50, null=True)
+    
+    INITIATED = 1
+    PROCESSED = 2
+    TRANSCTION_STATUS = (
+        (INITIATED, 'Open'),
+        (PROCESSED, 'Processed')
+    )
+
+    status = models.IntegerField(choices=TRANSCTION_STATUS, default=INITIATED)
+
+class Order(models.Model):
+    username = models.CharField(max_length=50)
+    transaction = models.OneToOneField(
+        Transaction,
+        on_delete=models.CASCADE,
+        null=True, 
+        blank=True
+    )
+    address = models.OneToOneField(
+        DeliveryAddress,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    created = models.DateTimeField(auto_now_add=True)
+    
+    COLLECTION = 1
+    UK_DELIVERY = 2
+    DELIVERY = (
+        (COLLECTION, 'Collection'),
+        (UK_DELIVERY, 'UK Delivery')
+    )
+
+    delivery_option = models.IntegerField(choices=DELIVERY, default=COLLECTION)
+
+    def total_price(self):
+        price = 0
+
+        for item in self.ordereditem_set.all():
+            price += item.total_price()
+
+        if self.delivery_option == Order.UK_DELIVERY:
+            price += self.delivery_cost()
+
+        return price
+
+    def delivery_cost(self):
+        price = 0
+
+        for item in self.ordereditem_set.all():
+            price += item.quantity * 5
+
+        return price
+
+    def separate_items(self):
+        amount = 0
+
+        for item in self.ordereditem_set.all():
+            amount += item.quantity
+
+        return amount
+
+class OrderedItem(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    choices = models.ManyToManyField(OptionChoice)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+    def total_price(self):
+        return self.item.price * self.quantity

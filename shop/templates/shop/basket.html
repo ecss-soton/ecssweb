@@ -1,0 +1,157 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+{% load website_extra %}
+{% load shop_extra %}
+
+{% block title %}My Basket - ECSS{% endblock %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'shop/styles/shop.css' %}">
+{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>Shop</h1>
+  <div class="card">
+    <h5 class="card-header">
+      My Basket
+    </h5>
+    {% if basket.basketeditem_set.all %}
+    <div class="card-body row">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 70%">Item</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for item in basket.basketeditem_set.all %}
+            <tr>
+            <form method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="form_id" value="item_edit">
+              <input type="hidden" name="item_id" value="{{item.id}}">
+                <td><b>{{item.item}}</b>
+                  {% for choice in item.choices.all %}<br /><i>{{choice.item_option.name}}:</i> {{choice.name}}{% endfor %}
+                </td>
+                <td>
+                <select name="quantity" id="quantity" class="quantity">
+                  <option value="" selected disabled hidden>{{item.quantity}}</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+               </td>
+               <td>£{{item.total_price|floatformat:2}}</td>
+               <td><button type="submit" name="delete" class="btn btn-danger">x</button></td>
+            </form>
+            
+          </tr>
+            {% endfor %}
+            {% if basket.delivery_option == 2 %} 
+            <tr class="table-primary">
+              <td>UK Delivery</td>
+              <td></td>
+              <td><b>£{{basket.delivery_cost|floatformat:2}}</b></td>
+              <td></td>
+            </tr>
+            {% endif %}
+            <tr class="table-secondary">
+              <td><b>Total</b></td>
+              <td></td>
+              <td><b>£{{basket.total_price|floatformat:2}}</b></td>
+              <td></td>
+            </tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="card-body" style="padding-top: 0px;">
+      <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="form_id" value="delivery">
+      <div class="card" style="width: 100%">
+        <div class="card-body">
+          <b>Delivery Options</b>
+          <br>
+          <br>
+          <div class="form-check" style="padding-left: 0">
+            <div class="card {% if basket.delivery_option == 1 %} selected-delivery {% endif %}" style="width: 100%">
+              <div class="card-body" style="padding: 2rem;">
+                <input class="form-check-input" type="radio" name="delivery" id="collection" value="collection" {% if basket.delivery_option == 1 %} checked="checked" {% endif %}>
+                <label class="form-check-label" for="collection" style="margin-left: 1rem">
+                  <b>Collection</b>
+                  <br />We will email you with collection details once we have received the clothes from our suppliers.
+                </label>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="form-check" style="padding-left: 0">
+            <div class="card {% if basket.delivery_option == 2 %} selected-delivery {% endif %}" style="width: 100%">
+              <div class="card-body" style="padding: 2rem;">
+                <input class="form-check-input" type="radio" name="delivery" id="uk_delivery" value="uk_delivery"  {% if basket.delivery_option == 2 %} checked="checked" {% endif %}>
+                <label class="form-check-label" for="uk_delivery" style="margin-left: 1rem">
+                  <b>UK Delivery</b>
+                  <br />We will post the clothes to you once we receive them from our supplier.
+                  <br />This incurs an additional cost of £5.00 per item.
+                  <br />
+                  <br />You can enter your delivery information on the checkout page.
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </form>
+      </div>
+      <div class="card-body">
+      <table style="width: 100%;">
+        <tr>
+          <td><form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="form_id" value="checkout">
+            <button type="submit" name="checkout" class="btn btn-success">Checkout</button><br>
+            <i><br>Your payment will be processed by Stripe. <br>We will send your basket details and your email to Stripe.</i><br><br>
+          </form></td>
+          <td style="vertical-align: top; text-align: right; padding-right: 10px;"><img src="{% static 'shop/images/stripe_cards.png' %}" width="218"></td>
+        </tr>
+      </table>
+    </div>
+    {% else %}
+    <div class="card-body">
+    Your basket is empty.
+  </div>
+  {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block pagescript %}
+{{ block.super }}
+<script>
+$(document).ready(function() {
+  $('.quantity').on('change', function() {
+    console.log("changed");
+    this.form.submit();
+  });
+
+  $('.form-check-input').on('change', function() {
+    console.log("changed");
+    this.form.submit();
+  });
+});
+</script>
+<style>
+  .selected-delivery {
+    background: #f0f0f0;
+    border: 1px solid black;
+  }
+</style>
+{% endblock %}
