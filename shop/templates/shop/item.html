@@ -89,7 +89,7 @@
             {% if item_option.auto_value == 'username' %}
             <input class="form-control" name="os{{ item_option.paypal_option_number }}" value="{{ user.username }}" id="input{{ item_option.paypal_option_number }}" readonly>
             {% else %}
-            <select class="form-control os-select" name="os-{{ item_option.id }}" id="input{{ item_option.id }}">
+            <select required class="form-control os-select" name="os-{{ item_option.id }}" id="input{{ item_option.id }}">
               <option value="" selected disabled>Select {{ item_option.name }}</option>
               {% for option_choice in item_option.optionchoice_set.all|msort:"sort_order" %}
               <option value="{{ option_choice.id }}">{{ option_choice.name }}</option>
@@ -105,18 +105,11 @@
           <br><br>
 
           <div class="alert alert-warning">
-            Refund may not be possible due to the items are customarily ordered. If purchasing items, you will be contacted upon item delivery, during semester 2. You will receive time slots to collect your purchased items, and if these cannot be met please contact the committee via email. Failure to contact committee and failure to collect will result in no guarantee you will get the items, with no refund available.
-          </div>
-
-          <div class="text-muted">
-            <small>
-              The order and payment is handled by PayPal. By clicking the "Buy Now" button, you order information will be sent to PayPal (this may also include your university username), and we may contact you regarding your order.
-            </small>
+            Refund may not be possible as we order each item customised and we cannot get a refund from our suppliers once ordered.
+            <br>
+            <br>If you select collection at checkout and you fail to collect, your purchase may revert to the property of the ECS Society as we cannot hold onto your purchased goods indefinitely.
           </div>
         </form>
-        <div class="mt-3">
-          <b>Sale for this item ends on {{ item.sale.end|date }} at {{ item.sale.end|time:"H:i" }}.</b>
-        </div>
         <div class="text-muted mt-3">
           <small>
             If having difficulities purchasing on the website, please contact the committee.
@@ -132,9 +125,11 @@
 {{ block.super }}
 <script>
   $(document).ready(function() {
-    $('.form-control').on('change', function() {
       selectImage();
-    });
+
+      $('.form-control').on('change', function() {
+        selectImage();
+      });
   });
 
   var lastClicked = null;
