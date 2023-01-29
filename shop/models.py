@@ -52,6 +52,7 @@ class Sale(models.Model):
 class Item(models.Model):
     codename = models.CharField(max_length=50)
     name = models.CharField(max_length=50, verbose_name='item name')
+    short_description = models.TextField(verbose_name='item short description')
     description = models.TextField(verbose_name='item description')
     price = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='item price')
     sort_order = models.IntegerField(null=True, blank=True, verbose_name='item sort order')
@@ -69,6 +70,12 @@ class Item(models.Model):
 
         ordering = ['sort_order']
 
+
+    def front_page_item(self):
+        if self.itemimage_set.filter(front_page=True).count() == 0:
+            return self.itemimage_set.first()
+        
+        return self.itemimage_set.filter(front_page=True).order_by("?").first()
 
 class ItemOption(models.Model):
 
@@ -109,6 +116,7 @@ class ItemImage(models.Model):
     image = models.ImageField(upload_to=item_image_file_name, verbose_name='item image')
     sort_order = models.IntegerField(null=True, blank=True, verbose_name='item image sort order')
     item_options = models.ManyToManyField(OptionChoice, blank=True, null=True)
+    front_page = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['sort_order']

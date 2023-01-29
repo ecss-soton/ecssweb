@@ -32,7 +32,7 @@
         {% if user|has_group:"committee" or not item.itempermission_set.all or user|has_any_perms_item:item %}
         <div class="card shop-item-card">
           {% if item.itemimage_set.all %}
-          {% with default_itemimage=item.itemimage_set.all|msort:"sort_order"|first %}
+          {% with default_itemimage=item.front_page_item %}
           <img class="card-img-top" src="{{ default_itemimage.image.url }}" alt="{{ item.name }}">
           {% endwith %}
           {% else %}
@@ -46,7 +46,7 @@
           </a>
           <div class="card-body">
             <div>
-              {{ item.description|md|striptags|truncatewords:20 }}
+              {{ item.short_description|md|striptags }}
             </div>
             <div class="badge badge-info">£{{ item.price }}</div>
             {% if item.itempermission_set.all and not user|has_any_perms_item:item %}
@@ -67,10 +67,10 @@
         <p>
           <small>There are {{ sale.item_set.count }} items in this sale, and any items not for the current user are hidden.</small>
         </p>
-        {% endif %}
         <p class="mb-0">
           <b>This sale ends on {{ sale.end|date }} at {{ sale.end|time:"H:i" }}.</b>
         </p>
+        {% endif %}
       </div>
     </div>
   </div>
