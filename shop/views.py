@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 from django.db.models import Q
 from django.conf import settings
+import itertools
 
 import yaml
 import os
@@ -62,13 +63,20 @@ def stripe_webhook(request):
   return HttpResponse(status=200)
 
 @login_required
-def shop(request):
+def shop(request, sale=None):
     # show all current and future sales for committee
     if request.user.groups.filter(name='committee').exists():
         sales = Sale.objects.filter(end__gte=timezone.now()).order_by('start')
     # only show current sales for other users
     else:
         sales = Sale.objects.filter(Q(start__lte=timezone.now()) & Q(end__gte=timezone.now())).order_by('start')
+
+    if(sale != None):
+        exactMatch = sales.filter(codename=sale)
+        notMatch = sales.exclude(codename=sale)
+
+        sales = itertools.chain(exactMatch, notMatch)
+
     context = {
         'sales': sales,
     }

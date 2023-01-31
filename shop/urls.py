@@ -12,6 +12,7 @@ urlpatterns = [
     re_path(r'^order/(?P<order>[\w-]+)/$', views.order, name='order'),
 
     path('', views.shop, name='shop'),
+    re_path(r'^(?P<sale>[\w-]+)/$', views.shop, name='shop-sale'),
     re_path(r'^(?P<sale>[\w-]+)/(?P<item>[\w-]+)/$', views.item, name='item'),
 
     path('basket', views.basket, name='basket'),
