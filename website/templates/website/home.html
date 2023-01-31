@@ -74,7 +74,7 @@
   </section>
   <section>
     <h2 class="text-center">Our Sponsors</h2>
-      <ul class="d-flex justify-content-around list-unstyled">
+      <ul class="d-flex justify-content-center flex-wrap">
       {% for gold_sponsor in sponsors %}
       <li class="sponsor-list-logo-home">
         <a href="{% url 'website:sponsors' %}?sponsor={{ gold_sponsor.codename }}" title="{{ gold_sponsor.name }}" aria-label="{{ gold_sponsor.name }}">
