@@ -209,7 +209,7 @@ def basket(request):
             checkout_session = stripe.checkout.Session.create(
                 line_items=stripe_items,
                 mode='payment',
-                success_url=settings.BASE_URL + '/portal/shop/order/' + str(order.id),
+                success_url=settings.BASE_URL + '/portal/shop/order/' + str(order.id) + '?from_stripe',
                 cancel_url=settings.BASE_URL + '/portal/shop/basket',
                 client_reference_id=order.id,
                 customer_email=request.user.email,
