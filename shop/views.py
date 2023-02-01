@@ -256,6 +256,43 @@ def merch1819(request):
     return render(request, 'shop/merch1819/merch1819.html', context)
 
 @login_required
+def merch2023(request):
+    sale = get_object_or_404(Sale, codename='ecss-merch-2023')
+    context = {
+        'sale': sale,
+    }
+    return render(request, 'shop/merch2023/merch2023.html', context)
+
+@login_required
+def merch2023_category(request, category):
+    sale = get_object_or_404(Sale, codename='ecss-merch-2023')
+    if sale.end < timezone.now():
+        raise Http404()
+    if sale.start > timezone.now() and not request.user.groups.filter(name='committee').exists():
+        raise Http404()
+
+    with open(os.path.join(settings.BASE_DIR, 'shop/data/merch2023.yaml')) as data_file:
+        data = yaml.safe_load(data_file)
+        items = Item.objects.filter(Q(sale='ecss-merch-2023') & Q(codename__in=data[category]))
+
+    category_names = {
+        'tshirts': 'T-shirts',
+        'hoodies': 'Hoodies',
+        'quarter-zips': 'Quarter Zips',
+        'jumpers': 'Jumpers',
+        'misc': 'Misc',
+    }
+
+    category_name = category_names[category]
+
+    context = {
+        'sale': sale,
+        'items': items,
+        'category_name': category_name,
+    }
+    return render(request, 'shop/merch2023/category.html', context)
+
+@login_required
 def merch1819_category(request, category):
     sale = get_object_or_404(Sale, codename='ecss-merch-2018-19')
     if sale.end < timezone.now():

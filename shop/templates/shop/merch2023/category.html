@@ -1,0 +1,60 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+{% load website_extra %}
+
+{% block title %}ECSS Merch 2023{% endblock %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'shop/styles/shop.css' %}">
+{% endblock %}
+
+{% block portalcontent %}
+<div class="mb-2">
+  <a href="{% url 'shop:merch2023' %}"><i class="fas fa-arrow-circle-left"></i> ECSS Merch 2023</a>
+</div>
+<section>
+  <h1>ECSS Merch 2023: {{ category_name }}</h1>
+  <div class="card my-3">
+    <h5 class="card-header">
+      {{ category_name }}
+    </h5>
+    <div class="card-body">
+      {% if sale.is_future %}
+      <div class="alert alert-warning">
+        This sale is not yet open. This sale opens between {{ sale.start|date }} {{ sale.start|time:"H:i" }} and {{ sale.end|date }} {{ sale.end|time:"H:i" }}.
+      </div>
+      {% endif %}
+      <div class="d-inline-flex flex-wrap">
+        {% for item in items|msort:"sort_order" %}
+        <div class="card shop-item-card">
+          {% if item.itemimage_set.all %}
+          {% with default_itemimage=item.itemimage_set.all|msort:"sort_order"|first %}
+          <img class="card-img-top" src="{{ default_itemimage.image.url }}" alt="{{ item.name }}">
+          {% endwith %}
+          {% else %}
+          <!-- src leave black if no image -->
+          <img class="card-img-top" src="" alt="{{ item.name }}">
+          {% endif %}
+          <a href="{% url 'shop:item' sale=sale.codename item=item.codename %}">
+            <h5 class="card-header">
+              {{ item.name }}
+            </h5>
+          </a>
+          <div class="card-body">
+            <div>
+              {{ item.description }}
+            </div>
+            <div class="badge badge-info">£{{ item.price }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div>
+        <b>This sale ends on {{ sale.end|date }} at {{ sale.end|time:"H:i" }}.</b>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
