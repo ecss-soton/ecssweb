@@ -93,7 +93,7 @@ def shop(request, sale=None):
 
 @login_required
 def order(request, order):
-    order = get_object_or_404(Order, id=order,transaction__status=Transaction.PROCESSED)
+    order = get_object_or_404(Order, id=order,transaction__status=Transaction.PROCESSED,username=request.user)
     
     context = {
         'order': order,
