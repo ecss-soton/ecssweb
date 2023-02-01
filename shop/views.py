@@ -60,6 +60,15 @@ def stripe_webhook(request):
       
       order.transaction.save()
 
+    try:
+        basket = Basket.objects.get(username=request.user)
+
+        if(basket != None):
+            basket.delete()
+    except Basket.DoesNotExist:
+        # do nothing
+        basket = None
+
   return HttpResponse(status=200)
 
 @login_required
