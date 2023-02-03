@@ -30,7 +30,7 @@
         {% for item in items|msort:"sort_order" %}
         <div class="card shop-item-card">
           {% if item.itemimage_set.all %}
-          {% with default_itemimage=item.itemimage_set.all|msort:"sort_order"|first %}
+          {% with default_itemimage=item.front_page_item %}
           <img class="card-img-top" src="{{ default_itemimage.image.url }}" alt="{{ item.name }}">
           {% endwith %}
           {% else %}
