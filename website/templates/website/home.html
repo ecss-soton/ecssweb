@@ -78,7 +78,8 @@
       {% for gold_sponsor in sponsors %}
       <li class="sponsor-list-logo-home">
         <a href="{% url 'website:sponsors' %}?sponsor={{ gold_sponsor.codename }}" title="{{ gold_sponsor.name }}" aria-label="{{ gold_sponsor.name }}">
-          <img src="{% static gold_sponsor.logo_file %}" width="175" alt="{{ gold_sponsor.name }}" class="sponsor-logo-home" aria-hidden="true">
+          <img src="{{ gold_sponsor.get_logo_url }}" width="175" alt="{{ gold_sponsor.name }}" class="sponsor-logo-home sponsor-logo-home-light" aria-hidden="true">
+          <img src="{{ gold_sponsor.get_dark_logo_url }}" width="175" alt="{{ gold_sponsor.name }}" class="sponsor-logo-home sponsor-logo-home-dark" aria-hidden="true">
         </a>
       </li>
       {% endfor %}

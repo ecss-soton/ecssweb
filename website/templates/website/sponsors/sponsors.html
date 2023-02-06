@@ -26,7 +26,8 @@
       {% for sponsor in gold_sponsors %}
       <li class="text-center sponsor-item">
         <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link" title="{{ sponsor.name }}">
-          <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
+          <img src="{{ sponsor.get_logo_url }}" alt="{{ sponsor.name }}" class="sponsor-logo-light">
+          <img src="{{ sponsor.get_dark_logo_url }}" alt="{{ sponsor.name }}" class="sponsor-logo-dark">
         </a>
       </li>
       {% endfor %}
@@ -39,7 +40,8 @@
       {% for sponsor in silver_sponsors %}
       <li class="text-center sponsor-item">
         <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link" title="{{ sponsor.name }}">
-          <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
+          <img src="{{ sponsor.get_logo_url }}" alt="{{ sponsor.name }}" class="sponsor-logo-light">
+          <img src="{{ sponsor.get_dark_logo_url }}" alt="{{ sponsor.name }}" class="sponsor-logo-dark">
         </a>
       </li>
       {% endfor %}
@@ -52,7 +54,8 @@
       {% for sponsor in bronze_sponsors %}
       <li class="text-center sponsor-item">
         <a href="{% url 'website:sponsors' %}?sponsor={{ sponsor.codename }}" class="sponsor-img-link" title="{{ sponsor.name }}">
-          <img src="{% static sponsor.logo_file %}" alt="{{ sponsor.name }}">
+          <img src="{{ sponsor.get_logo_url }}" alt="{{ sponsor.name }}" class="sponsor-logo-light">
+          <img src="{{ sponsor.get_dark_logo_url }}" alt="{{ sponsor.name }}" class="sponsor-logo-dark">
         </a>
       </li>
       {% endfor %}
