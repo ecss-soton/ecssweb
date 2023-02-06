@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.templatetags.static import static
 
 import os
 
@@ -97,7 +98,7 @@ class Sponsor(models.Model):
         if self.logo and hasattr(self.logo, 'url'):
             return self.logo.url
         
-        return self.logo_file
+        return static(self.logo_file)
 
     def get_dark_logo_url(self): 
         if self.dark_logo and hasattr(self.dark_logo, 'url'):
