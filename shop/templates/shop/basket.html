@@ -18,7 +18,7 @@
     <h5 class="card-header">
       My Basket
     </h5>
-    {% if basket.basketeditem_set.all %}
+    {% if sales and basket.basketeditem_set.all %}
     <div class="card-body row">
       <table class="table">
         <thead>

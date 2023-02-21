@@ -153,8 +153,11 @@ def item(request, sale, item):
 
 @login_required
 def basket(request):
+    sales = Sale.objects.filter(Q(start__lte=timezone.now()) & Q(end__gte=timezone.now())).order_by('start')
+
     basket,created =Basket.objects.get_or_create(username=request.user)
     context = {
+        'sales': sales,
         'basket': basket,
     }
 
