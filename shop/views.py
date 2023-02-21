@@ -91,6 +91,49 @@ def shop(request, sale=None):
     }
     return render(request, 'shop/shop.html', context)
 
+class OrderedItemSummary:
+  def __init__(self, id, name, count):
+    self.id = id
+    self.name = name
+    self.count = count
+    self.options = []
+
+class OrderedItemInnerSummary:
+  def __init__(self, username, options):
+    self.username = username
+    self.options = []
+    
+    self.options.append(options)
+
+@login_required
+def shop_sale_summary(request, sale):
+    if not request.user.groups.filter(name='committee').exists():
+        raise Http404()
+    
+    sale = Sale.objects.get(codename=sale)
+   
+    ordered_items = OrderedItem.objects.filter(item__sale__codename=sale.codename,order__transaction__status=Transaction.PROCESSED)
+
+    cum_items = dict()
+
+    for item in ordered_items:
+        if item.item.id in cum_items:
+            cumItem = cum_items[item.item.id]
+            cumItem.count = cumItem.count + 1
+        else:
+            cumItem = OrderedItemSummary(item.item.id, item.item.name, 1)
+            cum_items[item.item.id] = cumItem
+        
+        cumItem.options.append(OrderedItemInnerSummary(item.order.username, item.choices.all))
+
+
+    context = {
+        'sale': sale,
+        'ordered_items': cum_items,
+    }
+
+    return render(request, 'shop/shop_sale_summary.html', context)
+
 @login_required
 def order(request, order):
     order = get_object_or_404(Order, id=order,transaction__status=Transaction.PROCESSED,username=request.user)
