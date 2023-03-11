@@ -36,6 +36,25 @@ def elections(request):
     }
     return render(request, 'election/elections.html', context)
 
+def can_nominate(request):
+    username = request.user.username
+
+    with open('ecss_can_nominate.txt', 'r') as file:
+        for line in file:
+            if username in line:
+                return True
+    
+    return request.user.has_perm('ecsswebauth.is_ecs_user')
+
+def can_vote(request):
+    username = request.user.username
+
+    with open('ecss_can_vote.txt', 'r') as file:
+        for line in file:
+            if username in line:
+                return True
+    
+    return request.user.has_perm('ecsswebauth.is_ecs_user')
 
 @login_required
 def election(request, election):
@@ -46,6 +65,8 @@ def election(request, election):
 
     context = {
         'election': election,
+        'can_nominate': can_nominate(request),
+        'can_vote': can_vote(request)
     }
     if is_nomination_current(election):
         return render(request, 'election/nomination.html', context)
@@ -99,6 +120,8 @@ class NominationView(PermissionRequiredMixin, View):
             'position': position,
             'nomination_form': nomination_form,
             'support_shareable_link': support_shareable_link,
+            'can_nominate': can_nominate(request),
+            'can_vote': can_vote(request)
         }
         return render(request, 'election/nominate.html', context)
 
@@ -139,6 +162,8 @@ class NominationView(PermissionRequiredMixin, View):
             'election': election,
             'position': position,
             'nomination_form': nomination_form,
+            'can_nominate': can_nominate(request),
+            'can_vote': can_vote(request)
         }
         return render(request, 'election/nominate.html', context)
 
@@ -180,6 +205,8 @@ class SupportView(PermissionRequiredMixin, View):
         context = {
             'nomination': nomination,
             'supporting_name': supporting_name,
+            'can_nominate': can_nominate(request),
+            'can_vote': can_vote(request)
         }
         return render(request, 'election/support.html', context)
 
@@ -238,6 +265,8 @@ class PositionView(LoginRequiredMixin, View):
         context = {
             'position': position,
             'nominations': nominations,
+            'can_nominate': can_nominate(request),
+            'can_vote': can_vote(request)
         }
         return render(request, 'election/position.html', context)
 
