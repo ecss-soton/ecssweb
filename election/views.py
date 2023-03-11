@@ -37,24 +37,30 @@ def elections(request):
     return render(request, 'election/elections.html', context)
 
 def can_nominate(request):
+    if request.user.has_perm('ecsswebauth.is_ecs_user'):
+        return True
+    
     username = request.user.username
 
-    with open('ecss_can_nominate.txt', 'r') as file:
+    with open(os.path.join(settings.BASE_DIR, 'election/data/ecss_can_nominate.txt'), 'r') as file:
         for line in file:
             if username in line:
                 return True
-    
-    return request.user.has_perm('ecsswebauth.is_ecs_user')
+            
+    return False
 
 def can_vote(request):
+    if request.user.has_perm('ecsswebauth.is_ecs_user'):
+        return True
+
     username = request.user.username
 
-    with open('ecss_can_vote.txt', 'r') as file:
+    with open(os.path.join(settings.BASE_DIR, 'election/data/ecss_can_vote.txt'), 'r') as file:
         for line in file:
             if username in line:
                 return True
     
-    return request.user.has_perm('ecsswebauth.is_ecs_user')
+    return Fa;se
 
 @login_required
 def election(request, election):
@@ -88,17 +94,7 @@ class NominationView(PermissionRequiredMixin, View):
     raise_exception = True
 
     def has_permission(self) -> bool:
-        if super().has_permission():
-            return True
-    
-        username = self.request.user.username
-
-        with open('ecss_can_nominate.txt', 'r') as file:
-            for line in file:
-                if username in line:
-                    return True
-                
-        return False
+        return can_nominate(self.request)
 
     def get(self, request, election, position):
         election = get_object_or_404(Election, codename=election)
@@ -174,17 +170,7 @@ class SupportView(PermissionRequiredMixin, View):
     raise_exception = True
 
     def has_permission(self) -> bool:
-        if super().has_permission():
-            return True
-    
-        username = self.request.user.username
-
-        with open('ecss_can_vote.txt', 'r') as file:
-            for line in file:
-                if username in line:
-                    return True
-                
-        return False
+        return can_vote(self.request)
 
     def get(self, request, election, position):
         election = get_object_or_404(Election, codename=election)
@@ -278,17 +264,7 @@ class VoteView(PermissionRequiredMixin, View):
     raise_exception = True
 
     def has_permission(self) -> bool:
-        if super().has_permission():
-            return True
-    
-        username = self.request.user.username
-
-        with open('ecss_can_vote.txt', 'r') as file:
-            for line in file:
-                if username in line:
-                    return True
-                
-        return False
+        return can_vote(self.request)
 
     def post(self, request, election, position):
         election = get_object_or_404(Election, codename=election)
