@@ -52,6 +52,9 @@ def can_nominate(request):
 def can_vote(request):
     if request.user.has_perm('ecsswebauth.is_ecs_user'):
         return True
+    
+    if can_nominate(request):
+        return True
 
     username = request.user.username
 
@@ -60,7 +63,7 @@ def can_vote(request):
             if username in line:
                 return True
     
-    return Fa;se
+    return False
 
 @login_required
 def election(request, election):
