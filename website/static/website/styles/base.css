@@ -421,3 +421,28 @@ footer {
 .dark-theme .card {
   background-color: #484848;
 }
+
+.dark-theme .sponsor-logo-home-light {
+  display: none;
+}
+
+.sponsor-logo-home-dark {
+  display: none !important;
+}
+
+.dark-theme .sponsor-logo-home-dark {
+  display: inherit !important;
+}
+
+
+.dark-theme .sponsor-logo-light {
+  display: none !important;
+}
+
+.sponsor-logo-dark {
+  display: none !important;
+}
+
+.dark-theme .sponsor-logo-dark {
+  display: inherit !important;
+}

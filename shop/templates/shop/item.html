@@ -14,11 +14,6 @@
 {% block portalcontent %}
 <section>
   <h1>Shop</h1>
-  <form target="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post" >
-    <input type="hidden" name="cmd" value="_s-xclick">
-    <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
-    <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_viewcart_LG.gif" border="0" name="submit" alt="View Cart">
-  </form>
   <div class="card">
     <h5 class="card-header">
       {{ item.name }}
@@ -33,7 +28,7 @@
         <div id="itemCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
           <ol class="carousel-indicators">
             {% for itemimage in item.itemimage_set.all %}
-            <li data-target="#itemCarousel" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter == 1 %}active{% endif %}"></li>
+            <li data-carousel-target data-target="#itemCarousel" data-slide-to="{{ forloop.counter0 }}"  {% for item_option in itemimage.item_options.all %} data-os-{{item_option.item_option.id}}="{{item_option.id}}" {% endfor %} class="{% if forloop.counter == 1 %}active{% endif %}"></li>
             {% endfor %}
           </ol>
           <div class="carousel-inner">
@@ -72,14 +67,12 @@
           This item is not for the current user.
         </div>
         {% endif %}
-        <div class="alert alert-danger" id="jsWarning">
-          <b>Error</b>: JavaScript is not enabled. JavaScript is required to send the correct order information.
-        </div>
         <h5>
           {{ item.name }}
         </h5>
         <div>{{ item.description|md|safe }}</div>
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" id="orderForm">        
+        <form method="post" id="orderForm">        
+          {% csrf_token %}
           <input type="hidden" name="cmd" value="_s-xclick">
           <input type="hidden" name="hosted_button_id" value="{{ item.paypal_button_id }}">
 
@@ -91,38 +84,32 @@
 
           {% for item_option in item.itemoption_set.all|dictsort:"paypal_option_number" %}
           <div class="form-group">
-            <label for="input{{ item_option.paypal_option_number }}">{{ item_option.name }}</label>
+            <label for="input{{ item_option.paypal_option_number }}"><b>{{ item_option.name }}</b></label>
             <input type="hidden" name="on{{ item_option.paypal_option_number }}" value="{{ item_option.paypal_option_name }}">
             {% if item_option.auto_value == 'username' %}
             <input class="form-control" name="os{{ item_option.paypal_option_number }}" value="{{ user.username }}" id="input{{ item_option.paypal_option_number }}" readonly>
             {% else %}
-            <select class="form-control" name="os{{ item_option.paypal_option_number }}" id="input{{ item_option.paypal_option_number }}" required>
+            <select required class="form-control os-select" name="os-{{ item_option.id }}" id="input{{ item_option.id }}">
               <option value="" selected disabled>Select {{ item_option.name }}</option>
               {% for option_choice in item_option.optionchoice_set.all|msort:"sort_order" %}
-              <option value="{{ option_choice.value }}">{{ option_choice.name }}</option>
+              <option value="{{ option_choice.id }}">{{ option_choice.name }}</option>
               {% endfor %}
             </select>
           {% endif %}
           </div>
           {% endfor %}
 
-          <div class="mb-3">£{{ item.price }}</div>
+          <div class="mb-3"><b>£{{ item.price }}</b></div>
 
-          <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_cart_LG.gif" alt="Add to cart" id="paypalButton" hidden>
+          <button type="submit" name="add-to-cart" class="btn btn-success" style="width: 100%">Add to Cart</button>
+          <br><br>
 
           <div class="alert alert-warning">
-            Refund may not be possible due to the items are customarily ordered. If purchasing items, you will be contacted upon item delivery, during semester 2. You will receive time slots to collect your purchased items, and if these cannot be met please contact the committee via email. Failure to contact committee and failure to collect will result in no guarantee you will get the items, with no refund available.
-          </div>
-
-          <div class="text-muted">
-            <small>
-              The order and payment is handled by PayPal. By clicking the "Buy Now" button, you order information will be sent to PayPal (this may also include your university username), and we may contact you regarding your order.
-            </small>
+            Refund may not be possible as we order each item customised and we cannot get a refund from our suppliers once ordered.
+            <br>
+            <br>If you select collection at checkout and you fail to collect, your purchase may revert to the property of the ECS Society as we cannot hold onto your purchased goods indefinitely.
           </div>
         </form>
-        <div class="mt-3">
-          <b>Sale for this item ends on {{ item.sale.end|date }} at {{ item.sale.end|time:"H:i" }}.</b>
-        </div>
         <div class="text-muted mt-3">
           <small>
             If having difficulities purchasing on the website, please contact the committee.
@@ -137,20 +124,66 @@
 {% block pagescript %}
 {{ block.super }}
 <script>
-// show "Buy Now" button and hide js warning
-$('#paypalButton').removeAttr('hidden');
-$('#jsWarning').prop('hidden', true);
+  $(document).ready(function() {
+      selectImage();
 
-var optionsFields = new Array();
-{% for item_option in item.itemoption_set.all %}
-optionsFields.push('on{{ item_option.paypal_option_number }}');
-optionsFields.push('os{{ item_option.paypal_option_number }}');
-{% endfor %}
+      $('.form-control').on('change', function() {
+        selectImage();
+      });
+  });
 
-$('#paypalButton').click(function() {
-  $("#orderForm>input[name='os0']").val($("#orderForm :input").filter(function() {
-    return optionsFields.includes(this.name);
-  }).serialize());
-});
-</script>
+  var lastClicked = null;
+
+  function selectImage() {
+    var selects = $(document).find(".os-select");
+
+    const images = new Map();
+    const filters = new Map();
+
+    selects.each(function() {
+      var name = $(this).attr("name");
+      var selected = $(this).find(":selected").attr("value");
+
+      filters.set(name, selected);
+    });
+
+    $(document).find("[data-carousel-target]").each(function() {
+      images.set($(this), 0);
+    });
+
+    for (const [key, value] of images) {
+      var count = 0;
+
+      for (const [filterName, filterValue] of filters) {
+        if(!key.attr("data-" + filterName)) {
+          continue;
+        }
+
+        if(key.attr("data-" + filterName) == filterValue) {
+          count++;
+        }
+      }
+
+      images.set(key, count);
+    }
+
+    sortedImages = new Map(
+      Array
+        .from(images)
+        .sort((a, b) => {
+          return b[1] - a[1];
+        })
+    )
+
+    firstImage = Array.from(sortedImages.keys())[0];
+
+    if(lastClicked != null && lastClicked.attr("data-slide-to") == firstImage.attr("data-slide-to")) {
+      return;
+    }
+
+    firstImage.click();
+
+    lastClicked = firstImage;
+  }
+  </script>
 {% endblock %}

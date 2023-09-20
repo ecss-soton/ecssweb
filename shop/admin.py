@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Sale, Item, ItemImage, ItemOption, ItemPermission, OptionChoice
+from .models import Sale, Item, ItemImage, ItemOption, ItemPermission, OptionChoice, ItemImageModelForm, Order, OrderedItem, Transaction
 
 
 class ItemInline(admin.StackedInline):
@@ -22,9 +22,12 @@ class SaleAdmin(admin.ModelAdmin):
 
 
 class ItemImageInline(admin.StackedInline):
+    form = ItemImageModelForm
     model = ItemImage
     extra = 0
     min_num = 0
+
+    filter_horizontal = ('item_options',)
 
 
 class ItemOptionInline(admin.StackedInline):
@@ -85,7 +88,23 @@ class ItemOptionAdmin(admin.ModelAdmin):
     get_sale_name.short_description = 'Sale'
     get_sale_name.admin_order_field = 'item__sale__start'
 
+class OrderedItemInline(admin.StackedInline):
+    model = OrderedItem
+    extra = 0
+    min_num = 0
+
+class TransactionAdmin(admin.ModelAdmin):
+    list_display = ['id', 'stripe_id', 'status']
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['id', 'username', 'created']
+
+    inlines = [
+        OrderedItemInline
+    ]
 
 admin.site.register(Sale, SaleAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(ItemOption, ItemOptionAdmin)
+admin.site.register(Order, OrderAdmin)
+admin.site.register(Transaction, TransactionAdmin)

@@ -28,6 +28,7 @@ ecsswebauth/saml_config/certs/sp.key
 
 # python virtual environment
 .env/
+venv/
 
 # IDE files
 .vscode/

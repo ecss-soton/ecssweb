@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.templatetags.static import static
 
 import os
 
@@ -82,15 +83,29 @@ class Sponsor(models.Model):
     codename = models.CharField(max_length=50, primary_key=True)
     name = models.CharField(max_length=100)
     level = models.CharField(choices=[('gold', 'gold'), ('silver', 'silver'), ('bronze', 'bronze'), ('64-bit', '64-bit'), ('32-bit', '32-bit'), ('16-bit', '16-bit')], max_length=20)
-    logo_file = models.CharField(max_length=100)
+    logo_file = models.CharField(max_length=100) # Redundant as logo and dark_logo now exist
+
+    logo = models.ImageField()
+    dark_logo = models.ImageField()
 
     description = models.TextField()
     website = models.URLField()
 
     def __str__(self):
         return self.name
+    
+    def get_logo_url(self):
+        if self.logo and hasattr(self.logo, 'url'):
+            return self.logo.url
+        
+        return static(self.logo_file)
 
-
+    def get_dark_logo_url(self): 
+        if self.dark_logo and hasattr(self.dark_logo, 'url'):
+            return self.dark_logo.url
+        
+        return self.get_logo_url()
+    
 class SponsorLink(models.Model):
     sponsor = models.ForeignKey(Sponsor, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)

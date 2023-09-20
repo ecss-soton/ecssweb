@@ -9,12 +9,13 @@ from fbevents.utils import get_upcoming_events
 
 import os
 import yaml
-
+import itertools
 
 # Homepage
 
 def home(request):
-    sponsors = Sponsor.objects.filter(Q(level='gold') | Q(level='silver') | Q(level='bronze'))
+    sponsors = itertools.chain(Sponsor.objects.filter(level='gold'), Sponsor.objects.filter(level='silver'), Sponsor.objects.filter(level='bronze'))
+
     context = {
         'sponsors': sponsors,
         'events': get_upcoming_events(),

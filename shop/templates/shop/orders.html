@@ -1,0 +1,67 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+{% load website_extra %}
+{% load shop_extra %}
+
+{% block title %}My Orders - ECSS{% endblock %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'shop/styles/shop.css' %}">
+{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>Shop</h1>
+  <div class="card">
+    <h5 class="card-header">
+      My Orders
+    </h5>
+    {% if orders %}
+    <div class="card-body row">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 70%">Order</th>
+            <th scope="col">Price</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+              {% csrf_token %}
+              <input type="hidden" name="form_id" value="item_edit">
+              <input type="hidden" name="item_id" value="{{item.id}}">
+                <td><b>Order #{{order.id}}</b><br>
+                  {{order.created}}
+                  {% for item in order.ordereditem_set.all %}
+                  <i><br>{{item.quantity}}x {{item.item}} ({% for choice in item.choices.all %}{{choice.name}}, {% endfor %})</i>
+                  {% endfor %}
+                </td>
+                <td>
+                  £{{order.total_price}}
+               </td>
+               <td><a href="{% url 'shop:order' order.id %}"><button type="submit" class="btn btn-primary">View</button></a>
+              </td>
+            
+          </tr>
+          {% endfor %}
+      </table>
+    </div>
+      {% else %}
+      <div class="card-body">
+      You have not yet purchased anything from the store.
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block pagescript %}
+{{ block.super }}
+<script>
+
+</script>
+{% endblock %}

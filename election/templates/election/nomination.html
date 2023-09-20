@@ -43,16 +43,24 @@
   <p>
     This election is for ECSS members.
   </p>
-  {% if not perms.ecsswebauth.is_ecs_user %}
-  <p>
-    Unfortunately you are unable to nominate, support nominations or vote in this election. If you think it is an error please contact us.
-  </p>
-  {% else %}
+  {% if can_vote and can_nominate %}
   <p>
     You are able to nominate yourself for as many roles, and each nomination requires at least two supports before the nomination closes. You are able to support one nomination for each role and change your support before the nomination closes.
   </p>
   <p>
     Click on heart icons <i class="far fa-heart"></i> next to names to support their nomination.
+  </p>
+  {% elif not can_vote %}
+  <p>
+    Unfortunately you are unable to nominate, support nominations or vote in this election. If you think it is an error please contact us.
+  </p>
+  {% elif not can_nominate %}
+  <p>
+    Unfortunately you are unable to nominate in this election. If you think it is an error please contact us.
+  </p>
+  {% else %}
+  <p>
+    Unfortunately you are unable to nominate, support nominations or vote in this election. If you think it is an error please contact us.
   </p>
   {% endif %}
   <div>
@@ -69,7 +77,7 @@
       <p class="position-description">
         <i>{{ position.description }}</i>
       </p>
-      {% if perms.ecsswebauth.is_ecs_user %}
+      {% if can_nominate %}
       <div>
         <a href="{% url 'election:nomination' election.codename position.codename %}">Nominate for {{ position.name }}</a>
       </div>
@@ -81,14 +89,14 @@
       {% else %}
       <div>
         Current nominations:
-        {% if perms.ecsswebauth.is_ecs_user %}
+        {% if can_vote %}
         <ul class="list-unstyled">
         {% else %}
         <ul>
         {% endif %}
           {% for nomination in position.nomination_set.all|shuffle %}
           <li>
-            {% if perms.ecsswebauth.is_ecs_user %}
+            {% if can_vote %}
             <div class="d-inline-flex support">
               <i class="fas fa-spinner fa-pulse loading" hidden></i>
               {% if nomination|is_supporting:user %}

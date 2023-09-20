@@ -2,9 +2,8 @@
 
 {% load static %}
 {% load website_extra %}
-{% load shop_extra %}
 
-{% block title %}Shop - ECSS{% endblock %}
+{% block title %}ECSS Merch 2023{% endblock %}
 
 {% block pagestyle %}
 {{ block.super }}
@@ -12,24 +11,23 @@
 {% endblock %}
 
 {% block portalcontent %}
+<div class="mb-2">
+  <a href="{% url 'shop:merch2023' %}"><i class="fas fa-arrow-circle-left"></i> ECSS Merch 2023</a>
+</div>
 <section>
-  <h1>Shop</h1>
-  {% if sales %}
-  {% for sale in sales %}
+  <h1>ECSS Merch 2023: {{ category_name }}</h1>
   <div class="card my-3">
     <h5 class="card-header">
-      {{ sale.name }}
+      {{ category_name }}
     </h5>
-    <div class="card-body pt-2">
+    <div class="card-body">
       {% if sale.is_future %}
       <div class="alert alert-warning">
         This sale is not yet open. This sale opens between {{ sale.start|date }} {{ sale.start|time:"H:i" }} and {{ sale.end|date }} {{ sale.end|time:"H:i" }}.
       </div>
       {% endif %}
-      {% if sale.item_set.all %}
       <div class="d-inline-flex flex-wrap">
-        {% for item in sale.item_set.all|msort:"sort_order" %}
-        {% if user|has_group:"committee" or not item.itempermission_set.all or user|has_any_perms_item:item %}
+        {% for item in items|msort:"sort_order" %}
         <div class="card shop-item-card">
           {% if item.itemimage_set.all %}
           {% with default_itemimage=item.front_page_item %}
@@ -46,37 +44,17 @@
           </a>
           <div class="card-body">
             <div>
-              {{ item.short_description|md|striptags }}
+              {{ item.description }}
             </div>
             <div class="badge badge-info">£{{ item.price }}</div>
-            {% if item.itempermission_set.all and not user|has_any_perms_item:item %}
-            <div class="alert alert-warning mb-0 mt-3">
-              This item is not for the current user.
-            </div>
-            {% endif %}
           </div>
         </div>
-        {% endif %}
         {% endfor %}
       </div>
-      {% else %}
-      <p class="card-text">Nothing is on sale in this sale.</p>
-      {% endif %}
       <div>
-        {% if not user|has_group:"committee" %}
-        <p>
-          <small>There are {{ sale.item_set.count }} items in this sale, and any items not for the current user are hidden.</small>
-        </p>
-        <p class="mb-0">
-          <b>This sale ends on {{ sale.end|date }} at {{ sale.end|time:"H:i" }}.</b>
-        </p>
-        {% endif %}
+        <b>This sale ends on {{ sale.end|date }} at {{ sale.end|time:"H:i" }}.</b>
       </div>
     </div>
   </div>
-  {% endfor %}
-  {% else %}
-  <p>Nothing is currently on sale here.</p>
-  {% endif %}
 </section>
 {% endblock %}

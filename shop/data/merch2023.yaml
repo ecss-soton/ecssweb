@@ -1,0 +1,25 @@
+tshirts:
+- ecss-t-shirt
+- super-ecss-t-shirt
+- ecss-heart-t-shirt
+hoodies:
+- ecss-zippy-hoodie
+- ecss-zippy-hoodie-with-slogan
+- ecss-zippy-hoodie-with-society
+- ecss-hoodie
+- ecss-hoodie-with-slogan
+- ecss-hoodie-with-society
+- super-ecss-hoodie
+- ecss-heart-hoodie
+quarter-zips:
+- ecss-quarter-zip
+- ecss-quarter-zip-with-slogan
+- ecss-quarter-zip-with-society
+jumpers:
+- ecss-jumper
+- ecss-jumper-with-slogan
+- ecss-jumper-with-society
+- ecss-heart-jumper
+- super-ecss-jumper
+misc:
+- ecss-beanie

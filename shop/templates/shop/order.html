@@ -1,0 +1,107 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+{% load website_extra %}
+{% load shop_extra %}
+
+{% block title %}Order #{{order.id}} - ECSS{% endblock %}
+
+{% block pagestyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'shop/styles/shop.css' %}">
+{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>Shop</h1>
+  {% if from_stripe != False %}
+  <div class="alert alert-success" role="alert">
+    <b>Order purchased!</b>
+    <br>Thank you for purchasing from the ECS Society's merch store.
+  </div>
+  {% endif %}
+  <div class="card">
+    <h5 class="card-header">
+      <b>Order #{{order.id}}</b> <br>{{order.created}}
+    </h5>
+    <div class="card-body row">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 70%">Item</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for item in order.ordereditem_set.all %}
+            <tr>
+            <form method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="form_id" value="item_edit">
+              <input type="hidden" name="item_id" value="{{item.id}}">
+                <td><b>{{item.item}}</b>
+                  {% for choice in item.choices.all %}<br /><i>{{choice.item_option.name}}:</i> {{choice.name}}{% endfor %}
+                </td>
+                <td>
+                  {{item.quantity}}
+               </td>
+               <td>£{{item.total_price|floatformat:2}}</td>
+            </form>
+            
+          </tr>
+            {% endfor %}
+            {% if order.delivery_option == 2 %} 
+            <tr class="table-primary">
+              <td>UK Delivery</td>
+              <td></td>
+              <td><b>£{{order.delivery_cost|floatformat:2}}</b></td>
+              <td></td>
+            </tr>
+            {% endif %}
+            <tr class="table-secondary">
+              <td><b>Total</b></td>
+              <td></td>
+              <td><b>£{{order.total_price|floatformat:2}}</b></td>
+              <td></td>
+            </tr>
+        </tbody>
+      </table>
+      {% if order.delivery_option == 1 %} 
+      <div class="card" style="width: 100%">
+        <div class="card-body">
+          <b>Collection</b>
+          <br />We will email you with collection details once we have received the clothes from our suppliers.
+        </div>
+      </div>
+      {% else %}
+      <div class="card" style="width: 100%">
+        <div class="card-body">
+          <b>UK Delivery</b>
+          <br />We will post the clothes to you once we receive them from our supplier.
+          <br /> <br />
+          <div class="card">
+            <div class="card-body">
+              <b>Address</b>
+              {% if order.address.name != null %}<br />{{order.address.name}}{% endif %}
+              {% if order.address.line1 != null %}<br />{{order.address.line1}}{% endif %}
+              {% if order.address.line2 != null %}<br />{{order.address.line2}}{% endif %}
+              {% if order.address.city != null %}<br />{{order.address.city}}{% endif %}
+              {% if order.address.postal_code != null %}<br />{{order.address.postal_code}}{% endif %}
+              {% if order.address.country != null %}<br />{{order.address.country}}{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block pagescript %}
+{{ block.super }}
+<script>
+
+</script>
+{% endblock %}

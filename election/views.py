@@ -36,6 +36,34 @@ def elections(request):
     }
     return render(request, 'election/elections.html', context)
 
+def can_nominate(request):
+    if request.user.has_perm('ecsswebauth.is_ecs_user'):
+        return True
+    
+    username = request.user.username
+
+    with open(os.path.join(settings.BASE_DIR, 'election/data/ecss_can_nominate.txt'), 'r') as file:
+        for line in file:
+            if username in line:
+                return True
+            
+    return False
+
+def can_vote(request):
+    if request.user.has_perm('ecsswebauth.is_ecs_user'):
+        return True
+    
+    if can_nominate(request):
+        return True
+
+    username = request.user.username
+
+    with open(os.path.join(settings.BASE_DIR, 'election/data/ecss_can_vote.txt'), 'r') as file:
+        for line in file:
+            if username in line:
+                return True
+    
+    return False
 
 @login_required
 def election(request, election):
@@ -46,6 +74,8 @@ def election(request, election):
 
     context = {
         'election': election,
+        'can_nominate': can_nominate(request),
+        'can_vote': can_vote(request)
     }
     if is_nomination_current(election):
         return render(request, 'election/nomination.html', context)
@@ -65,6 +95,9 @@ class NominationView(PermissionRequiredMixin, View):
 
     permission_required = 'ecsswebauth.is_ecs_user'
     raise_exception = True
+
+    def has_permission(self) -> bool:
+        return can_nominate(self.request)
 
     def get(self, request, election, position):
         election = get_object_or_404(Election, codename=election)
@@ -86,6 +119,8 @@ class NominationView(PermissionRequiredMixin, View):
             'position': position,
             'nomination_form': nomination_form,
             'support_shareable_link': support_shareable_link,
+            'can_nominate': can_nominate(request),
+            'can_vote': can_vote(request)
         }
         return render(request, 'election/nominate.html', context)
 
@@ -126,6 +161,8 @@ class NominationView(PermissionRequiredMixin, View):
             'election': election,
             'position': position,
             'nomination_form': nomination_form,
+            'can_nominate': can_nominate(request),
+            'can_vote': can_vote(request)
         }
         return render(request, 'election/nominate.html', context)
 
@@ -134,6 +171,9 @@ class SupportView(PermissionRequiredMixin, View):
 
     permission_required = 'ecsswebauth.is_ecs_user'
     raise_exception = True
+
+    def has_permission(self) -> bool:
+        return can_vote(self.request)
 
     def get(self, request, election, position):
         election = get_object_or_404(Election, codename=election)
@@ -154,6 +194,8 @@ class SupportView(PermissionRequiredMixin, View):
         context = {
             'nomination': nomination,
             'supporting_name': supporting_name,
+            'can_nominate': can_nominate(request),
+            'can_vote': can_vote(request)
         }
         return render(request, 'election/support.html', context)
 
@@ -212,6 +254,8 @@ class PositionView(LoginRequiredMixin, View):
         context = {
             'position': position,
             'nominations': nominations,
+            'can_nominate': can_nominate(request),
+            'can_vote': can_vote(request)
         }
         return render(request, 'election/position.html', context)
 
@@ -221,6 +265,9 @@ class VoteView(PermissionRequiredMixin, View):
 
     permission_required = 'ecsswebauth.is_ecs_user'
     raise_exception = True
+
+    def has_permission(self) -> bool:
+        return can_vote(self.request)
 
     def post(self, request, election, position):
         election = get_object_or_404(Election, codename=election)

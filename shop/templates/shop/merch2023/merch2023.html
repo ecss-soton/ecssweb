@@ -1,0 +1,364 @@
+{% extends 'portal/base.html' %}
+
+{% load static %}
+
+{% block title %}ECSS 2023 Merch Store{% endblock %}
+
+{% block portalcontent %}
+<section>
+  <h1>ECSS Merch 2023</h1>
+  <hr>
+  {% if not sale.is_current %}
+  <div class="alert alert-warning">
+    This sale is not currently open. This sale opens between {{ sale.start|date }} {{ sale.start|time:"H:i" }} and {{ sale.end|date }} {{ sale.end|time:"H:i" }}.
+  </div>
+  {% endif %}
+  <section class="container">
+    <h2 class="text-center">ECSS Merch</h2>
+    <div class="row">
+      <a class="col border border-ecssweb m-1" href="{% url 'shop:merch2023-category' 'tshirts' %}">
+        <img class="img-fluid" src="{% static 'shop/images/2023-t-shirt.png' %}" alt="t-shirts">
+        <div class="text-center">T-shirts</div>
+      </a>
+      <a class="col border border-ecssweb m-1" href="{% url 'shop:merch2023-category' 'hoodies' %}">
+        <img class="img-fluid" src="{% static 'shop/images/2023-hoodie.png' %}" alt="hoodies">
+        <div class="text-center">Hoodies</div>
+      </a>
+      <a class="col border border-ecssweb m-1" href="{% url 'shop:merch2023-category' 'jumpers' %}">
+        <img class="img-fluid" src="{% static 'shop/images/2023-jumper.png' %}">
+        <div class="text-center">Jumpers</div>
+      </a>
+      <a class="col border border-ecssweb m-1" href="{% url 'shop:merch2023-category' 'quarter-zips' %}">
+        <img class="img-fluid" src="{% static 'shop/images/2023-quarter-zip.png' %}">
+        <div class="text-center">Quarter Zips</div>
+      </a>
+      <a class="col border border-ecssweb m-1" href="{% url 'shop:merch2023-category' 'misc' %}">
+        <img class="img-fluid" src="{% static 'shop/images/2023-beanie.png' %}">
+        <div class="text-center">Misc</div>
+      </a>
+    </div>
+  </section>
+  <section class="container">
+    <h2 class="text-center">Other ECS Societies Merch</h2>
+    <div class="row">
+      <a class="col border border-ecssweb m-1" href="{% url 'shop:shop-sale' 'ecssb-2023' %}" style="text-align: center">
+        <img class="img-fluid" src="{% static 'shop/images/ecssb-logo.png' %}" width="150">
+        <div class="text-center">ECSSB</div>
+      </a>
+      <a class="col border border-ecssweb m-1" href="{% url 'shop:shop-sale' 'dagsoc-merch-2023' %}" style="text-align: center">
+        <img class="img-fluid" src="{% static 'shop/images/dagsoc-logo.png' %}" width="150">
+        <div class="text-center">DAGSoc</div>
+      </a>
+      <a class="col border border-ecssweb m-1" href="{% url 'shop:shop-sale' 'sucss-2023' %}" style="text-align: center">
+        <img class="img-fluid" src="{% static 'shop/images/sucss-logo.png' %}" width="150">
+        <div class="text-center">SUCSS</div>
+      </a>
+    </div>
+  </section>
+  <div class="my-3">
+    <p>
+      Welcome to the ECSS Merch Store for 2023!
+    </p>
+    <p>
+      Within each category you can find our classic logo/slogan designs with new 2023 Merch including the winners of the Slogan Contest! <i>Plus</i>, brand new for this year, merchandise from other ECS societies too!
+    </p>
+    <p>
+      The store is only open for a short time so grab your gear while you can!
+    </p>
+    <p>
+      <b>This sale ends on {{ sale.end|date }} at {{ sale.end|time:"H:i" }}.</b>
+    </p>
+    <b>
+      We expect to have the merch produced and ready to give out in April after the Easter break. If it comes earlier, we will do our best to give it out before the Easter break. See <a href="#technicalInformation">technical information</a> to learn more.
+    </b>
+  </div>
+  <section>
+    <h2>Slogans</h2>
+    <hr>
+    <div>
+      We love slogans, and you can have optional slogans on the back of our hoodies, jumpers and quarter zips.
+      <div class="mt-3">
+        Here is a list of slogans available this year created and picked by our members:
+        <ul>
+          <li>
+            I Have No Idea How To Fix Your Laptop
+          </li>
+          <li>
+            If Its Not Broken, There Is Still Time To Change That.
+          </li>
+          <li>
+            Byte Me
+          </li>
+          <li>
+            A Monad Is A Monoid In The Category of Endofuctors
+          </li>
+          <li>
+            Can I Get Your Port Number?
+          </li>
+          <li>
+            <i>And more!</i>
+          </li>
+        </ul>
+      </div>
+      Don't fancy having slogans? Leaving it blank is an option, or you can have "Electronics and Computer Science" on the back!
+    </div>
+  </section>
+  <section>
+    <h2>Size Guide</h2>
+    <hr>
+    <div>
+      <p>
+        All inches represent chest measurement.
+      </p>
+    </div>
+    <div>
+      <b>T-shirt</b>
+      <table class="table table-bordered table-sm ">
+        <thead>
+          <tr>
+            <th scope="col">
+              S
+            </th>
+            <th scope="col">
+              M
+            </th>
+            <th scope="col">
+              L
+            </th>
+            <th scope="col">
+              XL
+            </th>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              34/36'
+            </td>
+            <td>
+              38/40'
+            </td>
+            <td>
+              42/44'
+            </td>
+            <td>
+              46/48'
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <b>Hoodie</b>
+      <table class="table table-bordered table-sm ">
+        <thead>
+          <tr>
+            <th scope="col">
+              S
+            </th>
+            <th scope="col">
+              M
+            </th>
+            <th scope="col">
+              L
+            </th>
+            <th scope="col">
+              XL
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              34/36'
+            </td>
+            <td>
+              38/40'
+            </td>
+            <td>
+              42/44'
+            </td>
+            <td>
+              46/48'
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <b>Zippy Hoodie</b>
+      <table class="table table-bordered table-sm ">
+        <thead>
+          <tr>
+            <th scope="col">
+              S
+            </th>
+            <th scope="col">
+              M
+            </th>
+            <th scope="col">
+              L
+            </th>
+            <th scope="col">
+              XL
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              34/36'
+            </td>
+            <td>
+              38/40'
+            </td>
+            <td>
+              42/44'
+            </td>
+            <td>
+              46/48'
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <b>Quarter Zip</b>
+      <table class="table table-bordered table-sm ">
+        <thead>
+          <tr>
+            <th scope="col">
+              S
+            </th>
+            <th scope="col">
+              M
+            </th>
+            <th scope="col">
+              L
+            </th>
+            <th scope="col">
+              XL
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              37'
+            </td>
+            <td>
+              41'
+            </td>
+            <td>
+              44'
+            </td>
+            <td>
+              48'
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <b>Jumper</b>
+      <table class="table table-bordered table-sm ">
+        <thead>
+          <tr>
+            <th scope="col">
+              S
+            </th>
+            <th scope="col">
+              M
+            </th>
+            <th scope="col">
+              L
+            </th>
+            <th scope="col">
+              XL
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              36'
+            </td>
+            <td>
+              40'
+            </td>
+            <td>
+              44'
+            </td>
+            <td>
+              48'
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <b>Varsity</b>
+      <table class="table table-bordered table-sm ">
+        <thead>
+          <tr>
+            <th scope="col">
+              S
+            </th>
+            <th scope="col">
+              M
+            </th>
+            <th scope="col">
+              L
+            </th>
+            <th scope="col">
+              XL
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              36'
+            </td>
+            <td>
+              40'
+            </td>
+            <td>
+              44'
+            </td>
+            <td>
+              48'
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </section>
+  <section id="technicalInformation">
+    <h2>Technical Information</h2>
+    <hr>
+    <p>
+      We expect to have the merch produced and ready to give out in April after the Easter break. If it comes earlier, we will do our best to give it out before the Easter break.
+    </p>
+    <p>
+      All design pictures are just a preview and it is possible for the final designs to look slightly different, but they will still look great!
+    </p>
+    <p>
+      If you have any questions, send us an email (society@ecs.soton.ac.uk) and we will get back to you as soon as we can. 😊
+    </p>
+  </section>
+  <hr>
+  <div>
+    <small class="text-muted">
+      If having difficulities purchasing on the website, please contact the committee.
+    </small>
+  </div>
+  <div>
+    <small class="text-muted">
+      To get refund or amend your order, please contact the committee. Please note the refund or changes after the sale ends might not be possible.
+    </small>
+  </div>
+</section>
+<style>
+.border-ecssweb {
+  padding: 20px;
+}
+</style>
+{% endblock %}

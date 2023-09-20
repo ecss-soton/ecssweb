@@ -21,7 +21,7 @@
   <p>
     This election is for ECSS members.
   </p>
-  {% if not perms.ecsswebauth.is_ecs_user %}
+  {% if not can_vote %}
   <p>
     Unfortunately you are unable to nominate, support nominations or vote in this election. If you think it is an error please contact us.
   </p>
@@ -42,7 +42,7 @@
       <p class="position-description">
         <i>{{ position.description }}</i>
       </p>
-      {% if perms.ecsswebauth.is_ecs_user %}
+      {% if can_vote %}
       <div>
         {% if position|has_voted:user %}
         You have voted for {{ position.name }}.
